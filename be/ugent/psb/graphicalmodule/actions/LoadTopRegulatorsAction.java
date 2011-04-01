@@ -10,7 +10,7 @@ import javax.swing.filechooser.FileNameExtensionFilter;
 import be.ugent.psb.ModuleNetwork.ModuleNetwork;
 import be.ugent.psb.ModuleNetwork.parsers.ModuleNetworkParser;
 import be.ugent.psb.ModuleNetwork.parsers.TopRegulatorsParser;
-import be.ugent.psb.graphicalmodule.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 /**
  * 

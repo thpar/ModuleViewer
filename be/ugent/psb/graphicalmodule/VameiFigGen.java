@@ -11,6 +11,7 @@ import javax.swing.JScrollPane;
 
 import be.ugent.psb.ModuleNetwork.BiNGO;
 import be.ugent.psb.ModuleNetwork.ModuleNetwork;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 
 public class VameiFigGen {

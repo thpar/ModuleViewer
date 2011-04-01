@@ -1,4 +1,4 @@
-package be.ugent.psb.graphicalmodule;
+package be.ugent.psb.graphicalmodule.model;
 
 import java.awt.Color;
 import java.awt.Frame;

@@ -12,7 +12,7 @@ import be.ugent.psb.ModuleNetwork.parsers.GeneLinkParser;
 import be.ugent.psb.ModuleNetwork.parsers.GeneNameMappingParser;
 import be.ugent.psb.ModuleNetwork.parsers.ModuleNetworkParser;
 import be.ugent.psb.ModuleNetwork.parsers.TopRegulatorsParser;
-import be.ugent.psb.graphicalmodule.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 /**
  * 

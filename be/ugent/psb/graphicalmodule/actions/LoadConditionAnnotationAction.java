@@ -12,7 +12,7 @@ import javax.swing.JFileChooser;
 import be.ugent.psb.ModuleNetwork.ConditionClassification;
 import be.ugent.psb.ModuleNetwork.ModuleNetwork;
 import be.ugent.psb.ModuleNetwork.parsers.ConditionMapParser;
-import be.ugent.psb.graphicalmodule.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 /**
  * 

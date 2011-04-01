@@ -19,6 +19,7 @@ import javax.swing.JToolBar;
 import be.ugent.psb.ModuleNetwork.ModuleNetwork;
 import be.ugent.psb.graphicalmodule.actions.ExportToEPSAction;
 import be.ugent.psb.graphicalmodule.actions.NavModuleAction;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 public class NavigationToolBar extends JToolBar implements Observer, FocusListener, KeyListener{
 

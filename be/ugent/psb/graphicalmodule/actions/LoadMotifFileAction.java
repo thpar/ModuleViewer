@@ -9,8 +9,8 @@ import javax.swing.JFileChooser;
 
 import be.ugent.psb.ModuleNetwork.ModuleNetwork;
 import be.ugent.psb.ModuleNetwork.parsers.MotifFileParser;
-import be.ugent.psb.graphicalmodule.GraphicalModuleModel;
 import be.ugent.psb.graphicalmodule.dialogs.LoadMotifFileDialog;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 /**
  * 

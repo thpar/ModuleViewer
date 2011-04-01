@@ -10,6 +10,8 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+
 public class StatusBar extends JPanel implements Observer{
 
 	private static final long serialVersionUID = 1L;

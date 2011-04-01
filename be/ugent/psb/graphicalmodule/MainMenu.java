@@ -21,6 +21,7 @@ import be.ugent.psb.graphicalmodule.actions.LoadGeneMapAction;
 import be.ugent.psb.graphicalmodule.actions.LoadModulesAction;
 import be.ugent.psb.graphicalmodule.actions.LoadMotifFileAction;
 import be.ugent.psb.graphicalmodule.actions.LoadTopRegulatorsAction;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 public class MainMenu extends JMenuBar {
 

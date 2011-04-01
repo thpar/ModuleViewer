@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
-import be.ugent.psb.graphicalmodule.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 
 public class NavModuleAction extends AbstractAction {
 

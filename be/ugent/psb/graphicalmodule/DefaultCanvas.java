@@ -21,6 +21,7 @@ import be.ugent.psb.graphicalmodule.elements.GeneNames;
 import be.ugent.psb.graphicalmodule.elements.TickBoxColumn;
 import be.ugent.psb.graphicalmodule.elements.TickBoxMatrix;
 import be.ugent.psb.graphicalmodule.elements.Title;
+import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Label;
