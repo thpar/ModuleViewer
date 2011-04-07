@@ -2,16 +2,14 @@ package be.ugent.psb.graphicalmodule;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.util.HashSet;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import be.ugent.psb.ModuleNetwork.BiNGO;
-import be.ugent.psb.ModuleNetwork.ModuleNetwork;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 
 public class VameiFigGen {
@@ -166,7 +164,7 @@ public class VameiFigGen {
 		guiModel.setDrawConditionAnnotationLegend(true);
 		guiModel.setDrawConditionAnnotations(true);
 
-		this.window = new JFrame("LeMoNe Viewer");
+		this.window = new JFrame("ModuleViewer");
 		guiModel.setTopContainer(window);
 		
 		ModuleLabel modLabel = new ModuleLabel(modnet, guiModel);

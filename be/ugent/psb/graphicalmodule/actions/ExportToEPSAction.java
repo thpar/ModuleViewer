@@ -7,9 +7,9 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
-import be.ugent.psb.ModuleNetwork.Module;
-import be.ugent.psb.ModuleNetwork.ModuleNetwork;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.Module;
+import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 public class ExportToEPSAction extends AbstractAction {
 

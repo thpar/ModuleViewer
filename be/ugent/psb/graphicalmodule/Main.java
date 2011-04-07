@@ -5,25 +5,10 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-public class VameiMain {
+public class Main {
 
 	private static final String SLASH = System.getProperty("file.separator");
 
-	private static String dataDir = "data"+SLASH+"spidermite";
-	private static String outputDir = "output";
-	
-	
-	private static String xmlInput = dataDir+SLASH+"regs_Bla.xml.gz";
-	private static String nameMap = dataDir+SLASH+"ath_symbol";
-	private static String topRegs = dataDir+SLASH+"top3reg_Bla";
-	private static String condMap = dataDir+SLASH+"conditions_Bla.txt";
-	
-	
-	private static String geneAssoc = dataDir+SLASH+"gene_association.tair";
-	private static String geneOnto = dataDir+SLASH+"gene_ontology.obo";
-	
-	private static String bingoOut = outputDir+SLASH+"bingo_out";
-	private static String topCondOut = outputDir+SLASH+"topCondOut";
 	
 	public static void main(String[] args) {
 		//we get a properties file as input

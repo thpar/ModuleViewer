@@ -22,6 +22,7 @@ public class StatusBar extends JPanel implements Observer{
 	
 	
 	public StatusBar(GraphicalModuleModel guiModel){
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 
 		this.guiModel = guiModel;

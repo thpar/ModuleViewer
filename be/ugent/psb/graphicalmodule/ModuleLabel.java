@@ -13,15 +13,17 @@ import java.util.Observer;
 
 import javax.swing.ImageIcon;
 
-import be.ugent.psb.ModuleNetwork.Module;
-import be.ugent.psb.ModuleNetwork.ModuleNetwork;
-import be.ugent.psb.ModuleNetwork.TreeNode;
 import be.ugent.psb.graphicalmodule.elements.ConditionAnnotationMatrix;
 import be.ugent.psb.graphicalmodule.elements.ConditionLabels;
 import be.ugent.psb.graphicalmodule.elements.ExpressionMatrix;
 import be.ugent.psb.graphicalmodule.elements.GeneNames;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.Module;
+import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
+import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Element;
+
+
 
 public class ModuleLabel extends CanvasLabel implements Observer{
 

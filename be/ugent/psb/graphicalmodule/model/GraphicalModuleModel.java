@@ -5,12 +5,9 @@ import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
 import java.io.File;
-import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
-
-import be.ugent.psb.ModuleNetwork.Gene;
 
 /**
  * Settings of which data to include in the figure to be drawn.
