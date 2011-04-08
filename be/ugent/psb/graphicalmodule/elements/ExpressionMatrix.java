@@ -8,10 +8,12 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.ugent.psb.ModuleNetwork.Gene;
-import be.ugent.psb.ModuleNetwork.TreeNode;
+import be.ugent.psb.graphicalmodule.model.Experiment;
+import be.ugent.psb.graphicalmodule.model.Gene;
+import be.ugent.psb.graphicalmodule.model.TreeNode;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
+import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
 /**
  * Iterates {@link TreeNode}s and constructs the Expression Matrix on a {@link Canvas}
@@ -58,7 +60,7 @@ public class ExpressionMatrix extends Canvas {
 			addLeaves(rootNode);
 		} else{ 
 			ExpressionLeaf leaf = new ExpressionLeaf(genes,
-					rootNode.leafDistribution.condSet,
+					rootNode.getColumns(),
 					this.mean, this.sigma);
 			this.add(leaf);
 			leaves.add(leaf);
@@ -109,13 +111,13 @@ public class ExpressionMatrix extends Canvas {
 	 * @param x
 	 * @return width of the drawn leave
 	 */
-	private void addLeaves(TreeNode node) {
-		if (node.nodeStatus.equals("internal")){
-			addLeaves(node.leftChild);
-			addLeaves(node.rightChild);
+	private void addLeaves(ITreeNode<Experiment> node) {
+		if (!node.isLeaf()){
+			addLeaves(node.left());
+			addLeaves(node.right());
 		} else {
 			ExpressionLeaf leaf = new ExpressionLeaf(genes,
-					node.leafDistribution.condSet,
+					node.getExperiments(),
 					this.mean, this.sigma );
 			this.add(leaf);
 			this.leaves.add(leaf);

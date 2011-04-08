@@ -6,7 +6,7 @@ import java.awt.Graphics2D;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.ugent.psb.ModuleNetwork.Gene;
+import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.LabelList;
@@ -21,7 +21,7 @@ public class GeneNames extends Element {
 		this.genes = genes;
 		List<String> geneNames = new ArrayList<String>();
 		for (Gene gene : genes){
-			geneNames.add(gene.getAltName());
+			geneNames.add(gene.getName());
 		}
 		labelList = new LabelList(geneNames);
 		
@@ -64,10 +64,10 @@ public class GeneNames extends Element {
 	
 	
 	public void highlightGene(Gene highlight, boolean hl){
-		labelList.setLabelHighlight(highlight.name, hl);		
+		labelList.setLabelHighlight(highlight.getName(), hl);		
 	}
 	public void toggleHighlightGene(Gene highlight){
-		labelList.toggleLabelHighlight(highlight.name);
+		labelList.toggleLabelHighlight(highlight.getName());
 	}
 	public void removeHighlights(){
 		labelList.removeHighlights();

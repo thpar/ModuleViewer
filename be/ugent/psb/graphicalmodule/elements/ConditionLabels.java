@@ -5,11 +5,12 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import be.ugent.psb.ModuleNetwork.Experiment;
-import be.ugent.psb.ModuleNetwork.TreeNode;
+import be.ugent.psb.graphicalmodule.model.Experiment;
+import be.ugent.psb.graphicalmodule.model.TreeNode;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
+import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
 
@@ -21,11 +22,6 @@ import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
  */
 public class ConditionLabels extends Canvas {
 
-	/**
-	 * Conditions to look up condition name by condition number
-	 */
-	private List<Experiment> conditions;
-
 
 	/**
 	 * 
@@ -33,8 +29,7 @@ public class ConditionLabels extends Canvas {
 	 * @param conditions
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ConditionLabels(TreeNode rootNode, List<Experiment> conditions, boolean recursive){
-		this.conditions = conditions;
+	public ConditionLabels(TreeNode rootNode, boolean recursive){
 		this.addMouseListener(new ElementEventChildForwarder(this));
 		
 		if (recursive){
@@ -47,20 +42,20 @@ public class ConditionLabels extends Canvas {
 	
 	
 	
-	private void addLeaves(TreeNode node) {
-		if (node.nodeStatus.equals("internal")){
-			addLeaves(node.leftChild);
-			addLeaves(node.rightChild);
+	private void addLeaves(ITreeNode<Experiment> node) {
+		if (!node.isLeaf()){
+			addLeaves(node.left());
+			addLeaves(node.right());
 		} else {
 			this.add(createLabelList(node));
 		}
 	}
 	
-	private LabelList createLabelList(TreeNode node){
-		Collections.sort(node.leafDistribution.condSet);
+	private LabelList createLabelList(ITreeNode<Experiment> node){
+		Collections.sort(node.getColumns());
 		List<String> labelStrings = new ArrayList<String>();
-		for (int condNumber : node.leafDistribution.condSet){
-			labelStrings.add(conditions.get(condNumber).name);
+		for (Experiment condition : node.getColumns()){
+			labelStrings.add(condition.getName());
 		}
 		
 		LabelList labels = new LabelList(labelStrings);

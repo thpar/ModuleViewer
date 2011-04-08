@@ -6,7 +6,8 @@ import java.awt.Point;
 import java.util.Collections;
 import java.util.List;
 
-import be.ugent.psb.ModuleNetwork.Gene;
+import be.ugent.psb.graphicalmodule.model.Gene;
+import be.ugent.psb.graphicalmodule.elements.ExpressionColorizer;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Matrix;
@@ -35,7 +36,7 @@ public class ExpressionLeaf extends Element{
 		for (Gene gene : genes){
 			int ii=0;
 			for (int m : condSet){
-				data[i][ii++] = gene.realData[m];
+				data[i][ii++] = gene.getData()[m];
 			}
 			i++;
 		}

@@ -4,7 +4,7 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
-public class TreeNode implements ITreeNode{
+public class TreeNode implements ITreeNode<Experiment>{
 	/**
 	 * Left child
 	 */
@@ -33,13 +33,21 @@ public class TreeNode implements ITreeNode{
 	
 	
 	
+	public List<Experiment> getExperiments() {
+		return experiments;
+	}
+
+	public void setExperiments(List<Experiment> experiments) {
+		this.experiments = experiments;
+	}
+
 	@Override
-	public ITreeNode left() {
+	public ITreeNode<Experiment> left() {
 		return left;
 	}
 
 	@Override
-	public ITreeNode right() {
+	public ITreeNode<Experiment> right() {
 		return right;
 	}
 
@@ -51,6 +59,11 @@ public class TreeNode implements ITreeNode{
 	@Override
 	public int getWidth() {
 		return experiments.size();
+	}
+
+	@Override
+	public List<Experiment> getColumns() {
+		return experiments;
 	}
 
 	

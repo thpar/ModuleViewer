@@ -8,8 +8,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import be.ugent.psb.ModuleNetwork.Gene;
-import be.ugent.psb.ModuleNetwork.Module;
 import be.ugent.psb.graphicalmodule.elements.ConditionAnnotationLegend;
 import be.ugent.psb.graphicalmodule.elements.ConditionAnnotationMatrix;
 import be.ugent.psb.graphicalmodule.elements.ConditionLabels;
@@ -21,7 +19,9 @@ import be.ugent.psb.graphicalmodule.elements.GeneNames;
 import be.ugent.psb.graphicalmodule.elements.TickBoxColumn;
 import be.ugent.psb.graphicalmodule.elements.TickBoxMatrix;
 import be.ugent.psb.graphicalmodule.elements.Title;
+import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.Module;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Label;

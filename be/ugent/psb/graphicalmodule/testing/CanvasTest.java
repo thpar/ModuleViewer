@@ -11,13 +11,13 @@ import java.util.List;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
-import be.ugent.psb.ModuleNetwork.Gene;
-import be.ugent.psb.graphicalmodule.CanvasLabel;
 import be.ugent.psb.graphicalmodule.elements.GeneNames;
 import be.ugent.psb.graphicalmodule.elements.TickBoxColumn;
 import be.ugent.psb.graphicalmodule.elements.TickBoxMatrix;
 import be.ugent.psb.graphicalmodule.elements.Title;
 import be.ugent.psb.graphicalmodule.elements.Title.Angle;
+import be.ugent.psb.graphicalmodule.model.Gene;
+import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element.Alignment;
 import be.ugent.psb.modulegraphics.elements.Rectangle;
@@ -44,12 +44,12 @@ public class CanvasTest implements MouseListener {
 	
 	private void clickTest() {
 
-		Gene a = new Gene("something", 1);
-		Gene b = new Gene("blablabalb", 1);
-		Gene c = new Gene("ATH6564", 1);
-		Gene d = new Gene("sheep", 1);
-		Gene e = new Gene("onetwoone", 1);
-		Gene f = new Gene("tadtaag", 1);
+		Gene a = new Gene("something");
+		Gene b = new Gene("blablabalb");
+		Gene c = new Gene("ATH6564");
+		Gene d = new Gene("sheep");
+		Gene e = new Gene("onetwoone");
+		Gene f = new Gene("tadtaag");
 
 
 		List<Gene> genes = new ArrayList<Gene>();

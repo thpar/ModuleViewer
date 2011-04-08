@@ -62,7 +62,6 @@ public class Title extends Element {
 	}
 
 
-
 	@Override
 	protected Dimension getRawDimension(Graphics2D g) {
 		return label.getDimension(g);

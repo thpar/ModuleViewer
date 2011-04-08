@@ -7,7 +7,7 @@ import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
-import be.ugent.psb.ModuleNetwork.Gene;
+import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Colorizer;
 import be.ugent.psb.modulegraphics.elements.Element;
