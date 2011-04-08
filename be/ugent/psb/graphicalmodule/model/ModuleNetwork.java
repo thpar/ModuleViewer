@@ -20,7 +20,7 @@ public class ModuleNetwork {
 	private List<Module> modules;
 	
 	/**
-	 * All possible regulatores?
+	 * All possible regulators?
 	 */
 	private List<Gene> regulators;
 	
@@ -29,6 +29,21 @@ public class ModuleNetwork {
 	 * The original data matrix
 	 */
 	private double data[][];
+	
+	
+	/**
+	 * 
+	 * @param geneId
+	 */
+	public void addGene(String geneId){
+		this.genes.add(new Gene(geneId));
+	}
+	
+	public void addExperiment(String expName){
+		Experiment exp = new Experiment(expName, conditions.size());
+		this.conditions.add(exp);
+	}
+	
 	
 	
 	

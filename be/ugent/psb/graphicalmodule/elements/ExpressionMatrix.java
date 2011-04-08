@@ -117,7 +117,7 @@ public class ExpressionMatrix extends Canvas {
 			addLeaves(node.right());
 		} else {
 			ExpressionLeaf leaf = new ExpressionLeaf(genes,
-					node.getExperiments(),
+					node.getColumns(),
 					this.mean, this.sigma );
 			this.add(leaf);
 			this.leaves.add(leaf);

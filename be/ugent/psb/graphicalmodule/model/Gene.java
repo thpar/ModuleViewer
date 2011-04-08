@@ -67,8 +67,10 @@ public class Gene {
 	public void setData(double[] data) {
 		this.data = data;
 	}
-	
-	
+
+	public double getValue(Experiment exp){
+		return data[exp.getNumber()];
+	}
 	
 	
 }

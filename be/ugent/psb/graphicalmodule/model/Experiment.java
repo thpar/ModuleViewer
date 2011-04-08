@@ -6,6 +6,11 @@ public class Experiment implements Comparable<Experiment> {
 	 * Name of this experiment.
 	 */
 	private String name;
+	
+	/**
+	 * Number of this experiment in the list in ModuleNetwork
+	 */
+	private int number;
 
 	
 	/**
@@ -16,6 +21,11 @@ public class Experiment implements Comparable<Experiment> {
 		this.name = name;
 	}
 
+	public Experiment(String name, int nr){
+		this(name);
+		this.number = nr;
+	}
+	
 	/**
 	 * 
 	 * @return experiment name
@@ -42,6 +52,10 @@ public class Experiment implements Comparable<Experiment> {
 	public boolean equals(Object obj) {
 		// TODO Auto-generated method stub
 		return super.equals(obj);
+	}
+
+	public int getNumber() {
+		return this.number;
 	}
 	
 	

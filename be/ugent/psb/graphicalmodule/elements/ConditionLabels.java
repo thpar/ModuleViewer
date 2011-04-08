@@ -23,6 +23,8 @@ import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
 public class ConditionLabels extends Canvas {
 
 
+	private TreeNode rootNode;
+
 	/**
 	 * 
 	 * @param rootNode
@@ -31,6 +33,7 @@ public class ConditionLabels extends Canvas {
 	 */
 	public ConditionLabels(TreeNode rootNode, boolean recursive){
 		this.addMouseListener(new ElementEventChildForwarder(this));
+		this.rootNode = rootNode;
 		
 		if (recursive){
 			addLeaves(rootNode);
@@ -70,7 +73,7 @@ public class ConditionLabels extends Canvas {
 		assert(el instanceof LabelList);
 		LabelList ll = (LabelList)el;
 		int row = ll.getHitLabelRow(x, y);
-		return conditions.get(row);
+		return rootNode.getExperiment(row);
 	}
 	
 	/**
