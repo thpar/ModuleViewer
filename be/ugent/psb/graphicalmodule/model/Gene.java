@@ -12,6 +12,8 @@ public class Gene {
 	 */
 	private String name;
 	
+	private String description;
+	
 	/**
 	 * The original data for this gene
 	 * The corresponding line from the data matrix 
@@ -26,7 +28,9 @@ public class Gene {
 		this.id = id;
 	}
 	
-	
+	public Gene(String id, String description){
+		this.description = description;
+	}
 	
 	/**
 	 * Get the alternative gene name
@@ -71,6 +75,20 @@ public class Gene {
 	public double getValue(Experiment exp){
 		return data[exp.getNumber()];
 	}
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
+	
 	
 	
 }

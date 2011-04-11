@@ -9,7 +9,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
-import be.ugent.psb.ModuleNetwork.ModuleNetwork;
 import be.ugent.psb.graphicalmodule.actions.ChangeEpsOutputDirAction;
 import be.ugent.psb.graphicalmodule.actions.ExportToEPSAction;
 import be.ugent.psb.graphicalmodule.actions.LoadAracycAction;
@@ -22,6 +21,7 @@ import be.ugent.psb.graphicalmodule.actions.LoadModulesAction;
 import be.ugent.psb.graphicalmodule.actions.LoadMotifFileAction;
 import be.ugent.psb.graphicalmodule.actions.LoadTopRegulatorsAction;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 public class MainMenu extends JMenuBar {
 

@@ -1,17 +1,14 @@
 package be.ugent.psb.graphicalmodule.actions;
 
 import java.awt.event.ActionEvent;
-import java.beans.PropertyChangeSupport;
 import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
-import be.ugent.psb.ModuleNetwork.ModuleNetwork;
-import be.ugent.psb.ModuleNetwork.parsers.ModuleNetworkParser;
-import be.ugent.psb.graphicalmodule.StatusBar;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 /**
  * 
