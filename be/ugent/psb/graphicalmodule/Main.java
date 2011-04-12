@@ -17,17 +17,6 @@ public class Main {
 			try {
 				props.load(new FileReader(args[0]));
 				
-				dataDir = props.getProperty("dataDir");
-				outputDir = props.getProperty("outputDir");
-				xmlInput = dataDir+SLASH+props.getProperty("xmlInput");
-				nameMap = dataDir+SLASH+props.getProperty("nameMap");
-				topRegs = dataDir+SLASH+props.getProperty("topRegs");
-				condMap = dataDir+SLASH+props.getProperty("condMap");
-				geneAssoc  = dataDir+SLASH+props.getProperty("geneAssoc");
-				geneOnto = dataDir+SLASH+props.getProperty("geneOnto");
-				bingoOut = outputDir+SLASH+props.getProperty("bingoOut");
-				topCondOut = outputDir+SLASH+props.getProperty("topCondOut");
-
 			} catch (FileNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -37,15 +26,7 @@ public class Main {
 			}
 		}
 		
-		VameiFigGen figGen = new VameiFigGen(xmlInput, 
-					outputDir, 
-					nameMap,
-					topRegs, 
-					condMap,
-					geneAssoc,
-					geneOnto,
-					bingoOut,
-					topCondOut);
+		ViewerGUI figGen = new ViewerGUI();
 
 			figGen.startGUI();
 

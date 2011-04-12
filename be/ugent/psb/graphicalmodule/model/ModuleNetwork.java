@@ -1,6 +1,8 @@
 package be.ugent.psb.graphicalmodule.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -71,6 +73,22 @@ public class ModuleNetwork {
 		return this.conditions.get(expId);
 	}
 	
+	public List<Experiment> getExperimentList(){
+		List<Experiment> exps = new ArrayList<Experiment>();
+		for (Experiment exp : conditions.values()){
+			exps.add(exp);
+		}
+		Collections.sort(exps, new Comparator<Experiment>(){
+			@Override
+			public int compare(Experiment o1, Experiment o2) {
+				if (o1.getNumber() == o2.getNumber()) return 0;
+				else if (o1.getNumber()< o2.getNumber()) return -1;
+				else return 1;
+			}
+			
+		});
+		return exps;
+	}
 	
 	public void addConditionCheckList(ConditionCheckList ccl){
 		this.conditionAnnotation.put(ccl.getName(), ccl);
@@ -84,9 +102,15 @@ public class ModuleNetwork {
 		this.regulators = regulators;
 	}
 
-	public void setModules(ArrayList<Module> modset) {
+	public void setModules(List<Module> modset) {
 		this.modules = modset;
 	}
+
+	public List<Module> getModules() {
+		return modules;
+	}
+	
+	
 	
 	
 }

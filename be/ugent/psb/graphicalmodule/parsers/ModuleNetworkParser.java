@@ -34,7 +34,7 @@ public class ModuleNetworkParser extends Parser{
 			Date now = new Date();
 			System.out.println(timerCalc(then, now));
 			
-			modnet.calculateModuleMeans();
+//			modnet.calculateModuleMeans();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

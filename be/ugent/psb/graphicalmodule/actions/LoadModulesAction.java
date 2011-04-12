@@ -9,6 +9,7 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
+import be.ugent.psb.graphicalmodule.parsers.ModuleNetworkParser;
 
 /**
  * 

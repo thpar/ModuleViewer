@@ -547,8 +547,9 @@ public class XMLModuleHandler extends DefaultHandler{
 	private void parseRegulator(Attributes atts) {
 		int regnum = Integer.parseInt(atts.getValue("id"));
 		boolean flag = Boolean.parseBoolean(atts.getValue("discrete"));
-		modnet.regulatorSet.add(modnet.geneSet.get(regnum));
-		modnet.geneSet.get(regnum).setDiscrete(flag);
+//		modnet.regul1atorSet.add(modnet.geneSet.get(regnum));
+		
+//		modnet.geneSet.get(regnum).setDiscrete(flag);
 	}
 	
 	private void setNormalizedDataAndSplitValue() {
@@ -599,15 +600,19 @@ public class XMLModuleHandler extends DefaultHandler{
 	private void parseTreeNodeAtts(Attributes attributes){
 //		node.leafDistribution.score = Double.parseDouble(attributes.getValue("score"));
 		String expts = attributes.getValue("condSet");
-		ArrayList<Integer> condList = new ArrayList<Integer>();
+		ArrayList<Experiment> condList = new ArrayList<Experiment>();
 		StringTokenizer tokens = new StringTokenizer(expts,";");
+		List<Experiment> expList = modnet.getExperimentList();
 		while(tokens.hasMoreTokens()){
-			condList.add(Integer.parseInt(tokens.nextElement().toString()));
+			int expNumber = Integer.parseInt(tokens.nextElement().toString());
+			condList.add(expList.get(expNumber));
+//			condList.add(Integer.parseInt(tokens.nextElement().toString()));
 		}
-		node.leafDistribution.condSet = condList;
+//		node.leafDistribution.condSet = condList;
+		node.setExperiments(condList);
 		// compute statistics and score as if node was leaf
-		node.statistics();
-		node.leafDistribution.bayesianScore();	
+//		node.statistics();
+//		node.leafDistribution.bayesianScore();	
 	}
 	
 	

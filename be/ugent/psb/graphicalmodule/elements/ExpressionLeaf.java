@@ -27,7 +27,7 @@ public class ExpressionLeaf extends Element{
 	 */
 	public ExpressionLeaf(List<Gene> genes, List<Experiment> condSet, double mean, double sigma){
 		c = new ExpressionColorizer(mean, sigma);
-		Collections.sort(condSet);
+//		Collections.sort(condSet);
 
 		this.addMouseListener(new ElementEventChildForwarder(this));
 		

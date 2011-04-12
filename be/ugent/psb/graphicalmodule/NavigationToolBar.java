@@ -15,7 +15,6 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
-import be.ugent.psb.graphicalmodule.actions.ExportToEPSAction;
 import be.ugent.psb.graphicalmodule.actions.NavModuleAction;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
@@ -48,7 +47,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		nextButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/next.png")),+1, guiModel));
 		prevButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/prev.png")),-1, guiModel));
-		exportButton.setAction(new ExportToEPSAction(new ImageIcon(getClass().getResource("/icons/eps_icon.jpg")),modnet, guiModel));
+//		exportButton.setAction(new ExportToEPSAction(new ImageIcon(getClass().getResource("/icons/eps_icon.jpg")),modnet, guiModel));
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -71,8 +70,8 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		locationField.setText(String.valueOf(modnr));
 		int totalModnr = 0;
 		String totalString;
-		if (modnet.moduleSet != null){
-			totalModnr=	modnet.moduleSet.size();
+		if (modnet.getModules() != null){
+			totalModnr=	modnet.getModules().size();
 			totalString = new String("/"+totalModnr);
 		} else {
 			totalString = new String("--");

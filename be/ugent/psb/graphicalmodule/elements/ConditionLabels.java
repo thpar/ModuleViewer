@@ -55,7 +55,7 @@ public class ConditionLabels extends Canvas {
 	}
 	
 	private LabelList createLabelList(ITreeNode<Experiment> node){
-		Collections.sort(node.getColumns());
+//		Collections.sort(node.getColumns());
 		List<String> labelStrings = new ArrayList<String>();
 		for (Experiment condition : node.getColumns()){
 			labelStrings.add(condition.getName());

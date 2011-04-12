@@ -12,41 +12,24 @@ import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 
-public class VameiFigGen {
+public class ViewerGUI {
 
-	private static final String SLASH = System.getProperty("file.separator");
-	private String outputDir;
-	private String oldOutputDir;
-
-	private String geneMapFile;
-
-	private String topRegs;
-	private String conditionMapFile;
-	private String xmlInput;
-	private String geneAssoc;
-	private String geneOnto;
-	private String bingoOut;
-	private String topCondOut;
+//	private static final String SLASH = System.getProperty("file.separator");
+	
 	private JFrame window;
-	private GraphicalModuleModel gModel;
+//	private GraphicalModuleModel gModel;
 	
 	
-	public VameiFigGen(String xmlInput, String outputDir, String nameMap, 
+	public ViewerGUI(String xmlInput, String outputDir, String nameMap, 
 			String topRegs, String conditionMap,
 			String geneAssoc,
 			String geneOnto,
 			String bingoOut,
 			String topCondOut) {
-		this.xmlInput = xmlInput;
-		this.outputDir = outputDir;
-		this.oldOutputDir = "old_"+outputDir;
-		this.geneMapFile = nameMap;
-		this.topRegs = topRegs;
-		this.conditionMapFile = conditionMap;
-		this.geneAssoc = geneAssoc;
-		this.geneOnto = geneOnto;
-		this.bingoOut = bingoOut;
-		this.topCondOut = topCondOut;
+	}
+	
+	public ViewerGUI(){
+		
 	}
 
 	

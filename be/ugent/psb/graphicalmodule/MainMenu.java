@@ -1,6 +1,5 @@
 package be.ugent.psb.graphicalmodule;
 
-import java.awt.Frame;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
@@ -10,16 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import be.ugent.psb.graphicalmodule.actions.ChangeEpsOutputDirAction;
-import be.ugent.psb.graphicalmodule.actions.ExportToEPSAction;
-import be.ugent.psb.graphicalmodule.actions.LoadAracycAction;
-import be.ugent.psb.graphicalmodule.actions.LoadBiNGOAction;
-import be.ugent.psb.graphicalmodule.actions.LoadConditionAnnotationAction;
-import be.ugent.psb.graphicalmodule.actions.LoadGeneCheckListAction;
-import be.ugent.psb.graphicalmodule.actions.LoadGeneLinkAction;
-import be.ugent.psb.graphicalmodule.actions.LoadGeneMapAction;
 import be.ugent.psb.graphicalmodule.actions.LoadModulesAction;
-import be.ugent.psb.graphicalmodule.actions.LoadMotifFileAction;
-import be.ugent.psb.graphicalmodule.actions.LoadTopRegulatorsAction;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
@@ -31,16 +21,16 @@ public class MainMenu extends JMenuBar {
 	public MainMenu(ModuleNetwork modnet, final GraphicalModuleModel guiModel){
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem loadModnetItem = new JMenuItem(new LoadModulesAction(modnet, guiModel));
-		JMenuItem loadTopRegItem = new JMenuItem(new LoadTopRegulatorsAction(modnet, guiModel));
-		JMenuItem loadGeneMapItem = new JMenuItem(new LoadGeneMapAction(modnet, guiModel));
-		JMenuItem loadBiNGOItem = new JMenuItem(new LoadBiNGOAction(modnet, guiModel));
-		JMenuItem loadGeneLinkItem = new JMenuItem(new LoadGeneLinkAction(modnet, guiModel));
-		JMenuItem loadGeneCheckListItem = new JMenuItem(new LoadGeneCheckListAction(modnet, guiModel));
-		JMenuItem loadAracycItem = new JMenuItem(new LoadAracycAction(modnet, guiModel));
-		JMenuItem loadMotifFileItem = new JMenuItem(new LoadMotifFileAction((Frame)this.getTopLevelAncestor(), modnet, guiModel));
-		JMenuItem loadCondMapItem = new JMenuItem(new LoadConditionAnnotationAction(modnet, guiModel));
+//		JMenuItem loadTopRegItem = new JMenuItem(new LoadTopRegulatorsAction(modnet, guiModel));
+//		JMenuItem loadGeneMapItem = new JMenuItem(new LoadGeneMapAction(modnet, guiModel));
+//		JMenuItem loadBiNGOItem = new JMenuItem(new LoadBiNGOAction(modnet, guiModel));
+//		JMenuItem loadGeneLinkItem = new JMenuItem(new LoadGeneLinkAction(modnet, guiModel));
+//		JMenuItem loadGeneCheckListItem = new JMenuItem(new LoadGeneCheckListAction(modnet, guiModel));
+//		JMenuItem loadAracycItem = new JMenuItem(new LoadAracycAction(modnet, guiModel));
+//		JMenuItem loadMotifFileItem = new JMenuItem(new LoadMotifFileAction((Frame)this.getTopLevelAncestor(), modnet, guiModel));
+//		JMenuItem loadCondMapItem = new JMenuItem(new LoadConditionAnnotationAction(modnet, guiModel));
 
-		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(modnet, guiModel));
+//		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(modnet, guiModel));
 		JMenuItem exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener(){
 			@Override
@@ -49,19 +39,19 @@ public class MainMenu extends JMenuBar {
 			}
 		});
 		fileMenu.add(loadModnetItem);
-		fileMenu.add(loadTopRegItem);
-		fileMenu.add(loadGeneMapItem);
-		fileMenu.add(loadBiNGOItem);
-		fileMenu.add(loadGeneLinkItem);
-		fileMenu.add(loadGeneCheckListItem);
-		fileMenu.add(loadAracycItem);
-		fileMenu.add(loadMotifFileItem);
-		
-		fileMenu.add(loadCondMapItem);
+//		fileMenu.add(loadTopRegItem);
+//		fileMenu.add(loadGeneMapItem);
+//		fileMenu.add(loadBiNGOItem);
+//		fileMenu.add(loadGeneLinkItem);
+//		fileMenu.add(loadGeneCheckListItem);
+//		fileMenu.add(loadAracycItem);
+//		fileMenu.add(loadMotifFileItem);
+//		
+//		fileMenu.add(loadCondMapItem);
 		
 		fileMenu.addSeparator();
 		
-		fileMenu.add(exportItem);
+//		fileMenu.add(exportItem);
 		fileMenu.addSeparator();
 		
 		fileMenu.add(exitItem);
