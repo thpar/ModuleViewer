@@ -3,7 +3,7 @@ package be.ugent.psb.graphicalmodule.model;
 public class Model {
 
 	
-	ModuleNetwork modnet;
+	ModuleNetwork modnet = new ModuleNetwork();
 
 	public ModuleNetwork getModnet() {
 		return modnet;
