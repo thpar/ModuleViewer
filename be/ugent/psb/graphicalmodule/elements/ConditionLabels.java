@@ -6,7 +6,7 @@ import java.util.Collections;
 import java.util.List;
 
 import be.ugent.psb.graphicalmodule.model.Condition;
-import be.ugent.psb.graphicalmodule.model.TreeNode;
+import be.ugent.psb.graphicalmodule.model.ConditionNode;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
@@ -23,7 +23,7 @@ import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
 public class ConditionLabels extends Canvas {
 
 
-	private TreeNode rootNode;
+	private ConditionNode rootNode;
 
 	/**
 	 * 
@@ -31,7 +31,7 @@ public class ConditionLabels extends Canvas {
 	 * @param conditions
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ConditionLabels(TreeNode rootNode, boolean recursive){
+	public ConditionLabels(ConditionNode rootNode, boolean recursive){
 		this.addMouseListener(new ElementEventChildForwarder(this));
 		this.rootNode = rootNode;
 		

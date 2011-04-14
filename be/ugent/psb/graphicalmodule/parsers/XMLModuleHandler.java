@@ -18,7 +18,7 @@ import be.ugent.psb.graphicalmodule.model.Condition;
 import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.graphicalmodule.model.Module;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
-import be.ugent.psb.graphicalmodule.model.TreeNode;
+import be.ugent.psb.graphicalmodule.model.ConditionNode;
 
 
 
@@ -118,12 +118,12 @@ public class XMLModuleHandler extends DefaultHandler{
 	/**
 	 * Rootnode of current tree
 	 */
-	private TreeNode rootNode;
+	private ConditionNode rootNode;
 
 	/**
 	 * The node we're building
 	 */
-	private TreeNode node;
+	private ConditionNode node;
 
 	/**
 	 * Number of Regulation trees found in total
@@ -215,7 +215,7 @@ public class XMLModuleHandler extends DefaultHandler{
 		case REGULATORS:
 			progListener.setMyProgress(35);
 			System.out.println("Reading Regulators");
-			modnet.setRegulators(new ArrayList<Gene>());
+//			modnet.setRegulators(new ArrayList<Gene>());
 			break;
 		case REGULATOR:
 			if (hasParents(XMLTag.REGULATORS)){
@@ -276,21 +276,21 @@ public class XMLModuleHandler extends DefaultHandler{
 			
 			if (rootNode==null){
 //				rootNode = new TreeNode(mod, modnet.normalGammaPrior);
-				rootNode = new TreeNode();
+				rootNode = new ConditionNode();
 				node = rootNode;
 			} else {
 				
 				switch(treePath.peek()){
-				case LEFT: node = (TreeNode)node.left();
+				case LEFT: node = (ConditionNode)node.left();
 					break;
-				case RIGHT: node = (TreeNode)node.right();
+				case RIGHT: node = (ConditionNode)node.right();
 					break;
 				}
 			}
 			
 			//read atts and init node
 			parseTreeNodeAtts(attributes);
-			int numChildren = Integer.parseInt(attributes.getValue("numChildren"));
+//			int numChildren = Integer.parseInt(attributes.getValue("numChildren"));
 //			switch(numChildren){
 			//			case 0: node.nodeStatus = LEAF;	
 			//			
@@ -299,8 +299,8 @@ public class XMLModuleHandler extends DefaultHandler{
 			//			case 2: node.nodeStatus = INTERNAL;
 			if (!node.isLeaf()){
 				//internal node has 2 children
-				node.setLeft(new TreeNode(node));
-				node.setRight(new TreeNode(node));
+				node.setLeft(new ConditionNode(node));
+				node.setRight(new ConditionNode(node));
 				//				node.testSplits = new ArrayList<Split>();
 				//				node.testSplitsRandom = new ArrayList<Split>();
 				treePath.push(Dir.LEFT);
@@ -483,7 +483,7 @@ public class XMLModuleHandler extends DefaultHandler{
 			
 			data2 = data1[i + 1].split("\\t");
 			//gene name/description/number
-			Gene newGene = new Gene(data2[0], data2[1]);
+			Gene newGene = new Gene(data2[0]);
 			modnet.addGene(newGene);
 //			modnet.geneMap.put(modnet.geneSet.get(i).name, modnet.geneSet.get(i));
 			for (int j = 0; j < numCond; j++) {

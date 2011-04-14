@@ -5,15 +5,15 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 
 public class ChangeEpsOutputDirAction extends AbstractAction {
 
 
 	private static final long serialVersionUID = 1L;
-	private GraphicalModuleModel guiModel;
+	private GUIModel guiModel;
 
-	public ChangeEpsOutputDirAction(GraphicalModuleModel guiModel){
+	public ChangeEpsOutputDirAction(GUIModel guiModel){
 		super("Set eps output directory...");
 		this.guiModel = guiModel;
 	}

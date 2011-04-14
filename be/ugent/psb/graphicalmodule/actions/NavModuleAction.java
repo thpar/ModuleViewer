@@ -5,7 +5,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 
 public class NavModuleAction extends AbstractAction {
 
@@ -13,11 +13,11 @@ public class NavModuleAction extends AbstractAction {
 
 	private int step = 1;
 
-	private GraphicalModuleModel guiModel;
+	private GUIModel guiModel;
 	
 	
 	
-	public NavModuleAction(ImageIcon icon, int step, GraphicalModuleModel guiModel) {
+	public NavModuleAction(ImageIcon icon, int step, GUIModel guiModel) {
 		super(new String(), icon);
 		this.step = step;
 		this.guiModel = guiModel;

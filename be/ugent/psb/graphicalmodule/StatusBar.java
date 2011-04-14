@@ -10,18 +10,18 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JProgressBar;
 
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 
 public class StatusBar extends JPanel implements Observer{
 
 	private static final long serialVersionUID = 1L;
-	private GraphicalModuleModel guiModel;
+	private GUIModel guiModel;
 	private JLabel state;
 	
 	private JProgressBar progressBar = new JProgressBar();
 	
 	
-	public StatusBar(GraphicalModuleModel guiModel){
+	public StatusBar(GUIModel guiModel){
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 

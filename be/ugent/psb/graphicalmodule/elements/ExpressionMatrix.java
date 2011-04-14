@@ -10,13 +10,13 @@ import java.util.List;
 
 import be.ugent.psb.graphicalmodule.model.Condition;
 import be.ugent.psb.graphicalmodule.model.Gene;
-import be.ugent.psb.graphicalmodule.model.TreeNode;
+import be.ugent.psb.graphicalmodule.model.ConditionNode;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
 /**
- * Iterates {@link TreeNode}s and constructs the Expression Matrix on a {@link Canvas}
+ * Iterates {@link ConditionNode}s and constructs the Expression Matrix on a {@link Canvas}
  * 
  * @author thpar
  *
@@ -27,7 +27,7 @@ public class ExpressionMatrix extends Canvas {
 	 * a list of leaves, in order to be able to change their settings after creation
 	 */
 	private List<ExpressionLeaf> leaves = new ArrayList<ExpressionLeaf>();
-	private TreeNode rootNode;
+	private ConditionNode rootNode;
 	private double mean;
 	private double sigma;
 	private List<Gene> genes;
@@ -41,7 +41,7 @@ public class ExpressionMatrix extends Canvas {
 	 * @param sigma
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ExpressionMatrix(List<Gene> genes, TreeNode rootNode, double mean, double sigma, boolean recursive){
+	public ExpressionMatrix(List<Gene> genes, ConditionNode rootNode, double mean, double sigma, boolean recursive){
 		this.genes = genes;
 		this.rootNode = rootNode;
 		this.mean = mean;

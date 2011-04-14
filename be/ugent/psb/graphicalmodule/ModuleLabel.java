@@ -15,10 +15,10 @@ import javax.swing.ImageIcon;
 import be.ugent.psb.graphicalmodule.elements.ConditionLabels;
 import be.ugent.psb.graphicalmodule.elements.ExpressionMatrix;
 import be.ugent.psb.graphicalmodule.elements.GeneNames;
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 import be.ugent.psb.graphicalmodule.model.Module;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
-import be.ugent.psb.graphicalmodule.model.TreeNode;
+import be.ugent.psb.graphicalmodule.model.ConditionNode;
 import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Element;
 
@@ -27,7 +27,7 @@ import be.ugent.psb.modulegraphics.elements.Element;
 public class ModuleLabel extends CanvasLabel implements Observer{
 
 	private static final long serialVersionUID = 1L;
-	private GraphicalModuleModel guiModel;
+	private GUIModel guiModel;
 
 //	private int currentPaintedModule = -1;
 	private ModuleNetwork modnet;
@@ -37,7 +37,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	private final String GENEFETCH = "http://bioinformatics.psb.ugent.be/webtools/genefetch/search.html"; 
 		
 		
-	public ModuleLabel(ModuleNetwork modnet, GraphicalModuleModel guiModel){
+	public ModuleLabel(ModuleNetwork modnet, GUIModel guiModel){
 		this.modnet = modnet;
 		this.guiModel = guiModel;
 		this.guiModel.addObserver(this);
@@ -52,7 +52,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		int displayedModule = guiModel.getDisplayedModule();
 		Module mod = modnet.getModules().get(displayedModule);
 		
-		TreeNode n = mod.getRootNode();
+		ConditionNode n = mod.getRootNode();
 //		mod.hierarchicalTree = n;
 		
 //		for (TreeNode node : mod.hierarchicalTree.getInternalNodes()){

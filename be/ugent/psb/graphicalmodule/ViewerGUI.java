@@ -8,7 +8,7 @@ import javax.swing.JFrame;
 import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 
@@ -143,7 +143,7 @@ public class ViewerGUI {
 		
 		//do the drawing...
 		
-		GraphicalModuleModel guiModel = new GraphicalModuleModel();
+		GUIModel guiModel = new GUIModel();
 		guiModel.setDrawConditionAnnotationLegend(true);
 		guiModel.setDrawConditionAnnotations(true);
 

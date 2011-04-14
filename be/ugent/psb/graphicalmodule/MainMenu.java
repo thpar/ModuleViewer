@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 
 import be.ugent.psb.graphicalmodule.actions.ChangeEpsOutputDirAction;
 import be.ugent.psb.graphicalmodule.actions.LoadModulesAction;
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 public class MainMenu extends JMenuBar {
@@ -18,7 +18,7 @@ public class MainMenu extends JMenuBar {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public MainMenu(ModuleNetwork modnet, final GraphicalModuleModel guiModel){
+	public MainMenu(ModuleNetwork modnet, final GUIModel guiModel){
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem loadModnetItem = new JMenuItem(new LoadModulesAction(modnet, guiModel));
 //		JMenuItem loadTopRegItem = new JMenuItem(new LoadTopRegulatorsAction(modnet, guiModel));

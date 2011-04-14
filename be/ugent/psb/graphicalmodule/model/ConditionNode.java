@@ -5,15 +5,15 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
-public class TreeNode implements ITreeNode<Condition>{
+public class ConditionNode implements ITreeNode<Condition>{
 	/**
 	 * Left child
 	 */
-	private TreeNode left;
+	private ConditionNode left;
 	/**
 	 * Right child
 	 */
-	private TreeNode right;
+	private ConditionNode right;
 	
 	/**
 	 * True is this node doesn't have any children.
@@ -23,12 +23,14 @@ public class TreeNode implements ITreeNode<Condition>{
 	/**
 	 * Parent node, for navigating the tree upwards.
 	 */
-	private TreeNode parent;
+	private ConditionNode parent;
 	
 	//TODO split?
 	
 	/**
-	 * The conditions grouped into this part of the tree
+	 * The conditions grouped into this part of the tree.
+	 * This attribute is not null only for leave nodes. Internal nodes just
+	 * take the concatenation of the conditions of their children.
 	 */
 	List<Condition> conditions;
 	
@@ -36,22 +38,22 @@ public class TreeNode implements ITreeNode<Condition>{
 	
 	
 	
-	public TreeNode() {
+	public ConditionNode() {
 	}
 
-	public TreeNode(TreeNode parent) {
+	public ConditionNode(ConditionNode parent) {
 		this.parent = parent;
 	}
 
-	public TreeNode getParent() {
+	public ConditionNode getParent() {
 		return parent;
 	}
 
-	public void setLeft(TreeNode left) {
+	public void setLeft(ConditionNode left) {
 		this.left = left;
 	}
 
-	public void setRight(TreeNode right) {
+	public void setRight(ConditionNode right) {
 		this.right = right;
 	}
 

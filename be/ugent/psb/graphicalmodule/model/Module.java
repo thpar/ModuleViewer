@@ -19,7 +19,7 @@ public class Module {
 	 */
 	List<Gene> topRegulators;
 	
-	TreeNode rootNode;
+	ConditionNode rootNode;
 	
 	
 	/**
@@ -31,8 +31,9 @@ public class Module {
 	private List<GeneLinks> linkLists = new ArrayList<GeneLinks>();
 	
 	
-	private int mean;
-	private int sigma;
+	private double mean;
+	private double sigma;
+	private boolean changed = true;
 	
 	//TODO splits... do we need this info?
 	
@@ -45,9 +46,6 @@ public class Module {
 		return genes;
 	}
 
-	public void setGenes(List<Gene> genes) {
-		this.genes = genes;
-	}
 
 	/**
 	 * Add a gene by id to this module. The gene has to exist in the ModuleNetwork already.
@@ -68,16 +66,12 @@ public class Module {
 		this.topRegulators = topRegulators;
 	}
 
-	public TreeNode getRootNode() {
+	public ConditionNode getRootNode() {
 		return rootNode;
 	}
 
-	public void setRootNode(TreeNode rootNode) {
+	public void setRootNode(ConditionNode rootNode) {
 		this.rootNode = rootNode;
-	}
-
-	public int getSigma() {
-		return sigma;
 	}
 
 	public void setSigma(int sigma) {
@@ -86,10 +80,6 @@ public class Module {
 
 	public int getId() {
 		return id;
-	}
-
-	public int getMean() {
-		return mean;
 	}
 
 	public List<GeneCheckList> getCheckLists() {
@@ -120,7 +110,50 @@ public class Module {
 	}
 	
 	
-	
+	public double getMean(){
+		if (changed){
+			calculateMeanAndSigma();
+		}
+		return mean;
+	}
+	public double getSigma(){
+		if (changed){
+			calculateMeanAndSigma();
+		}
+		return sigma;
+	}
+
+	private void calculateMeanAndSigma() {
+		
+		//get the mean for this module
+		int nbval=0;
+		for (Gene g : this.genes) {
+			for (double value : g.getData()) {
+				if (!Double.isNaN(value)) {
+					this.mean += value;
+					nbval++;
+				}
+			}
+		}
+		this.mean = this.mean / nbval;
+
+		
+		//get the sigma for this module
+		nbval=0;
+		for (Gene g : this.genes) {
+			for (double value : g.getData()) {
+				if (!Double.isNaN(value)) {
+					this.sigma += Math.pow(this.mean - value,2);
+					nbval++;
+				}
+			}
+		}
+		this.sigma = Math.sqrt(this.sigma / nbval);
+
+
+
+		changed = false;
+	}
 	
 	
 }

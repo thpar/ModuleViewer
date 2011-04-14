@@ -17,7 +17,7 @@ import be.ugent.psb.graphicalmodule.elements.TickBoxMatrix;
 import be.ugent.psb.graphicalmodule.elements.Title;
 import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.graphicalmodule.model.GeneCheckList;
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 import be.ugent.psb.graphicalmodule.model.Module;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 import be.ugent.psb.modulegraphics.elements.Canvas;
@@ -50,7 +50,7 @@ public class DefaultCanvas extends Canvas {
 //	private ConditionAnnotationMatrix conditionAnnotationMatrix;
 	private Element conditionLabels;
 	
-	public DefaultCanvas(Module mod, GraphicalModuleModel guiModel, String title){
+	public DefaultCanvas(Module mod, GUIModel guiModel, String title){
 
 		this.modnet = mod.getModuleNetwork();
 		
@@ -62,9 +62,9 @@ public class DefaultCanvas extends Canvas {
 		//check which mean and sigma to use
 		double mean;
 		double sigma;
-		if (mod.getModuleNetwork().getGlobalMeanForFigures()){
-			mean = mod.getModuleNetwork().getDataMean();
-			sigma = mod.getModuleNetwork().getDataSigma();
+		if (guiModel.isUseGlobalMeans()){
+			mean = mod.getModuleNetwork().getMean();
+			sigma = mod.getModuleNetwork().getSigma();
 		} else {
 			mean = mod.getMean();
 			sigma = mod.getSigma();

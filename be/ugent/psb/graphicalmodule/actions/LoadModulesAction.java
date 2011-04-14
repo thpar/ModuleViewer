@@ -7,7 +7,7 @@ import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 import be.ugent.psb.graphicalmodule.parsers.ModuleNetworkParser;
 
@@ -20,10 +20,10 @@ public class LoadModulesAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private ModuleNetwork modnet;
-	private GraphicalModuleModel guiModel;
+	private GUIModel guiModel;
 
 	
-	public LoadModulesAction(ModuleNetwork modnet, GraphicalModuleModel guiModel){
+	public LoadModulesAction(ModuleNetwork modnet, GUIModel guiModel){
 		super("Load Modules...");
 		this.modnet = modnet;
 		this.guiModel = guiModel;

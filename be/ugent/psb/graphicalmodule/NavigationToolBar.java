@@ -16,7 +16,7 @@ import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
 import be.ugent.psb.graphicalmodule.actions.NavModuleAction;
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
+import be.ugent.psb.graphicalmodule.model.GUIModel;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 
 public class NavigationToolBar extends JToolBar implements Observer, FocusListener, KeyListener{
@@ -24,10 +24,10 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 	private static final long serialVersionUID = 1L;
 	private JLabel totalLabel;
 	private ModuleNetwork modnet;
-	private GraphicalModuleModel guiModel;
+	private GUIModel guiModel;
 	private JTextField locationField;	
 	
-	public NavigationToolBar(ModuleNetwork modnet, GraphicalModuleModel guiModel){
+	public NavigationToolBar(ModuleNetwork modnet, GUIModel guiModel){
 		super("LeMoNe Navigation");
 
 		this.modnet = modnet;

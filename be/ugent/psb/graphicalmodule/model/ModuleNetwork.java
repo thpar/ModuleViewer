@@ -35,6 +35,16 @@ public class ModuleNetwork {
 	 * Maps condition checklists by name
 	 */
 	private Map<String, ConditionCheckList> conditionAnnotation = new HashMap<String, ConditionCheckList>();
+
+	private double dataMean;
+
+	private double dataSigma;
+
+	private double dataMin;
+
+	private double dataMax;
+
+	private boolean dataChanged = true;
 	
 	
 	
@@ -111,7 +121,60 @@ public class ModuleNetwork {
 		return modules;
 	}
 	
+	/**
+	 * Calculates basic stats for the data in this network.
+	 * Mean, Sigma, Min and Max
+	 */
+	private void calcDataPoints() {
+		double nrDataPoints = 0;
+		double sumSquare = 0.0;
+		this.dataMean = 0.0;
+		this.dataSigma = 0.0;
+		this.dataMin = Double.POSITIVE_INFINITY;
+		this.dataMax = Double.NEGATIVE_INFINITY;
+		for (Gene gene : genes.values()){
+			for (double value : gene.getData()) {
+				if (!Double.isNaN(value)) {
+					this.dataMean += value;
+					sumSquare += Math.pow(value, 2);
+					nrDataPoints++;
+					if (value < this.dataMin)
+						this.dataMin = value;
+					else if (value > this.dataMax)
+						this.dataMax = value;
+				}
+			}
+		}
+
+		this.dataMean /= (double) nrDataPoints;
+		this.dataSigma = Math.sqrt(sumSquare - nrDataPoints * Math.pow(this.dataMean, 2)) / Math.sqrt((double) nrDataPoints);
+		dataChanged = false;
+	}
 	
 	
+	public double getMean(){
+		if (dataChanged){
+			calcDataPoints();
+		}
+		return dataMean;
+	}
+	public double getSigma(){
+		if (dataChanged){
+			calcDataPoints();
+		}
+		return dataSigma;
+	}
+	public double getMin(){
+		if (dataChanged){
+			calcDataPoints();
+		}
+		return dataMin;
+	}
+	public double getMax(){
+		if (dataChanged){
+			calcDataPoints();
+		}
+		return dataMax;
+	}
 	
 }

@@ -17,7 +17,7 @@ import java.util.Observable;
  * @author thpar
  *
  */
-public class GraphicalModuleModel extends Observable implements PropertyChangeListener{
+public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawModule = true;
 	
 	private boolean drawGOForTopRegulators = true;
@@ -34,6 +34,10 @@ public class GraphicalModuleModel extends Observable implements PropertyChangeLi
 	private Map<String, Color> geneCheckListColorMap = new HashMap<String, Color>();
 	private boolean drawGeneLinks = true;
 	private boolean drawGeneCheckLists = true;
+	
+	
+	private boolean useGlobalMeans = true;
+	
 	
 	private String stateString = "--";
 
@@ -201,5 +205,11 @@ public class GraphicalModuleModel extends Observable implements PropertyChangeLi
 	}
 	public boolean isDrawAracyc() {
 		return drawAracyc;
+	}
+	public void setUseGlobalMeans(boolean useGlobalMeans) {
+		this.useGlobalMeans = useGlobalMeans;
+	}
+	public boolean isUseGlobalMeans() {
+		return useGlobalMeans;
 	}
 }

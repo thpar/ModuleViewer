@@ -5,9 +5,6 @@ public class Model {
 	
 	ModuleNetwork modnet;
 
-	
-	
-	
 	public ModuleNetwork getModnet() {
 		return modnet;
 	}
