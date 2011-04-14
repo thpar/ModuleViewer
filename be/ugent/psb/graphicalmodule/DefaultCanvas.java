@@ -8,20 +8,18 @@ import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
-import be.ugent.psb.graphicalmodule.elements.ConditionAnnotationLegend;
-import be.ugent.psb.graphicalmodule.elements.ConditionAnnotationMatrix;
 import be.ugent.psb.graphicalmodule.elements.ConditionLabels;
 import be.ugent.psb.graphicalmodule.elements.ExpressionMatrix;
-import be.ugent.psb.graphicalmodule.elements.GOLabels;
-import be.ugent.psb.graphicalmodule.elements.GOMatrix;
 import be.ugent.psb.graphicalmodule.elements.GeneLinks;
 import be.ugent.psb.graphicalmodule.elements.GeneNames;
 import be.ugent.psb.graphicalmodule.elements.TickBoxColumn;
 import be.ugent.psb.graphicalmodule.elements.TickBoxMatrix;
 import be.ugent.psb.graphicalmodule.elements.Title;
 import be.ugent.psb.graphicalmodule.model.Gene;
+import be.ugent.psb.graphicalmodule.model.GeneCheckList;
 import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
 import be.ugent.psb.graphicalmodule.model.Module;
+import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Label;
@@ -43,15 +41,19 @@ import be.ugent.psb.modulegraphics.elements.TreeStructure;
  */
 public class DefaultCanvas extends Canvas {
 	
+	ModuleNetwork modnet;
+	
 	private ExpressionMatrix matrix;
 	private GeneNames geneNames;
 	private ExpressionMatrix topRegMatrix;
 	private GeneNames topRegGeneNames;
-	private ConditionAnnotationMatrix conditionAnnotationMatrix;
+//	private ConditionAnnotationMatrix conditionAnnotationMatrix;
 	private Element conditionLabels;
 	
 	public DefaultCanvas(Module mod, GraphicalModuleModel guiModel, String title){
 
+		this.modnet = mod.getModuleNetwork();
+		
 		//general settings
 		this.setHorizontalSpacing(5);
 		this.setVerticalSpacing(5);
@@ -60,12 +62,12 @@ public class DefaultCanvas extends Canvas {
 		//check which mean and sigma to use
 		double mean;
 		double sigma;
-		if (mod.moduleNetwork.getGlobalMeanForFigures()){
-			mean = mod.moduleNetwork.dataMean;
-			sigma = mod.moduleNetwork.dataSigma;
+		if (mod.getModuleNetwork().getGlobalMeanForFigures()){
+			mean = mod.getModuleNetwork().getDataMean();
+			sigma = mod.getModuleNetwork().getDataSigma();
 		} else {
-			mean = mod.mean;
-			sigma = mod.sigma;
+			mean = mod.getMean();
+			sigma = mod.getSigma();
 		}
 
 		
@@ -81,7 +83,7 @@ public class DefaultCanvas extends Canvas {
 		boolean recursiveNodes = false;
 		//tree structure and top regulators only needed if we do have topRegulators
 		//tell the matrices to traverse the nodes recursively
-		if (mod.topRegulators.size()>0){
+		if (mod.getTopRegulators().size()>0){
 			if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
 				this.add(new Spacer());
 			}
@@ -89,42 +91,42 @@ public class DefaultCanvas extends Canvas {
 			Canvas regCanvas = new Canvas();
 
 			//tree structure 
-			regCanvas.add(new TreeStructure(mod.hierarchicalTree));
+			regCanvas.add(new TreeStructure(mod.getRootNode()));
 			regCanvas.newRow();
 
 			//the topregulators
-			topRegMatrix = new ExpressionMatrix(mod.topRegulators, mod.hierarchicalTree, mean, sigma, recursiveNodes);
+			topRegMatrix = new ExpressionMatrix(mod.getTopRegulators(), mod.getRootNode(), mean, sigma, recursiveNodes);
 			regCanvas.add(topRegMatrix);
 
 			//join these on one canvas to draw them without spacing in between
 			this.add(regCanvas);
 
-			topRegGeneNames = new GeneNames(mod.topRegulators);
+			topRegGeneNames = new GeneNames(mod.getTopRegulators());
 			this.add(topRegGeneNames);
 			topRegGeneNames.setAlignment(Alignment.BOTTOM_LEFT);
 			
 			if(guiModel.isDrawGOForTopRegulators()){
-				this.add(new GOMatrix(mod.topRegulators, mod.GOsuper));
-				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+//				this.add(new GOMatrix(mod.getTopRegulators(), mod.GOsuper));
+//				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
 			}
-			if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
-				TickBoxColumn araCol = new TickBoxColumn(mod.topRegulators, mod.getAracyc(), Color.RED);
-				this.add(araCol);
-				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
-			}
+//			if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
+//				TickBoxColumn araCol = new TickBoxColumn(mod.topRegulators, mod.getAracyc(), Color.RED);
+//				this.add(araCol);
+//				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+//			}
 			
-			if (guiModel.isDrawGeneCheckLists() && mod.getTopregCheckLists()!=null){
-				Map<String, List<Gene>> checkLists = mod.getTopregCheckLists();
-				List<TickBoxColumn> cols = new ArrayList<TickBoxColumn>();
-				for (String listName : checkListNames){
-					List<Gene> list = checkLists.get(listName);
-					TickBoxColumn col = new TickBoxColumn(mod.topRegulators, list, guiModel.getGeneCheckListColorMap().get(listName));
-					cols.add(col);
-				}
-				TickBoxMatrix tbMatrix = new TickBoxMatrix(cols);
-				this.add(tbMatrix);
-				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
-			}
+//			if (guiModel.isDrawGeneCheckLists() && mod.getTopregCheckLists()!=null){
+//				Map<String, List<Gene>> checkLists = mod.getTopregCheckLists();
+//				List<TickBoxColumn> cols = new ArrayList<TickBoxColumn>();
+//				for (String listName : checkListNames){
+//					List<Gene> list = checkLists.get(listName);
+//					TickBoxColumn col = new TickBoxColumn(mod.topRegulators, list, guiModel.getGeneCheckListColorMap().get(listName));
+//					cols.add(col);
+//				}
+//				TickBoxMatrix tbMatrix = new TickBoxMatrix(cols);
+//				this.add(tbMatrix);
+//				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+//			}
 			
 			this.newRow();
 			this.add(new Spacer(new Dimension(0,10)));
@@ -132,41 +134,41 @@ public class DefaultCanvas extends Canvas {
 		}
 		
 		if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
-			GeneLinks linksElement = new GeneLinks(mod.getLinkLists());
-			for (Entry<String, Color> ent : guiModel.getGeneLinkColorMap().entrySet()){
-				String id = ent.getKey();
-				Color c   = ent.getValue();
-				linksElement.setColor(id, c);
-			}
-			this.add(linksElement);
+//			GeneLinks linksElement = new GeneLinks(mod.getLinkLists());
+//			for (Entry<String, Color> ent : guiModel.getGeneLinkColorMap().entrySet()){
+//				String id = ent.getKey();
+//				Color c   = ent.getValue();
+//				linksElement.setColor(id, c);
+//			}
+//			this.add(linksElement);
 		}
 		//the genes
-		this.matrix = new ExpressionMatrix(mod.genes, mod.hierarchicalTree, mean, sigma, recursiveNodes);
+		this.matrix = new ExpressionMatrix(mod.getGenes(), mod.getRootNode(), mean, sigma, recursiveNodes);
 		this.add(matrix);
-		this.geneNames = new GeneNames(mod.genes);
+		this.geneNames = new GeneNames(mod.getGenes());
 		geneNames.setAlignment(Alignment.BOTTOM_LEFT);
 		this.add(geneNames);
 		
 		if (guiModel.isDrawGOForGenes()){
-			this.add(new GOMatrix(mod.genes, mod.GOsuper));
+//			this.add(new GOMatrix(mod.genes, mod.GOsuper));
 		}
 
-		if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
-			TickBoxColumn araCol = new TickBoxColumn(mod.genes, mod.getAracyc(), Color.RED);
-			this.add(araCol);
-		}
+//		if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
+//			TickBoxColumn araCol = new TickBoxColumn(mod.genes, mod.getAracyc(), Color.RED);
+//			this.add(araCol);
+//		}
 		
 		//init the checkLists
-		if (guiModel.isDrawGeneCheckLists() && mod.getGeneCheckLists()!=null){
-			Map<String, List<Gene>> checkLists = mod.getGeneCheckLists();
-			List<TickBoxColumn> cols = new ArrayList<TickBoxColumn>();
-			for (String listName : checkListNames){
-				List<Gene> list = checkLists.get(listName);
-				TickBoxColumn col = new TickBoxColumn(mod.genes, list, guiModel.getGeneCheckListColorMap().get(listName));
-				cols.add(col);
-			}
-			TickBoxMatrix tbMatrix = new TickBoxMatrix(cols);
-			this.add(tbMatrix);
+		if (guiModel.isDrawGeneCheckLists() && mod.getCheckLists()!=null){
+//			List<GeneCheckList> checkLists = mod.getCheckLists();
+//			List<TickBoxColumn> cols = new ArrayList<TickBoxColumn>();
+//			for (String listName : checkListNames){
+//				List<Gene> list = checkLists.get(listName);
+//				TickBoxColumn col = new TickBoxColumn(mod.genes, list, guiModel.getGeneCheckListColorMap().get(listName));
+//				cols.add(col);
+//			}
+//			TickBoxMatrix tbMatrix = new TickBoxMatrix(cols);
+//			this.add(tbMatrix);
 		}
 		LabelList checkListLabels = new LabelList(checkListNames);
 		checkListLabels.setDirection(Direction.LEFT_TO_RIGHT);
@@ -180,51 +182,51 @@ public class DefaultCanvas extends Canvas {
 			this.add(new Spacer());
 		}
 		//condition and GO labels
-		conditionLabels = new ConditionLabels(mod.hierarchicalTree, mod.moduleNetwork.conditionSet, recursiveNodes); 
+		conditionLabels = new ConditionLabels(mod.getRootNode(), recursiveNodes); 
 		this.add(conditionLabels);
 		
 		
 		this.add(new Spacer());
-		if (guiModel.isDrawGOForTopRegulators() || guiModel.isDrawGOForGenes()){
-			GOLabels goLabels = new GOLabels(mod.GOsuper);
-			goLabels.setPushBounds(false);
-			this.add(goLabels);
-		}	
-		if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
-			this.add(new Label("Aracyc"));
-			((Label)this.getLastAddedElement()).setAngle(Math.PI/4);
-		}
-		if (guiModel.isDrawGeneCheckLists() && mod.getGeneCheckLists()!=null){
+//		if (guiModel.isDrawGOForTopRegulators() || guiModel.isDrawGOForGenes()){
+//			GOLabels goLabels = new GOLabels(mod.GOsuper);
+//			goLabels.setPushBounds(false);
+//			this.add(goLabels);
+//		}	
+//		if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
+//			this.add(new Label("Aracyc"));
+//			((Label)this.getLastAddedElement()).setAngle(Math.PI/4);
+//		}
+		if (guiModel.isDrawGeneCheckLists() && mod.getCheckLists()!=null){
 			this.add(checkListLabels);
 		}
 		
 		this.newRow();
 		
 		//condition annotations
-		if (guiModel.isDrawConditionAnnotations() && mod.moduleNetwork.getConditionClassification()!=null){
-			if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
-				this.add(new Spacer());
-			}
-			conditionAnnotationMatrix = new ConditionAnnotationMatrix(mod.hierarchicalTree, 
-					mod.moduleNetwork.getConditionClassification(), mod.moduleNetwork.conditionSet, recursiveNodes);
-			this.add(conditionAnnotationMatrix);
-
-			LabelList classLabels = new LabelList(mod.moduleNetwork.getConditionClassification().getClasses());
-			classLabels.setDirection(Direction.TOP_TO_BOTTOM);
-			this.add(classLabels);
-			this.newRow();
-		}
+//		if (guiModel.isDrawConditionAnnotations() && mod.moduleNetwork.getConditionClassification()!=null){
+//			if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
+//				this.add(new Spacer());
+//			}
+//			conditionAnnotationMatrix = new ConditionAnnotationMatrix(mod.hierarchicalTree, 
+//					mod.moduleNetwork.getConditionClassification(), mod.moduleNetwork.conditionSet, recursiveNodes);
+//			this.add(conditionAnnotationMatrix);
+//
+//			LabelList classLabels = new LabelList(mod.moduleNetwork.getConditionClassification().getClasses());
+//			classLabels.setDirection(Direction.TOP_TO_BOTTOM);
+//			this.add(classLabels);
+//			this.newRow();
+//		}
 		//the legend for condition annotations
 		//we don't want the white CTRL blocks to show up here
-		if (guiModel.isDrawConditionAnnotationLegend() && mod.moduleNetwork.getConditionClassification()!=null){
-			if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
-				this.add(new Spacer());
-			}
-			List<String> excludedProps = new ArrayList<String>();
-			excludedProps.add("CTRL");
-			excludedProps.add("ctrl");
-			this.add(new ConditionAnnotationLegend(mod.moduleNetwork.getConditionClassification(), excludedProps));
-		}
+//		if (guiModel.isDrawConditionAnnotationLegend() && mod.moduleNetwork.getConditionClassification()!=null){
+//			if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
+//				this.add(new Spacer());
+//			}
+//			List<String> excludedProps = new ArrayList<String>();
+//			excludedProps.add("CTRL");
+//			excludedProps.add("ctrl");
+//			this.add(new ConditionAnnotationLegend(mod.moduleNetwork.getConditionClassification(), excludedProps));
+//		}
 		
 	}
 
@@ -244,9 +246,9 @@ public class DefaultCanvas extends Canvas {
 		return topRegGeneNames;
 	}
 
-	public ConditionAnnotationMatrix getConditionAnnotationMatrix() {
-		return conditionAnnotationMatrix;
-	}
+//	public ConditionAnnotationMatrix getConditionAnnotationMatrix() {
+//		return conditionAnnotationMatrix;
+//	}
 
 	public Element getConditionLabels() {
 		return conditionLabels;

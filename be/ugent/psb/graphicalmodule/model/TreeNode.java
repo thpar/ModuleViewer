@@ -5,7 +5,7 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
-public class TreeNode implements ITreeNode<Experiment>{
+public class TreeNode implements ITreeNode<Condition>{
 	/**
 	 * Left child
 	 */
@@ -28,9 +28,9 @@ public class TreeNode implements ITreeNode<Experiment>{
 	//TODO split?
 	
 	/**
-	 * The experiments grouped into this part of the tree
+	 * The conditions grouped into this part of the tree
 	 */
-	List<Experiment> experiments;
+	List<Condition> conditions;
 	
 	
 	
@@ -55,21 +55,21 @@ public class TreeNode implements ITreeNode<Experiment>{
 		this.right = right;
 	}
 
-	public List<Experiment> getExperiments() {
-		return experiments;
+	public List<Condition> getConditions() {
+		return conditions;
 	}
 
-	public void setExperiments(List<Experiment> experiments) {
-		this.experiments = experiments;
+	public void setConditions(List<Condition> conditions) {
+		this.conditions = conditions;
 	}
 
 	@Override
-	public ITreeNode<Experiment> left() {
+	public ITreeNode<Condition> left() {
 		return left;
 	}
 
 	@Override
-	public ITreeNode<Experiment> right() {
+	public ITreeNode<Condition> right() {
 		return right;
 	}
 
@@ -80,23 +80,23 @@ public class TreeNode implements ITreeNode<Experiment>{
 
 	@Override
 	public int getWidth() {
-		if (isLeaf) return experiments.size();
+		if (isLeaf) return conditions.size();
 		else return left.getWidth() + right.getWidth();
 	}
 
 	@Override
-	public List<Experiment> getColumns() {
-		if (isLeaf) return experiments;
+	public List<Condition> getColumns() {
+		if (isLeaf) return conditions;
 		else {
-			List<Experiment> cols = new ArrayList<Experiment>();
+			List<Condition> cols = new ArrayList<Condition>();
 			cols.addAll(left.getColumns());
 			cols.addAll(right.getColumns());
 			return cols;
 		}
 	}
 	
-	public Experiment getExperiment(int expNumber){
-		return getColumns().get(expNumber);
+	public Condition getCondition(int condNumber){
+		return getColumns().get(condNumber);
 	}
 	
 }

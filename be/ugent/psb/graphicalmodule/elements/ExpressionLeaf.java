@@ -6,7 +6,7 @@ import java.awt.Point;
 import java.util.Collections;
 import java.util.List;
 
-import be.ugent.psb.graphicalmodule.model.Experiment;
+import be.ugent.psb.graphicalmodule.model.Condition;
 import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Element;
@@ -25,7 +25,7 @@ public class ExpressionLeaf extends Element{
 	 * @param mean
 	 * @param sigma
 	 */
-	public ExpressionLeaf(List<Gene> genes, List<Experiment> condSet, double mean, double sigma){
+	public ExpressionLeaf(List<Gene> genes, List<Condition> condSet, double mean, double sigma){
 		c = new ExpressionColorizer(mean, sigma);
 //		Collections.sort(condSet);
 
@@ -35,8 +35,8 @@ public class ExpressionLeaf extends Element{
 		int i=0;
 		for (Gene gene : genes){
 			int ii=0;
-			for (Experiment exp : condSet){
-				data[i][ii++] = gene.getValue(exp);
+			for (Condition cond : condSet){
+				data[i][ii++] = gene.getValue(cond);
 			}
 			i++;
 		}

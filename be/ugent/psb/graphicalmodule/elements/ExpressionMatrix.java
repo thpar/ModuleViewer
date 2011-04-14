@@ -8,7 +8,7 @@ import java.awt.Point;
 import java.util.ArrayList;
 import java.util.List;
 
-import be.ugent.psb.graphicalmodule.model.Experiment;
+import be.ugent.psb.graphicalmodule.model.Condition;
 import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.graphicalmodule.model.TreeNode;
 import be.ugent.psb.modulegraphics.elements.Canvas;
@@ -111,7 +111,7 @@ public class ExpressionMatrix extends Canvas {
 	 * @param x
 	 * @return width of the drawn leave
 	 */
-	private void addLeaves(ITreeNode<Experiment> node) {
+	private void addLeaves(ITreeNode<Condition> node) {
 		if (!node.isLeaf()){
 			addLeaves(node.left());
 			addLeaves(node.right());

@@ -72,8 +72,8 @@ public class Gene {
 		this.data = data;
 	}
 
-	public double getValue(Experiment exp){
-		return data[exp.getNumber()];
+	public double getValue(Condition cond){
+		return data[cond.getNumber()];
 	}
 
 

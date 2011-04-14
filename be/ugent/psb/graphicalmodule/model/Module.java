@@ -2,7 +2,6 @@ package be.ugent.psb.graphicalmodule.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 public class Module {
 
@@ -18,7 +17,7 @@ public class Module {
 	/**
 	 * The genes that are top regulators for this module 
 	 */
-	Set<Gene> topRegulators;
+	List<Gene> topRegulators;
 	
 	TreeNode rootNode;
 	
@@ -61,11 +60,11 @@ public class Module {
 	}
 
 	
-	public Set<Gene> getTopRegulators() {
+	public List<Gene> getTopRegulators() {
 		return topRegulators;
 	}
 
-	public void setTopRegulators(Set<Gene> topRegulators) {
+	public void setTopRegulators(List<Gene> topRegulators) {
 		this.topRegulators = topRegulators;
 	}
 
@@ -96,6 +95,13 @@ public class Module {
 	public List<GeneCheckList> getCheckLists() {
 		return checkLists;
 	}
+	public List<String> getCheckListNames(){
+		List<String> list = new ArrayList<String>();
+		for (GeneCheckList cl : checkLists){
+			list.add(cl.getName());
+		}
+		return list;
+	}
 
 	public List<GeneLinks> getLinkLists() {
 		return linkLists;
@@ -108,6 +114,11 @@ public class Module {
 	public void addLinkList(GeneLinks gl){
 		this.linkLists.add(gl);
 	}
+
+	public ModuleNetwork getModuleNetwork() {
+		return modnet;
+	}
+	
 	
 	
 	

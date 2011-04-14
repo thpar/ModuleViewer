@@ -11,9 +11,9 @@ public class ConditionCheckList {
 	
 	
 	/**
-	 * List of gene objects
+	 * List of condition objects
 	 */
-	private List<Experiment> exps;
+	private List<Condition> conds;
 
 	/**
 	 * The module network this list is referring to.
@@ -38,32 +38,32 @@ public class ConditionCheckList {
 	 * 
 	 * @param geneId 
 	 */
-	public void addExperiment(String expId){
-		Experiment exp = modnet.getExperiment(expId);
-		this.exps.add(exp);
+	public void addCondition(String condId){
+		Condition exp = modnet.getCondition(condId);
+		this.conds.add(exp);
 	}
-	public void addExperiments(List<String> expIdList){
-		for(String exp : expIdList){
-			addExperiment(exp);
+	public void addConditions(List<String> condIdList){
+		for(String cond : condIdList){
+			addCondition(cond);
 		}
 	}
-	public List<Experiment> getExperiments(){
-		return exps;
+	public List<Condition> getConditions(){
+		return conds;
 	}
-	public List<String> getExperimentIds(){
+	public List<String> getConditionIds(){
 		List<String> geneIds = new ArrayList<String>();
-		for(Experiment exp : exps){
-			geneIds.add(exp.getName());
+		for(Condition cond : conds){
+			geneIds.add(cond.getName());
 		}
 		return geneIds;
 	}
 	
 	
-	public boolean hasExperiment(Experiment exp){
-		return exps.contains(exp);
+	public boolean hasCondition(Condition cond){
+		return conds.contains(cond);
 	}
-	public boolean hasExperiment(String expId){
-		return this.getExperimentIds().contains(expId);
+	public boolean hasCondition(String condId){
+		return this.getConditionIds().contains(condId);
 	}
 	
 	

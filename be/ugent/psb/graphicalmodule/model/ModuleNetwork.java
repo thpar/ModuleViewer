@@ -15,9 +15,10 @@ public class ModuleNetwork {
 	private Map<String, Gene> genes;
 	
 	/**
-	 * All conditions or experiments in this network. Maps experiment name to the experiment object.
+	 * All conditions in this network. Maps condition name to the condition
+	 * object.
 	 */
-	private Map<String, Experiment> conditions;
+	private Map<String, Condition> conditions;
 	
 	/**
 	 * The modules in which genes are ordered {@link something}
@@ -64,30 +65,30 @@ public class ModuleNetwork {
 	}
 	
 
-	public void addExperiment(String expName){
-		Experiment exp = new Experiment(expName, conditions.size());
-		this.conditions.put(expName, exp);
+	public void addCondition(String condName){
+		Condition cond = new Condition(condName, conditions.size());
+		this.conditions.put(condName, cond);
 	}
 	
-	public Experiment getExperiment(String expId){
-		return this.conditions.get(expId);
+	public Condition getCondition(String condId){
+		return this.conditions.get(condId);
 	}
 	
-	public List<Experiment> getExperimentList(){
-		List<Experiment> exps = new ArrayList<Experiment>();
-		for (Experiment exp : conditions.values()){
-			exps.add(exp);
+	public List<Condition> getConditionList(){
+		List<Condition> conds = new ArrayList<Condition>();
+		for (Condition cond : conditions.values()){
+			conds.add(cond);
 		}
-		Collections.sort(exps, new Comparator<Experiment>(){
+		Collections.sort(conds, new Comparator<Condition>(){
 			@Override
-			public int compare(Experiment o1, Experiment o2) {
+			public int compare(Condition o1, Condition o2) {
 				if (o1.getNumber() == o2.getNumber()) return 0;
 				else if (o1.getNumber()< o2.getNumber()) return -1;
 				else return 1;
 			}
 			
 		});
-		return exps;
+		return conds;
 	}
 	
 	public void addConditionCheckList(ConditionCheckList ccl){

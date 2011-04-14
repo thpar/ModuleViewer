@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import be.ugent.psb.graphicalmodule.actions.LoadModulesAction.ProgressListener;
-import be.ugent.psb.graphicalmodule.model.Experiment;
+import be.ugent.psb.graphicalmodule.model.Condition;
 import be.ugent.psb.graphicalmodule.model.Gene;
 import be.ugent.psb.graphicalmodule.model.Module;
 import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
@@ -455,7 +455,7 @@ public class XMLModuleHandler extends DefaultHandler{
 		int i = 0;
 		for (String exp : expLine) {
 //			modnet.conditionSet.add(new Experiment(exp, i++));
-			modnet.addExperiment(exp);
+			modnet.addCondition(exp);
 		}
 		
 	}
@@ -600,16 +600,16 @@ public class XMLModuleHandler extends DefaultHandler{
 	private void parseTreeNodeAtts(Attributes attributes){
 //		node.leafDistribution.score = Double.parseDouble(attributes.getValue("score"));
 		String expts = attributes.getValue("condSet");
-		ArrayList<Experiment> condList = new ArrayList<Experiment>();
+		ArrayList<Condition> condList = new ArrayList<Condition>();
 		StringTokenizer tokens = new StringTokenizer(expts,";");
-		List<Experiment> expList = modnet.getExperimentList();
+		List<Condition> expList = modnet.getConditionList();
 		while(tokens.hasMoreTokens()){
 			int expNumber = Integer.parseInt(tokens.nextElement().toString());
 			condList.add(expList.get(expNumber));
 //			condList.add(Integer.parseInt(tokens.nextElement().toString()));
 		}
 //		node.leafDistribution.condSet = condList;
-		node.setExperiments(condList);
+		node.setConditions(condList);
 		// compute statistics and score as if node was leaf
 //		node.statistics();
 //		node.leafDistribution.bayesianScore();	

@@ -5,7 +5,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 
-import be.ugent.psb.graphicalmodule.model.Experiment;
+import be.ugent.psb.graphicalmodule.model.Condition;
 import be.ugent.psb.graphicalmodule.model.TreeNode;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Canvas;
@@ -15,7 +15,7 @@ import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
 
 /**
- * Draw the names of Conditions (experiments) under the expression matrix.
+ * Draw the names of Conditions under the expression matrix.
  * 
  * @author thpar
  *
@@ -45,7 +45,7 @@ public class ConditionLabels extends Canvas {
 	
 	
 	
-	private void addLeaves(ITreeNode<Experiment> node) {
+	private void addLeaves(ITreeNode<Condition> node) {
 		if (!node.isLeaf()){
 			addLeaves(node.left());
 			addLeaves(node.right());
@@ -54,10 +54,10 @@ public class ConditionLabels extends Canvas {
 		}
 	}
 	
-	private LabelList createLabelList(ITreeNode<Experiment> node){
+	private LabelList createLabelList(ITreeNode<Condition> node){
 //		Collections.sort(node.getColumns());
 		List<String> labelStrings = new ArrayList<String>();
-		for (Experiment condition : node.getColumns()){
+		for (Condition condition : node.getColumns()){
 			labelStrings.add(condition.getName());
 		}
 		
@@ -68,12 +68,12 @@ public class ConditionLabels extends Canvas {
 		return labels;
 	}
 	
-	public Experiment getHitExperiment(int x, int y){
+	public Condition getHitCondition(int x, int y){
 		Element el = getHitChild(x, y);
 		assert(el instanceof LabelList);
 		LabelList ll = (LabelList)el;
 		int row = ll.getHitLabelRow(x, y);
-		return rootNode.getExperiment(row);
+		return rootNode.getCondition(row);
 	}
 	
 	/**

@@ -1,34 +1,34 @@
 package be.ugent.psb.graphicalmodule.model;
 
-public class Experiment {
+public class Condition {
 
 	/**
-	 * Name of this experiment.
+	 * Name of this Condition.
 	 */
 	private String name;
 	
 	/**
-	 * Number of this experiment in the list in ModuleNetwork
+	 * Number of this condition in the list in ModuleNetwork
 	 */
 	private int number;
 
 	
 	/**
-	 * Create an experiment with a given name.
+	 * Create a condition with a given name.
 	 * @param name
 	 */
-	public Experiment(String name) {
+	public Condition(String name) {
 		this.name = name;
 	}
 
-	public Experiment(String name, int nr){
+	public Condition(String name, int nr){
 		this(name);
 		this.number = nr;
 	}
 	
 	/**
 	 * 
-	 * @return experiment name
+	 * @return condition name
 	 */
 	public String getName() {
 		return name;
@@ -36,7 +36,7 @@ public class Experiment {
 
 	/**
 	 * 
-	 * @param name experiment name
+	 * @param name condition name
 	 */
 	public void setName(String name) {
 		this.name = name;

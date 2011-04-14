@@ -7,7 +7,6 @@ import java.awt.event.MouseEvent;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.Collections;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -48,18 +47,18 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	
 	public Element initCanvas() {
 		//don't even start if we don't have any module loaded.
-		if (modnet.moduleSet == null || modnet.moduleSet.isEmpty()) return null;
+		if (modnet.getModules() == null || modnet.getModules().isEmpty()) return null;
 		
 		int displayedModule = guiModel.getDisplayedModule();
-		Module mod = modnet.moduleSet.get(displayedModule);
+		Module mod = modnet.getModules().get(displayedModule);
 		
-		TreeNode n = mod.hierarchicalTrees.get(0);
-		mod.hierarchicalTree = n;
+		TreeNode n = mod.getRootNode();
+//		mod.hierarchicalTree = n;
 		
-		for (TreeNode node : mod.hierarchicalTree.getInternalNodes()){
-			Collections.sort(node.testSplits);
-			node.regulationSplit = node.testSplits.get(0);
-		}
+//		for (TreeNode node : mod.hierarchicalTree.getInternalNodes()){
+//			Collections.sort(node.testSplits);
+//			node.regulationSplit = node.testSplits.get(0);
+//		}
 		
 		DefaultCanvas canvas = new DefaultCanvas(mod, guiModel, "Module "+displayedModule);
 		setCanvas(canvas);
@@ -147,17 +146,17 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 				guiModel.setStateString(cnString);
 			}
 		});
-		ConditionAnnotationMatrix condAnnotMatrix = canvas.getConditionAnnotationMatrix();
-		if (condAnnotMatrix!=null){
-			canvas.getConditionAnnotationMatrix().addMouseListener(new MouseAdapter(){
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					ConditionAnnotationMatrix cam = (ConditionAnnotationMatrix)e.getSource();
-					String cnString = cam.getHitAnnotation(e.getX(), e.getY());
-					guiModel.setStateString(cnString);
-				}
-			});
-		}
+//		ConditionAnnotationMatrix condAnnotMatrix = canvas.getConditionAnnotationMatrix();
+//		if (condAnnotMatrix!=null){
+//			canvas.getConditionAnnotationMatrix().addMouseListener(new MouseAdapter(){
+//				@Override
+//				public void mouseClicked(MouseEvent e) {
+//					ConditionAnnotationMatrix cam = (ConditionAnnotationMatrix)e.getSource();
+//					String cnString = cam.getHitAnnotation(e.getX(), e.getY());
+//					guiModel.setStateString(cnString);
+//				}
+//			});
+//		}
 	}
 
 
