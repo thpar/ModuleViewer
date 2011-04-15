@@ -169,9 +169,9 @@ public class DefaultCanvas extends Canvas {
 		
 		this.newRow();
 		
-		if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
-			this.add(new Spacer());
-		}
+//		if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
+//			this.add(new Spacer());
+//		}
 		//condition and GO labels
 		conditionLabels = new ConditionLabels(mod.getRootNode(), recursiveNodes); 
 		this.add(conditionLabels);

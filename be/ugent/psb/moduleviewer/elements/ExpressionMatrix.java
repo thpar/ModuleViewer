@@ -59,6 +59,9 @@ public class ExpressionMatrix extends Canvas {
 		if (recursive){ 
 			addLeaves(rootNode);
 		} else{ 
+			for (Condition cond : rootNode.getColumns()){
+				System.out.println(cond.getName() + " - " + cond.getNumber());
+			}
 			ExpressionLeaf leaf = new ExpressionLeaf(genes,
 					rootNode.getColumns(),
 					this.mean, this.sigma);

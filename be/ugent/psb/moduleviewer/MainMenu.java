@@ -9,6 +9,7 @@ import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 
 import be.ugent.psb.moduleviewer.actions.ChangeEpsOutputDirAction;
+import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
 import be.ugent.psb.moduleviewer.actions.LoadModulesAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -30,7 +31,7 @@ public class MainMenu extends JMenuBar {
 //		JMenuItem loadMotifFileItem = new JMenuItem(new LoadMotifFileAction((Frame)this.getTopLevelAncestor(), modnet, guiModel));
 //		JMenuItem loadCondMapItem = new JMenuItem(new LoadConditionAnnotationAction(modnet, guiModel));
 
-//		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(modnet, guiModel));
+		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(modnet, guiModel));
 		JMenuItem exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener(){
 			@Override
@@ -51,7 +52,7 @@ public class MainMenu extends JMenuBar {
 		
 		fileMenu.addSeparator();
 		
-//		fileMenu.add(exportItem);
+		fileMenu.add(exportItem);
 		fileMenu.addSeparator();
 		
 		fileMenu.add(exitItem);

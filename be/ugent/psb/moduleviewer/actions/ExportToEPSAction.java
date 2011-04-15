@@ -7,25 +7,28 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
-import be.ugent.psb.graphicalmodule.model.GraphicalModuleModel;
-import be.ugent.psb.graphicalmodule.model.Module;
-import be.ugent.psb.graphicalmodule.model.ModuleNetwork;
+import be.ugent.psb.modulegraphics.display.FigureCanvas;
+import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.Module;
+import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+
+
 
 public class ExportToEPSAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 
-	GraphicalModuleModel guiModel;
+	GUIModel guiModel;
 
 	private ModuleNetwork modnet;
 	
-	public ExportToEPSAction(ImageIcon icon, ModuleNetwork modnet, GraphicalModuleModel guiModel){
+	public ExportToEPSAction(ImageIcon icon, ModuleNetwork modnet, GUIModel guiModel){
 		super(new String(), icon);
 		this.guiModel = guiModel;
 		this.modnet = modnet;
 	}
 	
-	public ExportToEPSAction( ModuleNetwork modnet, GraphicalModuleModel guiModel){
+	public ExportToEPSAction( ModuleNetwork modnet, GUIModel guiModel){
 		super("Export to eps");
 		this.guiModel = guiModel;
 		this.modnet = modnet;
@@ -35,7 +38,7 @@ public class ExportToEPSAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		int modId = guiModel.getDisplayedModule();
 		
-		Module mod = modnet.moduleSet.get(modId);
+		Module mod = modnet.getModules().get(modId);
 		
 		File outputDir = guiModel.getEpsOutputDir();
 		if (outputDir==null){
@@ -51,8 +54,10 @@ public class ExportToEPSAction extends AbstractAction {
 			
 		}
 		
-		mod.drawMyWay(guiModel.getEpsOutputDir()+System.getProperty("file.separator")+
-				guiModel.getFileNameTemplate(modId), "Module "+modId);
+//		FigureCanvas figCanvas = new FigureCanvas(canvas, );
+		//TODO enable the module drawing!
+//		mod.drawMyWay(guiModel.getEpsOutputDir()+System.getProperty("file.separator")+
+//				guiModel.getFileNameTemplate(modId), "Module "+modId);
 		
 	}
 

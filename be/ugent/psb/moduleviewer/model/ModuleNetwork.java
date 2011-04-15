@@ -21,7 +21,7 @@ public class ModuleNetwork {
 	private Map<String, Condition> conditions = new HashMap<String, Condition>();
 	
 	/**
-	 * The modules in which genes are ordered {@link something}
+	 * The modules in which genes are organized
 	 */
 	private List<Module> modules;
 	

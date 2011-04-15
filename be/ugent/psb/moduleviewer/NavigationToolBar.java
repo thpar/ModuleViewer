@@ -15,6 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
+import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
 import be.ugent.psb.moduleviewer.actions.NavModuleAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -47,7 +48,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		nextButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/next.png")),+1, guiModel));
 		prevButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/prev.png")),-1, guiModel));
-//		exportButton.setAction(new ExportToEPSAction(new ImageIcon(getClass().getResource("/icons/eps_icon.jpg")),modnet, guiModel));
+		exportButton.setAction(new ExportToEPSAction(new ImageIcon(getClass().getResource("/icons/eps_icon.jpg")),modnet, guiModel));
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		

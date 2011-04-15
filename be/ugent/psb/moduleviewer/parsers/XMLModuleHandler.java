@@ -288,10 +288,10 @@ public class XMLModuleHandler extends DefaultHandler{
 			}
 			
 			//read atts and init node
-			parseTreeNodeAtts(attributes);
 			int numChildren = Integer.parseInt(attributes.getValue("numChildren"));
 			switch(numChildren){
 			case 0: node.setLeaf(true);
+				parseTreeNodeAtts(attributes);
 				break;
 			case 2: node.setLeaf(false);
 				//internal node has 2 children
@@ -594,13 +594,13 @@ public class XMLModuleHandler extends DefaultHandler{
 	
 	private void parseTreeNodeAtts(Attributes attributes){
 //		node.leafDistribution.score = Double.parseDouble(attributes.getValue("score"));
-		String expts = attributes.getValue("condSet");
+		String conds = attributes.getValue("condSet");
 		ArrayList<Condition> condList = new ArrayList<Condition>();
-		StringTokenizer tokens = new StringTokenizer(expts,";");
-		List<Condition> expList = modnet.getConditionList();
+		StringTokenizer tokens = new StringTokenizer(conds,";");
+		List<Condition> allConditions = modnet.getConditionList();
 		while(tokens.hasMoreTokens()){
-			int expNumber = Integer.parseInt(tokens.nextElement().toString());
-			condList.add(expList.get(expNumber));
+			int condNumber = Integer.parseInt(tokens.nextElement().toString());
+			condList.add(allConditions.get(condNumber));
 //			condList.add(Integer.parseInt(tokens.nextElement().toString()));
 		}
 //		node.leafDistribution.condSet = condList;

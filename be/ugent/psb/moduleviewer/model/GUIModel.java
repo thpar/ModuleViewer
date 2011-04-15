@@ -36,7 +36,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawGeneCheckLists = true;
 	
 	
-	private boolean useGlobalMeans = true;
+	private boolean useGlobalMeans = false;
 	
 	
 	private String stateString = "--";
