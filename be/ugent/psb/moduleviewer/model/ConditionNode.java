@@ -18,7 +18,7 @@ public class ConditionNode implements ITreeNode<Condition>{
 	/**
 	 * True is this node doesn't have any children.
 	 */
-	private boolean isLeaf;
+	private boolean isLeaf = false;
 	
 	/**
 	 * Parent node, for navigating the tree upwards.
@@ -100,5 +100,10 @@ public class ConditionNode implements ITreeNode<Condition>{
 	public Condition getCondition(int condNumber){
 		return getColumns().get(condNumber);
 	}
+
+	public void setLeaf(boolean isLeaf) {
+		this.isLeaf = isLeaf;
+	}
+	
 	
 }

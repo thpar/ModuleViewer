@@ -28,11 +28,12 @@ public class Gene {
 	
 	
 	/**
-	 * Get the alternative gene name
+	 * Get the alternative gene name. If no name is set, the geneId is returned.
 	 * @return
 	 */
 	public String getName() {
-		return name;
+		if (name!=null) return name;
+		else return id;
 	}
 
 	/**

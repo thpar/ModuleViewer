@@ -12,12 +12,12 @@ public class Module {
 	/**
 	 * Genes in this module
 	 */
-	private List<Gene> genes;
+	private List<Gene> genes = new ArrayList<Gene>();
 
 	/**
 	 * The genes that are top regulators for this module 
 	 */
-	List<Gene> topRegulators;
+	List<Gene> topRegulators = new ArrayList<Gene>();
 	
 	ConditionNode rootNode;
 	

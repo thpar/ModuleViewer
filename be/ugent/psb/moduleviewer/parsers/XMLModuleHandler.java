@@ -279,7 +279,6 @@ public class XMLModuleHandler extends DefaultHandler{
 				rootNode = new ConditionNode();
 				node = rootNode;
 			} else {
-				
 				switch(treePath.peek()){
 				case LEFT: node = (ConditionNode)node.left();
 					break;
@@ -290,26 +289,22 @@ public class XMLModuleHandler extends DefaultHandler{
 			
 			//read atts and init node
 			parseTreeNodeAtts(attributes);
-//			int numChildren = Integer.parseInt(attributes.getValue("numChildren"));
-//			switch(numChildren){
-			//			case 0: node.nodeStatus = LEAF;	
-			//			
-			//			break;
-
-			//			case 2: node.nodeStatus = INTERNAL;
-			if (!node.isLeaf()){
+			int numChildren = Integer.parseInt(attributes.getValue("numChildren"));
+			switch(numChildren){
+			case 0: node.setLeaf(true);
+				break;
+			case 2: node.setLeaf(false);
 				//internal node has 2 children
 				node.setLeft(new ConditionNode(node));
 				node.setRight(new ConditionNode(node));
-				//				node.testSplits = new ArrayList<Split>();
-				//				node.testSplitsRandom = new ArrayList<Split>();
+				//node.testSplits = new ArrayList<Split>();
+				//node.testSplitsRandom = new ArrayList<Split>();
 				treePath.push(Dir.LEFT);
-				//				break;
-				//			default: throw new SAXException("Impossible to have "+numChildren+" child nodes.");
+				break;
+			default: throw new SAXException("Impossible to have "+numChildren+" child nodes.");
 			}
-			//			break;
-
-		
+			
+			break;
 		case NA:
 			throw new SAXException("Unknown tag: "+qName);
 		default:

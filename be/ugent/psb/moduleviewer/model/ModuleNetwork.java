@@ -12,13 +12,13 @@ public class ModuleNetwork {
 	/**
 	 * All genes in this network. Maps gene id to gene object
 	 */
-	private Map<String, Gene> genes;
+	private Map<String, Gene> genes = new HashMap<String, Gene>();
 	
 	/**
 	 * All conditions in this network. Maps condition name to the condition
 	 * object.
 	 */
-	private Map<String, Condition> conditions;
+	private Map<String, Condition> conditions = new HashMap<String, Condition>();
 	
 	/**
 	 * The modules in which genes are ordered {@link something}

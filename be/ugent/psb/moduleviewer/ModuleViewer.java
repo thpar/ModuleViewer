@@ -5,7 +5,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.Properties;
 
-public class Main {
+public class ModuleViewer {
 
 	private static final String SLASH = System.getProperty("file.separator");
 

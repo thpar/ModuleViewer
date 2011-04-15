@@ -1,16 +1,11 @@
 package be.ugent.psb.moduleviewer;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.Font;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
-import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.LabelList.Angle;
 import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
@@ -18,14 +13,9 @@ import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
 import be.ugent.psb.moduleviewer.elements.ConditionLabels;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
-import be.ugent.psb.moduleviewer.elements.GeneLinks;
 import be.ugent.psb.moduleviewer.elements.GeneNames;
-import be.ugent.psb.moduleviewer.elements.TickBoxColumn;
-import be.ugent.psb.moduleviewer.elements.TickBoxMatrix;
 import be.ugent.psb.moduleviewer.elements.Title;
 import be.ugent.psb.moduleviewer.model.GUIModel;
-import be.ugent.psb.moduleviewer.model.Gene;
-import be.ugent.psb.moduleviewer.model.GeneCheckList;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
@@ -60,6 +50,7 @@ public class DefaultCanvas extends Canvas {
 		this.setMargin(20);
 
 		//check which mean and sigma to use
+		//TODO move sigma and mean calculations to specific colorizers...
 		double mean;
 		double sigma;
 		if (guiModel.isUseGlobalMeans()){
