@@ -11,7 +11,7 @@ import java.util.List;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
-import be.ugent.psb.moduleviewer.model.Condition;
+import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Gene;
 
@@ -111,7 +111,7 @@ public class ExpressionMatrix extends Canvas {
 	 * @param x
 	 * @return width of the drawn leave
 	 */
-	private void addLeaves(ITreeNode<Condition> node) {
+	private void addLeaves(ITreeNode<ConditionAnnotation> node) {
 		if (!node.isLeaf()){
 			addLeaves(node.left());
 			addLeaves(node.right());

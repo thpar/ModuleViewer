@@ -18,7 +18,7 @@ public class ModuleNetwork {
 	 * All conditions in this network. Maps condition name to the condition
 	 * object.
 	 */
-	private Map<String, Condition> conditions = new HashMap<String, Condition>();
+	private Map<String, ConditionAnnotation> conditions = new HashMap<String, ConditionAnnotation>();
 	
 	/**
 	 * The modules in which genes are organized
@@ -76,22 +76,22 @@ public class ModuleNetwork {
 	
 
 	public void addCondition(String condName){
-		Condition cond = new Condition(condName, conditions.size());
+		ConditionAnnotation cond = new ConditionAnnotation(condName, conditions.size());
 		this.conditions.put(condName, cond);
 	}
 	
-	public Condition getCondition(String condId){
+	public ConditionAnnotation getCondition(String condId){
 		return this.conditions.get(condId);
 	}
 	
-	public List<Condition> getConditionList(){
-		List<Condition> conds = new ArrayList<Condition>();
-		for (Condition cond : conditions.values()){
+	public List<ConditionAnnotation> getConditionList(){
+		List<ConditionAnnotation> conds = new ArrayList<ConditionAnnotation>();
+		for (ConditionAnnotation cond : conditions.values()){
 			conds.add(cond);
 		}
-		Collections.sort(conds, new Comparator<Condition>(){
+		Collections.sort(conds, new Comparator<ConditionAnnotation>(){
 			@Override
-			public int compare(Condition o1, Condition o2) {
+			public int compare(ConditionAnnotation o1, ConditionAnnotation o2) {
 				if (o1.getNumber() == o2.getNumber()) return 0;
 				else if (o1.getNumber()< o2.getNumber()) return -1;
 				else return 1;

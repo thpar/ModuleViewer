@@ -8,7 +8,7 @@ import java.util.zip.GZIPInputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
-import be.ugent.psb.moduleviewer.actions.LoadModulesAction.ProgressListener;
+import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 /**
@@ -19,8 +19,10 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  */
 public class ModuleNetworkParser extends Parser{
 
-	static public void loadWithSAXParser(ModuleNetwork modnet, File xmlFile) {
-
+	
+	@Override
+	public void parse(Model model, File xmlFile) {
+		ModuleNetwork modnet = model.getModnet();
 		try {
 			
 			GZIPInputStream inputStream = new GZIPInputStream(new FileInputStream(xmlFile));
@@ -30,18 +32,16 @@ public class ModuleNetworkParser extends Parser{
 			SAXParser saxParser =  factory.newSAXParser();
 			
 			Date then = new Date();
-			saxParser.parse(inputStream, new XMLModuleHandler(modnet, progressListener));
+			saxParser.parse(inputStream, new LemoneXMLHandler(modnet, progressListener));
 			Date now = new Date();
 			System.out.println(timerCalc(then, now));
-			
-//			modnet.calculateModuleMeans();
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	
-	private static String timerCalc(Date before, Date after){
+	private String timerCalc(Date before, Date after){
 		long diff = (after.getTime() - before.getTime())/1000;
 
 		int hours = (int)(diff / 60 / 60);
@@ -53,10 +53,6 @@ public class ModuleNetworkParser extends Parser{
 	}
 
 
-	static private ProgressListener progressListener;
-
-	public void setProgressListener(ProgressListener progListener) {
-		progressListener = progListener;		
-	}
+	
 
 }

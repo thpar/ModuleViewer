@@ -13,7 +13,7 @@ public class ConditionCheckList {
 	/**
 	 * List of condition objects
 	 */
-	private List<Condition> conds;
+	private List<ConditionAnnotation> conds;
 
 	/**
 	 * The module network this list is referring to.
@@ -39,7 +39,7 @@ public class ConditionCheckList {
 	 * @param geneId 
 	 */
 	public void addCondition(String condId){
-		Condition exp = modnet.getCondition(condId);
+		ConditionAnnotation exp = modnet.getCondition(condId);
 		this.conds.add(exp);
 	}
 	public void addConditions(List<String> condIdList){
@@ -47,19 +47,19 @@ public class ConditionCheckList {
 			addCondition(cond);
 		}
 	}
-	public List<Condition> getConditions(){
+	public List<ConditionAnnotation> getConditions(){
 		return conds;
 	}
 	public List<String> getConditionIds(){
 		List<String> geneIds = new ArrayList<String>();
-		for(Condition cond : conds){
+		for(ConditionAnnotation cond : conds){
 			geneIds.add(cond.getName());
 		}
 		return geneIds;
 	}
 	
 	
-	public boolean hasCondition(Condition cond){
+	public boolean hasCondition(ConditionAnnotation cond){
 		return conds.contains(cond);
 	}
 	public boolean hasCondition(String condId){

@@ -13,7 +13,6 @@ import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
 import be.ugent.psb.moduleviewer.actions.LoadModulesAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 public class MainMenu extends JMenuBar {
 
@@ -21,9 +20,9 @@ public class MainMenu extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
-		ModuleNetwork modnet = model.getModnet();
+//		ModuleNetwork modnet = model.getModnet();
 		JMenu fileMenu = new JMenu("File");
-		JMenuItem loadModnetItem = new JMenuItem(new LoadModulesAction(modnet, guiModel));
+		JMenuItem loadModnetItem = new JMenuItem(new LoadModulesAction(model, guiModel));
 //		JMenuItem loadTopRegItem = new JMenuItem(new LoadTopRegulatorsAction(modnet, guiModel));
 //		JMenuItem loadGeneMapItem = new JMenuItem(new LoadGeneMapAction(modnet, guiModel));
 //		JMenuItem loadBiNGOItem = new JMenuItem(new LoadBiNGOAction(modnet, guiModel));

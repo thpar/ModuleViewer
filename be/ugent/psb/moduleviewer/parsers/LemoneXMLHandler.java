@@ -14,7 +14,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import be.ugent.psb.moduleviewer.actions.LoadModulesAction.ProgressListener;
-import be.ugent.psb.moduleviewer.model.Condition;
+import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Module;
@@ -31,7 +31,7 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  * @author thpar
  *
  */
-public class XMLModuleHandler extends DefaultHandler{
+public class LemoneXMLHandler extends DefaultHandler{
 	
 	/**
 	 * The XML tags we're expecting.
@@ -133,21 +133,13 @@ public class XMLModuleHandler extends DefaultHandler{
 	private ProgressListener progListener;
 	
 	
-	public ProgressListener getProgListener() {
-		return progListener;
-	}
-	public void setProgListener(ProgressListener progListener) {
-		this.progListener = progListener;
-	}
-	
-	
 	/**
 	 * Create an XML handler to fill the given modnet with data.
 	 * 
 	 * @param modnet the ModuleNetwork to fill
 	 * @param progressListener 
 	 */
-	public XMLModuleHandler(ModuleNetwork modnet) {
+	public LemoneXMLHandler(ModuleNetwork modnet) {
 		this.modnet = modnet;
 	}
 
@@ -159,7 +151,7 @@ public class XMLModuleHandler extends DefaultHandler{
 	 * @param modnet the ModuleNetwork to fill
 	 * @param progressListener 
 	 */
-	public XMLModuleHandler(ModuleNetwork modnet, ProgressListener progressListener) {
+	public LemoneXMLHandler(ModuleNetwork modnet, ProgressListener progressListener) {
 		this.modnet = modnet;
 		this.progListener = progressListener;
 	}
@@ -595,9 +587,9 @@ public class XMLModuleHandler extends DefaultHandler{
 	private void parseTreeNodeAtts(Attributes attributes){
 //		node.leafDistribution.score = Double.parseDouble(attributes.getValue("score"));
 		String conds = attributes.getValue("condSet");
-		ArrayList<Condition> condList = new ArrayList<Condition>();
+		ArrayList<ConditionAnnotation> condList = new ArrayList<ConditionAnnotation>();
 		StringTokenizer tokens = new StringTokenizer(conds,";");
-		List<Condition> allConditions = modnet.getConditionList();
+		List<ConditionAnnotation> allConditions = modnet.getConditionList();
 		while(tokens.hasMoreTokens()){
 			int condNumber = Integer.parseInt(tokens.nextElement().toString());
 			condList.add(allConditions.get(condNumber));

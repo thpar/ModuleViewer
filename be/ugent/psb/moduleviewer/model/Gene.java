@@ -11,7 +11,9 @@ public class Gene {
 	 * Gene alternative name
 	 */
 	private String name;
-		
+	
+	private String description;
+	
 	/**
 	 * The original data for this gene
 	 * The corresponding line from the data matrix 
@@ -26,6 +28,10 @@ public class Gene {
 		this.id = id;
 	}
 	
+	public Gene(String id, String description){
+		this.id = id;
+		this.description = description;
+	}
 	
 	/**
 	 * Get the alternative gene name. If no name is set, the geneId is returned.
@@ -68,8 +74,18 @@ public class Gene {
 		this.data = data;
 	}
 
-	public double getValue(Condition cond){
+	public double getValue(ConditionAnnotation cond){
 		return data[cond.getNumber()];
+	}
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+	public void setDescription(String description) {
+		this.description = description;
 	}
 
 

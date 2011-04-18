@@ -8,7 +8,7 @@ import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
-import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.parsers.ModuleNetworkParser;
 
 /**
@@ -19,14 +19,14 @@ import be.ugent.psb.moduleviewer.parsers.ModuleNetworkParser;
 public class LoadModulesAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
-	private ModuleNetwork modnet;
 	private GUIModel guiModel;
+	private Model model;
 
 	
-	public LoadModulesAction(ModuleNetwork modnet, GUIModel guiModel){
+	public LoadModulesAction(Model model, GUIModel guiModel){
 		super("Load Modules...");
-		this.modnet = modnet;
 		this.guiModel = guiModel;
+		this.model = model;
 	}
 	
 	@Override
@@ -71,7 +71,7 @@ public class LoadModulesAction extends AbstractAction {
 			
 			ModuleNetworkParser parser = new ModuleNetworkParser();
 			parser.setProgressListener(progListener);
-			ModuleNetworkParser.loadWithSAXParser(modnet, file);
+			parser.parse(model, file);
 			
 			setProgress(100);
 

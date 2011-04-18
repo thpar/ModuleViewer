@@ -5,7 +5,7 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
-public class ConditionNode implements ITreeNode<Condition>{
+public class ConditionNode implements ITreeNode<ConditionAnnotation>{
 	/**
 	 * Left child
 	 */
@@ -32,7 +32,7 @@ public class ConditionNode implements ITreeNode<Condition>{
 	 * This attribute is not null only for leave nodes. Internal nodes just
 	 * take the concatenation of the conditions of their children.
 	 */
-	List<Condition> conditions;
+	List<ConditionAnnotation> conditions;
 	
 	
 	
@@ -57,21 +57,21 @@ public class ConditionNode implements ITreeNode<Condition>{
 		this.right = right;
 	}
 
-	public List<Condition> getConditions() {
+	public List<ConditionAnnotation> getConditions() {
 		return conditions;
 	}
 
-	public void setConditions(List<Condition> conditions) {
+	public void setConditions(List<ConditionAnnotation> conditions) {
 		this.conditions = conditions;
 	}
 
 	@Override
-	public ITreeNode<Condition> left() {
+	public ITreeNode<ConditionAnnotation> left() {
 		return left;
 	}
 
 	@Override
-	public ITreeNode<Condition> right() {
+	public ITreeNode<ConditionAnnotation> right() {
 		return right;
 	}
 
@@ -87,17 +87,17 @@ public class ConditionNode implements ITreeNode<Condition>{
 	}
 
 	@Override
-	public List<Condition> getColumns() {
+	public List<ConditionAnnotation> getColumns() {
 		if (isLeaf) return conditions;
 		else {
-			List<Condition> cols = new ArrayList<Condition>();
+			List<ConditionAnnotation> cols = new ArrayList<ConditionAnnotation>();
 			cols.addAll(left.getColumns());
 			cols.addAll(right.getColumns());
 			return cols;
 		}
 	}
 	
-	public Condition getCondition(int condNumber){
+	public ConditionAnnotation getCondition(int condNumber){
 		return getColumns().get(condNumber);
 	}
 

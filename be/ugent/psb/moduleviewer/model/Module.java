@@ -27,7 +27,7 @@ public class Module {
 	 */
 	private List<Gene> parents;
 	
-	private List<GeneCheckList> checkLists = new ArrayList<GeneCheckList>();
+	private List<GeneAnnotation> checkLists = new ArrayList<GeneAnnotation>();
 	private List<GeneLinks> linkLists = new ArrayList<GeneLinks>();
 	
 	
@@ -82,12 +82,12 @@ public class Module {
 		return id;
 	}
 
-	public List<GeneCheckList> getCheckLists() {
+	public List<GeneAnnotation> getCheckLists() {
 		return checkLists;
 	}
 	public List<String> getCheckListNames(){
 		List<String> list = new ArrayList<String>();
-		for (GeneCheckList cl : checkLists){
+		for (GeneAnnotation cl : checkLists){
 			list.add(cl.getName());
 		}
 		return list;
@@ -97,7 +97,7 @@ public class Module {
 		return linkLists;
 	}
 	
-	public void addCheckList(GeneCheckList cl){
+	public void addCheckList(GeneAnnotation cl){
 		this.checkLists.add(cl);
 	}
 

@@ -2,9 +2,14 @@ package be.ugent.psb.moduleviewer.model;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
-public class GeneCheckList {
+/**
+ * Links extra labels and values to a list of genes.
+ * 
+ * @author thpar
+ *
+ */
+public class GeneAnnotation {
 
 	/**
 	 * Name of the list.
@@ -22,7 +27,7 @@ public class GeneCheckList {
 	 */
 	private ModuleNetwork modnet;
 	
-	public GeneCheckList(String name, ModuleNetwork modnet){
+	public GeneAnnotation(String name, ModuleNetwork modnet){
 		this.name = name;
 		this.modnet = modnet;
 	}

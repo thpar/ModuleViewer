@@ -1,6 +1,6 @@
 package be.ugent.psb.moduleviewer.model;
 
-public class Condition {
+public class ConditionAnnotation {
 
 	/**
 	 * Name of this Condition.
@@ -17,11 +17,11 @@ public class Condition {
 	 * Create a condition with a given name.
 	 * @param name
 	 */
-	public Condition(String name) {
+	public ConditionAnnotation(String name) {
 		this.name = name;
 	}
 
-	public Condition(String name, int nr){
+	public ConditionAnnotation(String name, int nr){
 		this(name);
 		this.number = nr;
 	}
