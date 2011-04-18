@@ -190,6 +190,13 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	public Map<String, Color> getGeneCheckListColorMap() {
 		return geneCheckListColorMap;
 	}
+	
+	
+	/**
+	 * 
+	 * @param modId Module ID
+	 * @return a filename without extension, based on a template.
+	 */
 	public String getFileNameTemplate(int modId) {
 		String subst = template.replaceFirst("#ID#", String.valueOf(modId));
 		return subst;

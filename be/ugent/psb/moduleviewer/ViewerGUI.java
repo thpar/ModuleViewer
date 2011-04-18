@@ -45,12 +45,12 @@ public class ViewerGUI {
 		
 		JPanel toolBars = new JPanel();
 		toolBars.setLayout(new BoxLayout(toolBars, BoxLayout.LINE_AXIS));	
-		toolBars.add(new NavigationToolBar(modnet, guiModel));
+		toolBars.add(new NavigationToolBar(model, guiModel));
 		modulePanel.add(toolBars, BorderLayout.NORTH);
 
 		modulePanel.add(new StatusBar(guiModel), BorderLayout.SOUTH);
 		
-		window.setJMenuBar(new MainMenu(modnet, guiModel));
+		window.setJMenuBar(new MainMenu(model, guiModel));
 		window.setContentPane(modulePanel);
 		window.setMinimumSize(new Dimension(window.getSize().width, 300));
 		

@@ -7,8 +7,11 @@ import javax.swing.AbstractAction;
 import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
-import be.ugent.psb.modulegraphics.display.FigureCanvas;
+import be.ugent.psb.modulegraphics.display.CanvasFigure;
+import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.moduleviewer.DefaultCanvas;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
@@ -20,23 +23,24 @@ public class ExportToEPSAction extends AbstractAction {
 
 	GUIModel guiModel;
 
-	private ModuleNetwork modnet;
+	private Model model;
 	
-	public ExportToEPSAction(ImageIcon icon, ModuleNetwork modnet, GUIModel guiModel){
+	public ExportToEPSAction(ImageIcon icon, Model model, GUIModel guiModel){
 		super(new String(), icon);
 		this.guiModel = guiModel;
-		this.modnet = modnet;
+		this.model = model;
 	}
 	
-	public ExportToEPSAction( ModuleNetwork modnet, GUIModel guiModel){
+	public ExportToEPSAction(Model model, GUIModel guiModel){
 		super("Export to eps");
 		this.guiModel = guiModel;
-		this.modnet = modnet;
+		this.model = model;
 	}
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		int modId = guiModel.getDisplayedModule();
+		ModuleNetwork modnet = model.getModnet();
 		
 		Module mod = modnet.getModules().get(modId);
 		
@@ -54,10 +58,10 @@ public class ExportToEPSAction extends AbstractAction {
 			
 		}
 		
-//		FigureCanvas figCanvas = new FigureCanvas(canvas, );
-		//TODO enable the module drawing!
-//		mod.drawMyWay(guiModel.getEpsOutputDir()+System.getProperty("file.separator")+
-//				guiModel.getFileNameTemplate(modId), "Module "+modId);
+		String fileName = outputDir + System.getProperty("file.separator") + guiModel.getFileNameTemplate(modId);
+		Canvas canvas = new DefaultCanvas(mod, guiModel, guiModel.getFileNameTemplate(modId));
+		CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
+		figCanvas.writeToEPS();
 		
 	}
 

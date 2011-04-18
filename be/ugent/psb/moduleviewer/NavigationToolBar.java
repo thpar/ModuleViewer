@@ -18,20 +18,21 @@ import javax.swing.JToolBar;
 import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
 import be.ugent.psb.moduleviewer.actions.NavModuleAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 public class NavigationToolBar extends JToolBar implements Observer, FocusListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
 	private JLabel totalLabel;
-	private ModuleNetwork modnet;
 	private GUIModel guiModel;
-	private JTextField locationField;	
+	private JTextField locationField;
+	private Model model;	
 	
-	public NavigationToolBar(ModuleNetwork modnet, GUIModel guiModel){
+	public NavigationToolBar(Model model, GUIModel guiModel){
 		super("LeMoNe Navigation");
 
-		this.modnet = modnet;
+		this.model = model;
 		this.guiModel = guiModel;
 		guiModel.addObserver(this);
 		
@@ -48,7 +49,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		nextButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/next.png")),+1, guiModel));
 		prevButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/prev.png")),-1, guiModel));
-		exportButton.setAction(new ExportToEPSAction(new ImageIcon(getClass().getResource("/icons/eps_icon.jpg")),modnet, guiModel));
+		exportButton.setAction(new ExportToEPSAction(new ImageIcon(getClass().getResource("/icons/eps_icon.jpg")),model, guiModel));
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -59,7 +60,6 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		add(new JToolBar.Separator());
 		add(exportButton);
-//		add(Box.createHorizontalGlue());
 		
 		this.update(null, null);
 	}
@@ -68,6 +68,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 	@Override
 	public void update(Observable o, Object arg) {
 		int modnr = guiModel.getDisplayedModule();
+		ModuleNetwork modnet = model.getModnet();
 		locationField.setText(String.valueOf(modnr));
 		int totalModnr = 0;
 		String totalString;

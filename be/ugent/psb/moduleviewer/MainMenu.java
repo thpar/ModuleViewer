@@ -12,6 +12,7 @@ import be.ugent.psb.moduleviewer.actions.ChangeEpsOutputDirAction;
 import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
 import be.ugent.psb.moduleviewer.actions.LoadModulesAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 public class MainMenu extends JMenuBar {
@@ -19,7 +20,8 @@ public class MainMenu extends JMenuBar {
 	
 	private static final long serialVersionUID = 1L;
 	
-	public MainMenu(ModuleNetwork modnet, final GUIModel guiModel){
+	public MainMenu(Model model, final GUIModel guiModel){
+		ModuleNetwork modnet = model.getModnet();
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem loadModnetItem = new JMenuItem(new LoadModulesAction(modnet, guiModel));
 //		JMenuItem loadTopRegItem = new JMenuItem(new LoadTopRegulatorsAction(modnet, guiModel));
@@ -31,7 +33,7 @@ public class MainMenu extends JMenuBar {
 //		JMenuItem loadMotifFileItem = new JMenuItem(new LoadMotifFileAction((Frame)this.getTopLevelAncestor(), modnet, guiModel));
 //		JMenuItem loadCondMapItem = new JMenuItem(new LoadConditionAnnotationAction(modnet, guiModel));
 
-		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(modnet, guiModel));
+		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(model, guiModel));
 		JMenuItem exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener(){
 			@Override
