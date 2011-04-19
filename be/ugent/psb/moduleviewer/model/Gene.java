@@ -1,5 +1,7 @@
 package be.ugent.psb.moduleviewer.model;
 
+
+
 public class Gene {
 
 	/**
@@ -74,10 +76,9 @@ public class Gene {
 		this.data = data;
 	}
 
-	public double getValue(ConditionAnnotation cond){
+	public double getValue(Condition cond){
 		return data[cond.getNumber()];
 	}
-
 
 	public String getDescription() {
 		return description;

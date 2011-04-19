@@ -1,7 +1,6 @@
 package be.ugent.psb.moduleviewer.parsers;
 
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.HashSet;
 import java.util.InputMismatchException;
 import java.util.List;
@@ -14,7 +13,7 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import be.ugent.psb.moduleviewer.actions.LoadModulesAction.ProgressListener;
-import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
+import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Module;
@@ -587,9 +586,9 @@ public class LemoneXMLHandler extends DefaultHandler{
 	private void parseTreeNodeAtts(Attributes attributes){
 //		node.leafDistribution.score = Double.parseDouble(attributes.getValue("score"));
 		String conds = attributes.getValue("condSet");
-		ArrayList<ConditionAnnotation> condList = new ArrayList<ConditionAnnotation>();
+		List<Condition> condList = new ArrayList<Condition>();
 		StringTokenizer tokens = new StringTokenizer(conds,";");
-		List<ConditionAnnotation> allConditions = modnet.getConditionList();
+		List<Condition> allConditions = modnet.getConditionList();
 		while(tokens.hasMoreTokens()){
 			int condNumber = Integer.parseInt(tokens.nextElement().toString());
 			condList.add(allConditions.get(condNumber));

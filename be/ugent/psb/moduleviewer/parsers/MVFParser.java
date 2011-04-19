@@ -4,8 +4,15 @@ import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.HashMap;
+import java.util.Map;
 
+import be.ugent.psb.moduleviewer.model.Annotation;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock;
+import be.ugent.psb.moduleviewer.model.Gene;
+import be.ugent.psb.moduleviewer.model.GeneAnnotation;
 import be.ugent.psb.moduleviewer.model.Model;
+import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 
 /**
@@ -59,15 +66,31 @@ public class MVFParser extends Parser {
 	
 	private final String keyValueDelimiter = "=";
 
+	private ModuleNetwork modnet;
+
+	private Map<String, String> unknownParameters = new HashMap<String, String>();
+
+	private AnnotationBlock<?, ?> currentBlock;
+
+	
+	enum ParamKey{
+		TYPE, COLOR, SEP, LABELCOLOR;
+	}
+	
+	
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {
-		this.inputFile = inputFile;
+		this.modnet = model.getModnet();
 		
+		this.inputFile = inputFile;
 		BufferedReader in = new BufferedReader(new FileReader(inputFile));
+		
+//		newBlock();
 		
 		String line = in.readLine();
 		while (line!=null){
 			if (line.startsWith("#")) parseComment(line);
+//			else if (line.isEmpty()) newBlock();
 			else if (line.startsWith("::")) parseKeyValue(line);
 			else parseEntry(line);
 			in.readLine();
@@ -75,24 +98,57 @@ public class MVFParser extends Parser {
 		
 	}
 
+//	private void newBlock() {
+//		
+//		
+//	}
+
 	private void parseKeyValue(String line) {
 		String[] keyValue = line.substring(2).split(keyValueDelimiter);
-		String key = keyValue[0];
+		String keyString = keyValue[0];
 		String value = keyValue[1];
 		
-		//TODO process key value pair
+		try {
+			ParamKey key = ParamKey.valueOf(keyString);
+			switch(key){
+			case TYPE:
+				//TODO meh... switch on Gene/Condition here
+				currentBlock = new AnnotationBlock<Gene, Double>(value, modnet);
+				break;
+			case COLOR:
+				break;
+			case SEP:
+				break;
+				
+			}
+		} catch (IllegalArgumentException e) {
+			this.unknownParameters .put(keyString, value);
+		}
 	}
 
 	private void parseEntry(String line) {
 		String[] columns = line.split("\t");
 		
 		int moduleId = Integer.parseInt(columns[0]);
-		String[] genes = columns[1].split(geneDelimiter);
-		//TODO process genes/values
-		
+		String[] items = columns[1].split(geneDelimiter);
 		String label   = columns[2];
+
+		currentBlock.
+//		Annotation<?,Double> annot = currentBlock.getAnnotation(label);
+		if (annot == null){
+			annot = new GeneAnnotation<Double>(label, modnet);
+		}
 		
-		// TODO process entry
+		for (String it : items){
+			String[] itemKeyValue = it.split(this.geneValueDelimiter);
+			String itemId = itemKeyValue[0];
+			Double itemValue = Double.valueOf(itemKeyValue[1]);
+			
+			annot.addItem(itemId, itemValue);
+		}
+		
+		
+		
 	}
 
 	private void parseComment(String line) {

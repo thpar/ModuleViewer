@@ -2,7 +2,6 @@ package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Font;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
@@ -11,7 +10,7 @@ import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
-import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
+import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 
 /**
@@ -45,7 +44,7 @@ public class ConditionLabels extends Canvas {
 	
 	
 	
-	private void addLeaves(ITreeNode<ConditionAnnotation> node) {
+	private void addLeaves(ITreeNode<Condition> node) {
 		if (!node.isLeaf()){
 			addLeaves(node.left());
 			addLeaves(node.right());
@@ -54,10 +53,10 @@ public class ConditionLabels extends Canvas {
 		}
 	}
 	
-	private LabelList createLabelList(ITreeNode<ConditionAnnotation> node){
+	private LabelList createLabelList(ITreeNode<Condition> node){
 //		Collections.sort(node.getColumns());
 		List<String> labelStrings = new ArrayList<String>();
-		for (ConditionAnnotation condition : node.getColumns()){
+		for (Condition condition : node.getColumns()){
 			labelStrings.add(condition.getName());
 		}
 		
@@ -68,7 +67,7 @@ public class ConditionLabels extends Canvas {
 		return labels;
 	}
 	
-	public ConditionAnnotation getHitCondition(int x, int y){
+	public Condition getHitCondition(int x, int y){
 		Element el = getHitChild(x, y);
 		assert(el instanceof LabelList);
 		LabelList ll = (LabelList)el;

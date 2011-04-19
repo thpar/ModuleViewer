@@ -3,13 +3,12 @@ package be.ugent.psb.moduleviewer.elements;
 import java.awt.Dimension;
 import java.awt.Graphics2D;
 import java.awt.Point;
-import java.util.Collections;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Matrix;
-import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
+import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.Gene;
 
 public class ExpressionLeaf extends Element{
@@ -25,7 +24,7 @@ public class ExpressionLeaf extends Element{
 	 * @param mean
 	 * @param sigma
 	 */
-	public ExpressionLeaf(List<Gene> genes, List<ConditionAnnotation> condSet, double mean, double sigma){
+	public ExpressionLeaf(List<Gene> genes, List<Condition> condSet, double mean, double sigma){
 		c = new ExpressionColorizer(mean, sigma);
 //		Collections.sort(condSet);
 
@@ -35,7 +34,7 @@ public class ExpressionLeaf extends Element{
 		int i=0;
 		for (Gene gene : genes){
 			int ii=0;
-			for (ConditionAnnotation cond : condSet){
+			for (Condition cond : condSet){
 				data[i][ii++] = gene.getValue(cond);
 			}
 			i++;

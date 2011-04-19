@@ -9,68 +9,47 @@ import java.util.List;
  * @author thpar
  *
  */
-public class GeneAnnotation {
+public class GeneAnnotation<T> extends Annotation<Gene, T>{
 
-	/**
-	 * Name of the list.
-	 */
-	private String name;
 	
-	
-	/**
-	 * List of gene objects
-	 */
-	private List<Gene> genes;
+	public GeneAnnotation(String name, ModuleNetwork modnet) {
+		super(name, modnet);
+	}
 
-	/**
-	 * The module network this list is referring to.
-	 */
-	private ModuleNetwork modnet;
-	
-	public GeneAnnotation(String name, ModuleNetwork modnet){
-		this.name = name;
-		this.modnet = modnet;
-	}
-	
-	/**
-	 * 
-	 * @return list name
-	 */
-	public String getName() {
-		return name;
-	}
-	
 	/**
 	 * Add a gene by gene id
 	 * 
 	 * @param geneId 
 	 */
-	public void addGene(String geneId){
-		Gene gene = modnet.getGene(geneId);
-		this.genes.add(gene);
+	@Override
+	public void addItem(String itemId){
+		Gene gene = modnet.getGene(itemId);
+		this.contents.add(gene);
 	}
-	public void addGenes(List<String> geneIdList){
-		for(String gene : geneIdList){
-			addGene(gene);
-		}
+	
+	/**
+	 * Add a gene by id and link a value to it.
+	 * 
+	 * @param geneId
+	 * @param value
+	 */
+	@Override
+	public void addItem(String geneId, T value){
+		this.addItem(geneId);
+		this.continuousValues.add(value);
 	}
-	public List<Gene> getGenes(){
-		return genes;
-	}
+	
 	public List<String> getGeneIds(){
 		List<String> geneIds = new ArrayList<String>();
-		for(Gene gene : genes){
+		for(Gene gene : contents){
 			geneIds.add(gene.getId());
 		}
 		return geneIds;
 	}
 	
-	
-	public boolean hasGene(Gene gene){
-		return genes.contains(gene);
-	}
-	public boolean hasGene(String geneId){
-		return this.getGeneIds().contains(geneId);
+	@Override
+	public boolean hasItem(String itemId){
+		return this.getGeneIds().contains(itemId);
 	}
 	
 	

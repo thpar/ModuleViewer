@@ -18,7 +18,7 @@ public class ModuleNetwork {
 	 * All conditions in this network. Maps condition name to the condition
 	 * object.
 	 */
-	private Map<String, ConditionAnnotation> conditions = new HashMap<String, ConditionAnnotation>();
+	private Map<String, Condition> conditions = new HashMap<String, Condition>();
 	
 	/**
 	 * The modules in which genes are organized
@@ -34,7 +34,7 @@ public class ModuleNetwork {
 	/**
 	 * Maps condition checklists by name
 	 */
-	private Map<String, ConditionCheckList> conditionAnnotation = new HashMap<String, ConditionCheckList>();
+//	private Map<String, ConditionCheckList> conditionAnnotation = new HashMap<String, ConditionCheckList>();
 
 	private double dataMean;
 
@@ -76,22 +76,22 @@ public class ModuleNetwork {
 	
 
 	public void addCondition(String condName){
-		ConditionAnnotation cond = new ConditionAnnotation(condName, conditions.size());
+		Condition cond = new Condition(condName, conditions.size());
 		this.conditions.put(condName, cond);
 	}
 	
-	public ConditionAnnotation getCondition(String condId){
+	public Condition getCondition(String condId){
 		return this.conditions.get(condId);
 	}
 	
-	public List<ConditionAnnotation> getConditionList(){
-		List<ConditionAnnotation> conds = new ArrayList<ConditionAnnotation>();
-		for (ConditionAnnotation cond : conditions.values()){
+	public List<Condition> getConditionList(){
+		List<Condition> conds = new ArrayList<Condition>();
+		for (Condition cond : conditions.values()){
 			conds.add(cond);
 		}
-		Collections.sort(conds, new Comparator<ConditionAnnotation>(){
+		Collections.sort(conds, new Comparator<Condition>(){
 			@Override
-			public int compare(ConditionAnnotation o1, ConditionAnnotation o2) {
+			public int compare(Condition o1, Condition o2) {
 				if (o1.getNumber() == o2.getNumber()) return 0;
 				else if (o1.getNumber()< o2.getNumber()) return -1;
 				else return 1;
@@ -101,9 +101,9 @@ public class ModuleNetwork {
 		return conds;
 	}
 	
-	public void addConditionCheckList(ConditionCheckList ccl){
-		this.conditionAnnotation.put(ccl.getName(), ccl);
-	}
+//	public void addConditionCheckList(ConditionCheckList ccl){
+//		this.conditionAnnotation.put(ccl.getName(), ccl);
+//	}
 
 	public List<Gene> getRegulators() {
 		return regulators;

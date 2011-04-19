@@ -8,6 +8,7 @@ public class Module {
 	
 	private ModuleNetwork modnet;
 	private int id;
+	private String name;
 	
 	/**
 	 * Genes in this module
@@ -22,11 +23,6 @@ public class Module {
 	ConditionNode rootNode;
 	
 	
-	/**
-	 * @todo what is this?
-	 */
-	private List<Gene> parents;
-	
 	private List<GeneAnnotation> checkLists = new ArrayList<GeneAnnotation>();
 	private List<GeneLinks> linkLists = new ArrayList<GeneLinks>();
 	
@@ -35,13 +31,18 @@ public class Module {
 	private double sigma;
 	private boolean changed = true;
 	
-	//TODO splits... do we need this info?
 	
 	public Module(ModuleNetwork modnet, int id) {
 		this.modnet = modnet;
 		this.id = id;
 	}
-
+	
+	public Module(ModuleNetwork modnet, int id, String name) {
+		this.modnet = modnet;
+		this.id = id;
+		this.name = name;
+	}
+	
 	public List<Gene> getGenes() {
 		return genes;
 	}
@@ -154,6 +155,16 @@ public class Module {
 
 		changed = false;
 	}
+
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+	
+	
 	
 	
 }
