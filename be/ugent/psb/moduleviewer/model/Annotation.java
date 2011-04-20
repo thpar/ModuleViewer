@@ -1,5 +1,6 @@
 package be.ugent.psb.moduleviewer.model;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -10,10 +11,10 @@ import java.util.List;
  * 
  * @author thpar
  *
- * @param <T>
- * @param <U>
+ * @param <T> Type of contents ({@link Gene} or {@link Condition})
+ * @param <U> Type of values linked to the items
  */
-public abstract class Annotation<T, U> {
+public class Annotation<T, U> {
 	/**
 	 * Name of the list.
 	 */
@@ -58,16 +59,38 @@ public abstract class Annotation<T, U> {
 	}
 	
 	
-	abstract public void addItem(String itemId);
-	abstract public void addItem(String itemId, U value);
-	abstract public boolean hasItem(String itemId);
+	public void addItem(T item){
+		this.contents.add(item);
+		if (useContValues){
+			this.continuousValues.add(null);
+		}
+	}
+	
+	public void addItem(T item, U value){
+		this.contents.add(item);
+		this.continuousValues.add(value);
+	}
 
 	public List<T> getItems() {
 		return contents;
 	}
 	
-	public boolean hasItem(Gene gene){
-		return contents.contains(gene);
+	public boolean hasItem(T item){
+		return contents.contains(item);
 	}
 
+	
+	
+	public boolean isUseContValues() {
+		return useContValues;
+	}
+
+	public void setUseContValues(boolean useContValues) {
+		this.useContValues = useContValues;
+		if (useContValues){
+			this.continuousValues = new ArrayList<U>();
+		}
+	}
+
+	
 }

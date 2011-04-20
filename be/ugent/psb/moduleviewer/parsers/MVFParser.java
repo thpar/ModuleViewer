@@ -71,6 +71,10 @@ public class MVFParser extends Parser {
 	private Map<String, String> unknownParameters = new HashMap<String, String>();
 
 	private AnnotationBlock<?, ?> currentBlock;
+	
+	private Class<?> currentItemClass;
+	private Class<?> currentValueClass;
+	
 
 	
 	enum ParamKey{
@@ -113,7 +117,7 @@ public class MVFParser extends Parser {
 			switch(key){
 			case TYPE:
 				//TODO meh... switch on Gene/Condition here
-				currentBlock = new AnnotationBlock<Gene, Double>(value, modnet);
+				currentBlock = new AnnotationBlock(value, modnet);
 				break;
 			case COLOR:
 				break;

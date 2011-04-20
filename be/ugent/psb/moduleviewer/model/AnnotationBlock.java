@@ -17,6 +17,12 @@ public class AnnotationBlock<T,U> {
 	private String blockName;
 	private ModuleNetwork modnet;
 	
+	
+	/**
+	 * 
+	 * @param blockName name of this block
+	 * @param modnet Module Network for gene and condition lookups
+	 */
 	public AnnotationBlock(String blockName, ModuleNetwork modnet){
 		this.blockName = blockName;
 		this.modnet = modnet;
@@ -27,15 +33,10 @@ public class AnnotationBlock<T,U> {
 		this.annotations.put(annot.getName(), annot);
 	}
 	
-	
-	
 	public String getBlockName() {
 		return blockName;
 	}
 	
-	public boolean hasAnnotation(String name){
-		return annotations.containsKey(name);
-	}
 	
 	/**
 	 * 

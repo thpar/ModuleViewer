@@ -1,6 +1,6 @@
 package be.ugent.psb.moduleviewer.model;
 
-public class Condition {
+public class Condition{
 
 	/**
 	 * Name of this Condition.
