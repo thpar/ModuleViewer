@@ -1,5 +1,6 @@
 package be.ugent.psb.moduleviewer.parsers;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -9,10 +10,12 @@ import java.util.Map;
 
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
-import be.ugent.psb.moduleviewer.model.Gene;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.GeneAnnotation;
 import be.ugent.psb.moduleviewer.model.Model;
+import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+
 
 
 /**
@@ -51,7 +54,6 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  */
 public class MVFParser extends Parser {
 
-	private File inputFile;
 	
 	/**
 	 * Separated genes from eachother in a list
@@ -70,42 +72,40 @@ public class MVFParser extends Parser {
 
 	private Map<String, String> unknownParameters = new HashMap<String, String>();
 
-	private AnnotationBlock<?, ?> currentBlock;
-	
-	private Class<?> currentItemClass;
-	private Class<?> currentValueClass;
-	
+	private String currentBlockId = "OneBigBlock";
+	private DataType currentDataType;
+	private Color currentColor;
 
 	
+	/**
+	 * Keys that can be used in the MVF format.
+	 * @author thpar
+	 *
+	 */
 	enum ParamKey{
 		TYPE, COLOR, SEP, LABELCOLOR;
 	}
 	
 	
+	
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {
+		System.out.println("Parsing "+inputFile);
 		this.modnet = model.getModnet();
+		currentBlockId = inputFile.getAbsolutePath();
 		
-		this.inputFile = inputFile;
 		BufferedReader in = new BufferedReader(new FileReader(inputFile));
-		
-//		newBlock();
 		
 		String line = in.readLine();
 		while (line!=null){
 			if (line.startsWith("#")) parseComment(line);
-//			else if (line.isEmpty()) newBlock();
 			else if (line.startsWith("::")) parseKeyValue(line);
 			else parseEntry(line);
-			in.readLine();
+			
+			line = in.readLine();
 		}
 		
 	}
-
-//	private void newBlock() {
-//		
-//		
-//	}
 
 	private void parseKeyValue(String line) {
 		String[] keyValue = line.substring(2).split(keyValueDelimiter);
@@ -116,10 +116,10 @@ public class MVFParser extends Parser {
 			ParamKey key = ParamKey.valueOf(keyString);
 			switch(key){
 			case TYPE:
-				//TODO meh... switch on Gene/Condition here
-				currentBlock = new AnnotationBlock(value, modnet);
+				this.currentDataType = DataType.valueOf(value); 
 				break;
 			case COLOR:
+				this.currentColor = Color.PINK;
 				break;
 			case SEP:
 				break;
@@ -133,30 +133,46 @@ public class MVFParser extends Parser {
 	private void parseEntry(String line) {
 		String[] columns = line.split("\t");
 		
-		int moduleId = Integer.parseInt(columns[0]);
+		int modId = Integer.parseInt(columns[0]);
 		String[] items = columns[1].split(geneDelimiter);
 		String label   = columns[2];
 
-		currentBlock.
-//		Annotation<?,Double> annot = currentBlock.getAnnotation(label);
-		if (annot == null){
-			annot = new GeneAnnotation<Double>(label, modnet);
+		
+		Module mod = modnet.getModule(modId);
+		AnnotationBlock ab = mod.getAnnotationBlock(currentBlockId);
+		if (ab==null){
+			mod.addAnnotationBlock(new AnnotationBlock(currentBlockId, currentDataType));
+		}
+		
+		
+		Annotation<?> annot = ab.getAnnotation(label);
+		if (annot==null){
+			annot = createNewAnnotation(label, DataType.GENE);
+			ab.addAnnotation(annot);
 		}
 		
 		for (String it : items){
 			String[] itemKeyValue = it.split(this.geneValueDelimiter);
 			String itemId = itemKeyValue[0];
 			Double itemValue = Double.valueOf(itemKeyValue[1]);
-			
 			annot.addItem(itemId, itemValue);
 		}
 		
-		
-		
 	}
+
 
 	private void parseComment(String line) {
-		System.out.println(inputFile+" : "+line);
+		System.out.println(line);
 	}
 
+	
+	private Annotation<?> createNewAnnotation(String label, DataType type){
+		switch(type){
+		case GENE:
+			return new GeneAnnotation(label, modnet);
+		case CONDITION:
+			return new ConditionAnnotation(label, modnet);
+		default: return null;
+		}
+	}
 }

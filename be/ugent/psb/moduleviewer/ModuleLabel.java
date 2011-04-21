@@ -50,7 +50,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		if (modnet.getModules() == null || modnet.getModules().isEmpty()) return null;
 		
 		int displayedModule = guiModel.getDisplayedModule();
-		Module mod = modnet.getModules().get(displayedModule);
+		Module mod = modnet.getModule(displayedModule);
 		
 		ConditionNode n = mod.getRootNode();
 //		mod.hierarchicalTree = n;

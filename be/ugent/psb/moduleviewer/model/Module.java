@@ -3,6 +3,8 @@ package be.ugent.psb.moduleviewer.model;
 import java.util.ArrayList;
 import java.util.List;
 
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
+
 public class Module {
 
 	
@@ -22,9 +24,7 @@ public class Module {
 	
 	ConditionNode rootNode;
 	
-	
-	private List<GeneAnnotation> checkLists = new ArrayList<GeneAnnotation>();
-	private List<GeneLinks> linkLists = new ArrayList<GeneLinks>();
+	private List<AnnotationBlock> annotationBlocks = new ArrayList<AnnotationBlock>();
 	
 	
 	private double mean;
@@ -83,29 +83,30 @@ public class Module {
 		return id;
 	}
 
-	public List<GeneAnnotation> getCheckLists() {
-		return checkLists;
-	}
-	public List<String> getCheckListNames(){
-		List<String> list = new ArrayList<String>();
-		for (GeneAnnotation cl : checkLists){
-			list.add(cl.getName());
+	
+	public AnnotationBlock getAnnotationBlock(String blockId){
+		for (AnnotationBlock block : annotationBlocks){
+			if (block.getBlockName().equals(blockId)) return block;
 		}
-		return list;
-	}
-
-	public List<GeneLinks> getLinkLists() {
-		return linkLists;
+		return null;
 	}
 	
-	public void addCheckList(GeneAnnotation cl){
-		this.checkLists.add(cl);
+	public List<AnnotationBlock> getAnnotationBlocks(){
+		return annotationBlocks;
 	}
-
-	public void addLinkList(GeneLinks gl){
-		this.linkLists.add(gl);
+	public List<AnnotationBlock> getAnnotationBlock(DataType type){
+		List<AnnotationBlock> typeBlocks = new ArrayList<AnnotationBlock>();
+		for (AnnotationBlock ab : annotationBlocks){
+			if (ab.getType() == type){
+				typeBlocks.add(ab);
+			}
+		}
+		return typeBlocks;
 	}
-
+	public void addAnnotationBlock(AnnotationBlock ab){
+		this.annotationBlocks.add(ab);
+	}
+	
 	public ModuleNetwork getModuleNetwork() {
 		return modnet;
 	}

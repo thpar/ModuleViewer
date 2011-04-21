@@ -1,6 +1,7 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.util.ArrayList;
+import java.util.Collection;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.HashMap;
@@ -23,7 +24,7 @@ public class ModuleNetwork {
 	/**
 	 * The modules in which genes are organized
 	 */
-	private List<Module> modules;
+	private Map<Integer, Module> modules;
 	
 	/**
 	 * All possible regulators?
@@ -114,11 +115,21 @@ public class ModuleNetwork {
 	}
 
 	public void setModules(List<Module> modset) {
-		this.modules = modset;
+		for (Module mod : modset){
+			this.addModule(mod);
+		}
+	}
+	
+	public void addModule(Module mod) {
+		this.modules.put(mod.getId(), mod);
 	}
 
-	public List<Module> getModules() {
-		return modules;
+	public Module getModule(int modId){
+		return modules.get(modId);
+	}
+	
+	public Collection<Module> getModules(){
+		return modules.values();
 	}
 	
 	/**

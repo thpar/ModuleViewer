@@ -42,7 +42,7 @@ public class ExportToEPSAction extends AbstractAction {
 		int modId = guiModel.getDisplayedModule();
 		ModuleNetwork modnet = model.getModnet();
 		
-		Module mod = modnet.getModules().get(modId);
+		Module mod = modnet.getModule(modId);
 		
 		File outputDir = guiModel.getEpsOutputDir();
 		if (outputDir==null){

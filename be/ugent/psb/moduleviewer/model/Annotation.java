@@ -12,9 +12,8 @@ import java.util.List;
  * @author thpar
  *
  * @param <T> Type of contents ({@link Gene} or {@link Condition})
- * @param <U> Type of values linked to the items
  */
-public class Annotation<T, U> {
+abstract public class Annotation<T> {
 	/**
 	 * Name of the list.
 	 */
@@ -33,7 +32,7 @@ public class Annotation<T, U> {
 	 * Possibility to link a value to each object, rather than just 
 	 * giving it an on/off statement.
 	 */
-	protected List<U> continuousValues;
+	protected List<Double> continuousValues;
 
 	/**
 	 * Whether or not this {@link Annotation} is using continuous values.
@@ -58,29 +57,25 @@ public class Annotation<T, U> {
 		return name;
 	}
 	
-	
 	public void addItem(T item){
 		this.contents.add(item);
-		if (useContValues){
-			this.continuousValues.add(null);
-		}
 	}
 	
-	public void addItem(T item, U value){
-		this.contents.add(item);
-		this.continuousValues.add(value);
+	public void addItem(String itemId, Double value) {
+		this.addItem(itemId);
+		this.continuousValues.add(value);	
 	}
-
-	public List<T> getItems() {
+	
+	abstract public void addItem(String itemId);
+	
+	public List<T> getItems(){
 		return contents;
 	}
 	
 	public boolean hasItem(T item){
-		return contents.contains(item);
+		return this.contents.contains(item);
 	}
 
-	
-	
 	public boolean isUseContValues() {
 		return useContValues;
 	}
@@ -88,9 +83,20 @@ public class Annotation<T, U> {
 	public void setUseContValues(boolean useContValues) {
 		this.useContValues = useContValues;
 		if (useContValues){
-			this.continuousValues = new ArrayList<U>();
+			this.continuousValues = new ArrayList<Double>();
 		}
 	}
 
+	
+	@Override
+	public String toString(){
+		String out = new String();
+		out+=this.name;
+		out+="\t";
+		for (T item : contents){
+			out+=item + " ";
+		}
+		return out;
+	}
 	
 }

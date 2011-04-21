@@ -9,7 +9,7 @@ import java.util.List;
  * @author thpar
  *
  */
-public class GeneAnnotation<T> extends Annotation<Gene, T>{
+public class GeneAnnotation extends Annotation<Gene>{
 
 	
 	public GeneAnnotation(String name, ModuleNetwork modnet) {
@@ -24,20 +24,9 @@ public class GeneAnnotation<T> extends Annotation<Gene, T>{
 	@Override
 	public void addItem(String itemId){
 		Gene gene = modnet.getGene(itemId);
-		this.contents.add(gene);
+		this.addItem(gene);
 	}
 	
-	/**
-	 * Add a gene by id and link a value to it.
-	 * 
-	 * @param geneId
-	 * @param value
-	 */
-	@Override
-	public void addItem(String geneId, T value){
-		this.addItem(geneId);
-		this.continuousValues.add(value);
-	}
 	
 	public List<String> getGeneIds(){
 		List<String> geneIds = new ArrayList<String>();
@@ -46,11 +35,10 @@ public class GeneAnnotation<T> extends Annotation<Gene, T>{
 		}
 		return geneIds;
 	}
+
 	
-	@Override
-	public boolean hasItem(String itemId){
-		return this.getGeneIds().contains(itemId);
-	}
+	
+	
 	
 	
 }
