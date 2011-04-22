@@ -99,6 +99,7 @@ public class MVFParser extends Parser {
 		String line = in.readLine();
 		while (line!=null){
 			if (line.startsWith("#")) parseComment(line);
+			else if (line.isEmpty());
 			else if (line.startsWith("::")) parseKeyValue(line);
 			else parseEntry(line);
 			
@@ -134,6 +135,7 @@ public class MVFParser extends Parser {
 		String[] columns = line.split("\t");
 		
 		int modId = Integer.parseInt(columns[0]);
+		
 		String[] items = columns[1].split(geneDelimiter);
 		String label   = columns[2];
 
@@ -141,10 +143,11 @@ public class MVFParser extends Parser {
 		Module mod = modnet.getModule(modId);
 		AnnotationBlock ab = mod.getAnnotationBlock(currentBlockId);
 		if (ab==null){
-			mod.addAnnotationBlock(new AnnotationBlock(currentBlockId, currentDataType));
+			ab = new AnnotationBlock(currentBlockId, currentDataType);
+			mod.addAnnotationBlock(ab);
 		}
 		
-		
+
 		Annotation<?> annot = ab.getAnnotation(label);
 		if (annot==null){
 			annot = createNewAnnotation(label, DataType.GENE);
@@ -154,8 +157,12 @@ public class MVFParser extends Parser {
 		for (String it : items){
 			String[] itemKeyValue = it.split(this.geneValueDelimiter);
 			String itemId = itemKeyValue[0];
-			Double itemValue = Double.valueOf(itemKeyValue[1]);
-			annot.addItem(itemId, itemValue);
+			if (itemKeyValue.length >=2){
+				Double itemValue = Double.valueOf(itemKeyValue[1]);				
+				annot.addItem(itemId, itemValue);
+			} else {
+				annot.addItem(itemId);
+			}
 		}
 		
 	}

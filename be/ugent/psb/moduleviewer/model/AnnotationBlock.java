@@ -81,7 +81,7 @@ public class AnnotationBlock {
 	@Override
 	public String toString(){
 		String out = new String();
-		out+=this.blockName + System.getProperty("line.separator");
+		out+="Block: "+this.blockName + System.getProperty("line.separator");
 		out+=this.type + System.getProperty("line.separator");
 		for (Annotation<?> an : annotations.values()){
 			out+=an.toString() + System.getProperty("line.separator");

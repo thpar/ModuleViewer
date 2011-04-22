@@ -24,7 +24,7 @@ public class ModuleNetwork {
 	/**
 	 * The modules in which genes are organized
 	 */
-	private Map<Integer, Module> modules;
+	private Map<Integer, Module> modules = new HashMap<Integer, Module>();
 	
 	/**
 	 * All possible regulators?

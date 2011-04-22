@@ -26,7 +26,7 @@ abstract public class Annotation<T> {
 	/**
 	 * Genes, conditions, ... the objects to be annotated.
 	 */
-	protected List<T> contents;
+	protected List<T> contents = new ArrayList<T>();
 	
 	/**
 	 * Possibility to link a value to each object, rather than just 
