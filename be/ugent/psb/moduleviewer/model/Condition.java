@@ -46,6 +46,11 @@ public class Condition{
 	public int getNumber() {
 		return this.number;
 	}
+
+	@Override
+	public String toString() {
+		return this.name;
+	}
 	
 	
 }

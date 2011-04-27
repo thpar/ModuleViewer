@@ -53,7 +53,7 @@ public class Module {
 	 * 
 	 * @param geneId
 	 */
-	public void addGene(String geneId){
+	public void addGene(String geneId) throws UnknownItemException{
 		Gene gene = modnet.getGene(geneId);
 		this.genes.add(gene);
 	}
@@ -163,6 +163,12 @@ public class Module {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	@Override
+	public String toString() {
+		if (name==null || name.isEmpty()) return "module "+this.id;
+		else return this.name;
 	}
 	
 	

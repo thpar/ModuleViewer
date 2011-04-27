@@ -71,7 +71,8 @@ public class ModuleNetwork {
 	 * @param geneId
 	 * @return
 	 */
-	public Gene getGene(String geneId){
+	public Gene getGene(String geneId) throws UnknownItemException {
+		if (!genes.containsKey(geneId)) throw new UnknownItemException(geneId);
 		return genes.get(geneId);
 	}
 	

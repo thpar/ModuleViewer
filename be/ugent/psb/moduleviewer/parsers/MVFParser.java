@@ -15,6 +15,7 @@ import be.ugent.psb.moduleviewer.model.GeneAnnotation;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 
 
@@ -58,7 +59,7 @@ public class MVFParser extends Parser {
 	/**
 	 * Separated genes from eachother in a list
 	 */
-	private final String geneDelimiter = "|";
+	private final String geneDelimiter = "\\|";
 	
 	/**
 	 * If a gene is linked to a value, this character separated geneId and value
@@ -131,7 +132,7 @@ public class MVFParser extends Parser {
 		}
 	}
 
-	private void parseEntry(String line) {
+	private void parseEntry(String line){
 		String[] columns = line.split("\t");
 		
 		int modId = Integer.parseInt(columns[0]);
@@ -154,15 +155,23 @@ public class MVFParser extends Parser {
 			ab.addAnnotation(annot);
 		}
 		
-		for (String it : items){
-			String[] itemKeyValue = it.split(this.geneValueDelimiter);
-			String itemId = itemKeyValue[0];
-			if (itemKeyValue.length >=2){
-				Double itemValue = Double.valueOf(itemKeyValue[1]);				
-				annot.addItem(itemId, itemValue);
-			} else {
-				annot.addItem(itemId);
+		try {
+			for (String it : items){
+				String[] itemKeyValue = it.split(this.geneValueDelimiter);
+				String itemId = itemKeyValue[0];
+				if (itemKeyValue.length >=2){
+					Double itemValue = Double.valueOf(itemKeyValue[1]);				
+					annot.addItem(itemId, itemValue);
+				} else {
+					annot.addItem(itemId);
+				}
 			}
+		} catch (NumberFormatException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (UnknownItemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		
 	}

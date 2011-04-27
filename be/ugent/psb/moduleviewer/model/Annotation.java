@@ -61,12 +61,12 @@ abstract public class Annotation<T> {
 		this.contents.add(item);
 	}
 	
-	public void addItem(String itemId, Double value) {
+	public void addItem(String itemId, Double value) throws UnknownItemException{
 		this.addItem(itemId);
 		this.continuousValues.add(value);	
 	}
 	
-	abstract public void addItem(String itemId);
+	abstract public void addItem(String itemId) throws UnknownItemException;
 	
 	public List<T> getItems(){
 		return contents;
@@ -94,7 +94,7 @@ abstract public class Annotation<T> {
 		out+=this.name;
 		out+="\t";
 		for (T item : contents){
-			out+=item + " ";
+			out+=":"+item+":" + " ";
 		}
 		return out;
 	}

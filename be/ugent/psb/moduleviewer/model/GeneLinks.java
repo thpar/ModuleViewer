@@ -31,7 +31,7 @@ public class GeneLinks {
 		if (toSet==null) toSet = new HashSet<Gene>();
 		toSet.add(to);
 	}
-	public void addLink(String fromId, String toId){
+	public void addLink(String fromId, String toId) throws UnknownItemException{
 		Gene from = modnet.getGene(fromId);
 		Gene to = modnet.getGene(toId);
 		addLink(from, to);

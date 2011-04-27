@@ -18,6 +18,7 @@ import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 
 
@@ -249,7 +250,11 @@ public class LemoneXMLHandler extends DefaultHandler{
 //			int gene_id = Integer.parseInt(attributes.getValue("id"));
 			String geneId = attributes.getValue("name");
 //			this.mod.genes.add(modnet.geneSet.get(gene_id));
-			this.mod.addGene(geneId);
+			try {
+				this.mod.addGene(geneId);
+			} catch (UnknownItemException e) {
+				e.printStackTrace();
+			}
 			break;
 		case REGULATORWEIGHTS:
 			//only elements with atts. parsed in REGULATOR-start

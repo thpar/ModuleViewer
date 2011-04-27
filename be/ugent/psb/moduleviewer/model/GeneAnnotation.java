@@ -22,7 +22,7 @@ public class GeneAnnotation extends Annotation<Gene>{
 	 * @param geneId 
 	 */
 	@Override
-	public void addItem(String itemId){
+	public void addItem(String itemId) throws UnknownItemException{
 		Gene gene = modnet.getGene(itemId);
 		this.addItem(gene);
 	}

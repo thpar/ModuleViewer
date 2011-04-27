@@ -89,6 +89,14 @@ public class Gene {
 		this.description = description;
 	}
 
+	@Override
+	public String toString() {
+		if (name==null || name.isEmpty()) return this.id;
+		else return this.id + "("+this.name+")";
+	}
+
+	
+	
 
 	
 	
