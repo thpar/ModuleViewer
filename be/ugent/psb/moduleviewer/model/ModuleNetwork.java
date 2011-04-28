@@ -72,7 +72,7 @@ public class ModuleNetwork {
 	 * @return
 	 */
 	public Gene getGene(String geneId) throws UnknownItemException {
-		if (!genes.containsKey(geneId)) throw new UnknownItemException(geneId);
+		if (!genes.containsKey(geneId)) throw new UnknownItemException(UnknownItemException.ItemType.GENE, geneId);
 		return genes.get(geneId);
 	}
 	
@@ -125,7 +125,8 @@ public class ModuleNetwork {
 		this.modules.put(mod.getId(), mod);
 	}
 
-	public Module getModule(int modId){
+	public Module getModule(int modId) throws UnknownItemException{
+		if (!modules.containsKey(modId)) throw new UnknownItemException(UnknownItemException.ItemType.MODULE, modId);
 		return modules.get(modId);
 	}
 	

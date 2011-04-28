@@ -21,6 +21,7 @@ import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 
 
@@ -50,7 +51,13 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		if (modnet.getModules() == null || modnet.getModules().isEmpty()) return null;
 		
 		int displayedModule = guiModel.getDisplayedModule();
-		Module mod = modnet.getModule(displayedModule);
+		Module mod = null;
+		try {
+			mod = modnet.getModule(displayedModule);
+		} catch (UnknownItemException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 		
 		ConditionNode n = mod.getRootNode();
 //		mod.hierarchicalTree = n;

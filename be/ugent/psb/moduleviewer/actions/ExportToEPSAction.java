@@ -14,6 +14,7 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 
 
@@ -42,7 +43,13 @@ public class ExportToEPSAction extends AbstractAction {
 		int modId = guiModel.getDisplayedModule();
 		ModuleNetwork modnet = model.getModnet();
 		
-		Module mod = modnet.getModule(modId);
+		Module mod = null;
+		try {
+			mod = modnet.getModule(modId);
+		} catch (UnknownItemException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
 		
 		File outputDir = guiModel.getEpsOutputDir();
 		if (outputDir==null){

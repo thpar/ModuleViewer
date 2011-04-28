@@ -1,8 +1,5 @@
-package be.ugent.psb.moduleviewer.parsers;
+package be.ugent.psb.moduleviewer.model;
 
-import be.ugent.psb.moduleviewer.model.Annotation;
-import be.ugent.psb.moduleviewer.model.Condition;
-import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 public class ConditionAnnotation extends Annotation<Condition> {
 

@@ -11,6 +11,7 @@ import java.util.Map;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
+import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
 import be.ugent.psb.moduleviewer.model.GeneAnnotation;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
@@ -141,34 +142,39 @@ public class MVFParser extends Parser {
 		String label   = columns[2];
 
 		
-		Module mod = modnet.getModule(modId);
-		AnnotationBlock ab = mod.getAnnotationBlock(currentBlockId);
-		if (ab==null){
-			ab = new AnnotationBlock(currentBlockId, currentDataType);
-			mod.addAnnotationBlock(ab);
-		}
-		
-
-		Annotation<?> annot = ab.getAnnotation(label);
-		if (annot==null){
-			annot = createNewAnnotation(label, DataType.GENE);
-			ab.addAnnotation(annot);
-		}
-		
 		try {
-			for (String it : items){
-				String[] itemKeyValue = it.split(this.geneValueDelimiter);
-				String itemId = itemKeyValue[0];
-				if (itemKeyValue.length >=2){
-					Double itemValue = Double.valueOf(itemKeyValue[1]);				
-					annot.addItem(itemId, itemValue);
-				} else {
-					annot.addItem(itemId);
-				}
+			Module mod = modnet.getModule(modId);
+			AnnotationBlock ab = mod.getAnnotationBlock(currentBlockId);
+			if (ab==null){
+				ab = new AnnotationBlock(currentBlockId, currentDataType);
+				mod.addAnnotationBlock(ab);
 			}
-		} catch (NumberFormatException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			
+
+			Annotation<?> annot = ab.getAnnotation(label);
+			if (annot==null){
+				annot = createNewAnnotation(label, DataType.GENE);
+				ab.addAnnotation(annot);
+			}
+			
+			try {
+				for (String it : items){
+					String[] itemKeyValue = it.split(this.geneValueDelimiter);
+					String itemId = itemKeyValue[0];
+					if (itemKeyValue.length >=2){
+						Double itemValue = Double.valueOf(itemKeyValue[1]);				
+						annot.addItem(itemId, itemValue);
+					} else {
+						annot.addItem(itemId);
+					}
+				}
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnknownItemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		} catch (UnknownItemException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
