@@ -11,8 +11,13 @@ import java.util.Map;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.ValueType;
 import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
+import be.ugent.psb.moduleviewer.model.DoubleConditionAnnotation;
+import be.ugent.psb.moduleviewer.model.DoubleGeneAnnotation;
 import be.ugent.psb.moduleviewer.model.GeneAnnotation;
+import be.ugent.psb.moduleviewer.model.IntegerConditionAnnotation;
+import be.ugent.psb.moduleviewer.model.IntegerGeneAnnotation;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -153,7 +158,7 @@ public class MVFParser extends Parser {
 
 			Annotation<?> annot = ab.getAnnotation(label);
 			if (annot==null){
-				annot = createNewAnnotation(label, DataType.GENE);
+				annot = createNewAnnotation(label, DataType.GENE, ValueType.DOUBLE);
 				ab.addAnnotation(annot);
 			}
 			
@@ -188,12 +193,20 @@ public class MVFParser extends Parser {
 	}
 
 	
-	private Annotation<?> createNewAnnotation(String label, DataType type){
-		switch(type){
+	private Annotation<?> createNewAnnotation(String label, DataType dType, ValueType vType){
+		switch(dType){
 		case GENE:
-			return new GeneAnnotation(label, modnet);
+			switch(vType){
+			case DOUBLE: return new DoubleGeneAnnotation(label, modnet);
+			case INT: return new IntegerGeneAnnotation(label, modnet);
+			case NONE: return new GeneAnnotation(label, modnet);
+			}
 		case CONDITION:
-			return new ConditionAnnotation(label, modnet);
+			switch(vType){
+			case DOUBLE: return new DoubleConditionAnnotation(label, modnet);
+			case INT: return new IntegerConditionAnnotation(label, modnet);
+			case NONE: return new ConditionAnnotation(label, modnet);
+			}
 		default: return null;
 		}
 	}

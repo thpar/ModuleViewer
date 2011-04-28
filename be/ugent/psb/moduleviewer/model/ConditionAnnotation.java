@@ -8,7 +8,7 @@ public class ConditionAnnotation extends Annotation<Condition> {
 	}
 
 	@Override
-	public void addItem(String itemId) {
+	public void addItem(String itemId) throws UnknownItemException{
 		Condition cond = modnet.getCondition(itemId);
 		this.contents.add(cond);
 	}

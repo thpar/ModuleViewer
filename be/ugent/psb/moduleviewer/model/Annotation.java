@@ -28,16 +28,7 @@ abstract public class Annotation<T> {
 	 */
 	protected List<T> contents = new ArrayList<T>();
 	
-	/**
-	 * Possibility to link a value to each object, rather than just 
-	 * giving it an on/off statement.
-	 */
-	protected List<Double> continuousValues;
 
-	/**
-	 * Whether or not this {@link Annotation} is using continuous values.
-	 */
-	protected boolean useContValues = false;
 	
 	/**
 	 * Create a new annotation list, linked to the modnet
@@ -61,10 +52,7 @@ abstract public class Annotation<T> {
 		this.contents.add(item);
 	}
 	
-	public void addItem(String itemId, Double value) throws UnknownItemException{
-		this.addItem(itemId);
-		this.continuousValues.add(value);	
-	}
+	
 	
 	abstract public void addItem(String itemId) throws UnknownItemException;
 	
@@ -76,17 +64,7 @@ abstract public class Annotation<T> {
 		return this.contents.contains(item);
 	}
 
-	public boolean isUseContValues() {
-		return useContValues;
-	}
-
-	public void setUseContValues(boolean useContValues) {
-		this.useContValues = useContValues;
-		if (useContValues){
-			this.continuousValues = new ArrayList<Double>();
-		}
-	}
-
+	
 	
 	@Override
 	public String toString(){
