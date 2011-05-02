@@ -18,7 +18,8 @@ public class ParserTest {
 		Model model = new Model();
 		
 		File dataInput = new File(args[0]);
-		File mvfInput = new File(args[1]);
+		File conditionXML = new File(args[1]);
+		File mvfInput = new File(args[2]);
 		
 		ModuleNetwork modnet = model.getModnet();
 		modnet.addModule(new Module(modnet, 0));
