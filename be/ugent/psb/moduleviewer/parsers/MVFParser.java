@@ -11,13 +11,7 @@ import java.util.Map;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
-import be.ugent.psb.moduleviewer.model.AnnotationBlock.ValueType;
-import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
-import be.ugent.psb.moduleviewer.model.DoubleConditionAnnotation;
-import be.ugent.psb.moduleviewer.model.DoubleGeneAnnotation;
-import be.ugent.psb.moduleviewer.model.GeneAnnotation;
-import be.ugent.psb.moduleviewer.model.IntegerConditionAnnotation;
-import be.ugent.psb.moduleviewer.model.IntegerGeneAnnotation;
+import be.ugent.psb.moduleviewer.model.AnnotationBlockFactory;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -79,9 +73,9 @@ public class MVFParser extends Parser {
 
 	private Map<String, String> unknownParameters = new HashMap<String, String>();
 
-	private String currentBlockId = "OneBigBlock";
-	private DataType currentDataType;
-	private Color currentColor;
+	private AnnotationBlockFactory abf;
+
+	private File inputFile;
 
 	
 	/**
@@ -99,7 +93,7 @@ public class MVFParser extends Parser {
 	public void parse(Model model, File inputFile) throws IOException {
 		System.out.println("Parsing "+inputFile);
 		this.modnet = model.getModnet();
-		currentBlockId = inputFile.getAbsolutePath();
+		this.inputFile = inputFile;
 		
 		BufferedReader in = new BufferedReader(new FileReader(inputFile));
 		
@@ -124,10 +118,10 @@ public class MVFParser extends Parser {
 			ParamKey key = ParamKey.valueOf(keyString);
 			switch(key){
 			case TYPE:
-				this.currentDataType = DataType.valueOf(value); 
+				this.abf = new AnnotationBlockFactory(inputFile.getAbsolutePath(), DataType.valueOf(value), modnet); 
 				break;
 			case COLOR:
-				this.currentColor = Color.PINK;
+//				this.currentColor = Color.PINK;
 				break;
 			case SEP:
 				break;
@@ -149,16 +143,16 @@ public class MVFParser extends Parser {
 		
 		try {
 			Module mod = modnet.getModule(modId);
-			AnnotationBlock ab = mod.getAnnotationBlock(currentBlockId);
+			AnnotationBlock ab = mod.getAnnotationBlock(abf.getBlockName());
 			if (ab==null){
-				ab = new AnnotationBlock(currentBlockId, currentDataType);
+				ab = abf.createNewAnnotationBlock();
 				mod.addAnnotationBlock(ab);
 			}
 			
 
 			Annotation<?> annot = ab.getAnnotation(label);
 			if (annot==null){
-				annot = createNewAnnotation(label, DataType.GENE, ValueType.DOUBLE);
+				annot = ab.addNewAnnotation(label);
 				ab.addAnnotation(annot);
 			}
 			
@@ -192,22 +186,5 @@ public class MVFParser extends Parser {
 		System.out.println(line);
 	}
 
-	
-	private Annotation<?> createNewAnnotation(String label, DataType dType, ValueType vType){
-		switch(dType){
-		case GENE:
-			switch(vType){
-			case DOUBLE: return new DoubleGeneAnnotation(label, modnet);
-			case INT: return new IntegerGeneAnnotation(label, modnet);
-			case NONE: return new GeneAnnotation(label, modnet);
-			}
-		case CONDITION:
-			switch(vType){
-			case DOUBLE: return new DoubleConditionAnnotation(label, modnet);
-			case INT: return new IntegerConditionAnnotation(label, modnet);
-			case NONE: return new ConditionAnnotation(label, modnet);
-			}
-		default: return null;
-		}
-	}
+
 }

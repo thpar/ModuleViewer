@@ -7,7 +7,6 @@ import java.util.List;
  * Annotates a list of genes or conditions.
  * 
  * T : class of objects to be annotated
- * U : class of optional continuous value.
  * 
  * @author thpar
  *
@@ -28,6 +27,7 @@ abstract public class Annotation<T> {
 	 */
 	protected List<T> contents = new ArrayList<T>();
 	
+	protected List<Double> values = new ArrayList<Double>();
 
 	
 	/**
@@ -55,6 +55,12 @@ abstract public class Annotation<T> {
 	
 	
 	abstract public void addItem(String itemId) throws UnknownItemException;
+	
+	public void addItem(String itemId, Double value) throws UnknownItemException {
+		this.addItem(itemId);
+		this.values.add(value);
+		
+	}
 	
 	public List<T> getItems(){
 		return contents;

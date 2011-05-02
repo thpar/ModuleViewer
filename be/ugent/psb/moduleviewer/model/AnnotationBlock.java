@@ -3,8 +3,6 @@ package be.ugent.psb.moduleviewer.model;
 import java.util.HashMap;
 import java.util.Map;
 
-import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
-
 /**
  * 
  * 
@@ -21,19 +19,12 @@ public class AnnotationBlock {
 	public enum DataType{
 		GENE, CONDITION;
 	}
-	/**
-	 * Type of values that can come with the data
-	 * @author thpar
-	 *
-	 */
-	public enum ValueType{
-		NONE, DOUBLE, INT, STRING;
-	}
 	
 	
 	private Map<String, Annotation<?>> annotations = new HashMap<String, Annotation<?>>();
 	private String blockName;
 	private DataType type;
+	private ModuleNetwork modnet;
 	
 	
 	/**
@@ -41,9 +32,10 @@ public class AnnotationBlock {
 	 * @param blockName name of this block
 	 * @param modnet Module Network for gene and condition lookups
 	 */
-	public AnnotationBlock(String blockName, DataType type){
+	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type){
 		this.blockName = blockName;
 		this.type=type;
+		this.modnet = modnet;
 	}
 
 	/**
@@ -81,13 +73,26 @@ public class AnnotationBlock {
 	@Override
 	public String toString(){
 		String out = new String();
-		out+="Block: "+this.blockName + System.getProperty("line.separator");
-		out+=this.type + System.getProperty("line.separator");
+		out+=this.type+" Block: "+this.blockName + System.getProperty("line.separator");
 		for (Annotation<?> an : annotations.values()){
 			out+=an.toString() + System.getProperty("line.separator");
 		}
 		
 		return out;
+	}
+	
+	public Annotation<?> addNewAnnotation(String label){
+		switch(type){
+		case GENE:
+			GeneAnnotation geneAnnot = new GeneAnnotation(label, modnet);
+			this.addAnnotation(geneAnnot);
+			return geneAnnot;
+		case CONDITION:
+			ConditionAnnotation condAnnot = new ConditionAnnotation(label, modnet);
+			this.addAnnotation(condAnnot);
+			return condAnnot;
+		default: return null;
+		}
 	}
 	
 }
