@@ -9,7 +9,7 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.parsers.ModuleNetworkParser;
+import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 
 /**
  * 
@@ -46,9 +46,6 @@ public class LoadModulesAction extends AbstractAction {
 		guiModel.setCurrentDir(fc.getCurrentDirectory());
 	}
 	
-	public interface ProgressListener{
-		void setMyProgress(int percent);
-	}
 	
 	public class LoadTask extends SwingWorker<Void, Void>{
 
@@ -69,8 +66,10 @@ public class LoadModulesAction extends AbstractAction {
 				}
 			};
 			
-			ModuleNetworkParser parser = new ModuleNetworkParser();
-			parser.setProgressListener(progListener);
+//			ModuleNetworkParser parser = new ModuleNetworkParser();
+			ConditionTreeParser parser = new ConditionTreeParser(progListener);
+			
+//			parser.setProgressListener(progListener);
 			parser.parse(model, file);
 			
 			setProgress(100);

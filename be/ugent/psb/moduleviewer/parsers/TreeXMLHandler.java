@@ -11,7 +11,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
-import be.ugent.psb.moduleviewer.actions.LoadModulesAction.ProgressListener;
+import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
@@ -96,10 +96,10 @@ public class TreeXMLHandler extends DefaultHandler {
 	 * @param progressListener
 	 */
 	public TreeXMLHandler(ModuleNetwork modnet,
-			ProgressListener progressListener) {
+			ProgressListener progListener) {
 		this.modnet = modnet;
 		conditionList = modnet.getConditionList();
-		this.progListener = progressListener;
+		this.progListener = this.progListener;
 	}
 
 	@Override

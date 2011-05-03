@@ -8,6 +8,7 @@ import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
+import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 import be.ugent.psb.moduleviewer.parsers.MVFParser;
 import be.ugent.psb.moduleviewer.parsers.Parser;
@@ -22,11 +23,10 @@ public class ParserTest {
 		File mvfInput = new File(args[2]);
 		
 		ModuleNetwork modnet = model.getModnet();
-		modnet.addModule(new Module(modnet, 0));
-		modnet.addModule(new Module(modnet, 1));
-		modnet.addModule(new Module(modnet, 2));
-		modnet.addModule(new Module(modnet, 3));
-		modnet.addModule(new Module(modnet, 4));
+		
+		for (int i = 0; i<300; i++){
+			modnet.addModule(new Module(modnet, i));			
+		}
 		
 		try {
 			DataMatrixParser dmParser = new DataMatrixParser();
@@ -37,14 +37,23 @@ public class ParserTest {
 		}
 		
 		try {
-			modnet.getModule(0).addGene("ATH1");
-			modnet.getModule(0).addGene("ATH2");
-			modnet.getModule(0).addGene("ATH3");
-			modnet.getModule(0).addGene("ATH4");
-			modnet.getModule(0).addGene("ATH6");
-		} catch (UnknownItemException e1) {
+			ConditionTreeParser condParser = new ConditionTreeParser();
+			condParser.parse(model, conditionXML);
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
+		
+		
+//		try {
+//			modnet.getModule(0).addGene("ATH1");
+//			modnet.getModule(0).addGene("ATH2");
+//			modnet.getModule(0).addGene("ATH3");
+//			modnet.getModule(0).addGene("ATH4");
+//			modnet.getModule(0).addGene("ATH6");
+//		} catch (UnknownItemException e1) {
+//			e1.printStackTrace();
+//		}
 		
 		
 		Parser p = new MVFParser();
