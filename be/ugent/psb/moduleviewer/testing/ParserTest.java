@@ -2,8 +2,11 @@ package be.ugent.psb.moduleviewer.testing;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.List;
 
+import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
+import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -25,7 +28,10 @@ public class ParserTest {
 		ModuleNetwork modnet = model.getModnet();
 		
 		for (int i = 0; i<300; i++){
-			modnet.addModule(new Module(modnet, i));			
+			modnet.addModule(new Module(modnet, i));
+		}
+		for (int i=0; i<280; i++){
+			modnet.addCondition(String.valueOf(i));
 		}
 		
 		try {
@@ -39,38 +45,64 @@ public class ParserTest {
 		try {
 			ConditionTreeParser condParser = new ConditionTreeParser();
 			condParser.parse(model, conditionXML);
+			
+			
+			//test conditions
+			try {
+				Module mod0 = modnet.getModule(96);
+				System.out.println("Testing module 0: "+mod0.getName());
+				
+				List<Condition> conds = mod0.getRootNode().getConditions();
+				for (Condition cond : conds){
+					System.out.print(cond);
+					System.out.print(", ");
+				}
+				
+				System.out.println();
+				System.out.println();
+				
+				for (ITreeNode<Condition> leaf : mod0.getRootNode().getLeaves()){
+					for (Condition col : leaf.getColumns()){
+						System.out.print(col);
+						System.out.print(", ");
+					}
+					System.out.println();
+				}
+				
+				System.out.println();
+				System.out.println();
+			} catch (UnknownItemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			
+			
 		} catch (IOException e1) {
 			// TODO Auto-generated catch block
 			e1.printStackTrace();
 		}
 		
 		
-//		try {
-//			modnet.getModule(0).addGene("ATH1");
-//			modnet.getModule(0).addGene("ATH2");
-//			modnet.getModule(0).addGene("ATH3");
-//			modnet.getModule(0).addGene("ATH4");
-//			modnet.getModule(0).addGene("ATH6");
-//		} catch (UnknownItemException e1) {
-//			e1.printStackTrace();
-//		}
-		
-		
 		Parser p = new MVFParser();
 		try {
 			p.parse(model, mvfInput);
 			
+			
+			//test parsing result
 			for (Module mod : modnet.getModules()){
-				System.out.println("Module "+mod.getId());
-				for (AnnotationBlock ab : mod.getAnnotationBlocks()){
-					System.out.println(ab);
-					System.out.println("--");
+				if (mod.getAnnotationBlocks().size() >0){
+					System.out.println("Module "+mod.getId());
+					for (AnnotationBlock ab : mod.getAnnotationBlocks()){
+						System.out.println(ab);
+					}
 				}
 			}
 			
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+		
 		
 	}
 }

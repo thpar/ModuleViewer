@@ -67,6 +67,10 @@ public class Module {
 		this.topRegulators = topRegulators;
 	}
 
+	/**
+	 * Returns the root node of the condition tree
+	 * @return
+	 */
 	public ConditionNode getRootNode() {
 		return rootNode;
 	}

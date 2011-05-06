@@ -8,6 +8,7 @@ import java.io.InputStream;
 import javax.xml.parsers.SAXParser;
 import javax.xml.parsers.SAXParserFactory;
 
+import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
@@ -21,6 +22,15 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  *
  */
 public class ConditionTreeParser extends Parser{
+
+	
+	public ConditionTreeParser() {
+		super();
+	}
+
+	public ConditionTreeParser(ProgressListener progListener) {
+		super(progListener);
+	}
 
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {

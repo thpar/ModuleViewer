@@ -17,6 +17,7 @@ import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 /**
  * Handles the XML that describes a {@link ConditionAnnotation} tree. Invoked by
@@ -86,7 +87,6 @@ public class TreeXMLHandler extends DefaultHandler {
 
 	private ConditionNode node;
 
-	private List<Condition> conditionList;
 
 	/**
 	 * Create an XML handler to fill the given modnet with data.
@@ -98,8 +98,7 @@ public class TreeXMLHandler extends DefaultHandler {
 	public TreeXMLHandler(ModuleNetwork modnet,
 			ProgressListener progListener) {
 		this.modnet = modnet;
-		conditionList = modnet.getConditionList();
-		this.progListener = this.progListener;
+		this.progListener = progListener;
 	}
 
 	@Override
@@ -165,7 +164,7 @@ public class TreeXMLHandler extends DefaultHandler {
 			}
 
 			// read atts and init node
-			int numChildren = Integer.parseInt(attributes.getValue("numChildren"));
+			int numChildren = Integer.parseInt(attributes.getValue("NumChildren"));
 //			String name = attributes.getValue("Name");
 			switch (numChildren) {
 			case 0:
@@ -200,8 +199,16 @@ public class TreeXMLHandler extends DefaultHandler {
 		List<Condition> condList = new ArrayList<Condition>();
 		StringTokenizer tokens = new StringTokenizer(conds,";");
 		while(tokens.hasMoreTokens()){
-			int condNumber = Integer.parseInt(tokens.nextElement().toString());
-			condList.add(conditionList.get(condNumber));
+			try {
+				int condNumber = Integer.parseInt(tokens.nextElement().toString());
+				condList.add(modnet.getCondition(condNumber));
+			} catch (NumberFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			} catch (UnknownItemException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 //			condList.add(Integer.parseInt(tokens.nextElement().toString()));
 		}
 //		node.leafDistribution.condSet = condList;

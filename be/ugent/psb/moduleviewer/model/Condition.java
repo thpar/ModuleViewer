@@ -49,7 +49,7 @@ public class Condition{
 
 	@Override
 	public String toString() {
-		return this.name;
+		return this.number+"("+this.name+")";
 	}
 	
 	

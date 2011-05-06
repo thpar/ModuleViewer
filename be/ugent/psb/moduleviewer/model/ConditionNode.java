@@ -55,9 +55,13 @@ public class ConditionNode implements ITreeNode<Condition>{
 	public void setRight(ConditionNode right) {
 		this.right = right;
 	}
-
+	
+	/**
+	 * Same as {@link getColumns}
+	 * @return
+	 */
 	public List<Condition> getConditions() {
-		return conditions;
+		return getColumns();
 	}
 
 	public void setConditions(List<Condition> conditions) {
@@ -96,6 +100,13 @@ public class ConditionNode implements ITreeNode<Condition>{
 		}
 	}
 	
+	/**
+	 * Get the condition in the given columns, counted over all nodes.
+	 * This method does NOT relate to the number assigned to the conditions. 
+	 * 
+	 * @param condNumber
+	 * @return
+	 */
 	public Condition getCondition(int condNumber){
 		return getColumns().get(condNumber);
 	}
@@ -103,6 +114,24 @@ public class ConditionNode implements ITreeNode<Condition>{
 	public void setLeaf(boolean isLeaf) {
 		this.isLeaf = isLeaf;
 	}
+
+	@Override
+	public List<ITreeNode<Condition>> getLeaves() {
+		List<ITreeNode<Condition>> list = new ArrayList<ITreeNode<Condition>>();
+		return getLeaves(list);
+	}
 	
+	private List<ITreeNode<Condition>> getLeaves(List<ITreeNode<Condition>> list){
+		if (left.isLeaf()) {
+			list.add(left);
+		} else left.getLeaves(list);
+		
+		if (right.isLeaf()) {
+			list.add(right);
+		} else left.getLeaves(list);
+		
+		return list;
+		
+	}
 	
 }

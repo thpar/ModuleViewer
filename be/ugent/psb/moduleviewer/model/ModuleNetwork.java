@@ -8,6 +8,8 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import be.ugent.psb.moduleviewer.model.UnknownItemException.ItemType;
+
 public class ModuleNetwork {
 
 	/**
@@ -46,6 +48,9 @@ public class ModuleNetwork {
 	private double dataMax;
 
 	private boolean dataChanged = true;
+
+	private List<Condition> conditionList = new ArrayList<Condition>();
+
 	
 	
 	
@@ -80,32 +85,36 @@ public class ModuleNetwork {
 	public void addCondition(String condName){
 		Condition cond = new Condition(condName, conditions.size());
 		this.conditions.put(condName, cond);
+		this.conditionList.add(cond);
 	}
 	
-	public Condition getCondition(String condId){
-		return this.conditions.get(condId);
+	public Condition getCondition(String condId) throws UnknownItemException{
+		if (!this.conditions.containsKey(condId)) throw new UnknownItemException(ItemType.CONDITION, condId);
+		else return this.conditions.get(condId);
 	}
 	
 	public List<Condition> getConditionList(){
-		List<Condition> conds = new ArrayList<Condition>();
-		for (Condition cond : conditions.values()){
-			conds.add(cond);
-		}
-		Collections.sort(conds, new Comparator<Condition>(){
-			@Override
-			public int compare(Condition o1, Condition o2) {
-				if (o1.getNumber() == o2.getNumber()) return 0;
-				else if (o1.getNumber()< o2.getNumber()) return -1;
-				else return 1;
-			}
-			
-		});
-		return conds;
+//		this.conditionList = new ArrayList<Condition>();
+//		for (Condition cond : conditions.values()){
+//			conditionList.add(cond);
+//		}
+//		Collections.sort(conditionList, new Comparator<Condition>(){
+//			@Override
+//			public int compare(Condition o1, Condition o2) {
+//				if (o1.getNumber() == o2.getNumber()) return 0;
+//				else if (o1.getNumber()< o2.getNumber()) return -1;
+//				else return 1;
+//			}
+//			
+//		});
+		return this.conditionList;
 	}
 	
-//	public void addConditionCheckList(ConditionCheckList ccl){
-//		this.conditionAnnotation.put(ccl.getName(), ccl);
-//	}
+	public Condition getCondition(int conditionNumber) throws UnknownItemException{
+		if (this.conditionList.size()<=conditionNumber) throw new UnknownItemException(ItemType.CONDITION, conditionNumber);
+		else return this.conditionList.get(conditionNumber);
+	}
+	
 
 	public List<Gene> getRegulators() {
 		return regulators;
