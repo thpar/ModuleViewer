@@ -29,8 +29,8 @@ public class ViewerGUI {
 		Model model = new Model();
 		ModuleNetwork modnet = model.getModnet();
 		GUIModel guiModel = new GUIModel();
-		guiModel.setDrawConditionAnnotationLegend(true);
-		guiModel.setDrawConditionAnnotations(true);
+		guiModel.setDrawConditionAnnotationLegend(false);
+		guiModel.setDrawConditionAnnotations(false);
 
 		this.window = new JFrame("ModuleViewer");
 		guiModel.setTopContainer(window);

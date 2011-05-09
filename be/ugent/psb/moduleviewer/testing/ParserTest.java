@@ -61,8 +61,8 @@ public class ParserTest {
 				System.out.println();
 				System.out.println();
 				
-				for (ITreeNode<Condition> leaf : mod0.getRootNode().getLeaves()){
-					for (Condition col : leaf.getColumns()){
+				for (ITreeNode<Condition> l : mod0.getRootNode().getLeaves()){
+					for (Condition col : l.getColumns()){
 						System.out.print(col);
 						System.out.print(", ");
 					}

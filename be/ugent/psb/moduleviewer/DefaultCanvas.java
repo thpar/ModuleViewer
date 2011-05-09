@@ -1,16 +1,7 @@
 package be.ugent.psb.moduleviewer;
 
-import java.awt.Dimension;
-import java.awt.Font;
-import java.util.List;
-
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
-import be.ugent.psb.modulegraphics.elements.LabelList;
-import be.ugent.psb.modulegraphics.elements.LabelList.Angle;
-import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
-import be.ugent.psb.modulegraphics.elements.Spacer;
-import be.ugent.psb.modulegraphics.elements.TreeStructure;
 import be.ugent.psb.moduleviewer.elements.ConditionLabels;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
 import be.ugent.psb.moduleviewer.elements.GeneNames;
@@ -69,62 +60,62 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
-		List<String> checkListNames = mod.getCheckListNames();
+//		List<String> checkListNames = mod.getCheckListNames();
 		
 		boolean recursiveNodes = false;
 		//tree structure and top regulators only needed if we do have topRegulators
 		//tell the matrices to traverse the nodes recursively
-		if (mod.getTopRegulators().size()>0){
-			if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
-				this.add(new Spacer());
-			}
-			recursiveNodes = true;
-			Canvas regCanvas = new Canvas();
-
-			//tree structure 
-			regCanvas.add(new TreeStructure(mod.getRootNode()));
-			regCanvas.newRow();
-
-			//the topregulators
-			topRegMatrix = new ExpressionMatrix(mod.getTopRegulators(), mod.getRootNode(), mean, sigma, recursiveNodes);
-			regCanvas.add(topRegMatrix);
-
-			//join these on one canvas to draw them without spacing in between
-			this.add(regCanvas);
-
-			topRegGeneNames = new GeneNames(mod.getTopRegulators());
-			this.add(topRegGeneNames);
-			topRegGeneNames.setAlignment(Alignment.BOTTOM_LEFT);
-			
-			if(guiModel.isDrawGOForTopRegulators()){
-//				this.add(new GOMatrix(mod.getTopRegulators(), mod.GOsuper));
-//				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
-			}
-//			if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
-//				TickBoxColumn araCol = new TickBoxColumn(mod.topRegulators, mod.getAracyc(), Color.RED);
-//				this.add(araCol);
-//				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+//		if (mod.getTopRegulators().size()>0){
+//			if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
+//				this.add(new Spacer());
 //			}
-			
-//			if (guiModel.isDrawGeneCheckLists() && mod.getTopregCheckLists()!=null){
-//				Map<String, List<Gene>> checkLists = mod.getTopregCheckLists();
-//				List<TickBoxColumn> cols = new ArrayList<TickBoxColumn>();
-//				for (String listName : checkListNames){
-//					List<Gene> list = checkLists.get(listName);
-//					TickBoxColumn col = new TickBoxColumn(mod.topRegulators, list, guiModel.getGeneCheckListColorMap().get(listName));
-//					cols.add(col);
-//				}
-//				TickBoxMatrix tbMatrix = new TickBoxMatrix(cols);
-//				this.add(tbMatrix);
-//				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+//			recursiveNodes = true;
+//			Canvas regCanvas = new Canvas();
+//
+//			//tree structure 
+//			regCanvas.add(new TreeStructure(mod.getRootNode()));
+//			regCanvas.newRow();
+//
+//			//the topregulators
+//			topRegMatrix = new ExpressionMatrix(mod.getTopRegulators(), mod.getRootNode(), mean, sigma, recursiveNodes);
+//			regCanvas.add(topRegMatrix);
+//
+//			//join these on one canvas to draw them without spacing in between
+//			this.add(regCanvas);
+//
+//			topRegGeneNames = new GeneNames(mod.getTopRegulators());
+//			this.add(topRegGeneNames);
+//			topRegGeneNames.setAlignment(Alignment.BOTTOM_LEFT);
+//			
+//			if(guiModel.isDrawGOForTopRegulators()){
+////				this.add(new GOMatrix(mod.getTopRegulators(), mod.GOsuper));
+////				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
 //			}
-			
-			this.newRow();
-			this.add(new Spacer(new Dimension(0,10)));
-			this.newRow();
-		}
+////			if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
+////				TickBoxColumn araCol = new TickBoxColumn(mod.topRegulators, mod.getAracyc(), Color.RED);
+////				this.add(araCol);
+////				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+////			}
+//			
+////			if (guiModel.isDrawGeneCheckLists() && mod.getTopregCheckLists()!=null){
+////				Map<String, List<Gene>> checkLists = mod.getTopregCheckLists();
+////				List<TickBoxColumn> cols = new ArrayList<TickBoxColumn>();
+////				for (String listName : checkListNames){
+////					List<Gene> list = checkLists.get(listName);
+////					TickBoxColumn col = new TickBoxColumn(mod.topRegulators, list, guiModel.getGeneCheckListColorMap().get(listName));
+////					cols.add(col);
+////				}
+////				TickBoxMatrix tbMatrix = new TickBoxMatrix(cols);
+////				this.add(tbMatrix);
+////				this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+////			}
+//			
+//			this.newRow();
+//			this.add(new Spacer(new Dimension(0,10)));
+//			this.newRow();
+//		}
 		
-		if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
+//		if (mod.getLinkLists()!=null && guiModel.isDrawGeneLinks()){
 //			GeneLinks linksElement = new GeneLinks(mod.getLinkLists());
 //			for (Entry<String, Color> ent : guiModel.getGeneLinkColorMap().entrySet()){
 //				String id = ent.getKey();
@@ -132,7 +123,7 @@ public class DefaultCanvas extends Canvas {
 //				linksElement.setColor(id, c);
 //			}
 //			this.add(linksElement);
-		}
+//		}
 		//the genes
 		this.matrix = new ExpressionMatrix(mod.getGenes(), mod.getRootNode(), mean, sigma, recursiveNodes);
 		this.add(matrix);
@@ -140,9 +131,9 @@ public class DefaultCanvas extends Canvas {
 		geneNames.setAlignment(Alignment.BOTTOM_LEFT);
 		this.add(geneNames);
 		
-		if (guiModel.isDrawGOForGenes()){
+//		if (guiModel.isDrawGOForGenes()){
 //			this.add(new GOMatrix(mod.genes, mod.GOsuper));
-		}
+//		}
 
 //		if (guiModel.isDrawAracyc() && mod.getAracyc() != null){
 //			TickBoxColumn araCol = new TickBoxColumn(mod.genes, mod.getAracyc(), Color.RED);
@@ -150,7 +141,7 @@ public class DefaultCanvas extends Canvas {
 //		}
 		
 		//init the checkLists
-		if (guiModel.isDrawGeneCheckLists() && mod.getCheckLists()!=null){
+//		if (guiModel.isDrawGeneCheckLists() && mod.getCheckLists()!=null){
 //			List<GeneCheckList> checkLists = mod.getCheckLists();
 //			List<TickBoxColumn> cols = new ArrayList<TickBoxColumn>();
 //			for (String listName : checkListNames){
@@ -160,12 +151,12 @@ public class DefaultCanvas extends Canvas {
 //			}
 //			TickBoxMatrix tbMatrix = new TickBoxMatrix(cols);
 //			this.add(tbMatrix);
-		}
-		LabelList checkListLabels = new LabelList(checkListNames);
-		checkListLabels.setDirection(Direction.LEFT_TO_RIGHT);
-		checkListLabels.setAngle(Angle.SKEWED);
-		checkListLabels.setFont(new Font("SansSerif", Font.PLAIN, 10));
-		checkListLabels.setPushBounds(true);
+//		}
+//		LabelList checkListLabels = new LabelList(checkListNames);
+//		checkListLabels.setDirection(Direction.LEFT_TO_RIGHT);
+//		checkListLabels.setAngle(Angle.SKEWED);
+//		checkListLabels.setFont(new Font("SansSerif", Font.PLAIN, 10));
+//		checkListLabels.setPushBounds(true);
 		
 		this.newRow();
 		
@@ -177,7 +168,7 @@ public class DefaultCanvas extends Canvas {
 		this.add(conditionLabels);
 		
 		
-		this.add(new Spacer());
+//		this.add(new Spacer());
 //		if (guiModel.isDrawGOForTopRegulators() || guiModel.isDrawGOForGenes()){
 //			GOLabels goLabels = new GOLabels(mod.GOsuper);
 //			goLabels.setPushBounds(false);
@@ -187,11 +178,11 @@ public class DefaultCanvas extends Canvas {
 //			this.add(new Label("Aracyc"));
 //			((Label)this.getLastAddedElement()).setAngle(Math.PI/4);
 //		}
-		if (guiModel.isDrawGeneCheckLists() && mod.getCheckLists()!=null){
-			this.add(checkListLabels);
-		}
-		
-		this.newRow();
+//		if (guiModel.isDrawGeneCheckLists() && mod.getCheckLists()!=null){
+//			this.add(checkListLabels);
+//		}
+//		
+//		this.newRow();
 		
 		//condition annotations
 //		if (guiModel.isDrawConditionAnnotations() && mod.moduleNetwork.getConditionClassification()!=null){

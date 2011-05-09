@@ -118,20 +118,19 @@ public class ConditionNode implements ITreeNode<Condition>{
 	@Override
 	public List<ITreeNode<Condition>> getLeaves() {
 		List<ITreeNode<Condition>> list = new ArrayList<ITreeNode<Condition>>();
-		return getLeaves(list);
+		getLeaves(list);
+		return list;
 	}
 	
-	private List<ITreeNode<Condition>> getLeaves(List<ITreeNode<Condition>> list){
-		if (left.isLeaf()) {
-			list.add(left);
-		} else left.getLeaves(list);
-		
-		if (right.isLeaf()) {
-			list.add(right);
-		} else left.getLeaves(list);
-		
-		return list;
-		
+	private void getLeaves(List<ITreeNode<Condition>> list){
+		if (isLeaf()) {
+			list.add(this);
+			return;
+		} else {
+			left.getLeaves(list);
+			right.getLeaves(list);
+			return;
+		}		
 	}
 	
 }

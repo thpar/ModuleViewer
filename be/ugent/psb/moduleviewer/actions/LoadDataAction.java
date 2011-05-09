@@ -10,21 +10,22 @@ import javax.swing.SwingWorker;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
+import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 
 /**
  * 
  * @author thpar
  *
  */
-public class LoadModulesAction extends AbstractAction {
+public class LoadDataAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
 	private Model model;
 
 	
-	public LoadModulesAction(Model model, GUIModel guiModel){
-		super("Load Modules...");
+	public LoadDataAction(Model model, GUIModel guiModel){
+		super("Load Data matrix...");
 		this.guiModel = guiModel;
 		this.model = model;
 	}
@@ -32,8 +33,7 @@ public class LoadModulesAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
-		fc.setDialogTitle("Load modules");
-		fc.setFileFilter(new FileNameRegexFilter("zipped module files", ".*\\.xml\\.gz"));
+		fc.setDialogTitle("Load data matrix");
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
 			final File file = fc.getSelectedFile();
@@ -66,9 +66,8 @@ public class LoadModulesAction extends AbstractAction {
 				}
 			};
 			
-			ConditionTreeParser parser = new ConditionTreeParser(progListener);
+			DataMatrixParser parser = new DataMatrixParser(progListener);
 			
-//			parser.setProgressListener(progListener);
 			parser.parse(model, file);
 			
 			setProgress(100);

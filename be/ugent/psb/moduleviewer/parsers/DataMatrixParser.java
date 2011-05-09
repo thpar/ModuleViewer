@@ -6,6 +6,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.util.InputMismatchException;
 
+import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -26,6 +27,16 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  *
  */
 public class DataMatrixParser extends Parser {
+
+	
+	
+	public DataMatrixParser() {
+		super();
+	}
+
+	public DataMatrixParser(ProgressListener progListener) {
+		super(progListener);
+	}
 
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {

@@ -84,7 +84,7 @@ public class MVFParser extends Parser {
 	 *
 	 */
 	enum ParamKey{
-		TYPE, COLOR, SEP, LABELCOLOR;
+		TYPE, COLOR, SEP, LABELCOLOR, OBJECT;
 	}
 	
 	
@@ -109,6 +109,11 @@ public class MVFParser extends Parser {
 		
 	}
 
+	/**
+	 * line began with "::", indicating a parameter key value pair.
+	 * 
+	 * @param line
+	 */
 	private void parseKeyValue(String line) {
 		String[] keyValue = line.substring(2).split(keyValueDelimiter);
 		String keyString = keyValue[0];
@@ -117,17 +122,13 @@ public class MVFParser extends Parser {
 		try {
 			ParamKey key = ParamKey.valueOf(keyString);
 			switch(key){
-			case TYPE:
+			case OBJECT:
 				this.abf = new AnnotationBlockFactory(inputFile.getAbsolutePath(), DataType.valueOf(value), modnet); 
-				break;
-			case COLOR:
-//				this.currentColor = Color.PINK;
-				break;
-			case SEP:
 				break;
 				
 			}
 		} catch (IllegalArgumentException e) {
+			System.err.println("Ignored unknown parameter: "+keyString);
 			this.unknownParameters .put(keyString, value);
 		}
 	}

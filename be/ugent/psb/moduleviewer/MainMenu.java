@@ -10,6 +10,7 @@ import javax.swing.JOptionPane;
 
 import be.ugent.psb.moduleviewer.actions.ChangeEpsOutputDirAction;
 import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
+import be.ugent.psb.moduleviewer.actions.LoadDataAction;
 import be.ugent.psb.moduleviewer.actions.LoadModulesAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -20,17 +21,11 @@ public class MainMenu extends JMenuBar {
 	private static final long serialVersionUID = 1L;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
-//		ModuleNetwork modnet = model.getModnet();
+
 		JMenu fileMenu = new JMenu("File");
+		JMenuItem loadDataItem = new JMenuItem(new LoadDataAction(model, guiModel));
 		JMenuItem loadModnetItem = new JMenuItem(new LoadModulesAction(model, guiModel));
-//		JMenuItem loadTopRegItem = new JMenuItem(new LoadTopRegulatorsAction(modnet, guiModel));
-//		JMenuItem loadGeneMapItem = new JMenuItem(new LoadGeneMapAction(modnet, guiModel));
-//		JMenuItem loadBiNGOItem = new JMenuItem(new LoadBiNGOAction(modnet, guiModel));
-//		JMenuItem loadGeneLinkItem = new JMenuItem(new LoadGeneLinkAction(modnet, guiModel));
-//		JMenuItem loadGeneCheckListItem = new JMenuItem(new LoadGeneCheckListAction(modnet, guiModel));
-//		JMenuItem loadAracycItem = new JMenuItem(new LoadAracycAction(modnet, guiModel));
-//		JMenuItem loadMotifFileItem = new JMenuItem(new LoadMotifFileAction((Frame)this.getTopLevelAncestor(), modnet, guiModel));
-//		JMenuItem loadCondMapItem = new JMenuItem(new LoadConditionAnnotationAction(modnet, guiModel));
+
 
 		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(model, guiModel));
 		JMenuItem exitItem = new JMenuItem("Exit");
@@ -40,16 +35,9 @@ public class MainMenu extends JMenuBar {
 				System.exit(0);
 			}
 		});
+		fileMenu.add(loadDataItem);
 		fileMenu.add(loadModnetItem);
-//		fileMenu.add(loadTopRegItem);
-//		fileMenu.add(loadGeneMapItem);
-//		fileMenu.add(loadBiNGOItem);
-//		fileMenu.add(loadGeneLinkItem);
-//		fileMenu.add(loadGeneCheckListItem);
-//		fileMenu.add(loadAracycItem);
-//		fileMenu.add(loadMotifFileItem);
-//		
-//		fileMenu.add(loadCondMapItem);
+
 		
 		fileMenu.addSeparator();
 		
