@@ -17,7 +17,7 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  * 
  * Format:
  * 
- * line 1 : tab delimited list of conditions (ids)
+ * line 1 : tab delimited list of conditions (ids) col 0 and 1 are headers and can be skipped.
  * other lines: tab delimited list: 
  * column 0: gene id
  * column 1: optional description
@@ -46,9 +46,10 @@ public class DataMatrixParser extends Parser {
 
 		String conditionLine = in.readLine();
 		String[] conditionIds = conditionLine.split("\\t");
-		int numCond = conditionIds.length;
-		for (String condId : conditionIds){
-			modnet.addCondition(condId);
+		
+		int numCond = conditionIds.length - 2;
+		for (int i=2; i<conditionIds.length; i++){
+			modnet.addCondition(conditionIds[i]);
 		}
 
 		String line = in.readLine();

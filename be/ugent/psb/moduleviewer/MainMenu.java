@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import be.ugent.psb.moduleviewer.actions.ChangeEpsOutputDirAction;
 import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
 import be.ugent.psb.moduleviewer.actions.LoadDataAction;
-import be.ugent.psb.moduleviewer.actions.LoadModulesAction;
+import be.ugent.psb.moduleviewer.actions.LoadGeneModulesAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 
@@ -24,7 +24,7 @@ public class MainMenu extends JMenuBar {
 
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem loadDataItem = new JMenuItem(new LoadDataAction(model, guiModel));
-		JMenuItem loadModnetItem = new JMenuItem(new LoadModulesAction(model, guiModel));
+		JMenuItem loadModnetItem = new JMenuItem(new LoadGeneModulesAction(model, guiModel));
 
 
 		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(model, guiModel));

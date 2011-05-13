@@ -21,12 +21,12 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 /**
  * Handles the XML that describes a {@link ConditionAnnotation} tree. Invoked by
- * the {@link ConditionTreeParser}
+ * the {@link TreeParser}
  * 
  * @author thpar
  * 
  */
-public class TreeXMLHandler extends DefaultHandler {
+public class ConditionXMLHandler extends DefaultHandler {
 	/**
 	 * The XML tags we're expecting. Enums are in all capitals, but will match
 	 * case insensitive.
@@ -35,7 +35,7 @@ public class TreeXMLHandler extends DefaultHandler {
 	 * 
 	 */
 	enum XMLTag {
-		MODULENETWORK, MODULES, MODULE, REGRESSIONTREE, CHILD, NA;
+		MODULENETWORK, MODULES, MODULE, CONDITIONTREE, CHILD, NONTREECONDITIONS, NA;
 
 		public static XMLTag getValue(String value) {
 			try {
@@ -95,7 +95,7 @@ public class TreeXMLHandler extends DefaultHandler {
 	 *            the ModuleNetwork to fill
 	 * @param progressListener
 	 */
-	public TreeXMLHandler(ModuleNetwork modnet,
+	public ConditionXMLHandler(ModuleNetwork modnet,
 			ProgressListener progListener) {
 		this.modnet = modnet;
 		this.progListener = progListener;
@@ -139,7 +139,7 @@ public class TreeXMLHandler extends DefaultHandler {
 			String modName = attributes.getValue("name");
 			this.mod = new Module(modnet, modId, modName);
 			break;
-		case REGRESSIONTREE:
+		case CONDITIONTREE:
 			treePath = new Stack<Dir>();
 			treePath.push(Dir.ROOT);
 			rootNode = null;
@@ -149,7 +149,6 @@ public class TreeXMLHandler extends DefaultHandler {
 			// just point to the correct one now
 
 			if (rootNode == null) {
-				// rootNode = new TreeNode(mod, modnet.normalGammaPrior);
 				rootNode = new ConditionNode();
 				node = rootNode;
 			} else {
@@ -164,27 +163,21 @@ public class TreeXMLHandler extends DefaultHandler {
 			}
 
 			// read atts and init node
-			int numChildren = Integer.parseInt(attributes.getValue("NumChildren"));
-//			String name = attributes.getValue("Name");
-			switch (numChildren) {
-			case 0:
-				node.setLeaf(true);
-				parseTreeNodeAtts(attributes);
-				break;
-			case 2:
+			String internalNodeString = attributes.getValue("Node");
+			/**
+			 * Is the child node internal? (internal == not a leaf)
+			 */
+			boolean internalNode =  internalNodeString.equals("internal");
+			if (internalNode) {
 				node.setLeaf(false);
 				// internal node has 2 children
 				node.setLeft(new ConditionNode(node));
 				node.setRight(new ConditionNode(node));
-				// node.testSplits = new ArrayList<Split>();
-				// node.testSplitsRandom = new ArrayList<Split>();
 				treePath.push(Dir.LEFT);
-				break;
-			default:
-				throw new SAXException("Impossible to have " + numChildren
-						+ " child nodes.");
+			} else {
+				node.setLeaf(true);
+				parseTreeNodeAtts(attributes);
 			}
-
 			break;
 		case NA:
 			throw new SAXException("Unknown tag: " + qName);
@@ -194,8 +187,7 @@ public class TreeXMLHandler extends DefaultHandler {
 	}
 
 	private void parseTreeNodeAtts(Attributes attributes) {
-//		node.leafDistribution.score = Double.parseDouble(attributes.getValue("score"));
-		String conds = attributes.getValue("type");
+		String conds = attributes.getValue("conditionIds");
 		List<Condition> condList = new ArrayList<Condition>();
 		StringTokenizer tokens = new StringTokenizer(conds,";");
 		while(tokens.hasMoreTokens()){
@@ -209,9 +201,7 @@ public class TreeXMLHandler extends DefaultHandler {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-//			condList.add(Integer.parseInt(tokens.nextElement().toString()));
 		}
-//		node.leafDistribution.condSet = condList;
 		node.setConditions(condList);
 		// compute statistics and score as if node was leaf
 //		node.statistics();
@@ -230,15 +220,12 @@ public class TreeXMLHandler extends DefaultHandler {
 			break;
 		case MODULES:
 			progListener.setMyProgress(80);
-//			modnet.moduleSets.add(modset);
-//			modnet.moduleSet = modset;
-//			modnet.setModules(modset);
 			System.out.println("Done reading Modules");
 			break;
 		case MODULE:
 			modnet.addModule(mod);
 			break;
-		case REGRESSIONTREE:
+		case CONDITIONTREE:
 			parseRootNodeEnd();
 			break;
 		case CHILD:
@@ -246,7 +233,6 @@ public class TreeXMLHandler extends DefaultHandler {
 			//if we completed a left child: off to the right
 			//if we had a right child: branch completed
 			Dir dir = treePath.pop();
-//			node = node.parentNode;
 			node = node.getParent();
 			if (dir == Dir.LEFT){
 				treePath.push(Dir.RIGHT);

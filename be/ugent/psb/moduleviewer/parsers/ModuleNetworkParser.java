@@ -13,6 +13,9 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 /**
  * This parser will load the Module information and data matrix into a given {@link ModuleNetwork} object.
+ * The parser takes as input the big GZipped XML-files LeMoNe generates and thus uses the {@link LemoneXMLHandler}. 
+ * 
+ * This parser will become deprecated and replaced by the faster and more slender {@link TreeParser}
  * 
  * @author thpar
  *

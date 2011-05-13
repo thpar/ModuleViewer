@@ -6,19 +6,19 @@ import java.io.IOException;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
 
-public class ConditionTreeParser extends TreeParser{
+public class GeneTreeParser extends TreeParser{
 
-	public ConditionTreeParser() {
+	public GeneTreeParser() {
 		super();
 	}
 
-	public ConditionTreeParser(ProgressListener progListener) {
+	public GeneTreeParser(ProgressListener progListener) {
 		super(progListener);
 	}
 
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {
-		parse(inputFile, new ConditionXMLHandler(model.getModnet(), progressListener));
+		parse(inputFile, new GeneXMLHandler(model.getModnet(), progressListener));
 	}
 	
 	

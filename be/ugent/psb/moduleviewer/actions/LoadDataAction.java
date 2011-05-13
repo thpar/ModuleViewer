@@ -9,7 +9,6 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 
 /**
