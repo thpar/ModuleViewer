@@ -7,12 +7,12 @@ public class Gene {
 	/**
 	 * GeneID
 	 */
-	private String id;
+	private String name;
 	
 	/**
 	 * Gene alternative name
 	 */
-	private String name;
+	private String alias;
 	
 	private String description;
 	
@@ -24,40 +24,51 @@ public class Gene {
 
 	/**
 	 * 
-	 * @param id Gene ID
+	 * @param name Gene ID
 	 */
-	public Gene(String id){
-		this.id = id;
-	}
-	
-	public Gene(String id, String description){
-		this.id = id;
-		this.description = description;
+	public Gene(String name){
+		this.name = name;
 	}
 	
 	/**
-	 * Get the alternative gene name. If no name is set, the geneId is returned.
+	 * Create a gene with name and alias
+	 * 
+	 * @param name
+	 * @param alias
+	 */
+	public Gene(String name, String alias){
+		this.name = name;
+		this.alias = alias;
+	}
+	
+	/**
+	 * Get the alternative gene name. If no alias is set, the {@link name} is returned.
+	 * @return
+	 */
+	public String getAliasOrName() {
+		if (alias!=null) return alias;
+		else return name;
+	}
+
+	public String getAlias(){
+		return alias;
+	}
+	
+	
+	/**
+	 * Set the alternative gene name
+	 * @param alias
+	 */
+	public void setAlias(String alias) {
+		this.alias = alias;
+	}
+
+	/**
+	 * Get the gene name
 	 * @return
 	 */
 	public String getName() {
-		if (name!=null) return name;
-		else return id;
-	}
-
-	/**
-	 * Set the alternative gene name
-	 * @param name
-	 */
-	public void setName(String name) {
-		this.name = name;
-	}
-
-	/**
-	 * Get the gene id
-	 * @return
-	 */
-	public String getId() {
-		return id;
+		return name;
 	}
 
 	/**
@@ -91,8 +102,8 @@ public class Gene {
 
 	@Override
 	public String toString() {
-		if (name==null || name.isEmpty()) return this.id;
-		else return this.id + "("+this.name+")";
+		if (alias==null || alias.isEmpty()) return this.name;
+		else return this.name + "("+this.alias+")";
 	}
 
 	

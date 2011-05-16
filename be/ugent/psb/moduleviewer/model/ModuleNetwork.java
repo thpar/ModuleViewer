@@ -18,6 +18,11 @@ public class ModuleNetwork {
 	private Map<String, Gene> genes = new HashMap<String, Gene>();
 	
 	/**
+	 * All genes in the network. Quick way of resolving a gene by Alias
+	 */
+	private Map<String, Gene> geneAliasses = new HashMap<String, Gene>();
+	
+	/**
 	 * All conditions in this network. Maps condition name to the condition
 	 * object.
 	 */
@@ -66,22 +71,45 @@ public class ModuleNetwork {
 		return gene;	
 	}
 	
+	/**
+	 * Adds a gene to to the complete gene list. 
+	 * 
+	 * @param geneId
+	 * @return the newly added {@link Gene} object.
+	 */
+	public Gene addGene(String geneId, String alias){
+		Gene gene = new Gene(geneId, alias);
+		this.genes.put(geneId, gene);
+		this.geneAliasses.put(alias, gene);
+		return gene;	
+	}
+	
+	
+	/**
+	 * Add a gene to the module network.
+	 * 
+	 * @param gene
+	 */
 	public void addGene(Gene gene){
-		this.genes.put(gene.getId(), gene);
+		this.genes.put(gene.getName(), gene);
+		if (gene.getAlias()!= null && !gene.getAlias().isEmpty()){
+			this.geneAliasses.put(gene.getAlias(), gene);
+		}
 	}
 	
 	/**
-	 * Get a gene by gene id.
+	 * Get a gene by gene id or alias.
 	 * 
 	 * @param geneId
 	 * @return
 	 */
 	public Gene getGene(String geneId) throws UnknownItemException {
-		if (!genes.containsKey(geneId)) throw new UnknownItemException(UnknownItemException.ItemType.GENE, geneId);
-		return genes.get(geneId);
+		if (!genes.containsKey(geneId) && !geneAliasses.containsKey(geneId)) 
+			throw new UnknownItemException(UnknownItemException.ItemType.GENE, geneId);
+		if (genes.containsKey(geneId)) return genes.get(geneId);
+		else return geneAliasses.get(geneId);
 	}
 	
-
 	public void addCondition(String condName){
 		Condition cond = new Condition(condName, conditions.size());
 		this.conditions.put(condName, cond);

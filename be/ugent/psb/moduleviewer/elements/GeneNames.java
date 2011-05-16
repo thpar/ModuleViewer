@@ -21,7 +21,7 @@ public class GeneNames extends Element {
 		this.genes = genes;
 		List<String> geneNames = new ArrayList<String>();
 		for (Gene gene : genes){
-			geneNames.add(gene.getName());
+			geneNames.add(gene.getAliasOrName());
 		}
 		labelList = new LabelList(geneNames);
 		
@@ -64,10 +64,10 @@ public class GeneNames extends Element {
 	
 	
 	public void highlightGene(Gene highlight, boolean hl){
-		labelList.setLabelHighlight(highlight.getName(), hl);		
+		labelList.setLabelHighlight(highlight.getAliasOrName(), hl);		
 	}
 	public void toggleHighlightGene(Gene highlight){
-		labelList.toggleLabelHighlight(highlight.getName());
+		labelList.toggleLabelHighlight(highlight.getAliasOrName());
 	}
 	public void removeHighlights(){
 		labelList.removeHighlights();

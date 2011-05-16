@@ -64,7 +64,8 @@ public class DataMatrixParser extends Parser {
 			if (descr==null || descr=="null" || descr.isEmpty()){
 				newGene = new Gene(geneId);				
 			} else {
-				newGene = new Gene(geneId, descr);							
+				newGene = new Gene(geneId);
+				newGene.setDescription(descr);
 			}
 			modnet.addGene(newGene);
 

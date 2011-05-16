@@ -11,7 +11,6 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
-import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
@@ -32,7 +31,7 @@ public class GeneXMLHandler extends DefaultHandler {
 	 * 
 	 */
 	enum XMLTag {
-		MODULENETWORK, MODULES, MODULE, GENETREE, CHILD, NA;
+		MODULENETWORK, MODULE, GENETREE, CHILD, GENE, NA;
 
 		public static XMLTag getValue(String value) {
 			try {
@@ -124,8 +123,6 @@ public class GeneXMLHandler extends DefaultHandler {
 		case MODULENETWORK:
 			progListener.setMyProgress(10);
 			break;
-		case MODULES:
-			break;
 		case MODULE:
 			int modId = Integer.parseInt(attributes.getValue("id"));
 			String modName = attributes.getValue("name");
@@ -174,11 +171,19 @@ public class GeneXMLHandler extends DefaultHandler {
 			}
 			
 			break;
+		case GENE:
+			parseGeneAttributes(attributes);
+			break;
 		case NA:
 			throw new SAXException("Unknown tag: " + qName);
 		default:
 			notCaught.add(el);
 		}
+	}
+
+	private void parseGeneAttributes(Attributes attributes) {
+		// TODO Auto-generated method stub
+		
 	}
 
 	private void parseTreeNodeAtts(Attributes attributes) {
@@ -207,8 +212,6 @@ public class GeneXMLHandler extends DefaultHandler {
 		if (el != opened.peek()) throw new SAXException("Incorrectly nested tags.");
 		switch(el){
 		case MODULENETWORK:
-			break;
-		case MODULES:
 			progListener.setMyProgress(80);
 			System.out.println("Done reading Modules");
 			break;
@@ -228,6 +231,7 @@ public class GeneXMLHandler extends DefaultHandler {
 //				treePath.push(Dir.RIGHT);
 //			}			
 			break;
+		case GENE: break;
 		case NA:
 			throw new SAXException("Unknown tag: "+qName);
 		default:

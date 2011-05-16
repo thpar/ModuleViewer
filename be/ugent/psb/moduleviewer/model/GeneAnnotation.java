@@ -31,7 +31,7 @@ public class GeneAnnotation extends Annotation<Gene>{
 	public List<String> getGeneIds(){
 		List<String> geneIds = new ArrayList<String>();
 		for(Gene gene : contents){
-			geneIds.add(gene.getId());
+			geneIds.add(gene.getName());
 		}
 		return geneIds;
 	}
