@@ -55,17 +55,9 @@ public class ParserTest {
 			
 		//test conditions
 		try {
-			Module mod0 = modnet.getModule(96);
-			System.out.println("Testing module 0: "+mod0.getName());
+			Module mod0 = modnet.getModule(18);
+			System.out.println("Testing module 18: "+mod0.getName());
 
-			List<Condition> conds = mod0.getRootNode().getConditions();
-			for (Condition cond : conds){
-				System.out.print(cond);
-				System.out.print(", ");
-			}
-
-			System.out.println();
-			System.out.println();
 
 			for (ITreeNode<Condition> l : mod0.getRootNode().getLeaves()){
 				for (Condition col : l.getColumns()){
@@ -73,6 +65,11 @@ public class ParserTest {
 					System.out.print(", ");
 				}
 				System.out.println();
+			}
+			System.out.println("Non Tree Conditions");
+			for (Condition cond : mod0.getNonTreeConditions()){
+				System.out.print(cond);
+				System.out.print(", ");
 			}
 
 			System.out.println();

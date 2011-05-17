@@ -30,6 +30,7 @@ public class Module {
 	private double mean;
 	private double sigma;
 	private boolean changed = true;
+	private List<Condition> nonTreeConditions = new ArrayList<Condition>();
 	
 	
 	public Module(ModuleNetwork modnet, int id) {
@@ -173,6 +174,16 @@ public class Module {
 	public String toString() {
 		if (name==null || name.isEmpty()) return "module "+this.id;
 		else return this.name;
+	}
+
+	public void addNonTreeCondition(int condId) throws UnknownItemException{
+		Condition cond = modnet.getCondition(condId);
+		this.nonTreeConditions.add(cond);
+		
+	}
+
+	public List<Condition> getNonTreeConditions() {
+		return nonTreeConditions;
 	}
 	
 	

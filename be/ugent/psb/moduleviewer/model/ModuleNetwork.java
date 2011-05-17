@@ -2,15 +2,13 @@ package be.ugent.psb.moduleviewer.model;
 
 import java.util.ArrayList;
 import java.util.Collection;
-import java.util.Collections;
-import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import be.ugent.psb.moduleviewer.model.UnknownItemException.ItemType;
 
-public class ModuleNetwork {
+public class ModuleNetwork{
 
 	/**
 	 * All genes in this network. Maps gene id to gene object
@@ -95,6 +93,16 @@ public class ModuleNetwork {
 		if (gene.getAlias()!= null && !gene.getAlias().isEmpty()){
 			this.geneAliasses.put(gene.getAlias(), gene);
 		}
+	}
+	
+	public void setGeneAlias(Gene gene, String alias){
+		String oldAlias = gene.getAlias();
+		if (oldAlias != null && !oldAlias.isEmpty() && 
+				!oldAlias.equals(alias) && geneAliasses.containsKey(oldAlias)){
+			geneAliasses.remove(oldAlias);
+		}
+		gene.setAlias(alias);
+		geneAliasses.put(alias, gene);
 	}
 	
 	/**
@@ -226,5 +234,7 @@ public class ModuleNetwork {
 		}
 		return dataMax;
 	}
+
+	
 	
 }

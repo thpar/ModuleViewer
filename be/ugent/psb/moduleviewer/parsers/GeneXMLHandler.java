@@ -3,7 +3,6 @@ package be.ugent.psb.moduleviewer.parsers;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Stack;
-import java.util.StringTokenizer;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -11,6 +10,7 @@ import org.xml.sax.helpers.DefaultHandler;
 
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
+import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
@@ -182,25 +182,23 @@ public class GeneXMLHandler extends DefaultHandler {
 	}
 
 	private void parseGeneAttributes(Attributes attributes) {
-		// TODO Auto-generated method stub
+		String name = attributes.getValue("name");
+		String alias = attributes.getValue("alias");
+		try {
+			Gene addingGene = modnet.getGene(name);
+			if (alias!=null && !alias.isEmpty()){
+				modnet.setGeneAlias(addingGene, alias);
+			}
+			mod.addGene(name);
+		} catch (UnknownItemException e) {
+			e.printStackTrace();
+		}
 		
 	}
 
 	private void parseTreeNodeAtts(Attributes attributes) {
-		String genes = attributes.getValue("geneIds");
-		StringTokenizer tokens = new StringTokenizer(genes,";");
-		while(tokens.hasMoreTokens()){
-			try {
-				String geneId = tokens.nextToken();
-				mod.addGene(geneId);
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnknownItemException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
-		}
+		String nodeStatus = attributes.getValue("Node");
+		//switch this between internal and leaf
 	}
 
 	

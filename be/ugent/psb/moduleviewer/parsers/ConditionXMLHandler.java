@@ -1,11 +1,8 @@
 package be.ugent.psb.moduleviewer.parsers;
 
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 import java.util.Stack;
-import java.util.StringTokenizer;
 
 import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
@@ -18,6 +15,7 @@ import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
+import be.ugent.psb.moduleviewer.parsers.ConditionXMLHandler.XMLTag;
 
 /**
  * Handles the XML that describes a {@link ConditionAnnotation} tree. Invoked by
@@ -35,7 +33,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 	 * 
 	 */
 	enum XMLTag {
-		MODULENETWORK, MODULES, MODULE, CONDITIONTREE, CHILD, NONTREECONDITIONS, NA;
+		MODULENETWORK, MODULE, CONDITIONTREE, CHILD, CONDITION, NONTREECONDITIONS, NA;
 
 		public static XMLTag getValue(String value) {
 			try {
@@ -132,8 +130,6 @@ public class ConditionXMLHandler extends DefaultHandler {
 		case MODULENETWORK:
 			progListener.setMyProgress(10);
 			break;
-		case MODULES:
-			break;
 		case MODULE:
 			int modId = Integer.parseInt(attributes.getValue("id"));
 			String modName = attributes.getValue("name");
@@ -144,6 +140,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 			treePath.push(Dir.ROOT);
 			rootNode = null;
 			break;
+		case NONTREECONDITIONS: break;
 		case CHILD:
 			// child nodes have been created on parent entry
 			// just point to the correct one now
@@ -179,6 +176,9 @@ public class ConditionXMLHandler extends DefaultHandler {
 				parseTreeNodeAtts(attributes);
 			}
 			break;
+		case CONDITION: 
+			parseConditionAttributes(attributes);
+			break;
 		case NA:
 			throw new SAXException("Unknown tag: " + qName);
 		default:
@@ -186,23 +186,47 @@ public class ConditionXMLHandler extends DefaultHandler {
 		}
 	}
 
-	private void parseTreeNodeAtts(Attributes attributes) {
-		String conds = attributes.getValue("conditionIds");
-		List<Condition> condList = new ArrayList<Condition>();
-		StringTokenizer tokens = new StringTokenizer(conds,";");
-		while(tokens.hasMoreTokens()){
-			try {
-				int condNumber = Integer.parseInt(tokens.nextElement().toString());
-				condList.add(modnet.getCondition(condNumber));
-			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			} catch (UnknownItemException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
+	private void parseConditionAttributes(Attributes attributes) {
+		String condId = attributes.getValue("id");
+		try {
+			//retrieve parent tag
+			XMLTag thisTag = opened.pop();
+			XMLTag parentTag = opened.peek();
+			opened.push(thisTag);
+			switch(parentTag){
+			case CHILD: 
+				Condition addingCondition = modnet.getCondition(Integer.parseInt(condId));
+				node.addCondition(addingCondition);
+				break;
+			case NONTREECONDITIONS:
+				mod.addNonTreeCondition(Integer.parseInt(condId));
+				break;
 			}
+		} catch (NumberFormatException e) {
+			e.printStackTrace();
+		} catch (UnknownItemException e) {
+			e.printStackTrace();
 		}
-		node.setConditions(condList);
+		
+	}
+
+	private void parseTreeNodeAtts(Attributes attributes) {
+//		String conds = attributes.getValue("conditionIds");
+//		List<Condition> condList = new ArrayList<Condition>();
+//		StringTokenizer tokens = new StringTokenizer(conds,";");
+//		while(tokens.hasMoreTokens()){
+//			try {
+//				int condNumber = Integer.parseInt(tokens.nextElement().toString());
+//				condList.add(modnet.getCondition(condNumber));
+//			} catch (NumberFormatException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			} catch (UnknownItemException e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//		node.setConditions(condList);
 		// compute statistics and score as if node was leaf
 //		node.statistics();
 //		node.leafDistribution.bayesianScore();	
@@ -218,16 +242,13 @@ public class ConditionXMLHandler extends DefaultHandler {
 		switch(el){
 		case MODULENETWORK:
 			break;
-		case MODULES:
-			progListener.setMyProgress(80);
-			System.out.println("Done reading Modules");
-			break;
 		case MODULE:
 			modnet.addModule(mod);
 			break;
 		case CONDITIONTREE:
 			parseRootNodeEnd();
 			break;
+		case NONTREECONDITIONS: break;
 		case CHILD:
 			//go back up in the tree.
 			//if we completed a left child: off to the right
@@ -238,6 +259,8 @@ public class ConditionXMLHandler extends DefaultHandler {
 				treePath.push(Dir.RIGHT);
 			}			
 			break;
+			
+		case CONDITION: break;
 		case NA:
 			throw new SAXException("Unknown tag: "+qName);
 		default:

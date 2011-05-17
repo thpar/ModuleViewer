@@ -31,7 +31,7 @@ public class ConditionNode implements ITreeNode<Condition>{
 	 * This attribute is not null only for leave nodes. Internal nodes just
 	 * take the concatenation of the conditions of their children.
 	 */
-	List<Condition> conditions;
+	List<Condition> conditions = new ArrayList<Condition>();
 	
 	
 	
@@ -131,6 +131,10 @@ public class ConditionNode implements ITreeNode<Condition>{
 			right.getLeaves(list);
 			return;
 		}		
+	}
+
+	public void addCondition(Condition condition) {
+		this.conditions.add(condition);
 	}
 	
 }
