@@ -271,7 +271,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 	}
 
 	private void parseRootNodeEnd() {
-		this.mod.setRootNode(rootNode);
+		this.mod.setConditionTree(rootNode);
 	}
 
 	

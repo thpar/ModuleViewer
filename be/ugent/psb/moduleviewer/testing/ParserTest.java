@@ -59,7 +59,7 @@ public class ParserTest {
 			System.out.println("Testing module 18: "+mod0.getName());
 
 
-			for (ITreeNode<Condition> l : mod0.getRootNode().getLeaves()){
+			for (ITreeNode<Condition> l : mod0.getConditionTree().getLeaves()){
 				for (Condition col : l.getColumns()){
 					System.out.print(col);
 					System.out.print(", ");

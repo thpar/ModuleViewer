@@ -125,7 +125,7 @@ public class DefaultCanvas extends Canvas {
 //			this.add(linksElement);
 //		}
 		//the genes
-		this.matrix = new ExpressionMatrix(mod.getGenes(), mod.getRootNode(), mean, sigma, recursiveNodes);
+		this.matrix = new ExpressionMatrix(mod.getGenes(), mod.getConditionTree(), mean, sigma, recursiveNodes);
 		this.add(matrix);
 		this.geneNames = new GeneNames(mod.getGenes());
 		geneNames.setAlignment(Alignment.BOTTOM_LEFT);
@@ -164,7 +164,7 @@ public class DefaultCanvas extends Canvas {
 //			this.add(new Spacer());
 //		}
 		//condition and GO labels
-		conditionLabels = new ConditionLabels(mod.getRootNode(), recursiveNodes); 
+		conditionLabels = new ConditionLabels(mod.getConditionTree(), recursiveNodes); 
 		this.add(conditionLabels);
 		
 		

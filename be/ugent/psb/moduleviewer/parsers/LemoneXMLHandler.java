@@ -579,7 +579,7 @@ public class LemoneXMLHandler extends DefaultHandler{
 //		}
 //		this.mod.hierarchicalTrees.add(this.rootNode);
 //		this.mod.hierarchicalTree = this.rootNode;
-		this.mod.setRootNode(rootNode);
+		this.mod.setConditionTree(rootNode);
 //		System.out.println("Done reading root");
 		
 	}

@@ -12,25 +12,39 @@ public class Module {
 	private int id;
 	private String name;
 	
-	/**
-	 * Genes in this module
-	 */
-	private List<Gene> genes = new ArrayList<Gene>();
+//	/**
+//	 * Genes in this module
+//	 */
+//	private List<Gene> genes = new ArrayList<Gene>();
 
 	/**
 	 * The genes that are top regulators for this module 
 	 */
 	List<Gene> topRegulators = new ArrayList<Gene>();
 	
-	ConditionNode rootNode;
+	/**
+	 * Root node of the condition tree
+	 */
+	ConditionNode conditionTree;
+	/**
+	 * Conditions that are not incorporated in the tree structure
+	 */
+	private List<Condition> nonTreeConditions = new ArrayList<Condition>();
+	
+	
+	/**
+	 * Root node of the gene tree
+	 */
+	GeneNode geneTree;
+	
 	
 	private List<AnnotationBlock> annotationBlocks = new ArrayList<AnnotationBlock>();
 	
 	
-	private double mean;
-	private double sigma;
-	private boolean changed = true;
-	private List<Condition> nonTreeConditions = new ArrayList<Condition>();
+//	private double mean;
+//	private double sigma;
+//	private boolean changed = true;
+	
 	
 	
 	public Module(ModuleNetwork modnet, int id) {
@@ -44,20 +58,20 @@ public class Module {
 		this.name = name;
 	}
 	
-	public List<Gene> getGenes() {
-		return genes;
-	}
+//	public List<Gene> getGenes() {
+//		return genes;
+//	}
 
 
-	/**
-	 * Add a gene by id to this module. The gene has to exist in the ModuleNetwork already.
-	 * 
-	 * @param geneId
-	 */
-	public void addGene(String geneId) throws UnknownItemException{
-		Gene gene = modnet.getGene(geneId);
-		this.genes.add(gene);
-	}
+//	/**
+//	 * Add a gene by id to this module. The gene has to exist in the ModuleNetwork already.
+//	 * 
+//	 * @param geneId
+//	 */
+//	public void addGene(String geneId) throws UnknownItemException{
+//		Gene gene = modnet.getGene(geneId);
+//		this.genes.add(gene);
+//	}
 
 	
 	public List<Gene> getTopRegulators() {
@@ -72,17 +86,25 @@ public class Module {
 	 * Returns the root node of the condition tree
 	 * @return
 	 */
-	public ConditionNode getRootNode() {
-		return rootNode;
+	public ConditionNode getConditionTree() {
+		return conditionTree;
 	}
 
-	public void setRootNode(ConditionNode rootNode) {
-		this.rootNode = rootNode;
+	public void setConditionTree(ConditionNode rootNode) {
+		this.conditionTree = rootNode;
 	}
 
-	public void setSigma(int sigma) {
-		this.sigma = sigma;
+	public GeneNode getGeneTree() {
+		return geneTree;
 	}
+
+	public void setGeneTree(GeneNode geneTree) {
+		this.geneTree = geneTree;
+	}
+
+//	public void setSigma(int sigma) {
+//		this.sigma = sigma;
+//	}
 
 	public int getId() {
 		return id;
@@ -117,50 +139,50 @@ public class Module {
 	}
 	
 	
-	public double getMean(){
-		if (changed){
-			calculateMeanAndSigma();
-		}
-		return mean;
-	}
-	public double getSigma(){
-		if (changed){
-			calculateMeanAndSigma();
-		}
-		return sigma;
-	}
+//	public double getMean(){
+//		if (changed){
+//			calculateMeanAndSigma();
+//		}
+//		return mean;
+//	}
+//	public double getSigma(){
+//		if (changed){
+//			calculateMeanAndSigma();
+//		}
+//		return sigma;
+//	}
 
-	private void calculateMeanAndSigma() {
-		
-		//get the mean for this module
-		int nbval=0;
-		for (Gene g : this.genes) {
-			for (double value : g.getData()) {
-				if (!Double.isNaN(value)) {
-					this.mean += value;
-					nbval++;
-				}
-			}
-		}
-		this.mean = this.mean / nbval;
-
-		
-		//get the sigma for this module
-		nbval=0;
-		for (Gene g : this.genes) {
-			for (double value : g.getData()) {
-				if (!Double.isNaN(value)) {
-					this.sigma += Math.pow(this.mean - value,2);
-					nbval++;
-				}
-			}
-		}
-		this.sigma = Math.sqrt(this.sigma / nbval);
-
-
-
-		changed = false;
-	}
+//	private void calculateMeanAndSigma() {
+//		
+//		//get the mean for this module
+//		int nbval=0;
+//		for (Gene g : this.genes) {
+//			for (double value : g.getData()) {
+//				if (!Double.isNaN(value)) {
+//					this.mean += value;
+//					nbval++;
+//				}
+//			}
+//		}
+//		this.mean = this.mean / nbval;
+//
+//		
+//		//get the sigma for this module
+//		nbval=0;
+//		for (Gene g : this.genes) {
+//			for (double value : g.getData()) {
+//				if (!Double.isNaN(value)) {
+//					this.sigma += Math.pow(this.mean - value,2);
+//					nbval++;
+//				}
+//			}
+//		}
+//		this.sigma = Math.sqrt(this.sigma / nbval);
+//
+//
+//
+//		changed = false;
+//	}
 
 	public String getName() {
 		return name;

@@ -59,7 +59,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 			e.printStackTrace();
 		}
 		
-		ConditionNode n = mod.getRootNode();
+		ConditionNode n = mod.getConditionTree();
 //		mod.hierarchicalTree = n;
 		
 //		for (TreeNode node : mod.hierarchicalTree.getInternalNodes()){
