@@ -11,6 +11,7 @@ import org.xml.sax.helpers.DefaultHandler;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
 import be.ugent.psb.moduleviewer.model.Gene;
+import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
@@ -79,9 +80,15 @@ public class GeneXMLHandler extends DefaultHandler {
 
 	private Module mod;
 
-//	private ConditionNode rootNode;
-//
-//	private ConditionNode node;
+	/**
+	 * top of the tree for the current module
+	 */
+	private GeneNode rootNode;
+	/**
+	 * node we're now working on
+	 */
+	private GeneNode node;
+	
 
 
 	/**
@@ -131,43 +138,38 @@ public class GeneXMLHandler extends DefaultHandler {
 		case GENETREE:
 			treePath = new Stack<Dir>();
 			treePath.push(Dir.ROOT);
-//			rootNode = null;
+			rootNode = null;
 			break;
 		case CHILD:
 			// child nodes have been created on parent entry
 			// just point to the correct one now
 
-//			if (rootNode == null) {
-//				// rootNode = new TreeNode(mod, modnet.normalGammaPrior);
-//				rootNode = new ConditionNode();
-//				node = rootNode;
-//			} else {
-//				switch (treePath.peek()) {
-//				case LEFT:
-//					node = (ConditionNode) node.left();
-//					break;
-//				case RIGHT:
-//					node = (ConditionNode) node.right();
-//					break;
-//				}
-//			}
+			if (rootNode == null) {
+				rootNode = new GeneNode();
+				node = rootNode;
+			} else {
+				switch (treePath.peek()) {
+				case LEFT:
+					node = (GeneNode) node.left();
+					break;
+				case RIGHT:
+					node = (GeneNode) node.right();
+					break;
+				}
+			}
 
 			// read atts and init node
 			String nodeTypeString = attributes.getValue("Node");
 			boolean internalNode = nodeTypeString.equals("internal");
 			if (internalNode) {
-//				node.setLeaf(false);
-//				// internal node has 2 children
-//				node.setLeft(new ConditionNode(node));
-//				node.setRight(new ConditionNode(node));
+				node.setLeaf(false);
+				// internal node has 2 children
+				node.setLeft(new GeneNode(node));
+				node.setRight(new GeneNode(node));
 				
-				
-				//TODO set tree structure for genes
-				
-//				treePath.push(Dir.LEFT);
+				treePath.push(Dir.LEFT);
 			} else {
-//				node.setLeaf(true);
-				parseTreeNodeAtts(attributes);
+				node.setLeaf(true);
 			}
 			
 			break;
@@ -189,17 +191,13 @@ public class GeneXMLHandler extends DefaultHandler {
 			if (alias!=null && !alias.isEmpty()){
 				modnet.setGeneAlias(addingGene, alias);
 			}
-			mod.addGene(name);
+			node.addGene(addingGene);
 		} catch (UnknownItemException e) {
 			e.printStackTrace();
 		}
 		
 	}
 
-	private void parseTreeNodeAtts(Attributes attributes) {
-		String nodeStatus = attributes.getValue("Node");
-		//switch this between internal and leaf
-	}
 
 	
 	@Override
@@ -223,11 +221,11 @@ public class GeneXMLHandler extends DefaultHandler {
 			//go back up in the tree.
 			//if we completed a left child: off to the right
 			//if we had a right child: branch completed
-//			Dir dir = treePath.pop();
-//			node = node.getParent();
-//			if (dir == Dir.LEFT){
-//				treePath.push(Dir.RIGHT);
-//			}			
+			Dir dir = treePath.pop();
+			node = node.getParent();
+			if (dir == Dir.LEFT){
+				treePath.push(Dir.RIGHT);
+			}			
 			break;
 		case GENE: break;
 		case NA:
@@ -240,7 +238,7 @@ public class GeneXMLHandler extends DefaultHandler {
 	}
 
 	private void parseRootNodeEnd() {
-//		this.mod.setRootNode(rootNode);
+		this.mod.setGeneTree(rootNode);
 	}
 
 	

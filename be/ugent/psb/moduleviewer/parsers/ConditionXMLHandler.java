@@ -15,7 +15,6 @@ import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
-import be.ugent.psb.moduleviewer.parsers.ConditionXMLHandler.XMLTag;
 
 /**
  * Handles the XML that describes a {@link ConditionAnnotation} tree. Invoked by
@@ -131,9 +130,16 @@ public class ConditionXMLHandler extends DefaultHandler {
 			progListener.setMyProgress(10);
 			break;
 		case MODULE:
-			int modId = Integer.parseInt(attributes.getValue("id"));
-			String modName = attributes.getValue("name");
-			this.mod = new Module(modnet, modId, modName);
+			try {
+				int modId = Integer.parseInt(attributes.getValue("id"));
+				String modName = attributes.getValue("name");
+				this.mod = modnet.getModule(modId);
+				this.mod.setName(modName);
+			} catch (NumberFormatException e) {
+				e.printStackTrace();
+			} catch (UnknownItemException e) {
+				e.printStackTrace();
+			}
 			break;
 		case CONDITIONTREE:
 			treePath = new Stack<Dir>();
@@ -173,7 +179,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 				treePath.push(Dir.LEFT);
 			} else {
 				node.setLeaf(true);
-				parseTreeNodeAtts(attributes);
+//				parseTreeNodeAtts(attributes);
 			}
 			break;
 		case CONDITION: 
@@ -210,27 +216,6 @@ public class ConditionXMLHandler extends DefaultHandler {
 		
 	}
 
-	private void parseTreeNodeAtts(Attributes attributes) {
-//		String conds = attributes.getValue("conditionIds");
-//		List<Condition> condList = new ArrayList<Condition>();
-//		StringTokenizer tokens = new StringTokenizer(conds,";");
-//		while(tokens.hasMoreTokens()){
-//			try {
-//				int condNumber = Integer.parseInt(tokens.nextElement().toString());
-//				condList.add(modnet.getCondition(condNumber));
-//			} catch (NumberFormatException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			} catch (UnknownItemException e) {
-//				// TODO Auto-generated catch block
-//				e.printStackTrace();
-//			}
-//		}
-//		node.setConditions(condList);
-		// compute statistics and score as if node was leaf
-//		node.statistics();
-//		node.leafDistribution.bayesianScore();	
-	}
 
 	
 	@Override

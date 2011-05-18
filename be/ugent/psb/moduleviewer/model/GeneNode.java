@@ -133,7 +133,7 @@ public class GeneNode implements ITreeNode<Gene>{
 		}		
 	}
 
-	public void addCondition(Gene gene) {
+	public void addGene(Gene gene) {
 		this.genes.add(gene);
 	}
 	

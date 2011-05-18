@@ -35,7 +35,7 @@ public class Module {
 	/**
 	 * Root node of the gene tree
 	 */
-	GeneNode geneTree;
+	private GeneNode geneTree;
 	
 	
 	private List<AnnotationBlock> annotationBlocks = new ArrayList<AnnotationBlock>();
