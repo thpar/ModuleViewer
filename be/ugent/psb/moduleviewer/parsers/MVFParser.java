@@ -1,12 +1,12 @@
 package be.ugent.psb.moduleviewer.parsers;
 
-import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
@@ -32,10 +32,9 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * Known key examples:
  * ::TYPE=type
  * ::COLOR=red
- * ::SEP=:
  * ::LABELCOLOR=
  * 
- * TYPE defines the type of data we're reading. Can be used as a label for the 
+ * OBJECT defines the type of data we're reading. Can be used as a label for the 
  * matrix that is drawn.
  * 
  * COLOR is an optional setting to tell the viewer which color to use when displaying this data.
@@ -56,6 +55,8 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
 public class MVFParser extends Parser {
 
 	
+	private static final String DEFAULT_ANNOT_LABEL = "default_annot_label";
+
 	/**
 	 * Separated genes from eachother in a list
 	 */
@@ -73,10 +74,16 @@ public class MVFParser extends Parser {
 
 	private Map<String, String> unknownParameters = new HashMap<String, String>();
 
+	private Map<ParamKey, String> params;
+	
+	
 	private AnnotationBlockFactory abf;
 
 	private File inputFile;
 
+	private ParsingType parsingMode;
+
+	private int counter; 
 	
 	/**
 	 * Keys that can be used in the MVF format.
@@ -84,16 +91,28 @@ public class MVFParser extends Parser {
 	 *
 	 */
 	enum ParamKey{
-		TYPE, COLOR, SEP, LABELCOLOR, OBJECT;
+		TYPE,       //used as the name of the block. Indicates the type of annotation.
+		COLOR,      //suggests a color for the annotation matrix
+		LABELCOLOR, //?? 
+		OBJECT;     //GENES of CONDITIONS (defines what kind of object is being annotated
 	}
 	
-	
+	/**
+	 * Part of the MVF file
+	 * 
+	 * @author thpar
+	 *
+	 */
+	enum ParsingType{
+		KEYVALUE, ENTRY;
+	}
 	
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {
 		System.out.println("Parsing "+inputFile);
 		this.modnet = model.getModnet();
 		this.inputFile = inputFile;
+		counter=0;
 		
 		BufferedReader in = new BufferedReader(new FileReader(inputFile));
 		
@@ -115,31 +134,90 @@ public class MVFParser extends Parser {
 	 * @param line
 	 */
 	private void parseKeyValue(String line) {
+		if (parsingMode!=ParsingType.KEYVALUE){
+			parsingMode = ParsingType.KEYVALUE;
+			params = new HashMap<ParamKey, String>();
+			unknownParameters = new HashMap<String, String>();
+		}
+		
 		String[] keyValue = line.substring(2).split(keyValueDelimiter);
 		String keyString = keyValue[0];
 		String value = keyValue[1];
 		
 		try {
-			ParamKey key = ParamKey.valueOf(keyString);
+			ParamKey pk = ParamKey.valueOf(keyString);
+			params.put(pk, value);
+		} catch (IllegalArgumentException e) {
+			System.err.println("Ignored unknown parameter: "+ keyString);
+			unknownParameters.put(keyString, value);
+		}
+	}
+	
+	private void processParams(){
+		//get object type
+		String objectTypeString = params.get(ParamKey.OBJECT);
+		DataType objectType; 
+		if (objectTypeString==null){
+			objectType=DataType.GENE;
+		} else {
+			try {
+				objectType=DataType.valueOf(objectTypeString);
+			} catch (IllegalArgumentException e) {
+				objectType=DataType.GENE;
+			}
+		}
+		
+		//get the block name
+		String blockName = params.get(ParamKey.TYPE);
+		if (blockName==null){
+			blockName = inputFile.getName()+"_"+counter; 
+			counter++;
+		}
+		
+		//create factory for annotation blocks 
+		abf = new AnnotationBlockFactory(blockName, objectType, modnet);
+		
+		//add other options to the block factory
+		for (Entry<ParamKey, String> pe : params.entrySet()){
+			ParamKey key = pe.getKey();
+			String value = pe.getValue();
 			switch(key){
-			case OBJECT:
-				this.abf = new AnnotationBlockFactory(inputFile.getAbsolutePath(), DataType.valueOf(value), modnet); 
+			case COLOR:
+//				abf.setColor()
+				break;
+			case LABELCOLOR:
 				break;
 				
+			case OBJECT:
+			case TYPE:
+			default:
+				break;
 			}
-		} catch (IllegalArgumentException e) {
-			System.err.println("Ignored unknown parameter: "+keyString);
-			this.unknownParameters .put(keyString, value);
 		}
+		
 	}
 
 	private void parseEntry(String line){
+		//if this is the first entry after parsing key values,
+		//first process the gathered key value pairs.
+		if (parsingMode==ParsingType.KEYVALUE){
+			processParams();
+			parsingMode=ParsingType.ENTRY;
+		}
+		
+		//now work on the entry itself
+		
 		String[] columns = line.split("\t");
 		
 		int modId = Integer.parseInt(columns[0]);
 		
 		String[] items = columns[1].split(geneDelimiter);
-		String label   = columns[2];
+		String label;
+		if (columns.length>=3){
+			label = columns[2];			
+		} else {
+			label = DEFAULT_ANNOT_LABEL;
+		}
 
 		
 		try {
@@ -169,14 +247,11 @@ public class MVFParser extends Parser {
 					}
 				}
 			} catch (NumberFormatException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (UnknownItemException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		} catch (UnknownItemException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		

@@ -4,6 +4,7 @@ import java.io.File;
 import java.io.IOException;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -13,6 +14,8 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
 import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
+import be.ugent.psb.moduleviewer.parsers.MVFParser;
+import be.ugent.psb.moduleviewer.parsers.Parser;
 
 public class ParserTest {
 	
@@ -25,7 +28,7 @@ public class ParserTest {
 		File dataInput = new File(dir+sep+args[1]);
 		File geneXML = new File(dir+sep+args[2]);
 		File conditionXML = new File(dir+sep+args[3]);
-//		File mvfInput = new File(dir+sep+args[2]);
+		File mvfInput = new File(dir+sep+args[4]);
 		
 		ModuleNetwork modnet = model.getModnet();
 		
@@ -98,24 +101,23 @@ public class ParserTest {
 		
 		
 		
-//		Parser p = new MVFParser();
-//		try {
-//			p.parse(model, mvfInput);
-//			
-//			
-//			//test parsing result
-//			for (Module mod : modnet.getModules()){
-//				if (mod.getAnnotationBlocks().size() >0){
-//					System.out.println("Module "+mod.getId());
-//					for (AnnotationBlock ab : mod.getAnnotationBlocks()){
-//						System.out.println(ab);
-//					}
-//				}
-//			}
-//			
-//		} catch (IOException e) {
-//			e.printStackTrace();
-//		}
+		Parser p = new MVFParser();
+		try {
+			p.parse(model, mvfInput);
+			
+			//test parsing result
+			for (Module mod : modnet.getModules()){
+				if (mod.getAnnotationBlocks().size() >0){
+					System.out.println("Module "+mod.getId());
+					for (AnnotationBlock ab : mod.getAnnotationBlocks()){
+						System.out.println(ab);
+					}
+				}
+			}
+			
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 		
 		
 		
