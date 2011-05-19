@@ -65,7 +65,7 @@ public class MVFParser extends Parser {
 	/**
 	 * If a gene is linked to a value, this character separated geneId and value
 	 */
-	private final String geneValueDelimiter = ":";
+	private static final String DEFAULT_GENE_VALUE_SEPARATOR = ":";
 	
 	
 	private final String keyValueDelimiter = "=";
@@ -83,7 +83,11 @@ public class MVFParser extends Parser {
 
 	private ParsingType parsingMode;
 
-	private int counter; 
+	private int counter;
+
+	private boolean parseGeneValues;
+
+	private String parseGeneValuesSeparator; 
 	
 	/**
 	 * Keys that can be used in the MVF format.
@@ -94,7 +98,8 @@ public class MVFParser extends Parser {
 		TYPE,       //used as the name of the block. Indicates the type of annotation.
 		COLOR,      //suggests a color for the annotation matrix
 		LABELCOLOR, //?? 
-		OBJECT;     //GENES of CONDITIONS (defines what kind of object is being annotated
+		OBJECT,     //GENES of CONDITIONS (defines what kind of object is being annotated
+		VALUES;		//when blank: genes and values are separated on default ":". Value of VALUES can indicate an other separator
 	}
 	
 	/**
@@ -142,7 +147,12 @@ public class MVFParser extends Parser {
 		
 		String[] keyValue = line.substring(2).split(keyValueDelimiter);
 		String keyString = keyValue[0];
-		String value = keyValue[1];
+		String value;
+		if (keyValue.length>=2){
+			value = keyValue[1];			
+		} else {
+			value = "true";
+		}
 		
 		try {
 			ParamKey pk = ParamKey.valueOf(keyString);
@@ -154,16 +164,17 @@ public class MVFParser extends Parser {
 	}
 	
 	private void processParams(){
+		parseGeneValues = false;
 		//get object type
 		String objectTypeString = params.get(ParamKey.OBJECT);
 		DataType objectType; 
 		if (objectTypeString==null){
-			objectType=DataType.GENE;
+			objectType=DataType.GENES;
 		} else {
 			try {
 				objectType=DataType.valueOf(objectTypeString);
 			} catch (IllegalArgumentException e) {
-				objectType=DataType.GENE;
+				objectType=DataType.GENES;
 			}
 		}
 		
@@ -187,7 +198,14 @@ public class MVFParser extends Parser {
 				break;
 			case LABELCOLOR:
 				break;
-				
+			case VALUES:
+				parseGeneValues = true;
+				if (value.equals("true")){
+					parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR;
+				} else {
+					parseGeneValuesSeparator = value;
+				}
+				break;
 			case OBJECT:
 			case TYPE:
 			default:
@@ -237,13 +255,13 @@ public class MVFParser extends Parser {
 			
 			try {
 				for (String it : items){
-					String[] itemKeyValue = it.split(this.geneValueDelimiter);
-					String itemId = itemKeyValue[0];
-					if (itemKeyValue.length >=2){
+					if (parseGeneValues){
+						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
+						String itemId = itemKeyValue[0];
 						Double itemValue = Double.valueOf(itemKeyValue[1]);				
-						annot.addItem(itemId, itemValue);
+						annot.addItem(itemId, itemValue);						
 					} else {
-						annot.addItem(itemId);
+						annot.addItem(it);						
 					}
 				}
 			} catch (NumberFormatException e) {

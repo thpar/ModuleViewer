@@ -1,5 +1,6 @@
 package be.ugent.psb.moduleviewer.model;
 
+import java.awt.Color;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -17,7 +18,7 @@ public class AnnotationBlock {
 	 *
 	 */
 	public enum DataType{
-		GENE, CONDITION;
+		GENES, CONDITIONS;
 	}
 	
 	
@@ -25,6 +26,8 @@ public class AnnotationBlock {
 	private String blockName;
 	private DataType type;
 	private ModuleNetwork modnet;
+	private Color color;
+
 	
 	
 	/**
@@ -83,16 +86,24 @@ public class AnnotationBlock {
 	
 	public Annotation<?> addNewAnnotation(String label){
 		switch(type){
-		case GENE:
+		case GENES:
 			GeneAnnotation geneAnnot = new GeneAnnotation(label, modnet);
 			this.addAnnotation(geneAnnot);
 			return geneAnnot;
-		case CONDITION:
+		case CONDITIONS:
 			ConditionAnnotation condAnnot = new ConditionAnnotation(label, modnet);
 			this.addAnnotation(condAnnot);
 			return condAnnot;
 		default: return null;
 		}
 	}
+
+	public void setColor(Color color) {
+		this.color = color;
+	}
+	public Color getColor(){
+		return color;
+	}
+
 	
 }

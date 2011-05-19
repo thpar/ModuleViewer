@@ -22,7 +22,7 @@ public class AnnotationBlockFactory {
 	
 	public AnnotationBlock createNewAnnotationBlock(){
 		AnnotationBlock ab = new AnnotationBlock(blockName, modnet, type);
-		//TODO more settings...
+		ab.setColor(color);
 		return ab;
 	}
 	
@@ -56,7 +56,6 @@ public class AnnotationBlockFactory {
 	public void setBlockName(String blockName) {
 		this.blockName = blockName;
 	}
-	
-	
+
 	
 }

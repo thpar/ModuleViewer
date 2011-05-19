@@ -159,7 +159,7 @@ public class GeneXMLHandler extends DefaultHandler {
 			}
 
 			// read atts and init node
-			String nodeTypeString = attributes.getValue("Node");
+			String nodeTypeString = attributes.getValue("node");
 			boolean internalNode = nodeTypeString.equals("internal");
 			if (internalNode) {
 				node.setLeaf(false);

@@ -33,7 +33,7 @@ public class ParserTest {
 		ModuleNetwork modnet = model.getModnet();
 		
 		try {
-			DataMatrixParser dmParser = new DataMatrixParser();
+			Parser dmParser = new DataMatrixParser();
 			dmParser.parse(model, dataInput);
 		} catch (IOException e2) {
 			e2.printStackTrace();
@@ -41,17 +41,24 @@ public class ParserTest {
 		
 
 		try {
-			GeneTreeParser geneParser = new GeneTreeParser();
+			Parser geneParser = new GeneTreeParser();
 			geneParser.parse(model, geneXML);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
-			ConditionTreeParser condParser = new ConditionTreeParser();
+			Parser condParser = new ConditionTreeParser();
 			condParser.parse(model, conditionXML);
 		} catch (IOException e1) {
 			e1.printStackTrace();
+		}
+		
+		try {
+			Parser p = new MVFParser();
+			p.parse(model, mvfInput);	
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 			
 		//test genes
@@ -99,27 +106,17 @@ public class ParserTest {
 
 
 		
+		//test annotations
 		
-		
-		Parser p = new MVFParser();
 		try {
-			p.parse(model, mvfInput);
-			
-			//test parsing result
-			for (Module mod : modnet.getModules()){
-				if (mod.getAnnotationBlocks().size() >0){
-					System.out.println("Module "+mod.getId());
-					for (AnnotationBlock ab : mod.getAnnotationBlocks()){
-						System.out.println(ab);
-					}
-				}
+			Module mod0 = modnet.getModule(0);
+			System.out.println("Annotation for module "+mod0.getId());
+			for (AnnotationBlock ab : mod0.getAnnotationBlocks()){
+				System.out.println(ab);
 			}
-			
-		} catch (IOException e) {
+		} catch (UnknownItemException e) {
 			e.printStackTrace();
 		}
-		
-		
 		
 	}
 }

@@ -166,7 +166,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 			}
 
 			// read atts and init node
-			String internalNodeString = attributes.getValue("Node");
+			String internalNodeString = attributes.getValue("node");
 			/**
 			 * Is the child node internal? (internal == not a leaf)
 			 */
