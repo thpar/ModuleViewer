@@ -9,16 +9,19 @@ import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
-import be.ugent.psb.moduleviewer.model.ConditionAnnotation;
 import be.ugent.psb.moduleviewer.model.Gene;
+import be.ugent.psb.moduleviewer.model.GeneAnnotation;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 /**
- * Handles the XML that describes a {@link ConditionAnnotation} tree. Invoked by
+ * Handles the XML that describes a {@link GeneAnnotation} tree. Invoked by
  * the {@link TreeParser}
+ * 
+ * The genes described in the XML file are grouped by module and organised into a tree structure.
+ * They either represent genes or regulators.
  * 
  * @author thpar
  * 

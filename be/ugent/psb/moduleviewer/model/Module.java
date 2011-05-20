@@ -12,15 +12,6 @@ public class Module {
 	private int id;
 	private String name;
 	
-//	/**
-//	 * Genes in this module
-//	 */
-//	private List<Gene> genes = new ArrayList<Gene>();
-
-	/**
-	 * The genes that are top regulators for this module 
-	 */
-	List<Gene> topRegulators = new ArrayList<Gene>();
 	
 	/**
 	 * Root node of the condition tree
@@ -37,10 +28,16 @@ public class Module {
 	 */
 	private GeneNode geneTree;
 	
+	/**
+	 * Root node of the regulator tree
+	 */
+	private GeneNode regulatorTree;
+	
+	
 	
 	private List<AnnotationBlock> annotationBlocks = new ArrayList<AnnotationBlock>();
 	
-	
+	//TODO for LeMoNe figures
 //	private double mean;
 //	private double sigma;
 //	private boolean changed = true;
@@ -58,29 +55,9 @@ public class Module {
 		this.name = name;
 	}
 	
-//	public List<Gene> getGenes() {
-//		return genes;
-//	}
 
+//TODO methods to return genes and regulators
 
-//	/**
-//	 * Add a gene by id to this module. The gene has to exist in the ModuleNetwork already.
-//	 * 
-//	 * @param geneId
-//	 */
-//	public void addGene(String geneId) throws UnknownItemException{
-//		Gene gene = modnet.getGene(geneId);
-//		this.genes.add(gene);
-//	}
-
-	
-	public List<Gene> getTopRegulators() {
-		return topRegulators;
-	}
-
-	public void setTopRegulators(List<Gene> topRegulators) {
-		this.topRegulators = topRegulators;
-	}
 
 	/**
 	 * Returns the root node of the condition tree
@@ -102,9 +79,6 @@ public class Module {
 		this.geneTree = geneTree;
 	}
 
-//	public void setSigma(int sigma) {
-//		this.sigma = sigma;
-//	}
 
 	public int getId() {
 		return id;
