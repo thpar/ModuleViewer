@@ -79,6 +79,13 @@ public class Module {
 		this.geneTree = geneTree;
 	}
 
+	public GeneNode getRegulatorTree() {
+		return regulatorTree;
+	}
+
+	public void setRegulatorTree(GeneNode regulatorTree) {
+		this.regulatorTree = regulatorTree;
+	}
 
 	public int getId() {
 		return id;

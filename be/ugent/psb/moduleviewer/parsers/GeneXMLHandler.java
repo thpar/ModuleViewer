@@ -27,6 +27,12 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * 
  */
 public class GeneXMLHandler extends DefaultHandler {
+	
+	enum GeneType{
+		GENES, REGULATORS;
+	}
+	
+	
 	/**
 	 * The XML tags we're expecting. Enums are in all capitals, but will match
 	 * case insensitive.
@@ -35,7 +41,7 @@ public class GeneXMLHandler extends DefaultHandler {
 	 * 
 	 */
 	enum XMLTag {
-		MODULENETWORK, MODULE, GENETREE, CHILD, GENE, NA;
+		MODULENETWORK, MODULE, GENETREE, REGULATORTREE, CHILD, GENE, NA;
 
 		public static XMLTag getValue(String value) {
 			try {
@@ -91,6 +97,11 @@ public class GeneXMLHandler extends DefaultHandler {
 	 * node we're now working on
 	 */
 	private GeneNode node;
+
+	/**
+	 * Parsing genes or regulators?
+	 */
+	private GeneType geneType;
 	
 
 
@@ -102,9 +113,10 @@ public class GeneXMLHandler extends DefaultHandler {
 	 * @param progressListener
 	 */
 	public GeneXMLHandler(ModuleNetwork modnet,
-			ProgressListener progListener) {
+			ProgressListener progListener, GeneType geneType) {
 		this.modnet = modnet;
 		this.progListener = progListener;
+		this.geneType = geneType;
 	}
 
 	@Override
@@ -139,6 +151,7 @@ public class GeneXMLHandler extends DefaultHandler {
 			this.mod = new Module(modnet, modId, modName);
 			break;
 		case GENETREE:
+		case REGULATORTREE:
 			treePath = new Stack<Dir>();
 			treePath.push(Dir.ROOT);
 			rootNode = null;
@@ -218,6 +231,7 @@ public class GeneXMLHandler extends DefaultHandler {
 			modnet.addModule(mod);
 			break;
 		case GENETREE:
+		case REGULATORTREE:
 			parseRootNodeEnd();
 			break;
 		case CHILD:
@@ -241,7 +255,14 @@ public class GeneXMLHandler extends DefaultHandler {
 	}
 
 	private void parseRootNodeEnd() {
-		this.mod.setGeneTree(rootNode);
+		switch(geneType){
+		case GENES:
+			this.mod.setGeneTree(rootNode);			
+			break;
+		case REGULATORS:
+			this.mod.setRegulatorTree(rootNode);			
+			break;
+		}
 	}
 
 	

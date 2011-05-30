@@ -27,8 +27,9 @@ public class ParserTest {
 		
 		File dataInput = new File(dir+sep+args[1]);
 		File geneXML = new File(dir+sep+args[2]);
-		File conditionXML = new File(dir+sep+args[3]);
-		File mvfInput = new File(dir+sep+args[4]);
+		File regulatorXML = new File(dir+sep+args[3]);
+		File conditionXML = new File(dir+sep+args[4]);
+		File mvfInput = new File(dir+sep+args[5]);
 		
 		ModuleNetwork modnet = model.getModnet();
 		
@@ -43,6 +44,13 @@ public class ParserTest {
 		try {
 			Parser geneParser = new GeneTreeParser();
 			geneParser.parse(model, geneXML);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
+		
+		try {
+			Parser geneParser = new GeneTreeParser();
+			geneParser.parse(model, regulatorXML);
 		} catch (IOException e1) {
 			e1.printStackTrace();
 		}
