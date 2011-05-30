@@ -6,6 +6,7 @@ import java.awt.Point;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
+import be.ugent.psb.modulegraphics.elements.Colorizer;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 import be.ugent.psb.moduleviewer.model.Condition;
@@ -15,7 +16,7 @@ public class ExpressionLeaf extends Element{
 
 	private Matrix<Double> matrix;
 	
-	private ExpressionColorizer c;
+	private LemoneColorizer c;
 
 	/**
 	 * 
@@ -24,8 +25,8 @@ public class ExpressionLeaf extends Element{
 	 * @param mean
 	 * @param sigma
 	 */
-	public ExpressionLeaf(List<Gene> genes, List<Condition> condSet, double mean, double sigma){
-		c = new ExpressionColorizer(mean, sigma);
+	public ExpressionLeaf(List<Gene> genes, List<Condition> condSet, ExpressionColorizer c){
+//		c = new ExpressionColorizer(mean, sigma);
 //		Collections.sort(condSet);
 
 		this.addMouseListener(new ElementEventChildForwarder(this));
@@ -44,12 +45,12 @@ public class ExpressionLeaf extends Element{
 	}
 	
 
-	public void setMean(double mean){
-		c.setMean(mean);
-	}
-	public void setSigma(double sigma){
-		c.setSigma(sigma);
-	}
+//	public void setMean(double mean){
+//		c.setMean(mean);
+//	}
+//	public void setSigma(double sigma){
+//		c.setSigma(sigma);
+//	}
 
 
 	@Override

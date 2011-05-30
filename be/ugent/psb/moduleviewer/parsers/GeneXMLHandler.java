@@ -147,8 +147,19 @@ public class GeneXMLHandler extends DefaultHandler {
 			break;
 		case MODULE:
 			int modId = Integer.parseInt(attributes.getValue("id"));
-			String modName = attributes.getValue("name");
-			this.mod = new Module(modnet, modId, modName);
+			String name = attributes.getValue("name");
+				switch(geneType){
+				case GENES:
+					this.mod = new Module(modnet, modId, name);
+					break;
+				case REGULATORS:
+					try {
+						this.mod = modnet.getModule(modId);
+						break;
+					} catch (UnknownItemException e) {
+						e.printStackTrace();
+					}
+				}
 			break;
 		case GENETREE:
 		case REGULATORTREE:

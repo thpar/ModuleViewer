@@ -68,7 +68,7 @@ public class ExportToEPSAction extends AbstractAction {
 		String fileName = guiModel.getEpsOutputDir() + System.getProperty("file.separator") + 
 								guiModel.getFileNameTemplate(modId)+".eps";
 		guiModel.setStateString("figure saved to: "+fileName);
-		Canvas canvas = new DefaultCanvas(mod, guiModel, guiModel.getFileNameTemplate(modId));
+		Canvas canvas = new DefaultCanvas(mod, model, guiModel, guiModel.getFileNameTemplate(modId));
 		CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
 		figCanvas.writeToEPS();
 		

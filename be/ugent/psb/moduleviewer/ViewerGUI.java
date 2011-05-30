@@ -27,7 +27,7 @@ public class ViewerGUI {
 		//create and load the module network
 		
 		Model model = new Model();
-		ModuleNetwork modnet = model.getModnet();
+
 		GUIModel guiModel = new GUIModel();
 		guiModel.setDrawConditionAnnotationLegend(false);
 		guiModel.setDrawConditionAnnotations(false);

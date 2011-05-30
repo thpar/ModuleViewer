@@ -35,7 +35,7 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
 		fc.setDialogTitle("Load regulator modules");
-		fc.setFileFilter(new FileNameRegexFilter("module tree files", ".*\\.xml"));
+		fc.setFileFilter(new FileNameRegexFilter("regulator tree files", ".*\\.xml"));
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
 			final File file = fc.getSelectedFile();
@@ -72,6 +72,7 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 			
 			parser.parse(model, file);
 			
+			model.setRegulatorTreeLoaded(true);
 			setProgress(100);
 
 			return null;

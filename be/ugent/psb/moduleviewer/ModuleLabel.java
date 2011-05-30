@@ -41,8 +41,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	
 	
 	public Element initCanvas() {
-		//don't even start if we don't have any module loaded.
-//		if (modnet.getModules() == null || modnet.getModules().isEmpty()) return null;
+		//don't even start if we don't have the essential data loaded
 		if (!model.isEssentialsLoaded()) return null;
 		
 		
@@ -63,7 +62,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 //			node.regulationSplit = node.testSplits.get(0);
 //		}
 		
-		DefaultCanvas canvas = new DefaultCanvas(mod, guiModel, "Module "+displayedModule);
+		DefaultCanvas canvas = new DefaultCanvas(mod, model, guiModel, "Module "+displayedModule);
 		setCanvas(canvas);
 		
 //		addCanvasListeners(canvas);

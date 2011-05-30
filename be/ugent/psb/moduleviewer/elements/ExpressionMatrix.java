@@ -28,10 +28,11 @@ public class ExpressionMatrix extends Canvas {
 	 */
 	private List<ExpressionLeaf> leaves = new ArrayList<ExpressionLeaf>();
 	private ConditionNode rootNode;
-	private double mean;
-	private double sigma;
+//	private double mean;
+//	private double sigma;
 	private List<Gene> genes;
 	private boolean recursive;
+	private ExpressionColorizer colorizer;
 
 	/**
 	 * 
@@ -41,11 +42,12 @@ public class ExpressionMatrix extends Canvas {
 	 * @param sigma
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ExpressionMatrix(List<Gene> genes, ConditionNode rootNode, double mean, double sigma, boolean recursive){
+	public ExpressionMatrix(List<Gene> genes, ConditionNode rootNode, ExpressionColorizer colorizer, boolean recursive){
 		this.genes = genes;
 		this.rootNode = rootNode;
-		this.mean = mean;
-		this.sigma = sigma;
+		this.colorizer = colorizer;
+//		this.mean = mean;
+//		this.sigma = sigma;
 		this.recursive = recursive;
 		compose();
 	}
@@ -61,23 +63,23 @@ public class ExpressionMatrix extends Canvas {
 		} else{ 
 			ExpressionLeaf leaf = new ExpressionLeaf(genes,
 					rootNode.getColumns(),
-					this.mean, this.sigma);
+					this.colorizer);
 			this.add(leaf);
 			leaves.add(leaf);
 		}
 		
 	}
 
-	public void setMeanSigma(double mean, double sigma){
-		this.mean = mean;
-		this.sigma = sigma;
-		
-		for (ExpressionLeaf l : leaves){
-			l.setMean(mean);
-			l.setSigma(sigma);
-		}
-		
-	}
+//	public void setMeanSigma(double mean, double sigma){
+//		this.mean = mean;
+//		this.sigma = sigma;
+//		
+//		for (ExpressionLeaf l : leaves){
+//			l.setMean(mean);
+//			l.setSigma(sigma);
+//		}
+//		
+//	}
 	
 
 
@@ -118,7 +120,7 @@ public class ExpressionMatrix extends Canvas {
 		} else {
 			ExpressionLeaf leaf = new ExpressionLeaf(genes,
 					node.getColumns(),
-					this.mean, this.sigma );
+					this.colorizer);
 			this.add(leaf);
 			this.leaves.add(leaf);
 		}

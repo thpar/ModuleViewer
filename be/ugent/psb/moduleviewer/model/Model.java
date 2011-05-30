@@ -9,6 +9,8 @@ public class Model {
 	private boolean geneTreeLoaded = false;
 	private boolean conditionTreeLoaded = false;
 	
+	private boolean regulatorTreeLoaded = false;
+	
 	
 	public ModuleNetwork getModnet() {
 		return modnet;
@@ -45,6 +47,14 @@ public class Model {
 
 	public void setConditionTreeLoaded(boolean conditionTreeLoaded) {
 		this.conditionTreeLoaded = conditionTreeLoaded;
+	}
+
+	public boolean isRegulatorTreeLoaded() {
+		return regulatorTreeLoaded;
+	}
+
+	public void setRegulatorTreeLoaded(boolean regulatorTreeLoaded) {
+		this.regulatorTreeLoaded = regulatorTreeLoaded;
 	}
 	
 	
