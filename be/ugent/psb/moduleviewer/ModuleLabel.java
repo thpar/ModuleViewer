@@ -13,6 +13,7 @@ import java.util.Observer;
 import javax.swing.ImageIcon;
 
 import be.ugent.psb.modulegraphics.display.CanvasLabel;
+import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.moduleviewer.elements.ConditionLabels;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
@@ -70,7 +71,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		DefaultCanvas canvas = new DefaultCanvas(mod, guiModel, "Module "+displayedModule);
 		setCanvas(canvas);
 		
-		addCanvasListeners(canvas);
+//		addCanvasListeners(canvas);
 		
 				
 		currentCanvasSize = canvas.getDimension(this.getGraphics());
@@ -83,88 +84,88 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 
 
 
-	private void addCanvasListeners(DefaultCanvas canvas) {
-		canvas.getGeneNames().addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				GeneNames gn = (GeneNames)e.getSource();
-				String gnString = gn.getHitGeneName(e.getX(), e.getY());
-				if (Desktop.isDesktopSupported()){
-					guiModel.setStateString("GeneFetching: "+gnString);
-					Desktop desktop = Desktop.getDesktop();
-					 if (desktop.isSupported(Desktop.Action.BROWSE)) {
-						 try {
-							URI uri = new URI(GENEFETCH+"?gene="+gnString);
-							 desktop.browse(uri);
-						} catch (URISyntaxException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						} catch (IOException e1) {
-							// TODO Auto-generated catch block
-							e1.printStackTrace();
-						}
-
-				     } else {
-				    	 System.err.println("Can't identify web browser");
-				     }
-				} else {
-					System.err.println("No Desktop operations supported!");
-				}
-			}
-		});
-		
-		canvas.getMatrix().addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ExpressionMatrix matrix = (ExpressionMatrix)e.getSource();
-				double data = matrix.getHitData(e.getX(), e.getY());
-				guiModel.setStateString(String.valueOf(data));
-			}
-		});
-		
-		ExpressionMatrix topRegMatrix = canvas.getTopRegMatrix();
-		if (topRegMatrix!=null){
-			topRegMatrix.addMouseListener(new MouseAdapter(){
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					ExpressionMatrix matrix = (ExpressionMatrix)e.getSource();
-					double data = matrix.getHitData(e.getX(), e.getY());
-					guiModel.setStateString(String.valueOf(data));
-				}
-			});
-		}
-		
-		GeneNames topRegGeneNames = canvas.getTopRegGeneNames();
-		if (topRegGeneNames!=null){
-			canvas.getTopRegGeneNames().addMouseListener(new MouseAdapter(){
-				@Override
-				public void mouseClicked(MouseEvent e) {
-					GeneNames gn = (GeneNames)e.getSource();
-					String gnString = gn.getHitGeneName(e.getX(), e.getY());
-					guiModel.setStateString(gnString);
-				}
-			});
-		}
-		canvas.getConditionLabels().addMouseListener(new MouseAdapter(){
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				ConditionLabels cl = (ConditionLabels)e.getSource();
-				String cnString = cl.getHitConditionName(e.getX(), e.getY());
-				guiModel.setStateString(cnString);
-			}
-		});
-//		ConditionAnnotationMatrix condAnnotMatrix = canvas.getConditionAnnotationMatrix();
-//		if (condAnnotMatrix!=null){
-//			canvas.getConditionAnnotationMatrix().addMouseListener(new MouseAdapter(){
+//	private void addCanvasListeners(DefaultCanvas canvas) {
+//		canvas.getGeneNames().addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				GeneNames gn = (GeneNames)e.getSource();
+//				String gnString = gn.getHitGeneName(e.getX(), e.getY());
+//				if (Desktop.isDesktopSupported()){
+//					guiModel.setStateString("GeneFetching: "+gnString);
+//					Desktop desktop = Desktop.getDesktop();
+//					 if (desktop.isSupported(Desktop.Action.BROWSE)) {
+//						 try {
+//							URI uri = new URI(GENEFETCH+"?gene="+gnString);
+//							 desktop.browse(uri);
+//						} catch (URISyntaxException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						} catch (IOException e1) {
+//							// TODO Auto-generated catch block
+//							e1.printStackTrace();
+//						}
+//
+//				     } else {
+//				    	 System.err.println("Can't identify web browser");
+//				     }
+//				} else {
+//					System.err.println("No Desktop operations supported!");
+//				}
+//			}
+//		});
+//		
+//		canvas.getMatrix().addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				ExpressionMatrix matrix = (ExpressionMatrix)e.getSource();
+//				double data = matrix.getHitData(e.getX(), e.getY());
+//				guiModel.setStateString(String.valueOf(data));
+//			}
+//		});
+//		
+//		ExpressionMatrix topRegMatrix = canvas.getTopRegMatrix();
+//		if (topRegMatrix!=null){
+//			topRegMatrix.addMouseListener(new MouseAdapter(){
 //				@Override
 //				public void mouseClicked(MouseEvent e) {
-//					ConditionAnnotationMatrix cam = (ConditionAnnotationMatrix)e.getSource();
-//					String cnString = cam.getHitAnnotation(e.getX(), e.getY());
-//					guiModel.setStateString(cnString);
+//					ExpressionMatrix matrix = (ExpressionMatrix)e.getSource();
+//					double data = matrix.getHitData(e.getX(), e.getY());
+//					guiModel.setStateString(String.valueOf(data));
 //				}
 //			});
 //		}
-	}
+//		
+//		GeneNames topRegGeneNames = canvas.getTopRegGeneNames();
+//		if (topRegGeneNames!=null){
+//			canvas.getTopRegGeneNames().addMouseListener(new MouseAdapter(){
+//				@Override
+//				public void mouseClicked(MouseEvent e) {
+//					GeneNames gn = (GeneNames)e.getSource();
+//					String gnString = gn.getHitGeneName(e.getX(), e.getY());
+//					guiModel.setStateString(gnString);
+//				}
+//			});
+//		}
+//		canvas.getConditionLabels().addMouseListener(new MouseAdapter(){
+//			@Override
+//			public void mouseClicked(MouseEvent e) {
+//				ConditionLabels cl = (ConditionLabels)e.getSource();
+//				String cnString = cl.getHitConditionName(e.getX(), e.getY());
+//				guiModel.setStateString(cnString);
+//			}
+//		});
+////		ConditionAnnotationMatrix condAnnotMatrix = canvas.getConditionAnnotationMatrix();
+////		if (condAnnotMatrix!=null){
+////			canvas.getConditionAnnotationMatrix().addMouseListener(new MouseAdapter(){
+////				@Override
+////				public void mouseClicked(MouseEvent e) {
+////					ConditionAnnotationMatrix cam = (ConditionAnnotationMatrix)e.getSource();
+////					String cnString = cam.getHitAnnotation(e.getX(), e.getY());
+////					guiModel.setStateString(cnString);
+////				}
+////			});
+////		}
+//	}
 
 
 	@Override
