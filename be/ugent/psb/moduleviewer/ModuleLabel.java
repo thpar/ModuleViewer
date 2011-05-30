@@ -1,25 +1,16 @@
 package be.ugent.psb.moduleviewer;
 
-import java.awt.Desktop;
 import java.awt.Dimension;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
-import java.io.IOException;
-import java.net.URI;
-import java.net.URISyntaxException;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.ImageIcon;
 
 import be.ugent.psb.modulegraphics.display.CanvasLabel;
-import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
-import be.ugent.psb.moduleviewer.elements.ConditionLabels;
-import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
-import be.ugent.psb.moduleviewer.elements.GeneNames;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
@@ -36,11 +27,13 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	
 	private Dimension currentCanvasSize = new Dimension();
 	//FIXME DONT DO THIS HARD CODED!
-	private final String GENEFETCH = "http://bioinformatics.psb.ugent.be/webtools/genefetch/search.html"; 
+	private final String GENEFETCH = "http://bioinformatics.psb.ugent.be/webtools/genefetch/search.html";
+	private Model model; 
 		
 		
-	public ModuleLabel(ModuleNetwork modnet, GUIModel guiModel){
-		this.modnet = modnet;
+	public ModuleLabel(Model model, GUIModel guiModel){
+		this.model = model;
+		this.modnet = model.getModnet();
 		this.guiModel = guiModel;
 		this.guiModel.addObserver(this);
 		this.setSplash(new ImageIcon(this.getClass().getResource("/icons/lemone.png")));
@@ -49,7 +42,9 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	
 	public Element initCanvas() {
 		//don't even start if we don't have any module loaded.
-		if (modnet.getModules() == null || modnet.getModules().isEmpty()) return null;
+//		if (modnet.getModules() == null || modnet.getModules().isEmpty()) return null;
+		if (!model.isEssentialsLoaded()) return null;
+		
 		
 		int displayedModule = guiModel.getDisplayedModule();
 		Module mod = null;

@@ -10,8 +10,11 @@ import javax.swing.JOptionPane;
 
 import be.ugent.psb.moduleviewer.actions.ChangeEpsOutputDirAction;
 import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
+import be.ugent.psb.moduleviewer.actions.LoadAnnotationAction;
+import be.ugent.psb.moduleviewer.actions.LoadConditionTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadDataAction;
-import be.ugent.psb.moduleviewer.actions.LoadGeneModulesAction;
+import be.ugent.psb.moduleviewer.actions.LoadGeneTreeAction;
+import be.ugent.psb.moduleviewer.actions.LoadRegulatorTreeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 
@@ -24,7 +27,11 @@ public class MainMenu extends JMenuBar {
 
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem loadDataItem = new JMenuItem(new LoadDataAction(model, guiModel));
-		JMenuItem loadModnetItem = new JMenuItem(new LoadGeneModulesAction(model, guiModel));
+		JMenuItem loadGeneTreeItem = new JMenuItem(new LoadGeneTreeAction(model, guiModel));
+		JMenuItem loadConditionTreeItem = new JMenuItem(new LoadConditionTreeAction(model, guiModel));
+		JMenuItem loadRegTreeItem = new JMenuItem(new LoadRegulatorTreeAction(model, guiModel));
+		JMenuItem loadAnnotItem = new JMenuItem(new LoadAnnotationAction(model, guiModel));
+		
 
 
 		JMenuItem exportItem = new JMenuItem(new ExportToEPSAction(model, guiModel));
@@ -36,8 +43,10 @@ public class MainMenu extends JMenuBar {
 			}
 		});
 		fileMenu.add(loadDataItem);
-		fileMenu.add(loadModnetItem);
-
+		fileMenu.add(loadGeneTreeItem);
+		fileMenu.add(loadConditionTreeItem);
+		fileMenu.add(loadRegTreeItem);
+		fileMenu.add(loadAnnotItem);
 		
 		fileMenu.addSeparator();
 		

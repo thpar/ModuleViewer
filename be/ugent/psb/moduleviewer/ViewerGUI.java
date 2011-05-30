@@ -35,7 +35,7 @@ public class ViewerGUI {
 		this.window = new JFrame("ModuleViewer");
 		guiModel.setTopContainer(window);
 		
-		ModuleLabel modLabel = new ModuleLabel(modnet, guiModel);
+		ModuleLabel modLabel = new ModuleLabel(model, guiModel);
 		
 		JScrollPane scroll = new JScrollPane(modLabel);
 		

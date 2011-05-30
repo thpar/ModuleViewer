@@ -9,22 +9,24 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
+import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 
 /**
+ * Loads an xml file that classifies genes into modules and organizes them 
+ * into a tree structure within each module.
  * 
  * @author thpar
  *
  */
-public class LoadGeneModulesAction extends AbstractAction {
+public class LoadConditionTreeAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
 	private Model model;
 
 	
-	public LoadGeneModulesAction(Model model, GUIModel guiModel){
-		super("Load Gene Modules...");
+	public LoadConditionTreeAction(Model model, GUIModel guiModel){
+		super("Load Condition Modules...");
 		this.guiModel = guiModel;
 		this.model = model;
 	}
@@ -32,8 +34,8 @@ public class LoadGeneModulesAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
-		fc.setDialogTitle("Load gene modules");
-		fc.setFileFilter(new FileNameRegexFilter("module tree files", ".*\\.xml"));
+		fc.setDialogTitle("Load condition modules");
+		fc.setFileFilter(new FileNameRegexFilter("condition tree files", ".*\\.xml"));
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
 			final File file = fc.getSelectedFile();
@@ -66,10 +68,11 @@ public class LoadGeneModulesAction extends AbstractAction {
 				}
 			};
 			
-			GeneTreeParser parser = new GeneTreeParser(progListener);
+			ConditionTreeParser parser = new ConditionTreeParser(progListener);
 			
 			parser.parse(model, file);
 			
+			model.setConditionTreeLoaded(true);
 			setProgress(100);
 
 			return null;

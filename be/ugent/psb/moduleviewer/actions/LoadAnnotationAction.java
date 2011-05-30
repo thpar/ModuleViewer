@@ -9,22 +9,24 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
+import be.ugent.psb.moduleviewer.parsers.MVFParser;
 
 /**
+ * Loads an MVF file. These files represent several kinds of annotations for 
+ * genes and conditions.
  * 
  * @author thpar
  *
  */
-public class LoadDataAction extends AbstractAction {
+public class LoadAnnotationAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
 	private Model model;
 
 	
-	public LoadDataAction(Model model, GUIModel guiModel){
-		super("Load Data matrix...");
+	public LoadAnnotationAction(Model model, GUIModel guiModel){
+		super("Load Annotations...");
 		this.guiModel = guiModel;
 		this.model = model;
 	}
@@ -32,7 +34,8 @@ public class LoadDataAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
-		fc.setDialogTitle("Load data matrix");
+		fc.setDialogTitle("Load gene modules");
+		fc.setFileFilter(new FileNameRegexFilter("module viewer format", ".*\\.mvf"));
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
 			final File file = fc.getSelectedFile();
@@ -58,18 +61,17 @@ public class LoadDataAction extends AbstractAction {
 			guiModel.showProgressBar(true);
 			setProgress(0);
 			
-			ProgressListener progListener = new ProgressListener(){
-				@Override
-				public void setMyProgress(int percent) {
-					setProgress(percent);
-				}
-			};
+//			ProgressListener progListener = new ProgressListener(){
+//				@Override
+//				public void setMyProgress(int percent) {
+//					setProgress(percent);
+//				}
+//			};
 			
-			DataMatrixParser parser = new DataMatrixParser(progListener);
+			MVFParser parser = new MVFParser();
 			
 			parser.parse(model, file);
 			
-			model.setDataMatrixLoaded(true);
 			setProgress(100);
 
 			return null;

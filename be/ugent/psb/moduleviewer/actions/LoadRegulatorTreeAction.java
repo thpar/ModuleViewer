@@ -9,22 +9,24 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
+import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
 /**
+ * Loads an xml file that classifies regulators into modules and organizes them 
+ * into a tree structure within each module.
  * 
  * @author thpar
  *
  */
-public class LoadDataAction extends AbstractAction {
+public class LoadRegulatorTreeAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
 	private Model model;
 
 	
-	public LoadDataAction(Model model, GUIModel guiModel){
-		super("Load Data matrix...");
+	public LoadRegulatorTreeAction(Model model, GUIModel guiModel){
+		super("Load Regulator Modules...");
 		this.guiModel = guiModel;
 		this.model = model;
 	}
@@ -32,7 +34,8 @@ public class LoadDataAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
-		fc.setDialogTitle("Load data matrix");
+		fc.setDialogTitle("Load regulator modules");
+		fc.setFileFilter(new FileNameRegexFilter("module tree files", ".*\\.xml"));
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
 			final File file = fc.getSelectedFile();
@@ -65,11 +68,10 @@ public class LoadDataAction extends AbstractAction {
 				}
 			};
 			
-			DataMatrixParser parser = new DataMatrixParser(progListener);
+			RegulatorTreeParser parser = new RegulatorTreeParser(progListener);
 			
 			parser.parse(model, file);
 			
-			model.setDataMatrixLoaded(true);
 			setProgress(100);
 
 			return null;
