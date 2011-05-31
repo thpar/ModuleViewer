@@ -72,7 +72,6 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 			
 			parser.parse(model, file);
 			
-			model.setRegulatorTreeLoaded(true);
 			setProgress(100);
 
 			return null;

@@ -72,7 +72,6 @@ public class LoadGeneTreeAction extends AbstractAction {
 			
 			parser.parse(model, file);
 			
-			model.setGeneTreeLoaded(true);
 			setProgress(100);
 
 			return null;

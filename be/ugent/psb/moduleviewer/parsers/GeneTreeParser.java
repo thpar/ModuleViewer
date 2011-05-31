@@ -19,6 +19,7 @@ public class GeneTreeParser extends TreeParser{
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {
 		parse(inputFile, new GeneXMLHandler(model.getModnet(), progressListener, GeneXMLHandler.GeneType.GENES));
+		model.setGeneFile(inputFile);
 	}
 	
 	

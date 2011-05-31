@@ -19,6 +19,7 @@ public class ConditionTreeParser extends TreeParser{
 	@Override
 	public void parse(Model model, File inputFile) throws IOException {
 		parse(inputFile, new ConditionXMLHandler(model.getModnet(), progressListener));
+		model.setConditionFile(inputFile);
 	}
 	
 	

@@ -80,6 +80,8 @@ public class DataMatrixParser extends Parser {
 			
 			line = in.readLine();
 		}
+		
+		model.setDataFile(inputFile);
 
 	}
 

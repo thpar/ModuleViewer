@@ -1,15 +1,19 @@
 package be.ugent.psb.moduleviewer.model;
 
-public class Model {
+import java.io.File;
+import java.util.Observable;
+
+public class Model extends Observable{
 
 	
 	ModuleNetwork modnet = new ModuleNetwork();
 
-	private boolean dataMatrixLoaded = false;
-	private boolean geneTreeLoaded = false;
-	private boolean conditionTreeLoaded = false;
 	
-	private boolean regulatorTreeLoaded = false;
+	private File dataFile;
+	private File geneFile;
+	private File conditionFile;
+	private File regulatorFile;
+	
 	
 	
 	public ModuleNetwork getModnet() {
@@ -21,41 +25,52 @@ public class Model {
 	}
 	
 	
+	
+	
 	public boolean isEssentialsLoaded(){
-		return dataMatrixLoaded && geneTreeLoaded && conditionTreeLoaded;
+		return dataFile != null && geneFile != null && conditionFile!= null;
 	}
 
-	public boolean isDataMatrixLoaded() {
-		return dataMatrixLoaded;
+	public File getDataFile() {
+		return dataFile;
 	}
 
-	public void setDataMatrixLoaded(boolean dataMatrixLoaded) {
-		this.dataMatrixLoaded = dataMatrixLoaded;
+	public void setDataFile(File dataFile) {
+		this.dataFile = dataFile;
+		setChanged();
+		notifyObservers();
 	}
 
-	public boolean isGeneTreeLoaded() {
-		return geneTreeLoaded;
+	public File getGeneFile() {
+		return geneFile;
 	}
 
-	public void setGeneTreeLoaded(boolean geneTreeLoaded) {
-		this.geneTreeLoaded = geneTreeLoaded;
+	public void setGeneFile(File geneFile) {
+		this.geneFile = geneFile;
+		setChanged();
+		notifyObservers();
 	}
 
-	public boolean isConditionTreeLoaded() {
-		return conditionTreeLoaded;
+	public File getConditionFile() {
+		return conditionFile;
 	}
 
-	public void setConditionTreeLoaded(boolean conditionTreeLoaded) {
-		this.conditionTreeLoaded = conditionTreeLoaded;
+	public void setConditionFile(File conditionFile) {
+		this.conditionFile = conditionFile;
+		setChanged();
+		notifyObservers();
 	}
 
-	public boolean isRegulatorTreeLoaded() {
-		return regulatorTreeLoaded;
+	public File getRegulatorFile() {
+		return regulatorFile;
 	}
 
-	public void setRegulatorTreeLoaded(boolean regulatorTreeLoaded) {
-		this.regulatorTreeLoaded = regulatorTreeLoaded;
+	public void setRegulatorFile(File regulatorFile) {
+		this.regulatorFile = regulatorFile;
+		setChanged();
+		notifyObservers();
 	}
+
 	
 	
 

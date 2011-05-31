@@ -2,8 +2,6 @@ package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
 
-import be.ugent.psb.modulegraphics.elements.Colorizer;
-
 
 public class LemoneColorizer extends ExpressionColorizer {
 	

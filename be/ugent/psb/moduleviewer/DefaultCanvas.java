@@ -58,7 +58,7 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
-		if (model.isRegulatorTreeLoaded()){
+		if (model.getRegulatorFile()!=null){
 			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree().getColumns(),
 					mod.getConditionTree(),
 					new LemoneColorizer(0,0),

@@ -32,9 +32,6 @@ public abstract class Parser {
 	}
 
 	
-//	public void setProgressListener(ProgressListener progListener) {
-//		progressListener = progListener;		
-//	}
 	
 	
 }

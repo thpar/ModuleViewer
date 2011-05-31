@@ -69,7 +69,6 @@ public class LoadDataAction extends AbstractAction {
 			
 			parser.parse(model, file);
 			
-			model.setDataMatrixLoaded(true);
 			setProgress(100);
 
 			return null;
