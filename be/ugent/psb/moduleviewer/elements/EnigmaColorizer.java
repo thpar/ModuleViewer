@@ -5,12 +5,6 @@ import java.awt.Color;
 public class EnigmaColorizer extends ExpressionColorizer{
 
 	
-	/*
-	 * 	blueperc = new Float(gene.upProb(data,this.moduleNetwork.dataMean,this.moduleNetwork.dataSigma));
-	 *	yellowperc = new Float(gene.downProb(data,this.moduleNetwork.dataMean,this.moduleNetwork.dataSigma));
-	 * 
-	 */
-	
 	private double sigma;
 	private double mean;
 	
@@ -26,7 +20,7 @@ public class EnigmaColorizer extends ExpressionColorizer{
 		Color col;
 		float blueperc, yellowperc;
 		blueperc = new Float(upProb(data,mean,sigma));
-		yellowperc = new Float(downProb(data,mean,this.sigma));
+		yellowperc = new Float(downProb(data,mean,sigma));
 
 		col = new Color(yellowperc, yellowperc, blueperc);
 

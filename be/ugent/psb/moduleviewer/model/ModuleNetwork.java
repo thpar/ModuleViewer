@@ -180,7 +180,7 @@ public class ModuleNetwork{
 	}
 	
 	/**
-	 * Calculates basic stats for the data in this network.
+	 * Calculates basic stats for the data in this network (as seen in the fromXML method from LeMoNe ModuleNetwork)
 	 * Mean, Sigma, Min and Max
 	 */
 	private void calcDataPoints() {
@@ -207,6 +207,32 @@ public class ModuleNetwork{
 		this.dataMean /= (double) nrDataPoints;
 		this.dataSigma = Math.sqrt(sumSquare - nrDataPoints * Math.pow(this.dataMean, 2)) / Math.sqrt((double) nrDataPoints);
 		dataChanged = false;
+	}
+	
+	/**
+	 * Calculate Mean and Sigma, as seen in the constructor of ModuleNetwork in Enigma.
+	 * 
+	 * @deprecated has to loop all data twice. Use {@link calcDataPoints()} instead
+	 */
+	private void calcDataPointsEnigmaStyle(){
+		 double nrDataPoints = 0 ;
+			for(Gene gene : genes.values()){
+				for(double value : gene.getData()){
+					if(!Double.isNaN(value)){
+					  this.dataMean += value;
+					  nrDataPoints += 1 ;
+					}
+				}
+			}
+			this.dataMean /= (nrDataPoints *1.0) ;
+			for(Gene gene : genes.values()){
+				for(double value : gene.getData()){
+					if(!Double.isNaN(value)){
+						this.dataSigma += Math.pow(this.dataMean - value, 2) ; 
+					}	
+				}
+			}
+			this.dataSigma = Math.sqrt(this.dataSigma/(nrDataPoints *1.0)) ;
 	}
 	
 	

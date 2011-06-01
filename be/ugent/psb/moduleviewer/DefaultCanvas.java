@@ -5,6 +5,7 @@ import java.awt.Dimension;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.moduleviewer.elements.ConditionLabels;
+import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
 import be.ugent.psb.moduleviewer.elements.GeneNames;
 import be.ugent.psb.moduleviewer.elements.LemoneColorizer;
@@ -58,10 +59,10 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
-		if (model.getRegulatorFile()!=null){
+		if (model.getRegulatorFile()!=null && mod.getRegulatorTree()!=null){
 			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree().getColumns(),
 					mod.getConditionTree(),
-					new LemoneColorizer(0,0),
+					new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 					true);
 			this.add(regulatorMatrix);
 
@@ -75,7 +76,7 @@ public class DefaultCanvas extends Canvas {
 		
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree().getColumns(),
 				mod.getConditionTree(),
-				new LemoneColorizer(0,0),
+				new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 				true);
 		this.add(expressionMatrix);
 		

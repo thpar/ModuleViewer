@@ -68,10 +68,10 @@ public class LoadSessionAction extends AbstractAction {
 		ConditionTreeParser ctp = new ConditionTreeParser();
 		ctp.parse(model, new File(props.getProperty("conditions")));
 		
-		
-		if (props.contains("regulators")){
+		String regTreeFile = props.getProperty("regulators");
+		if (regTreeFile != null){
 			RegulatorTreeParser rtp = new RegulatorTreeParser();
-			rtp.parse(model, new File(props.getProperty("regulators")));
+			rtp.parse(model, new File(regTreeFile));
 		}
 		
 		

@@ -83,6 +83,7 @@ public class DataMatrixParser extends Parser {
 		
 		model.setDataFile(inputFile);
 
+		
 	}
 
 
