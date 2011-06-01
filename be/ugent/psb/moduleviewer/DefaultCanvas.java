@@ -8,7 +8,6 @@ import be.ugent.psb.moduleviewer.elements.ConditionLabels;
 import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
 import be.ugent.psb.moduleviewer.elements.GeneNames;
-import be.ugent.psb.moduleviewer.elements.LemoneColorizer;
 import be.ugent.psb.moduleviewer.elements.Title;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;

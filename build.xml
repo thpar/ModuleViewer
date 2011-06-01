@@ -1,0 +1,56 @@
+<?xml version="1.0"?>
+<project name="ModuleViewer" default="jar" basedir=".">
+
+	<property name="version" value="2.0" />
+	
+	<property name="src" value="." />
+	<property name="build" value="build" />
+	<property name="dist" value="ModuleViewer-${version}" />
+	<property name="lib" value="lib" />
+	<property name="dev" value="devtools" />
+
+	<property name="jar" value="ModuleViewer-${version}.jar" />
+	<property name="srcjar" value="ModuleViewer-${version}-src.jar" />
+
+	
+	<target name="init">
+		<mkdir dir="${build}" />
+		<mkdir dir="${build}/icons" />
+		<copy todir="${build}/icons">
+			<fileset dir="icons" />
+		</copy>
+		
+	</target>
+
+	
+	<target name="compile" depends="init">
+		<javac source="1.6" 
+				target="1.6" 
+				debug="true" 
+				debuglevel="lines,vars,source" 
+				srcdir="${src}" destdir="${build}" 
+				excludes="**/testing/** **/OldDefaultCanvas.java **/ConditionAnnotationLegend.java **/ConditionAnnotationMatrix.java **/LemoneXMLHandler.java **/ModuleNetworkParser.java">
+			<classpath>
+				<fileset dir="${lib}">
+					<include name="**/*.jar" />
+				</fileset>
+			</classpath>
+		</javac>
+	</target>
+
+
+	<target name="jar" depends="compile">
+		<jar destfile="${jar}" basedir="${build}" manifest="${dev}/MANIFEST.MF">
+		</jar>
+	</target>
+	
+	
+	<target name="dist" depends="jar">
+		
+	</target>
+	
+	<target name="clean">
+		<delete failonerror="false" dir="${build}" />
+	</target>
+
+</project>

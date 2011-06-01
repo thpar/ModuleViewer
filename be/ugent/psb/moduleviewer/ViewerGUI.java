@@ -10,7 +10,6 @@ import javax.swing.JScrollPane;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 
 public class ViewerGUI {
