@@ -1,0 +1,36 @@
+<?php
+header('Content-Type: application/x-java-jnlp-file');
+header('Pragma: no-cache');
+echo '<?xml version="1.0" encoding="utf-8"?>';
+$siteroot = 'http://' . $_SERVER["HTTP_HOST"] . str_replace(basename($_SERVER["PHP_SELF"]), "", $_SERVER["PHP_SELF"]);?>
+
+<jnlp spec="1.0+" codebase="<?php echo $siteroot;?>">
+<information>
+  <title>Module Viewer</title>
+  <vendor>VIB :: Plant Systems Biology :: Bioinformatics :: Thomas Van Parys</vendor>
+  <homepage href="http://bioinformatics.psb.ugent.be" />
+  <description>Module Viewer (for LeMoNe/Enigma data)</description>
+</information>
+<security>
+  <all-permissions />
+</security>
+<resources>
+  <j2se version="1.6+" initial-heap-size="128M" max-heap-size="500M"/>
+
+  <jar href="<?php echo($siteroot."ModuleViewer-2.0.jar");?>" />
+<?php 
+$d = dir("./lib");
+while($entry = $d->read()): 
+  if ($entry!= "." && $entry!= ".." && preg_match('/\Q' . '.jar' . '\E$/', $entry)):
+    $jarlink = $siteroot."lib/".$entry;
+?>
+  <jar href="<?php echo($jarlink);?>" />
+<?php
+     endif;
+endwhile;
+$d->close(); 
+?> 
+
+</resources>
+<application-desc main-class="be.ugent.psb.moduleviewer.ModuleViewer" />
+</jnlp>
