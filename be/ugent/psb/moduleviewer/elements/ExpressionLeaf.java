@@ -1,22 +1,21 @@
 package be.ugent.psb.moduleviewer.elements;
 
-import java.awt.Dimension;
-import java.awt.Graphics2D;
 import java.awt.Point;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
-import be.ugent.psb.modulegraphics.elements.Colorizer;
-import be.ugent.psb.modulegraphics.elements.Element;
+import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.Gene;
+import be.ugent.psb.moduleviewer.model.GeneNode;
 
-public class ExpressionLeaf extends Element{
-
-	private Matrix<Double> matrix;
+public class ExpressionLeaf extends Canvas{
 	
-	private LemoneColorizer c;
+	
+
+	private List<Condition> condSet;
+	private ExpressionColorizer c;
 
 	/**
 	 * 
@@ -25,12 +24,29 @@ public class ExpressionLeaf extends Element{
 	 * @param mean
 	 * @param sigma
 	 */
-	public ExpressionLeaf(List<Gene> genes, List<Condition> condSet, ExpressionColorizer c){
-//		c = new ExpressionColorizer(mean, sigma);
-//		Collections.sort(condSet);
+	public ExpressionLeaf(GeneNode geneRoot, List<Condition> condSet, ExpressionColorizer c){
 
 		this.addMouseListener(new ElementEventChildForwarder(this));
 		
+		this.condSet = condSet;
+		this.c = c;
+		
+		addLeaves(geneRoot);
+		
+		
+	}
+
+
+	private void addLeaves(GeneNode node){
+		if (node.isLeaf()){
+			this.addMatrix(node.getColumns());
+		} else {
+			addLeaves((GeneNode)node.left());
+			addLeaves((GeneNode)node.right());
+		}
+	}
+	
+	private void addMatrix(List<Gene> genes){
 		Double[][] data = new Double[genes.size()][condSet.size()];
 		int i=0;
 		for (Gene gene : genes){
@@ -40,29 +56,11 @@ public class ExpressionLeaf extends Element{
 			}
 			i++;
 		}
-		this.matrix = new Matrix<Double>(data, c);
-		addChildElement(matrix);
-	}
-	
-
-//	public void setMean(double mean){
-//		c.setMean(mean);
-//	}
-//	public void setSigma(double sigma){
-//		c.setSigma(sigma);
-//	}
-
-
-	@Override
-	protected Dimension getRawDimension(Graphics2D g) {
-		return matrix.getDimension(g);
+		Matrix<Double> matrix = new Matrix<Double>(data, c);
+		this.add(matrix);
+		this.newRow();
 	}
 
-
-	@Override
-	protected Dimension paintElement(Graphics2D g, int xOffset, int yOffset) {
-		return matrix.paint(g, xOffset, yOffset);
-	}
 	
 	
 	/**
@@ -73,7 +71,8 @@ public class ExpressionLeaf extends Element{
 	 * @return a {@link Point} with {@link Point}.x the hit column and {@link Point}.y the hit row.  
 	 */
 	public Point getHitCoordinates(int x, int y){
-		return matrix.getHitSquare(x, y);
+		Matrix<Double> hitMatrix = (Matrix<Double>)this.getHitChild(x, y);
+		return hitMatrix.getHitSquare(x, y);
 	}
 	
 	/**
@@ -84,7 +83,8 @@ public class ExpressionLeaf extends Element{
 	 * @return
 	 */
 	public Double getHitData(int x, int y){
-		return matrix.getHitData(x, y);
+		Matrix<Double> hitMatrix = (Matrix<Double>)this.getHitChild(x, y);
+		return hitMatrix.getHitData(x, y);
 	}
 
 

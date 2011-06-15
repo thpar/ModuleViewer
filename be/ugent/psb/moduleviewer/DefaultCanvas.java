@@ -9,6 +9,7 @@ import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
 import be.ugent.psb.moduleviewer.elements.GeneNames;
 import be.ugent.psb.moduleviewer.elements.Title;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
@@ -59,13 +60,13 @@ public class DefaultCanvas extends Canvas {
 		}
 		
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTree()!=null){
-			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree().getColumns(),
+			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree(),
 					mod.getConditionTree(),
 					new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 					true);
 			this.add(regulatorMatrix);
 
-			GeneNames regNames = new GeneNames(mod.getRegulatorTree().getColumns());
+			GeneNames regNames = new GeneNames(mod.getRegulatorTree());
 			this.add(regNames);
 			
 			this.newRow();
@@ -73,19 +74,27 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
-		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree().getColumns(),
+		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
 				new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 				true);
 		this.add(expressionMatrix);
 		
-		GeneNames geneNames = new GeneNames(mod.getGeneTree().getColumns());
+		GeneNames geneNames = new GeneNames(mod.getGeneTree());
 		this.add(geneNames);
 		
 		this.newRow();
 		
 		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), true);
 		this.add(condLabels);
+		
+		
+//		for (AnnotationBlock ab : mod.getAnnotationBlocks()){
+//			if (ab.getType()==AnnotationBlock.DataType.GENES){
+//				
+//			}
+//		}
+		
 	}
 
 	

@@ -13,7 +13,7 @@ import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
-import be.ugent.psb.moduleviewer.model.Gene;
+import be.ugent.psb.moduleviewer.model.GeneNode;
 
 /**
  * Iterates {@link ConditionNode}s and constructs the Expression Matrix on a {@link Canvas}
@@ -27,27 +27,24 @@ public class ExpressionMatrix extends Canvas {
 	 * a list of leaves, in order to be able to change their settings after creation
 	 */
 	private List<ExpressionLeaf> leaves = new ArrayList<ExpressionLeaf>();
-	private ConditionNode rootNode;
-//	private double mean;
-//	private double sigma;
-	private List<Gene> genes;
+	private ConditionNode conditionRoot;
+	private GeneNode geneRoot;
+	
 	private boolean recursive;
 	private ExpressionColorizer colorizer;
 
 	/**
 	 * 
 	 * @param genes
-	 * @param rootNode
+	 * @param conditionRoot
 	 * @param mean
 	 * @param sigma
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ExpressionMatrix(List<Gene> genes, ConditionNode rootNode, ExpressionColorizer colorizer, boolean recursive){
-		this.genes = genes;
-		this.rootNode = rootNode;
+	public ExpressionMatrix(GeneNode geneRoot, ConditionNode conditionRoot, ExpressionColorizer colorizer, boolean recursive){
+		this.conditionRoot = conditionRoot;
+		this.geneRoot = geneRoot;
 		this.colorizer = colorizer;
-//		this.mean = mean;
-//		this.sigma = sigma;
 		this.recursive = recursive;
 		compose();
 	}
@@ -59,10 +56,10 @@ public class ExpressionMatrix extends Canvas {
 	 */
 	private void compose(){
 		if (recursive){ 
-			addLeaves(rootNode);
+			addLeaves(conditionRoot);
 		} else{ 
-			ExpressionLeaf leaf = new ExpressionLeaf(genes,
-					rootNode.getColumns(),
+			ExpressionLeaf leaf = new ExpressionLeaf(geneRoot,
+					conditionRoot.getColumns(),
 					this.colorizer);
 			this.add(leaf);
 			leaves.add(leaf);
@@ -70,17 +67,6 @@ public class ExpressionMatrix extends Canvas {
 		
 	}
 
-//	public void setMeanSigma(double mean, double sigma){
-//		this.mean = mean;
-//		this.sigma = sigma;
-//		
-//		for (ExpressionLeaf l : leaves){
-//			l.setMean(mean);
-//			l.setSigma(sigma);
-//		}
-//		
-//	}
-	
 
 
 	@Override
@@ -118,7 +104,7 @@ public class ExpressionMatrix extends Canvas {
 			addLeaves(node.left());
 			addLeaves(node.right());
 		} else {
-			ExpressionLeaf leaf = new ExpressionLeaf(genes,
+			ExpressionLeaf leaf = new ExpressionLeaf(geneRoot,
 					node.getColumns(),
 					this.colorizer);
 			this.add(leaf);
