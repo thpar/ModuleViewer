@@ -63,7 +63,7 @@ public class DefaultCanvas extends Canvas {
 			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree(),
 					mod.getConditionTree(),
 					new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
-					true);
+					true, false);
 			this.add(regulatorMatrix);
 
 			GeneNames regNames = new GeneNames(mod.getRegulatorTree());
@@ -77,7 +77,7 @@ public class DefaultCanvas extends Canvas {
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
 				new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
-				true);
+				true, true);
 		this.add(expressionMatrix);
 		
 		GeneNames geneNames = new GeneNames(mod.getGeneTree());

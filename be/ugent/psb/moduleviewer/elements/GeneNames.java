@@ -11,9 +11,6 @@ import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 
 public class GeneNames extends Canvas {
-
-	private LabelList labelList;
-
 	
 	public GeneNames(GeneNode geneRoot){
 		addLeaves(geneRoot);
@@ -36,27 +33,17 @@ public class GeneNames extends Canvas {
 			geneNames.add(gene.getAliasOrName());
 		}
 		
-		labelList = new LabelList(geneNames);
-		
-		add(labelList);
-		this.newRow();
-//		addMouseListener(new ElementEventChildForwarder(this));
+		LabelList labelList = new LabelList(geneNames);
 		
 		labelList.setFont(new Font("SansSerif", Font.BOLD, 12));
 		labelList.setDirection(Direction.TOP_TO_BOTTOM);
+//		addMouseListener(new ElementEventChildForwarder(this));
+		add(labelList);
+		this.newRow();
 		
 	}
 
-//	@Override
-//	protected Dimension getRawDimension(Graphics2D g) {
-//		return labelList.getDimension(g);
-//	}
-//
-//	@Override
-//	protected Dimension paintElement(Graphics2D g, int xOffset, int yOffset) {
-//		return labelList.paint(g, xOffset, yOffset);
-//	}
-	
+
 	
 	/*
 	 * Hits

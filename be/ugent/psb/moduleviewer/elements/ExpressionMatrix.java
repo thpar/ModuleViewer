@@ -33,6 +33,9 @@ public class ExpressionMatrix extends Canvas {
 	private boolean recursive;
 	private ExpressionColorizer colorizer;
 
+	private boolean drawGeneSeparators = true;
+	
+	
 	/**
 	 * 
 	 * @param genes
@@ -41,11 +44,13 @@ public class ExpressionMatrix extends Canvas {
 	 * @param sigma
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ExpressionMatrix(GeneNode geneRoot, ConditionNode conditionRoot, ExpressionColorizer colorizer, boolean recursive){
+	public ExpressionMatrix(GeneNode geneRoot, ConditionNode conditionRoot, ExpressionColorizer colorizer, 
+			boolean recursive, boolean drawGeneSeparators){
 		this.conditionRoot = conditionRoot;
 		this.geneRoot = geneRoot;
 		this.colorizer = colorizer;
 		this.recursive = recursive;
+		this.drawGeneSeparators = drawGeneSeparators;
 		compose();
 	}
 	
@@ -61,6 +66,7 @@ public class ExpressionMatrix extends Canvas {
 			ExpressionLeaf leaf = new ExpressionLeaf(geneRoot,
 					conditionRoot.getColumns(),
 					this.colorizer);
+			leaf.setDrawGeneSeparators(drawGeneSeparators);
 			this.add(leaf);
 			leaves.add(leaf);
 		}
@@ -74,7 +80,7 @@ public class ExpressionMatrix extends Canvas {
 		//paint the canvas as constructed in compose()
 		Dimension drawnDim = super.paintElement(g, xOffset, yOffset);
 		
-		//draw lines between leaves
+		//draw lines between condition leaves
 		int x = 0;
 		int leafCount = 0;
 		g.setColor(Color.MAGENTA);
@@ -108,6 +114,7 @@ public class ExpressionMatrix extends Canvas {
 					node.getColumns(),
 					this.colorizer);
 			this.add(leaf);
+			leaf.setDrawGeneSeparators(drawGeneSeparators);
 			this.leaves.add(leaf);
 		}
 	}
@@ -132,4 +139,7 @@ public class ExpressionMatrix extends Canvas {
 		return new Point(-1,-1);
 	}
 
+
+	
+	
 }

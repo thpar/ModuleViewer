@@ -1,10 +1,16 @@
 package be.ugent.psb.moduleviewer.elements;
 
+import java.awt.BasicStroke;
+import java.awt.Color;
+import java.awt.Dimension;
+import java.awt.Graphics2D;
 import java.awt.Point;
+import java.util.Iterator;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.Gene;
@@ -12,11 +18,13 @@ import be.ugent.psb.moduleviewer.model.GeneNode;
 
 public class ExpressionLeaf extends Canvas{
 	
-	
 
 	private List<Condition> condSet;
 	private ExpressionColorizer c;
+	
 
+	private boolean drawGeneSeparators = true;
+	
 	/**
 	 * 
 	 * @param genes list of genes in this module
@@ -32,7 +40,6 @@ public class ExpressionLeaf extends Canvas{
 		this.c = c;
 		
 		addLeaves(geneRoot);
-		
 		
 	}
 
@@ -63,6 +70,31 @@ public class ExpressionLeaf extends Canvas{
 
 	
 	
+	@Override
+	protected Dimension paintElement(Graphics2D g, int xOffset, int yOffset) {
+		Dimension drawnDim = super.paintElement(g, xOffset, yOffset);
+		
+		
+		//white lines in between gene groups
+		if (drawGeneSeparators){
+			int y = 0;
+			g.setColor(Color.WHITE);
+			g.setStroke(new BasicStroke(1.5F));
+
+			for (Iterator<Element> it = this.iterator(); it.hasNext(); ){
+				Element el = it.next();
+				if (it.hasNext()){
+					y+=el.getDimension(g).height;
+					g.drawLine(xOffset, yOffset + y, xOffset+drawnDim.width, yOffset+y);
+				}
+			}
+		}
+		
+		
+		return drawnDim;
+	}
+
+
 	/**
 	 * Returns the location in the data matrix that has been hit.
 	 * 
@@ -85,6 +117,16 @@ public class ExpressionLeaf extends Canvas{
 	public Double getHitData(int x, int y){
 		Matrix<Double> hitMatrix = (Matrix<Double>)this.getHitChild(x, y);
 		return hitMatrix.getHitData(x, y);
+	}
+
+
+	public boolean isDrawGeneSeparators() {
+		return drawGeneSeparators;
+	}
+
+
+	public void setDrawGeneSeparators(boolean drawGeneSeparators) {
+		this.drawGeneSeparators = drawGeneSeparators;
 	}
 
 
