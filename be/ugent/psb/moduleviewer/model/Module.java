@@ -37,11 +37,6 @@ public class Module {
 	
 	private List<AnnotationBlock> annotationBlocks = new ArrayList<AnnotationBlock>();
 	
-	//TODO for LeMoNe figures
-//	private double mean;
-//	private double sigma;
-//	private boolean changed = true;
-	
 	
 	
 	public Module(ModuleNetwork modnet, int id) {

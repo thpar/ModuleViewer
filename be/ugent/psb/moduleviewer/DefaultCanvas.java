@@ -4,6 +4,7 @@ import java.awt.Dimension;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Spacer;
+import be.ugent.psb.moduleviewer.elements.AnnotationMatrix;
 import be.ugent.psb.moduleviewer.elements.ConditionLabels;
 import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
@@ -83,17 +84,18 @@ public class DefaultCanvas extends Canvas {
 		GeneNames geneNames = new GeneNames(mod.getGeneTree());
 		this.add(geneNames);
 		
+		for (AnnotationBlock ab : mod.getAnnotationBlocks()){
+			if (ab.getType()==AnnotationBlock.DataType.GENES){
+				AnnotationMatrix anMatrix = new AnnotationMatrix(mod.getGeneTree(), ab);
+				this.add(anMatrix);
+			}
+		}
 		this.newRow();
 		
 		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), true);
 		this.add(condLabels);
 		
 		
-//		for (AnnotationBlock ab : mod.getAnnotationBlocks()){
-//			if (ab.getType()==AnnotationBlock.DataType.GENES){
-//				
-//			}
-//		}
 		
 	}
 

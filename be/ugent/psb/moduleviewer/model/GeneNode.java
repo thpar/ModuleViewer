@@ -35,8 +35,6 @@ public class GeneNode implements ITreeNode<Gene>{
 	
 	
 	
-	
-	
 	public GeneNode() {
 	}
 
@@ -60,11 +58,11 @@ public class GeneNode implements ITreeNode<Gene>{
 	 * Same as {@link getColumns}
 	 * @return
 	 */
-	public List<Gene> getConditions() {
+	public List<Gene> getGenes() {
 		return getColumns();
 	}
 
-	public void setConditions(List<Gene> genes) {
+	public void setGenes(List<Gene> genes) {
 		this.genes = genes;
 	}
 
@@ -101,13 +99,12 @@ public class GeneNode implements ITreeNode<Gene>{
 	}
 	
 	/**
-	 * Get the condition in the given columns, counted over all nodes.
-	 * This method does NOT relate to the number assigned to the conditions. 
+	 * Get the gene in the given columns, counted over all nodes.
 	 * 
 	 * @param geneNumber
 	 * @return
 	 */
-	public Gene getCondition(int geneNumber){
+	public Gene getGene(int geneNumber){
 		return getColumns().get(geneNumber);
 	}
 

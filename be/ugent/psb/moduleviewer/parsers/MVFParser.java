@@ -1,5 +1,6 @@
 package be.ugent.psb.moduleviewer.parsers;
 
+import java.awt.Color;
 import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileReader;
@@ -8,6 +9,7 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
 
+import be.ugent.psb.modulegraphics.elements.ColorFactory;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
@@ -194,7 +196,8 @@ public class MVFParser extends Parser {
 			String value = pe.getValue();
 			switch(key){
 			case COLOR:
-//				abf.setColor()
+				Color c = ColorFactory.decodeColor(pe.getValue());
+				abf.setColor(c);
 				break;
 			case LABELCOLOR:
 				break;
@@ -214,6 +217,8 @@ public class MVFParser extends Parser {
 		}
 		
 	}
+
+
 
 	private void parseEntry(String line){
 		//if this is the first entry after parsing key values,
@@ -258,8 +263,8 @@ public class MVFParser extends Parser {
 					if (parseGeneValues){
 						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
 						String itemId = itemKeyValue[0];
-						Double itemValue = Double.valueOf(itemKeyValue[1]);				
-						annot.addItem(itemId, itemValue);						
+						Color geneColor = new Color(Integer.valueOf(itemKeyValue[1]));				
+						annot.addItem(itemId, geneColor);						
 					} else {
 						annot.addItem(it);						
 					}

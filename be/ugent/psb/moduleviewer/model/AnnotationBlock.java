@@ -1,6 +1,7 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.awt.Color;
+import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -105,5 +106,13 @@ public class AnnotationBlock {
 		return color;
 	}
 
+	
+	public Collection<Annotation<?>> getAnnotations(){
+		return this.annotations.values();
+	}
+	
+	public int size(){
+		return this.annotations.size();
+	}
 	
 }

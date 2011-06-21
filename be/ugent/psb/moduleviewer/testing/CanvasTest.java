@@ -16,7 +16,6 @@ import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element.Alignment;
 import be.ugent.psb.modulegraphics.elements.Rectangle;
 import be.ugent.psb.modulegraphics.elements.Spacer;
-import be.ugent.psb.moduleviewer.elements.GeneNames;
 import be.ugent.psb.moduleviewer.elements.TickBoxColumn;
 import be.ugent.psb.moduleviewer.elements.TickBoxMatrix;
 import be.ugent.psb.moduleviewer.elements.Title;
@@ -37,7 +36,7 @@ public class CanvasTest implements MouseListener {
 
 
 
-	private GeneNames gn;
+//	private GeneNames gn;
 
 	
 	
@@ -100,8 +99,8 @@ public class CanvasTest implements MouseListener {
 		});
 		
 		
-		gn = new GeneNames(genes);
-		gn.addMouseListener(this);
+//		gn = new GeneNames(genes);
+//		gn.addMouseListener(this);
 		
 //		gn.highlightGene(b, true);
 //		gn.highlightGene(d, true);
@@ -109,7 +108,7 @@ public class CanvasTest implements MouseListener {
 		main.add(title);
 
 		
-		main.add(gn);
+//		main.add(gn);
 		main.add(tbcs);
 		
 		main.newRow();
@@ -249,8 +248,8 @@ public class CanvasTest implements MouseListener {
 
 	@Override
 	public void mouseClicked(MouseEvent e) {
-		Gene g = gn.getHitGene(e.getX(), e.getY());
-		gn.toggleHighlightGene(g);
+//		Gene g = gn.getHitGene(e.getX(), e.getY());
+//		gn.toggleHighlightGene(g);
 		
 	}
 

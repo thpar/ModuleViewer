@@ -1,5 +1,6 @@
 package be.ugent.psb.moduleviewer.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,7 +28,7 @@ abstract public class Annotation<T> {
 	 */
 	protected List<T> contents = new ArrayList<T>();
 	
-	protected List<Double> values = new ArrayList<Double>();
+	protected List<Color> colors = new ArrayList<Color>();
 
 	
 	/**
@@ -56,9 +57,9 @@ abstract public class Annotation<T> {
 	
 	abstract public void addItem(String itemId) throws UnknownItemException;
 	
-	public void addItem(String itemId, Double value) throws UnknownItemException {
+	public void addItem(String itemId, Color color) throws UnknownItemException {
 		this.addItem(itemId);
-		this.values.add(value);
+		this.colors.add(color);
 		
 	}
 	
