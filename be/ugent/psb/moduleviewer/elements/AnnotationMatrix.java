@@ -8,11 +8,11 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Matrix;
+import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.Gene;
-import be.ugent.psb.moduleviewer.model.GeneAnnotation;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 
 
@@ -44,7 +44,7 @@ public class AnnotationMatrix extends Element {
 		case GENES:
 			int anCount = 0;
 			for (Annotation<?> an : ab.getAnnotations()){
-				GeneAnnotation geneAnnot = (GeneAnnotation)an;
+				Annotation<Gene> geneAnnot = (Annotation<Gene>)an;
 				labels.add(an.getName());
 				for (int i=0; i<numberOfGenes; i++){
 					Gene gene = geneRoot.getGene(i);

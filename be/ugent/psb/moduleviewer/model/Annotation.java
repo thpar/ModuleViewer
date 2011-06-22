@@ -1,8 +1,8 @@
 package be.ugent.psb.moduleviewer.model;
 
-import java.awt.Color;
-import java.util.ArrayList;
-import java.util.List;
+import java.util.Collection;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * Annotates a list of genes or conditions.
@@ -13,7 +13,7 @@ import java.util.List;
  *
  * @param <T> Type of contents ({@link Gene} or {@link Condition})
  */
-abstract public class Annotation<T> {
+public class Annotation<T> {
 	/**
 	 * Name of the list.
 	 */
@@ -26,11 +26,11 @@ abstract public class Annotation<T> {
 	/**
 	 * Genes, conditions, ... the objects to be annotated.
 	 */
-	protected List<T> contents = new ArrayList<T>();
+	protected Set<T> contents = new HashSet<T>();
 	
-	protected List<Color> colors = new ArrayList<Color>();
+//	protected List<Color> colors = new ArrayList<Color>();
 
-	
+		
 	/**
 	 * Create a new annotation list, linked to the modnet
 	 * @param name
@@ -53,19 +53,29 @@ abstract public class Annotation<T> {
 		this.contents.add(item);
 	}
 	
+
 	
+//	public void addItem(T item, Color color) throws UnknownItemException {
+//		this.addItem(item);
+//		this.colors.add(color);
+//		
+//	}
 	
-	abstract public void addItem(String itemId) throws UnknownItemException;
-	
-	public void addItem(String itemId, Color color) throws UnknownItemException {
-		this.addItem(itemId);
-		this.colors.add(color);
-		
-	}
-	
-	public List<T> getItems(){
+	public Set<T> getItems(){
 		return contents;
 	}
+	
+//	public List<Color> getColors(){
+//		return colors;
+//	}
+	
+//	public T getItemAt(int pos){
+//		return contents.get(pos);
+//	}
+//	
+//	public Color getColorAt(int pos){
+//		return colors.get(pos);
+//	}
 	
 	public boolean hasItem(T item){
 		return this.contents.contains(item);
@@ -83,5 +93,11 @@ abstract public class Annotation<T> {
 		}
 		return out;
 	}
+
+	public ModuleNetwork getModnet() {
+		return modnet;
+	}
+	
+	
 	
 }

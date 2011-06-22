@@ -88,11 +88,11 @@ public class AnnotationBlock {
 	public Annotation<?> addNewAnnotation(String label){
 		switch(type){
 		case GENES:
-			GeneAnnotation geneAnnot = new GeneAnnotation(label, modnet);
+			Annotation<Gene> geneAnnot = new Annotation<Gene>(label, modnet);
 			this.addAnnotation(geneAnnot);
 			return geneAnnot;
 		case CONDITIONS:
-			ConditionAnnotation condAnnot = new ConditionAnnotation(label, modnet);
+			Annotation<Condition> condAnnot = new Annotation<Condition>(label, modnet);
 			this.addAnnotation(condAnnot);
 			return condAnnot;
 		default: return null;

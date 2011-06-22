@@ -14,6 +14,9 @@ import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlockFactory;
+import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
+import be.ugent.psb.moduleviewer.model.Condition;
+import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -263,10 +266,28 @@ public class MVFParser extends Parser {
 					if (parseGeneValues){
 						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
 						String itemId = itemKeyValue[0];
-						Color geneColor = new Color(Integer.valueOf(itemKeyValue[1]));				
-						annot.addItem(itemId, geneColor);						
+						Color geneColor = new Color(Integer.valueOf(itemKeyValue[1]));
+						switch(ab.getType()){
+						case GENES:
+							Gene geneItem = modnet.getGene(itemId);
+							((ColoredAnnotation<Gene>)annot).addItem(geneItem, geneColor);	
+							break;
+						case CONDITIONS:
+							Condition condItem = modnet.getCondition(itemId);
+							((ColoredAnnotation<Condition>)annot).addItem(condItem, geneColor);	
+							break;
+						}
 					} else {
-						annot.addItem(it);						
+						switch(ab.getType()){
+						case GENES:
+							Gene geneItem = modnet.getGene(it);
+							((Annotation<Gene>)annot).addItem(geneItem);	
+							break;
+						case CONDITIONS:
+							Condition condItem = modnet.getCondition(it);
+							((Annotation<Condition>)annot).addItem(condItem);	
+							break;
+						}
 					}
 				}
 			} catch (NumberFormatException e) {
