@@ -1,95 +1,88 @@
 package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
-import java.util.Collections;
-import java.util.List;
 
-import be.ugent.psb.ModuleNetwork.ConditionClassification;
-import be.ugent.psb.ModuleNetwork.Experiment;
-import be.ugent.psb.ModuleNetwork.TreeNode;
-import be.ugent.psb.modulegraphics.elements.Canvas;
-import be.ugent.psb.modulegraphics.elements.Colorizer;
-import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Matrix;
+import be.ugent.psb.modulegraphics.elements.PassThroughColorizer;
+import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
+import be.ugent.psb.moduleviewer.elements.AnnotationMatrix;
+import be.ugent.psb.moduleviewer.model.Annotation;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock;
+import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
+import be.ugent.psb.moduleviewer.model.Condition;
+import be.ugent.psb.moduleviewer.model.ConditionNode;
 
 
-public class ConditionAnnotationMatrix extends Canvas implements Colorizer<String>{
+//TODO rotate matrix for conditions!!!!
 
-	
-	private ConditionClassification classification;
-	private List<Experiment> conditions;
-	private TreeNode rootNode;
-	private boolean recursive;
+public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 
-
-	/**
-	 * 
-	 * @param rootNode
-	 * @param classification
-	 * @param conditions
-	 * @param recursive traverse the children of the node recursively
-	 */
-	public ConditionAnnotationMatrix(TreeNode rootNode, ConditionClassification classification, 
-			List<Experiment> conditions, boolean recursive){
-		this.classification = classification;
-		this.conditions = conditions;
-		this.rootNode = rootNode;
-		this.recursive = recursive;
-		compose();
-	}
-	
-	private void compose(){
-		if (recursive){
-			addLeaves(rootNode);
+	private AnnotationBlock<Condition> ab;
+	private ConditionNode condRoot;
+		
+	public ConditionAnnotationMatrix(ConditionNode condRoot, AnnotationBlock<Condition> ab){
+		this.ab = ab;
+		this.condRoot = condRoot;
+		
+		if (ab.isItemSpecificColored()){
+			constructColoredMatrix();
 		} else {
-			Matrix<String> matrix = createMatrix(rootNode);
-			this.add(matrix);
+			constructBooleanMatrix();			
 		}
 	}
 	
 	
-	private void addLeaves(TreeNode node) {
-		if (node.nodeStatus.equals("internal")){
-			addLeaves(node.leftChild);
-			addLeaves(node.rightChild);
-		} else {
-			Matrix<String> matrix = createMatrix(node);
-			this.add(matrix);
-		}
-	}
+	private void constructColoredMatrix() {
+		int numberOfConditions = condRoot.getWidth();
+		Color data[][] = new Color[numberOfConditions][ab.size()];
 
-
-	private Matrix<String> createMatrix(TreeNode node) {
-		Collections.sort(node.leafDistribution.condSet);
-		
-		String[][] data = new String[classification.getClasses().size()][node.leafDistribution.condSet.size()];
-		
-		int i=0; int j=0;
-		for (String clas: classification.getClasses()){
-			j=0;
-			for (int c : node.leafDistribution.condSet){
-				String name = this.conditions.get(c).name;
-				String prop = classification.getProperty(name, clas);
-				data[i][j++] = prop;
+		int anCount = 0;
+		for (Annotation<Condition> an : ab.getAnnotations()){
+			ColoredAnnotation<Condition> colorAn = (ColoredAnnotation<Condition>)an; 
+			for (int i=0; i<numberOfConditions; i++){
+				Condition cond = condRoot.getCondition(i);
+				if (an.hasItem(cond)){
+					data[i][anCount] = colorAn.getColor(cond);
+				} else {
+					data[i][anCount] = null;
+				}
 			}
-			i++;
+			labels.add(an.getName());
+			anCount++;
 		}
-		return new Matrix<String>(data, this);
+
+		PassThroughColorizer c = new PassThroughColorizer();
+		matrix = new Matrix<Color>(data, c);
+		matrix.setParentElement(this);
 	}
 
 
-	@Override
-	public Color getColor(String element) {
-		return classification.getPropertyColor(element);
+
+
+	private void constructBooleanMatrix() {
+
+		int numberOfConditions = condRoot.getWidth();
+		Boolean data[][] = new Boolean[numberOfConditions][ab.size()];
+
+		int anCount = 0;
+		for (Annotation<Condition> an : ab.getAnnotations()){
+			for (int i=0; i<numberOfConditions; i++){
+				Condition cond = condRoot.getCondition(i);
+				if (an.hasItem(cond)){
+					data[i][anCount] = true;
+				} else {
+					data[i][anCount] = false;
+				}
+			}
+			labels.add(an.getName());
+			anCount++;
+		}
+
+		Color color = ab.getColor();
+		SimpleColorizer c = new SimpleColorizer(color);
+		matrix = new Matrix<Boolean>(data, c);
+		matrix.setParentElement(this);
 	}
 	
-	
-	public String getHitAnnotation(int x, int y){
-		Element el = getHitChild(x, y);
-		assert(el instanceof Matrix);
-		Matrix<String> mat = (Matrix<String>)el;
-		String data = mat.getHitData(x, y);
-		return data;
-	}
 	
 }

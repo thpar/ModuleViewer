@@ -4,7 +4,7 @@ import java.awt.Dimension;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Spacer;
-import be.ugent.psb.moduleviewer.elements.AnnotationMatrix;
+import be.ugent.psb.moduleviewer.elements.GeneAnnotationMatrix;
 import be.ugent.psb.moduleviewer.elements.ConditionLabels;
 import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
@@ -86,8 +86,8 @@ public class DefaultCanvas extends Canvas {
 		
 		for (AnnotationBlock ab : mod.getAnnotationBlocks()){
 			if (ab.getType()==AnnotationBlock.DataType.GENES){
-				AnnotationMatrix anMatrix = new AnnotationMatrix(mod.getGeneTree(), ab);
-				this.add(anMatrix);
+				GeneAnnotationMatrix anMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), ab);
+				this.addExplode(anMatrix);
 			}
 		}
 		this.newRow();

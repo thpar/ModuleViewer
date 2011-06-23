@@ -35,7 +35,7 @@ public class Module {
 	
 	
 	
-	private List<AnnotationBlock> annotationBlocks = new ArrayList<AnnotationBlock>();
+	private List<AnnotationBlock<?>> annotationBlocks = new ArrayList<AnnotationBlock<?>>();
 	
 	
 	
@@ -50,8 +50,6 @@ public class Module {
 		this.name = name;
 	}
 	
-
-//TODO methods to return genes and regulators
 
 
 	/**
@@ -87,26 +85,26 @@ public class Module {
 	}
 
 	
-	public AnnotationBlock getAnnotationBlock(String blockId){
-		for (AnnotationBlock block : annotationBlocks){
+	public AnnotationBlock<?> getAnnotationBlock(String blockId){
+		for (AnnotationBlock<?> block : annotationBlocks){
 			if (block.getBlockName().equals(blockId)) return block;
 		}
 		return null;
 	}
 	
-	public List<AnnotationBlock> getAnnotationBlocks(){
+	public List<AnnotationBlock<?>> getAnnotationBlocks(){
 		return annotationBlocks;
 	}
-	public List<AnnotationBlock> getAnnotationBlock(DataType type){
-		List<AnnotationBlock> typeBlocks = new ArrayList<AnnotationBlock>();
-		for (AnnotationBlock ab : annotationBlocks){
+	public List<AnnotationBlock<?>> getAnnotationBlocks(DataType type){
+		List<AnnotationBlock<?>> typeBlocks = new ArrayList<AnnotationBlock<?>>();
+		for (AnnotationBlock<?> ab : annotationBlocks){
 			if (ab.getType() == type){
 				typeBlocks.add(ab);
 			}
 		}
 		return typeBlocks;
 	}
-	public void addAnnotationBlock(AnnotationBlock ab){
+	public void addAnnotationBlock(AnnotationBlock<?> ab){
 		this.annotationBlocks.add(ab);
 	}
 	
@@ -115,51 +113,6 @@ public class Module {
 	}
 	
 	
-//	public double getMean(){
-//		if (changed){
-//			calculateMeanAndSigma();
-//		}
-//		return mean;
-//	}
-//	public double getSigma(){
-//		if (changed){
-//			calculateMeanAndSigma();
-//		}
-//		return sigma;
-//	}
-
-//	private void calculateMeanAndSigma() {
-//		
-//		//get the mean for this module
-//		int nbval=0;
-//		for (Gene g : this.genes) {
-//			for (double value : g.getData()) {
-//				if (!Double.isNaN(value)) {
-//					this.mean += value;
-//					nbval++;
-//				}
-//			}
-//		}
-//		this.mean = this.mean / nbval;
-//
-//		
-//		//get the sigma for this module
-//		nbval=0;
-//		for (Gene g : this.genes) {
-//			for (double value : g.getData()) {
-//				if (!Double.isNaN(value)) {
-//					this.sigma += Math.pow(this.mean - value,2);
-//					nbval++;
-//				}
-//			}
-//		}
-//		this.sigma = Math.sqrt(this.sigma / nbval);
-//
-//
-//
-//		changed = false;
-//	}
-
 	public String getName() {
 		return name;
 	}

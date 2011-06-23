@@ -90,7 +90,7 @@ public class MVFParser extends Parser {
 
 	private int counter;
 
-	private boolean parseGeneValues;
+//	private boolean parseGeneValues;
 
 	private String parseGeneValuesSeparator; 
 	
@@ -169,7 +169,7 @@ public class MVFParser extends Parser {
 	}
 	
 	private void processParams(){
-		parseGeneValues = false;
+//		parseGeneValues = false;
 		//get object type
 		String objectTypeString = params.get(ParamKey.OBJECT);
 		DataType objectType; 
@@ -205,7 +205,8 @@ public class MVFParser extends Parser {
 			case LABELCOLOR:
 				break;
 			case VALUES:
-				parseGeneValues = true;
+//				parseGeneValues = true;
+				abf.setGeneSpecificColored(true);
 				if (value.equals("true")){
 					parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR;
 				} else {
@@ -248,22 +249,23 @@ public class MVFParser extends Parser {
 		
 		try {
 			Module mod = modnet.getModule(modId);
-			AnnotationBlock ab = mod.getAnnotationBlock(abf.getBlockName());
+			AnnotationBlock<?> ab = mod.getAnnotationBlock(abf.getBlockName());
 			if (ab==null){
 				ab = abf.createNewAnnotationBlock();
 				mod.addAnnotationBlock(ab);
 			}
 			
 
+			
 			Annotation<?> annot = ab.getAnnotation(label);
 			if (annot==null){
 				annot = ab.addNewAnnotation(label);
-				ab.addAnnotation(annot);
+//				ab.addAnnotation(annot);
 			}
 			
 			try {
 				for (String it : items){
-					if (parseGeneValues){
+					if (abf.isGeneSpecificColored()){
 						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
 						String itemId = itemKeyValue[0];
 						Color geneColor = new Color(Integer.valueOf(itemKeyValue[1]));

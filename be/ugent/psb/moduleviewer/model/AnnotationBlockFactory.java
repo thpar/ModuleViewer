@@ -12,6 +12,8 @@ public class AnnotationBlockFactory {
 	private String blockName;
 	private ModuleNetwork modnet;
 	
+	private boolean geneSpecificColored = false;
+	
 	
 	public AnnotationBlockFactory(String blockName, DataType type, ModuleNetwork modnet){
 		this.blockName = blockName;
@@ -20,10 +22,18 @@ public class AnnotationBlockFactory {
 	}
 
 	
-	public AnnotationBlock createNewAnnotationBlock(){
-		AnnotationBlock ab = new AnnotationBlock(blockName, modnet, type);
-		ab.setColor(color);
-		return ab;
+	public AnnotationBlock<?> createNewAnnotationBlock(){
+		switch(type){
+		case GENES:
+			AnnotationBlock<Gene> abg = new AnnotationBlock<Gene>(blockName, modnet, type, geneSpecificColored);			
+			abg.setColor(color);
+			return abg;
+		case CONDITIONS:
+			AnnotationBlock<Condition> abc = new AnnotationBlock<Condition>(blockName, modnet, type, geneSpecificColored);
+			abc.setColor(color);
+			return abc;
+		default: return null;
+		}
 	}
 	
 	
@@ -57,5 +67,16 @@ public class AnnotationBlockFactory {
 		this.blockName = blockName;
 	}
 
+
+	public boolean isGeneSpecificColored() {
+		return geneSpecificColored;
+	}
+
+
+	public void setGeneSpecificColored(boolean geneSpecificColored) {
+		this.geneSpecificColored = geneSpecificColored;
+	}
+
+	
 	
 }

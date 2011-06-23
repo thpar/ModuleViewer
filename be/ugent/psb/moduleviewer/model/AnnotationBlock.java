@@ -11,7 +11,7 @@ import java.util.Map;
  * @author thpar
  *
  */
-public class AnnotationBlock {
+public class AnnotationBlock<T> {
 	
 	/**
 	 * Type of data we're annotating (Genes or Conditions)
@@ -23,11 +23,20 @@ public class AnnotationBlock {
 	}
 	
 	
-	private Map<String, Annotation<?>> annotations = new HashMap<String, Annotation<?>>();
+	private Map<String, Annotation<T>> annotations = new HashMap<String, Annotation<T>>();
+	
+	
 	private String blockName;
 	private DataType type;
 	private ModuleNetwork modnet;
+	
+	/**
+	 * Use one single color for all points of the annotation
+	 */
 	private Color color;
+
+
+	private boolean itemSpecificColored = false;
 
 	
 	
@@ -41,12 +50,17 @@ public class AnnotationBlock {
 		this.type=type;
 		this.modnet = modnet;
 	}
+	
+	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type, boolean geneSpecificColored){
+		this(blockName, modnet, type);
+		this.itemSpecificColored = geneSpecificColored;
+	}
 
 	/**
 	 * Add an annotation to this block 
 	 * @param annot
 	 */
-	public void addAnnotation(Annotation<?> annot){
+	public void addAnnotation(Annotation<T> annot){
 		this.annotations.put(annot.getName(), annot);
 	}
 	
@@ -64,7 +78,7 @@ public class AnnotationBlock {
 	 * @param name
 	 * @return the annotation list or null if none is found
 	 */
-	public Annotation<?> getAnnotation(String name){
+	public Annotation<T> getAnnotation(String name){
 		return annotations.get(name);
 	}
 
@@ -85,18 +99,15 @@ public class AnnotationBlock {
 		return out;
 	}
 	
-	public Annotation<?> addNewAnnotation(String label){
-		switch(type){
-		case GENES:
-			Annotation<Gene> geneAnnot = new Annotation<Gene>(label, modnet);
-			this.addAnnotation(geneAnnot);
-			return geneAnnot;
-		case CONDITIONS:
-			Annotation<Condition> condAnnot = new Annotation<Condition>(label, modnet);
-			this.addAnnotation(condAnnot);
-			return condAnnot;
-		default: return null;
+	public Annotation<T> addNewAnnotation(String label){
+		Annotation<T> annot;
+		if (itemSpecificColored){
+			annot = new ColoredAnnotation<T>(label, modnet);
+		} else {
+			annot = new Annotation<T>(label, modnet);
 		}
+		this.addAnnotation(annot);
+		return annot;
 	}
 
 	public void setColor(Color color) {
@@ -107,12 +118,16 @@ public class AnnotationBlock {
 	}
 
 	
-	public Collection<Annotation<?>> getAnnotations(){
+	public Collection<Annotation<T>> getAnnotations(){
 		return this.annotations.values();
 	}
 	
 	public int size(){
 		return this.annotations.size();
+	}
+	
+	public boolean isItemSpecificColored(){
+		return itemSpecificColored ;
 	}
 	
 }
