@@ -102,7 +102,7 @@ public class DefaultCanvas extends Canvas {
 		
 		
 		//condition labels 
-		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), true);
+		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
 		this.add(condLabels);
 		
 		

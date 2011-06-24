@@ -23,6 +23,7 @@ public class ConditionLabels extends Canvas {
 
 
 	private ConditionNode rootNode;
+	private List<Condition> nonTreeConditions;
 
 	/**
 	 * 
@@ -30,14 +31,19 @@ public class ConditionLabels extends Canvas {
 	 * @param conditions
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ConditionLabels(ConditionNode rootNode, boolean recursive){
+	public ConditionLabels(ConditionNode rootNode, List<Condition> nonTreeConditions, boolean recursive){
 		this.addMouseListener(new ElementEventChildForwarder(this));
 		this.rootNode = rootNode;
+		this.nonTreeConditions = nonTreeConditions;
 		
 		if (recursive){
 			addLeaves(rootNode);
 		} else {
 			this.add(createLabelList(rootNode));
+		}
+		
+		if (nonTreeConditions.size()>0){
+			this.add(createLabelList(nonTreeConditions));
 		}
 		
 	}
@@ -54,9 +60,13 @@ public class ConditionLabels extends Canvas {
 	}
 	
 	private LabelList createLabelList(ITreeNode<Condition> node){
+		return createLabelList(node.getColumns());
+	}
+	
+	private LabelList createLabelList(List<Condition> conds){
 //		Collections.sort(node.getColumns());
 		List<String> labelStrings = new ArrayList<String>();
-		for (Condition condition : node.getColumns()){
+		for (Condition condition : conds){
 			labelStrings.add(condition.getName());
 		}
 		
