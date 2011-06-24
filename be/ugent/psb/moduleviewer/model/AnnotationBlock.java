@@ -27,6 +27,7 @@ public class AnnotationBlock<T> {
 	
 	
 	private String blockName;
+	private String blockType;
 	private DataType type;
 	private ModuleNetwork modnet;
 	
@@ -129,5 +130,14 @@ public class AnnotationBlock<T> {
 	public boolean isItemSpecificColored(){
 		return itemSpecificColored ;
 	}
+
+	public String getBlockType() {
+		return blockType;
+	}
+
+	public void setBlockType(String blockType) {
+		this.blockType = blockType;
+	}
+	
 	
 }

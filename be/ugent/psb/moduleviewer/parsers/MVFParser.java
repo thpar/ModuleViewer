@@ -100,7 +100,8 @@ public class MVFParser extends Parser {
 	 *
 	 */
 	enum ParamKey{
-		TYPE,       //used as the name of the block. Indicates the type of annotation.
+		NAME, 		//specific block name
+		TYPE,       //Indicates the type of annotation. Will be used as template for name when no name is given.
 		COLOR,      //suggests a color for the annotation matrix
 		LABELCOLOR, //?? 
 		OBJECT,     //GENES of CONDITIONS (defines what kind of object is being annotated
@@ -187,7 +188,7 @@ public class MVFParser extends Parser {
 		}
 		
 		//get the block name
-		String blockName = params.get(ParamKey.TYPE);
+		String blockName = params.get(ParamKey.NAME);
 		if (blockName==null){
 			blockName = inputFile.getName()+"_"+counter; 
 			counter++;
@@ -201,6 +202,9 @@ public class MVFParser extends Parser {
 			ParamKey key = pe.getKey();
 			String value = pe.getValue();
 			switch(key){
+			case TYPE:
+				abf.setBlockType(pe.getValue());
+				break;
 			case COLOR:
 				Color c = ColorFactory.decodeColor(pe.getValue());
 				abf.setColor(c);
@@ -208,7 +212,6 @@ public class MVFParser extends Parser {
 			case LABELCOLOR:
 				break;
 			case VALUES:
-//				parseGeneValues = true;
 				abf.setGeneSpecificColored(true);
 				if (value.equals("true")){
 					parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR;
@@ -217,7 +220,6 @@ public class MVFParser extends Parser {
 				}
 				break;
 			case OBJECT:
-			case TYPE:
 			default:
 				break;
 			}

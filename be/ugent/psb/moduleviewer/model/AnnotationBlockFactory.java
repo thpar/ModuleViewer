@@ -10,6 +10,7 @@ public class AnnotationBlockFactory {
 	private Color color;
 	private DataType type;
 	private String blockName;
+	private String blockType;
 	private ModuleNetwork modnet;
 	
 	private boolean geneSpecificColored = false;
@@ -75,6 +76,16 @@ public class AnnotationBlockFactory {
 
 	public void setGeneSpecificColored(boolean geneSpecificColored) {
 		this.geneSpecificColored = geneSpecificColored;
+	}
+
+
+	public String getBlockType() {
+		return blockType;
+	}
+
+
+	public void setBlockType(String blockType) {
+		this.blockType = blockType;
 	}
 
 	
