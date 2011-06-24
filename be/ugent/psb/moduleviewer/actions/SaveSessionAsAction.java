@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Date;
+import java.util.Iterator;
 import java.util.Properties;
 
 import javax.swing.AbstractAction;
@@ -58,6 +59,16 @@ public class SaveSessionAsAction extends AbstractAction {
 		props.setProperty("genes", model.getGeneFile().getAbsolutePath());
 		props.setProperty("regulators", model.getRegulatorFile().getAbsolutePath());
 		props.setProperty("conditions", model.getConditionFile().getAbsolutePath());
+		
+		String anFileNames = new String();
+		for (Iterator<File> it = model.getAnnotationFiles().iterator(); it.hasNext();){
+			anFileNames = anFileNames.concat(it.next().getAbsolutePath());
+			if (it.hasNext()){
+				anFileNames = anFileNames.concat(";");
+			}
+		}
+		System.out.println(model.getAnnotationFiles().size());
+		props.setProperty("annotations", anFileNames);
 		
 		//TODO store GUIModel settings on later point
 		

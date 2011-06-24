@@ -1,6 +1,8 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.io.File;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Observable;
 
 public class Model extends Observable{
@@ -13,6 +15,7 @@ public class Model extends Observable{
 	private File geneFile;
 	private File conditionFile;
 	private File regulatorFile;
+	private List<File> annotationFiles = new ArrayList<File>();
 	
 	
 	
@@ -71,6 +74,17 @@ public class Model extends Observable{
 		notifyObservers();
 	}
 
+	public List<File> getAnnotationFiles() {
+		return annotationFiles;
+	}
+
+	public void addAnnotationFile(File annotationFile) {
+		this.annotationFiles.add(annotationFile);
+		setChanged();
+		notifyObservers();
+	}
+
+	
 	
 	
 

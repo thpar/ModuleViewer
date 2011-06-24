@@ -136,6 +136,9 @@ public class MVFParser extends Parser {
 			line = in.readLine();
 		}
 		
+		
+		model.addAnnotationFile(inputFile);
+		
 	}
 
 	/**
@@ -305,7 +308,7 @@ public class MVFParser extends Parser {
 
 
 	private void parseComment(String line) {
-		System.out.println(line);
+//		System.out.println(line);
 	}
 
 

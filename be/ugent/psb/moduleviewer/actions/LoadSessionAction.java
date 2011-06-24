@@ -14,6 +14,7 @@ import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
+import be.ugent.psb.moduleviewer.parsers.MVFParser;
 import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
 /**
@@ -73,6 +74,17 @@ public class LoadSessionAction extends AbstractAction {
 			RegulatorTreeParser rtp = new RegulatorTreeParser();
 			rtp.parse(model, new File(regTreeFile));
 		}
+		
+		String mvfFileString = props.getProperty("annotations");
+		if (mvfFileString != null){
+			String[] mvfFiles = mvfFileString.split(";");
+			for (String mvf : mvfFiles){
+				MVFParser mvfp = new MVFParser();
+				mvfp.parse(model, new File(mvf));
+			}
+		}
+		
+		guiModel.refresh();
 		
 		
 	}

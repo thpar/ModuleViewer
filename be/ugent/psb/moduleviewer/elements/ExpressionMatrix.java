@@ -13,6 +13,7 @@ import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
+import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 
 /**
@@ -34,6 +35,7 @@ public class ExpressionMatrix extends Canvas {
 	private ExpressionColorizer colorizer;
 
 	private boolean drawGeneSeparators = true;
+	private List<Condition> nonTreeConditions;
 	
 	
 	/**
@@ -44,10 +46,12 @@ public class ExpressionMatrix extends Canvas {
 	 * @param sigma
 	 * @param recursive traverse the children of the node recursively
 	 */
-	public ExpressionMatrix(GeneNode geneRoot, ConditionNode conditionRoot, ExpressionColorizer colorizer, 
+	public ExpressionMatrix(GeneNode geneRoot, ConditionNode conditionRoot, List<Condition> nonTreeConditions, 
+			ExpressionColorizer colorizer, 
 			boolean recursive, boolean drawGeneSeparators){
 		this.conditionRoot = conditionRoot;
 		this.geneRoot = geneRoot;
+		this.nonTreeConditions = nonTreeConditions;
 		this.colorizer = colorizer;
 		this.recursive = recursive;
 		this.drawGeneSeparators = drawGeneSeparators;
@@ -71,6 +75,13 @@ public class ExpressionMatrix extends Canvas {
 			leaves.add(leaf);
 		}
 		
+		if (nonTreeConditions.size()>0){
+			ExpressionLeaf leaf = new ExpressionLeaf(geneRoot, nonTreeConditions, this.colorizer);
+			leaf.setDrawGeneSeparators(drawGeneSeparators);
+			this.add(leaf);
+			this.leaves.add(leaf);
+		}
+		
 	}
 
 
@@ -86,13 +97,16 @@ public class ExpressionMatrix extends Canvas {
 		g.setColor(Color.MAGENTA);
 		g.setStroke(new BasicStroke(1.5F));
 		for (ExpressionLeaf leaf : leaves){
-			if (leafCount<leaves.size()-1){
 				x+=leaf.getDimension(g).width;
-				g.drawLine(x + xOffset, yOffset, 
-						x + xOffset, yOffset+drawnDim.height);
+				if (leafCount>0 && leafCount<leaves.size()-1){
+					if (nonTreeConditions.size()>0 && leafCount==leaves.size()-2)
+						g.setColor(Color.WHITE);				
+					g.drawLine(x + xOffset, yOffset, 
+							x + xOffset, yOffset+drawnDim.height);
+				}
 				leafCount++;
-			}
 		}
+		
 		
 		return drawnDim;
 	}

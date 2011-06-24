@@ -60,9 +60,11 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
+		//regulator genes
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTree()!=null){
 			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree(),
 					mod.getConditionTree(),
+					mod.getNonTreeConditions(),
 					new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 					true, false);
 			this.add(regulatorMatrix);
@@ -75,8 +77,10 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
+		//expression matrix
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
+				mod.getNonTreeConditions(),
 				new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 				true, true);
 		this.add(expressionMatrix);
@@ -84,6 +88,7 @@ public class DefaultCanvas extends Canvas {
 		GeneNames geneNames = new GeneNames(mod.getGeneTree());
 		this.add(geneNames);
 		
+		//extra data (bingo, ...)
 		for (AnnotationBlock ab : mod.getAnnotationBlocks()){
 			if (ab.getType()==AnnotationBlock.DataType.GENES){
 				GeneAnnotationMatrix anMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), ab);
@@ -92,8 +97,14 @@ public class DefaultCanvas extends Canvas {
 		}
 		this.newRow();
 		
+		//condition annotations (with labels next to it)
+		
+		
+		
+		//condition labels 
 		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), true);
 		this.add(condLabels);
+		
 		
 		
 		
