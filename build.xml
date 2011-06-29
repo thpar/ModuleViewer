@@ -19,7 +19,7 @@
 		<copy todir="${build}/icons">
 			<fileset dir="icons" />
 		</copy>
-		
+		<copy file="VERSION.TXT" todir="${build}" />
 	</target>
 
 	
