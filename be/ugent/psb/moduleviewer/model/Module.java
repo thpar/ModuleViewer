@@ -95,11 +95,12 @@ public class Module {
 	public List<AnnotationBlock<?>> getAnnotationBlocks(){
 		return annotationBlocks;
 	}
-	public List<AnnotationBlock<?>> getAnnotationBlocks(DataType type){
-		List<AnnotationBlock<?>> typeBlocks = new ArrayList<AnnotationBlock<?>>();
+	
+	public <Q> List<AnnotationBlock<Q>> getAnnotationBlocks(DataType type){
+		List<AnnotationBlock<Q>> typeBlocks = new ArrayList<AnnotationBlock<Q>>();
 		for (AnnotationBlock<?> ab : annotationBlocks){
 			if (ab.getType() == type){
-				typeBlocks.add(ab);
+				typeBlocks.add((AnnotationBlock<Q>)ab);
 			}
 		}
 		return typeBlocks;

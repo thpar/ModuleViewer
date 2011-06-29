@@ -1,17 +1,22 @@
 package be.ugent.psb.moduleviewer;
 
 import java.awt.Dimension;
+import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Spacer;
-import be.ugent.psb.moduleviewer.elements.GeneAnnotationMatrix;
+import be.ugent.psb.moduleviewer.elements.ConditionAnnotationMatrix;
 import be.ugent.psb.moduleviewer.elements.ConditionLabels;
 import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
 import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
+import be.ugent.psb.moduleviewer.elements.GeneAnnotationMatrix;
 import be.ugent.psb.moduleviewer.elements.GeneNames;
 import be.ugent.psb.moduleviewer.elements.Title;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
+import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -89,23 +94,25 @@ public class DefaultCanvas extends Canvas {
 		this.add(geneNames);
 		
 		//extra data (bingo, ...)
-		for (AnnotationBlock ab : mod.getAnnotationBlocks()){
-			if (ab.getType()==AnnotationBlock.DataType.GENES){
-				GeneAnnotationMatrix anMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), ab);
-				this.addExplode(anMatrix);
-			}
+		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
+		for (AnnotationBlock<Gene> gab : gabList){
+			GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
+			this.addExplode(ganMatrix);
 		}
 		this.newRow();
+//		this.newRow();
 		
-		//condition annotations (with labels next to it)
-		
-		
-		
+//		//condition annotations (with labels next to it)
+//		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
+//		for (AnnotationBlock<Condition> cab : cabList){
+//			ConditionAnnotationMatrix canMatrix = new ConditionAnnotationMatrix(mod.getConditionTree(), cab);
+//			this.addExplode(canMatrix);
+//		}
+//		
+//		this.newRow();
 		//condition labels 
 		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
 		this.add(condLabels);
-		
-		
 		
 		
 	}

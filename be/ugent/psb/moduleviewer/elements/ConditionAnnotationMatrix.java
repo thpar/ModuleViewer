@@ -2,6 +2,7 @@ package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
 
+import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 import be.ugent.psb.modulegraphics.elements.PassThroughColorizer;
 import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
@@ -11,9 +12,6 @@ import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
-
-
-//TODO rotate matrix for conditions!!!!
 
 public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 
@@ -29,12 +27,16 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 		} else {
 			constructBooleanMatrix();			
 		}
+		
+		LabelList labelList = new LabelList(labels);
+		labelList.setDir(LabelList.Direction.TOP_TO_BOTTOM);
+		this.add(labelList);
 	}
 	
 	
 	private void constructColoredMatrix() {
 		int numberOfConditions = condRoot.getWidth();
-		Color data[][] = new Color[numberOfConditions][ab.size()];
+		Color data[][] = new Color[ab.size()][numberOfConditions];
 
 		int anCount = 0;
 		for (Annotation<Condition> an : ab.getAnnotations()){
@@ -42,9 +44,9 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 			for (int i=0; i<numberOfConditions; i++){
 				Condition cond = condRoot.getCondition(i);
 				if (an.hasItem(cond)){
-					data[i][anCount] = colorAn.getColor(cond);
+					data[anCount][i] = colorAn.getColor(cond);
 				} else {
-					data[i][anCount] = null;
+					data[anCount][i] = null;
 				}
 			}
 			labels.add(an.getName());
@@ -53,7 +55,7 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 
 		PassThroughColorizer c = new PassThroughColorizer();
 		matrix = new Matrix<Color>(data, c);
-		matrix.setParentElement(this);
+		this.add(matrix);
 	}
 
 
@@ -62,16 +64,16 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 	private void constructBooleanMatrix() {
 
 		int numberOfConditions = condRoot.getWidth();
-		Boolean data[][] = new Boolean[numberOfConditions][ab.size()];
+		Boolean data[][] = new Boolean[ab.size()][numberOfConditions];
 
 		int anCount = 0;
 		for (Annotation<Condition> an : ab.getAnnotations()){
 			for (int i=0; i<numberOfConditions; i++){
 				Condition cond = condRoot.getCondition(i);
 				if (an.hasItem(cond)){
-					data[i][anCount] = true;
+					data[anCount][i] = true;
 				} else {
-					data[i][anCount] = false;
+					data[anCount][i] = false;
 				}
 			}
 			labels.add(an.getName());
@@ -81,7 +83,7 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 		Color color = ab.getColor();
 		SimpleColorizer c = new SimpleColorizer(color);
 		matrix = new Matrix<Boolean>(data, c);
-		matrix.setParentElement(this);
+		this.add(matrix);
 	}
 	
 	

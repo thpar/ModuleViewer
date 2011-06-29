@@ -1,7 +1,9 @@
 package be.ugent.psb.moduleviewer.elements;
 
+import java.awt.Canvas;
 import java.awt.Color;
 
+import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 import be.ugent.psb.modulegraphics.elements.PassThroughColorizer;
 import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
@@ -23,14 +25,21 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		this.ab = ab;
 		this.geneRoot = geneRoot;
 		
+		//create matrix
 		if (ab.isItemSpecificColored()){
-			addColoredMatrix();
+			createColoredMatrix();
 		} else {
-			addBooleanMatrix();			
+			createBooleanMatrix();			
 		}
 
+		//create labels (were scanned while creating matrix)
 		LabelList labelList = new LabelList(labels);
+		labelList.setrAngle(LabelList.ReadingAngle.RIGHT);
 		labelList.setDir(LabelList.Direction.LEFT_TO_RIGHT);
+//		labelList.setAlignment(Element.Alignment.BOTTOM_CENTER);
+		
+		//add stuff
+		this.add(matrix);
 		this.newRow();
 		this.add(labelList);
 	}
@@ -38,7 +47,7 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 	
 	
 	
-	private void addColoredMatrix() {
+	private void createColoredMatrix() {
 		int numberOfGenes = geneRoot.getWidth();
 		Color data[][] = new Color[numberOfGenes][ab.size()];
 
@@ -59,13 +68,13 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 
 		PassThroughColorizer c = new PassThroughColorizer();
 		matrix = new Matrix<Color>(data, c);
-		this.add(matrix);
+//		this.add(matrix);
 	}
 
 
 
 
-	private void addBooleanMatrix() {
+	private void createBooleanMatrix() {
 
 		int numberOfGenes = geneRoot.getWidth();
 		Boolean data[][] = new Boolean[numberOfGenes][ab.size()];
@@ -87,7 +96,7 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		Color color = ab.getColor();
 		SimpleColorizer c = new SimpleColorizer(color);
 		matrix = new Matrix<Boolean>(data, c);
-		this.add(matrix);
+//		this.add(matrix);
 	}
 
 
