@@ -1,13 +1,11 @@
 package be.ugent.psb.moduleviewer.elements;
 
-import java.awt.Canvas;
 import java.awt.Color;
 
-import be.ugent.psb.modulegraphics.elements.Element;
+import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 import be.ugent.psb.modulegraphics.elements.PassThroughColorizer;
 import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
-import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
@@ -34,14 +32,15 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 
 		//create labels (were scanned while creating matrix)
 		LabelList labelList = new LabelList(labels);
-		labelList.setrAngle(LabelList.ReadingAngle.RIGHT);
+		labelList.setrAngle(LabelList.ReadingAngle.LEFT);
 		labelList.setDir(LabelList.Direction.LEFT_TO_RIGHT);
-//		labelList.setAlignment(Element.Alignment.BOTTOM_CENTER);
+		labelList.setLabelAlignment(LabelList.Alignment.BOTTOM);
+		labelList.setAlignment(Alignment.BOTTOM_CENTER);
 		
 		//add stuff
-		this.add(matrix);
-		this.newRow();
 		this.add(labelList);
+		this.newRow();
+		this.add(matrix);
 	}
 	
 	
@@ -68,7 +67,6 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 
 		PassThroughColorizer c = new PassThroughColorizer();
 		matrix = new Matrix<Color>(data, c);
-//		this.add(matrix);
 	}
 
 
@@ -96,7 +94,6 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		Color color = ab.getColor();
 		SimpleColorizer c = new SimpleColorizer(color);
 		matrix = new Matrix<Boolean>(data, c);
-//		this.add(matrix);
 	}
 
 

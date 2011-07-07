@@ -9,6 +9,9 @@ import java.util.HashMap;
 import java.util.Map;
 import java.util.Observable;
 
+import be.ugent.psb.modulegraphics.display.CanvasFigure.OutputFormat;
+
+
 /**
  * Settings of which data to include in the figure to be drawn.
  * This model can be observed by a Canvas or JPanel to react to 
@@ -48,7 +51,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 
 	private File currentDir;
 	
-	private File epsOutputDir;
+	private File outputDir;
 
 	private int progressBarProgress;
 
@@ -56,7 +59,10 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 
 	private String template = "module_#ID#";
 
-
+	
+	private OutputFormat outputFormat = OutputFormat.PDF;
+	
+	
 	
 	public boolean isDrawModule() {
 		return drawModule;
@@ -201,11 +207,11 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		String subst = template.replaceFirst("#ID#", String.valueOf(modId));
 		return subst;
 	}
-	public void setEpsOutputDir(File epsOutputDir) {
-		this.epsOutputDir = epsOutputDir;
+	public void setOutputDir(File outputDir) {
+		this.outputDir = outputDir;
 	}
-	public File getEpsOutputDir() {
-		return epsOutputDir;
+	public File getOutputDir() {
+		return outputDir;
 	}
 	public void setDrawAracyc(boolean drawAracyc) {
 		this.drawAracyc = drawAracyc;
@@ -219,4 +225,14 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	public boolean isUseGlobalMeans() {
 		return useGlobalMeans;
 	}
+	public OutputFormat getOutputFormat() {
+		return outputFormat;
+	}
+	public void setOutputFormat(OutputFormat outputFormat) {
+		this.outputFormat = outputFormat;
+		this.setChanged();
+		this.notifyObservers();
+	}
+	
+	
 }

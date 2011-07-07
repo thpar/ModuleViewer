@@ -1,20 +1,12 @@
-package be.ugent.psb.moduleviewer;
+package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Spacer;
-import be.ugent.psb.moduleviewer.elements.ConditionAnnotationMatrix;
-import be.ugent.psb.moduleviewer.elements.ConditionLabels;
-import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
-import be.ugent.psb.moduleviewer.elements.ExpressionMatrix;
-import be.ugent.psb.moduleviewer.elements.GeneAnnotationMatrix;
-import be.ugent.psb.moduleviewer.elements.GeneNames;
-import be.ugent.psb.moduleviewer.elements.Title;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
-import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -26,8 +18,6 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  * A Default layout for a Canvas that looks up which elements to 
  * draw in the graphical model of the module.
  * 
- * The Module itself is drawn anyway. If topregulators are given, they are drawn as well, together
- * with the tree structure.
  * 
  * @author thpar
  *
@@ -97,7 +87,7 @@ public class DefaultCanvas extends Canvas {
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
 		for (AnnotationBlock<Gene> gab : gabList){
 			GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
-			this.addExplode(ganMatrix);
+			this.addExplode(ganMatrix, Canvas.Anchor.SW);
 		}
 		this.newRow();
 //		this.newRow();

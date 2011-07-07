@@ -15,7 +15,7 @@ import javax.swing.JLabel;
 import javax.swing.JTextField;
 import javax.swing.JToolBar;
 
-import be.ugent.psb.moduleviewer.actions.ExportToEPSAction;
+import be.ugent.psb.moduleviewer.actions.ExportToFigureAction;
 import be.ugent.psb.moduleviewer.actions.NavModuleAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -27,10 +27,11 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 	private JLabel totalLabel;
 	private GUIModel guiModel;
 	private JTextField locationField;
-	private Model model;	
+	private Model model;
+	private JButton exportButton;	
 	
 	public NavigationToolBar(Model model, GUIModel guiModel){
-		super("LeMoNe Navigation");
+		super("ModuleViewer Navigation");
 
 		this.model = model;
 		this.guiModel = guiModel;
@@ -45,11 +46,12 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		JButton nextButton = new JButton();
 		JButton prevButton = new JButton();
-		JButton exportButton = new JButton();
+		exportButton = new JButton();
 		
 		nextButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/next.png")),+1, guiModel));
 		prevButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/prev.png")),-1, guiModel));
-		exportButton.setAction(new ExportToEPSAction(new ImageIcon(getClass().getResource("/icons/eps_icon.jpg")),model, guiModel));
+		exportButton.setAction(new ExportToFigureAction(model, guiModel, false));
+		exportButton.setIcon(new ImageIcon(getClass().getResource("/icons/"+guiModel.getOutputFormat()+"_icon.jpg")));
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -79,6 +81,8 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 			totalString = new String("--");
 		}
 		totalLabel.setText(totalString);
+		
+		exportButton.setIcon(new ImageIcon(getClass().getResource("/icons/"+guiModel.getOutputFormat()+"_icon.jpg")));
 	}
 
 

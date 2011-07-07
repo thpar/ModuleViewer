@@ -7,14 +7,14 @@ import javax.swing.JFileChooser;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
-public class ChangeEpsOutputDirAction extends AbstractAction {
+public class ChangeOutputDirAction extends AbstractAction {
 
 
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
 
-	public ChangeEpsOutputDirAction(GUIModel guiModel){
-		super("Set eps output directory...");
+	public ChangeOutputDirAction(GUIModel guiModel){
+		super("Set output directory...");
 		this.guiModel = guiModel;
 	}
 	
@@ -22,17 +22,17 @@ public class ChangeEpsOutputDirAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		
 		JFileChooser fc;
-		if (guiModel.getEpsOutputDir()==null){
+		if (guiModel.getOutputDir()==null){
 			fc = new JFileChooser(guiModel.getCurrentDir());
 		} else {
-			fc = new JFileChooser(guiModel.getEpsOutputDir());
+			fc = new JFileChooser(guiModel.getOutputDir());
 		}
 		
 		fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-		fc.setDialogTitle("Select EPS output directory");
+		fc.setDialogTitle("Select output directory");
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
-			guiModel.setEpsOutputDir(fc.getSelectedFile());
+			guiModel.setOutputDir(fc.getSelectedFile());
 		} 
 		
 	}

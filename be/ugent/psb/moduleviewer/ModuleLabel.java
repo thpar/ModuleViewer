@@ -8,6 +8,7 @@ import javax.swing.ImageIcon;
 
 import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Element;
+import be.ugent.psb.moduleviewer.elements.DefaultCanvas;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;

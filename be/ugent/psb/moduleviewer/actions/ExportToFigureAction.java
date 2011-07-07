@@ -4,12 +4,11 @@ import java.awt.event.ActionEvent;
 import java.io.File;
 
 import javax.swing.AbstractAction;
-import javax.swing.ImageIcon;
 import javax.swing.JFileChooser;
 
 import be.ugent.psb.modulegraphics.display.CanvasFigure;
 import be.ugent.psb.modulegraphics.elements.Canvas;
-import be.ugent.psb.moduleviewer.DefaultCanvas;
+import be.ugent.psb.moduleviewer.elements.DefaultCanvas;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
@@ -18,7 +17,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 
 
-public class ExportToEPSAction extends AbstractAction {
+public class ExportToFigureAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 
@@ -26,17 +25,19 @@ public class ExportToEPSAction extends AbstractAction {
 
 	private Model model;
 	
-	public ExportToEPSAction(ImageIcon icon, Model model, GUIModel guiModel){
-		super(new String(), icon);
+	
+	public ExportToFigureAction(Model model, GUIModel guiModel){
+		super("Export to figure");
 		this.guiModel = guiModel;
 		this.model = model;
 	}
 	
-	public ExportToEPSAction(Model model, GUIModel guiModel){
-		super("Export to eps");
+	public ExportToFigureAction(Model model, GUIModel guiModel, boolean showLabel){
+		super(new String());
 		this.guiModel = guiModel;
 		this.model = model;
 	}
+
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -51,26 +52,26 @@ public class ExportToEPSAction extends AbstractAction {
 			e1.printStackTrace();
 		}
 		
-		File outputDir = guiModel.getEpsOutputDir();
+		File outputDir = guiModel.getOutputDir();
 		if (outputDir==null){
 			JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
 			fc.setFileSelectionMode(JFileChooser.DIRECTORIES_ONLY);
-			fc.setDialogTitle("Select EPS output directory");
+			fc.setDialogTitle("Select output directory");
 			int answer = fc.showOpenDialog(guiModel.getTopContainer());
 			if (answer == JFileChooser.APPROVE_OPTION){
-				guiModel.setEpsOutputDir(fc.getSelectedFile());
+				guiModel.setOutputDir(fc.getSelectedFile());
 			} else {
-				guiModel.setEpsOutputDir(guiModel.getCurrentDir());
+				guiModel.setOutputDir(guiModel.getCurrentDir());
 			}
 			
 		}
 		
-		String fileName = guiModel.getEpsOutputDir() + System.getProperty("file.separator") + 
-								guiModel.getFileNameTemplate(modId)+".eps";
+		String fileName = guiModel.getOutputDir() + System.getProperty("file.separator") + 
+								guiModel.getFileNameTemplate(modId)+"."+guiModel.getOutputFormat();
 		guiModel.setStateString("figure saved to: "+fileName);
 		Canvas canvas = new DefaultCanvas(mod, model, guiModel, guiModel.getFileNameTemplate(modId));
 		CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
-		figCanvas.writeToEPS();
+		figCanvas.writeToFigure(guiModel.getOutputFormat());
 		
 	}
 
