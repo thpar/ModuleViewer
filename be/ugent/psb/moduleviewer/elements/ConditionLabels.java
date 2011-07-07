@@ -10,6 +10,7 @@ import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
+import be.ugent.psb.modulegraphics.elements.LabelList.ReadingAngle;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 
@@ -74,6 +75,7 @@ public class ConditionLabels extends Canvas {
 		
 		labels.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		labels.setDirection(Direction.LEFT_TO_RIGHT);
+		labels.setrAngle(ReadingAngle.LEFT);
 		return labels;
 	}
 	

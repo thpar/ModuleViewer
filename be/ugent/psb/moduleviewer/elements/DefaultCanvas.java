@@ -55,6 +55,10 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
+		Canvas coreCanvas = new Canvas();
+		coreCanvas.setHorizontalSpacing(5);
+		coreCanvas.setVerticalSpacing(5);
+		
 		//regulator genes
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTree()!=null){
 			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree(),
@@ -62,14 +66,14 @@ public class DefaultCanvas extends Canvas {
 					mod.getNonTreeConditions(),
 					new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 					true, false);
-			this.add(regulatorMatrix);
+			coreCanvas.add(regulatorMatrix);
 
 			GeneNames regNames = new GeneNames(mod.getRegulatorTree());
-			this.add(regNames);
+			coreCanvas.add(regNames);
 			
-			this.newRow();
-			this.add(new Spacer(new Dimension(0,10)));
-			this.newRow();
+			coreCanvas.newRow();
+			coreCanvas.add(new Spacer(new Dimension(0,10)));
+			coreCanvas.newRow();
 		}
 		
 		//expression matrix
@@ -78,16 +82,19 @@ public class DefaultCanvas extends Canvas {
 				mod.getNonTreeConditions(),
 				new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 				true, true);
-		this.add(expressionMatrix);
+		coreCanvas.add(expressionMatrix);
 		
 		GeneNames geneNames = new GeneNames(mod.getGeneTree());
-		this.add(geneNames);
+		coreCanvas.add(geneNames);
+		
+		this.add(coreCanvas);
 		
 		//extra data (bingo, ...)
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
 		for (AnnotationBlock<Gene> gab : gabList){
 			GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
-			this.addExplode(ganMatrix, Canvas.Anchor.SW);
+			this.add(ganMatrix);
+			this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
 		}
 		this.newRow();
 //		this.newRow();

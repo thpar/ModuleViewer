@@ -1,11 +1,13 @@
 package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
+import java.awt.Dimension;
 
 import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 import be.ugent.psb.modulegraphics.elements.PassThroughColorizer;
 import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
+import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
@@ -39,6 +41,8 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		
 		//add stuff
 		this.add(labelList);
+		this.newRow();
+		this.add(new Spacer(new Dimension(0,10)));
 		this.newRow();
 		this.add(matrix);
 	}
