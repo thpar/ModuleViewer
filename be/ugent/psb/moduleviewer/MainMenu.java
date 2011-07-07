@@ -108,20 +108,11 @@ public class MainMenu extends JMenuBar implements Observer{
 
 		JMenu helpMenu = new JMenu("Help");
 		JMenuItem aboutItem = new JMenuItem("About...");
+		
+		final String version = model.getVersion();
 		aboutItem.addActionListener(new ActionListener() {
-			
 			@Override
 			public void actionPerformed(ActionEvent e) {
-				String version;
-				try {
-					BufferedReader br = new BufferedReader(new InputStreamReader(
-							this.getClass().getResourceAsStream("/VERSION.TXT")));
-					version = br.readLine();
-					br.close();
-				} catch (IOException e1) {
-					System.err.println(e1.getMessage());
-					version = "??";
-				}
 				JOptionPane.showMessageDialog(guiModel.getTopContainer(), "ModuleViewer "+version+". Written by thpar");
 			}
 		});

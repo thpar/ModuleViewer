@@ -58,6 +58,7 @@ public class DefaultCanvas extends Canvas {
 		Canvas coreCanvas = new Canvas();
 		coreCanvas.setHorizontalSpacing(5);
 		coreCanvas.setVerticalSpacing(5);
+		coreCanvas.setAlignment(Alignment.BOTTOM_CENTER);
 		
 		//regulator genes
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTree()!=null){

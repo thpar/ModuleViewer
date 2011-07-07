@@ -31,7 +31,7 @@ public class ViewerGUI {
 		guiModel.setDrawConditionAnnotationLegend(false);
 		guiModel.setDrawConditionAnnotations(false);
 
-		this.window = new JFrame("ModuleViewer");
+		this.window = new JFrame("ModuleViewer - "+model.getVersion());
 		guiModel.setTopContainer(window);
 		
 		ModuleLabel modLabel = new ModuleLabel(model, guiModel);
