@@ -60,7 +60,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
 public class MVFParser extends Parser {
 
 	
-	private static final String DEFAULT_ANNOT_LABEL = "default_annot_label";
+	private static final String DEFAULT_ANNOT_LABEL = "";
 
 	/**
 	 * Separated genes from eachother in a list

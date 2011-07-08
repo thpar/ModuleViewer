@@ -7,6 +7,7 @@ import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
+import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -55,6 +56,9 @@ public class DefaultCanvas extends Canvas {
 			this.newRow();
 		}
 		
+		/**
+		 * coreCanvas groups regulator matrix, expression matrix and gene names
+		 */
 		Canvas coreCanvas = new Canvas();
 		coreCanvas.setHorizontalSpacing(5);
 		coreCanvas.setVerticalSpacing(5);
@@ -88,26 +92,36 @@ public class DefaultCanvas extends Canvas {
 		GeneNames geneNames = new GeneNames(mod.getGeneTree());
 		coreCanvas.add(geneNames);
 		
-		this.add(coreCanvas);
+		
+		Canvas horizontalCanvas = new Canvas();
+		horizontalCanvas.setHorizontalSpacing(5);
+		horizontalCanvas.setVerticalSpacing(5);
+		horizontalCanvas.setAlignment(Alignment.BOTTOM_CENTER);
+		
+		horizontalCanvas.add(coreCanvas);
+		
 		
 		//extra data (bingo, ...)
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
 		for (AnnotationBlock<Gene> gab : gabList){
 			GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
-			this.add(ganMatrix);
-			this.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+			horizontalCanvas.add(ganMatrix);
+			horizontalCanvas.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
 		}
+		
+		this.add(horizontalCanvas);
+		
 		this.newRow();
-//		this.newRow();
 		
 //		//condition annotations (with labels next to it)
-//		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
-//		for (AnnotationBlock<Condition> cab : cabList){
-//			ConditionAnnotationMatrix canMatrix = new ConditionAnnotationMatrix(mod.getConditionTree(), cab);
-//			this.addExplode(canMatrix);
-//		}
-//		
-//		this.newRow();
+		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
+		for (AnnotationBlock<Condition> cab : cabList){
+			ConditionAnnotationMatrix canMatrix = 
+				new ConditionAnnotationMatrix(mod.getConditionTree(), mod.getNonTreeConditions(), cab);
+			this.add(canMatrix);
+		}
+		
+		this.newRow();
 		//condition labels 
 		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
 		this.add(condLabels);
