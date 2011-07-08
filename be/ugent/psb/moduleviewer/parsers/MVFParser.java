@@ -12,6 +12,7 @@ import java.util.Map.Entry;
 import be.ugent.psb.modulegraphics.elements.ColorFactory;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlockFactory;
 import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
@@ -59,8 +60,6 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  */
 public class MVFParser extends Parser {
 
-	
-	private static final String DEFAULT_ANNOT_LABEL = "";
 
 	/**
 	 * Separated genes from eachother in a list
@@ -203,10 +202,14 @@ public class MVFParser extends Parser {
 			String value = pe.getValue();
 			switch(key){
 			case TYPE:
-				abf.setBlockType(pe.getValue());
+				BlockType bt = BlockType.getValueOf(value);
+				abf.setBlockType(bt);
+				if (bt == BlockType.unknown){
+					abf.setUnknownBlockType(value);
+				}
 				break;
 			case COLOR:
-				Color c = ColorFactory.decodeColor(pe.getValue());
+				Color c = ColorFactory.decodeColor(value);
 				abf.setColor(c);
 				break;
 			case LABELCOLOR:
@@ -248,7 +251,11 @@ public class MVFParser extends Parser {
 		if (columns.length>=3){
 			label = columns[2];			
 		} else {
-			label = DEFAULT_ANNOT_LABEL;
+			if (abf.getBlockType()!=BlockType.unknown){
+				label = abf.getBlockType().toString();
+			} else {
+				label = abf.getUnknownBlockType();
+			}
 		}
 
 		
@@ -274,7 +281,7 @@ public class MVFParser extends Parser {
 						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
 						String itemId = itemKeyValue[0];
 						Color geneColor = new Color(Integer.valueOf(itemKeyValue[1]));
-						switch(ab.getType()){
+						switch(ab.getDataType()){
 						case GENES:
 							Gene geneItem = modnet.getGene(itemId);
 							((ColoredAnnotation<Gene>)annot).addItem(geneItem, geneColor);	
@@ -285,7 +292,7 @@ public class MVFParser extends Parser {
 							break;
 						}
 					} else {
-						switch(ab.getType()){
+						switch(ab.getDataType()){
 						case GENES:
 							Gene geneItem = modnet.getGene(it);
 							((Annotation<Gene>)annot).addItem(geneItem);	

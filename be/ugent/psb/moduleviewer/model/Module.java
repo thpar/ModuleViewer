@@ -99,7 +99,7 @@ public class Module {
 	public <Q> List<AnnotationBlock<Q>> getAnnotationBlocks(DataType type){
 		List<AnnotationBlock<Q>> typeBlocks = new ArrayList<AnnotationBlock<Q>>();
 		for (AnnotationBlock<?> ab : annotationBlocks){
-			if (ab.getType() == type){
+			if (ab.getDataType() == type){
 				typeBlocks.add((AnnotationBlock<Q>)ab);
 			}
 		}

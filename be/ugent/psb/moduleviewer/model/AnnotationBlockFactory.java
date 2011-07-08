@@ -2,6 +2,7 @@ package be.ugent.psb.moduleviewer.model;
 
 import java.awt.Color;
 
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 
 public class AnnotationBlockFactory {
@@ -10,7 +11,8 @@ public class AnnotationBlockFactory {
 	private Color color;
 	private DataType type;
 	private String blockName;
-	private String blockType;
+	private BlockType blockType;
+	private String unknownBlockType;
 	private ModuleNetwork modnet;
 	
 	private boolean geneSpecificColored = false;
@@ -28,10 +30,14 @@ public class AnnotationBlockFactory {
 		case GENES:
 			AnnotationBlock<Gene> abg = new AnnotationBlock<Gene>(blockName, modnet, type, geneSpecificColored);			
 			abg.setColor(color);
+			abg.setBlockType(blockType);
+			abg.setUnknownBlockType(unknownBlockType);
 			return abg;
 		case CONDITIONS:
 			AnnotationBlock<Condition> abc = new AnnotationBlock<Condition>(blockName, modnet, type, geneSpecificColored);
 			abc.setColor(color);
+			abc.setBlockType(blockType);
+			abc.setUnknownBlockType(unknownBlockType);
 			return abc;
 		default: return null;
 		}
@@ -79,13 +85,23 @@ public class AnnotationBlockFactory {
 	}
 
 
-	public String getBlockType() {
+	public BlockType getBlockType() {
 		return blockType;
 	}
 
 
-	public void setBlockType(String blockType) {
+	public void setBlockType(BlockType blockType) {
 		this.blockType = blockType;
+	}
+
+
+	public String getUnknownBlockType() {
+		return unknownBlockType;
+	}
+
+
+	public void setUnknownBlockType(String unknownBlockType) {
+		this.unknownBlockType = unknownBlockType;
 	}
 
 	

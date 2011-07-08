@@ -21,14 +21,37 @@ public class AnnotationBlock<T> {
 	public enum DataType{
 		GENES, CONDITIONS;
 	}
-	
-	
+	public enum BlockType{
+		bingo,
+		conditionbingo,
+		modulelinks,
+		core,
+		genecolorbox,
+		regulatorcolorbox,
+		tfenrichment,
+		regulatorregulatorinteraction,
+		regulatorgeneinteraction,
+		genegeneinteraction,
+		unknown;
+		
+		
+		public static BlockType getValueOf(String name){
+			String shortName = name.replaceAll("[ -]", "");
+			try {
+				BlockType bt = BlockType.valueOf(shortName);
+				return bt;
+			} catch (Exception e) {
+				return BlockType.unknown;
+			}
+		}
+	}
 	private Map<String, Annotation<T>> annotations = new HashMap<String, Annotation<T>>();
 	
 	
 	private String blockName;
-	private String blockType;
-	private DataType type;
+	private BlockType blockType;
+	private String unknownBlockType;
+	private DataType dataType;
 	private ModuleNetwork modnet;
 	
 	/**
@@ -48,8 +71,9 @@ public class AnnotationBlock<T> {
 	 */
 	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type){
 		this.blockName = blockName;
-		this.type=type;
+		this.dataType=type;
 		this.modnet = modnet;
+		
 	}
 	
 	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type, boolean geneSpecificColored){
@@ -83,8 +107,12 @@ public class AnnotationBlock<T> {
 		return annotations.get(name);
 	}
 
-	public DataType getType() {
-		return type;
+	/**
+	 * The data type of an annotation block will be GENE or CONDITION
+	 * @return
+	 */
+	public DataType getDataType() {
+		return dataType;
 	}
 	
 	
@@ -92,7 +120,7 @@ public class AnnotationBlock<T> {
 	@Override
 	public String toString(){
 		String out = new String();
-		out+=this.type+" Block: "+this.blockName + System.getProperty("line.separator");
+		out+=this.dataType+" Block: "+this.blockName + System.getProperty("line.separator");
 		for (Annotation<?> an : annotations.values()){
 			out+=an.toString() + System.getProperty("line.separator");
 		}
@@ -131,13 +159,32 @@ public class AnnotationBlock<T> {
 		return itemSpecificColored ;
 	}
 
-	public String getBlockType() {
+	/**
+	 * The block type is data dependent. A few types have to be processed in their own way.
+	 * @return
+	 */
+	public BlockType getBlockType() {
 		return blockType;
 	}
 
-	public void setBlockType(String blockType) {
+	public void setBlockType(BlockType blockType) {
 		this.blockType = blockType;
 	}
 	
 	
+	public String getUnknownBlockType() {
+		return unknownBlockType;
+	}
+
+	public void setUnknownBlockType(String unknownBlockType) {
+		this.unknownBlockType = unknownBlockType;
+	}
+
+	/**
+	 * Get the first annotation (probably the only one).
+	 * @return
+	 */
+	public Annotation<T> getAnnotation(){
+		return this.annotations.values().iterator().next();
+	}
 }

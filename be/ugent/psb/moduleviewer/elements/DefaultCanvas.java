@@ -5,7 +5,9 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Spacer;
+import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -65,6 +67,7 @@ public class DefaultCanvas extends Canvas {
 		coreCanvas.setAlignment(Alignment.BOTTOM_CENTER);
 		
 		//regulator genes
+		GeneNames regNames = null;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTree()!=null){
 			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree(),
 					mod.getConditionTree(),
@@ -73,7 +76,7 @@ public class DefaultCanvas extends Canvas {
 					true, false);
 			coreCanvas.add(regulatorMatrix);
 
-			GeneNames regNames = new GeneNames(mod.getRegulatorTree());
+			regNames = new GeneNames(mod.getRegulatorTree());
 			coreCanvas.add(regNames);
 			
 			coreCanvas.newRow();
@@ -104,9 +107,33 @@ public class DefaultCanvas extends Canvas {
 		//extra data (bingo, ...)
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
 		for (AnnotationBlock<Gene> gab : gabList){
-			GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
-			horizontalCanvas.add(ganMatrix);
-			horizontalCanvas.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);
+			BlockType blockType = gab.getBlockType();
+			switch(blockType){
+			case genecolorbox:
+				Annotation<Gene> ansGene = gab.getAnnotation();
+				geneNames.colorBackgrounds(ansGene.getItems(), gab.getColor());
+				break;
+			case regulatorcolorbox:
+				Annotation<Gene> ansReg = gab.getAnnotation();
+				regNames.colorBackgrounds(ansReg.getItems(), gab.getColor());
+				break;
+			case genegeneinteraction:
+			case regulatorgeneinteraction:
+			case regulatorregulatorinteraction:
+				//TODO take care of interactions
+				break;
+			case bingo:
+			case core:
+			case modulelinks:
+			case tfenrichment:
+			case unknown:
+			default:
+				GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
+				horizontalCanvas.add(ganMatrix);
+				horizontalCanvas.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);				
+				
+			}
+			
 		}
 		
 		this.add(horizontalCanvas);

@@ -1,10 +1,13 @@
 package be.ugent.psb.moduleviewer.elements;
 
+import java.awt.Color;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Set;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.LabelList;
 import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
 import be.ugent.psb.moduleviewer.model.Gene;
@@ -41,6 +44,17 @@ public class GeneNames extends Canvas {
 		add(labelList);
 		this.newRow();
 		
+	}
+
+	public void colorBackgrounds(Set<Gene> coloredGenes, Color backgroundColor) {
+		List<String> coloredGeneNames = new ArrayList<String>();
+		for (Gene g: coloredGenes){
+			coloredGeneNames.add(g.getAliasOrName());
+		}
+		for (Element el: this){
+			LabelList labelList = (LabelList)el;
+			labelList.colorBackgrounds(coloredGeneNames, backgroundColor);
+		}
 	}
 
 
