@@ -55,7 +55,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 			e.printStackTrace();
 		}
 		
-		ConditionNode n = mod.getConditionTree();
+//		ConditionNode n = mod.getConditionTree();
 //		mod.hierarchicalTree = n;
 		
 //		for (TreeNode node : mod.hierarchicalTree.getInternalNodes()){
@@ -63,7 +63,12 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 //			node.regulationSplit = node.testSplits.get(0);
 //		}
 		
-		DefaultCanvas canvas = new DefaultCanvas(mod, model, guiModel, "Module "+displayedModule);
+		String title = "Module "+displayedModule;
+		if (mod.getName()!=null && !mod.getName().isEmpty()){
+			title+=" - "+mod.getName();
+		}
+		
+		DefaultCanvas canvas = new DefaultCanvas(mod, model, guiModel, title);
 		setCanvas(canvas);
 		
 //		addCanvasListeners(canvas);

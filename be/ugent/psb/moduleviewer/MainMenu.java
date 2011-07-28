@@ -2,9 +2,6 @@ package be.ugent.psb.moduleviewer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -17,6 +14,7 @@ import javax.swing.JRadioButtonMenuItem;
 
 import be.ugent.psb.modulegraphics.display.CanvasFigure.OutputFormat;
 import be.ugent.psb.moduleviewer.actions.ChangeOutputDirAction;
+import be.ugent.psb.moduleviewer.actions.ExportAllFiguresAction;
 import be.ugent.psb.moduleviewer.actions.ExportToFigureAction;
 import be.ugent.psb.moduleviewer.actions.LoadAnnotationAction;
 import be.ugent.psb.moduleviewer.actions.LoadConditionTreeAction;
@@ -56,6 +54,8 @@ public class MainMenu extends JMenuBar implements Observer{
 
 
 		JMenuItem exportItem = new JMenuItem(new ExportToFigureAction(model, guiModel));
+		JMenuItem exportAllItem = new JMenuItem(new ExportAllFiguresAction(model, guiModel));
+		
 		JMenuItem exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener(){
 			@Override
@@ -77,6 +77,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		fileMenu.addSeparator();
 		
 		fileMenu.add(exportItem);
+		fileMenu.add(exportAllItem);
 		fileMenu.addSeparator();
 		
 		fileMenu.add(exitItem);

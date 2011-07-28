@@ -153,8 +153,6 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		if ("progress" == evt.getPropertyName()) {
             int progress = (Integer) evt.getNewValue();
             setProgressBarProgress(progress);
-//            taskOutput.append(String.format(
-//                    "Completed %d%% of task.\n", task.getProgress()));
         } 
 
 		
@@ -205,6 +203,10 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	 */
 	public String getFileNameTemplate(int modId) {
 		String subst = template.replaceFirst("#ID#", String.valueOf(modId));
+		return subst;
+	}
+	public String getFileNameTemplate(String modId) {
+		String subst = template.replaceFirst("#ID#", modId);
 		return subst;
 	}
 	public void setOutputDir(File outputDir) {

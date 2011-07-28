@@ -66,10 +66,17 @@ public class ExportToFigureAction extends AbstractAction {
 			
 		}
 		
+		String title = "Module "+mod.getId();
+		String fileId = String.valueOf(mod.getId());
+		if (mod.getName()!=null && !mod.getName().isEmpty()){
+			title+=" - "+mod.getName();
+			fileId+="_"+mod.getName();
+		}
+		
 		String fileName = guiModel.getOutputDir() + System.getProperty("file.separator") + 
-								guiModel.getFileNameTemplate(modId)+"."+guiModel.getOutputFormat();
+								guiModel.getFileNameTemplate(fileId)+"."+guiModel.getOutputFormat();
 		guiModel.setStateString("figure saved to: "+fileName);
-		Canvas canvas = new DefaultCanvas(mod, model, guiModel, guiModel.getFileNameTemplate(modId));
+		Canvas canvas = new DefaultCanvas(mod, model, guiModel, title);
 		CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
 		figCanvas.writeToFigure(guiModel.getOutputFormat());
 		
