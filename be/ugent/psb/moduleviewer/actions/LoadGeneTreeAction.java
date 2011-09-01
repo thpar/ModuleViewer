@@ -71,6 +71,7 @@ public class LoadGeneTreeAction extends AbstractAction {
 			GeneTreeParser parser = new GeneTreeParser(progListener);
 			
 			parser.parse(model, file);
+			model.setGeneFile(file.getAbsolutePath());
 			
 			setProgress(100);
 

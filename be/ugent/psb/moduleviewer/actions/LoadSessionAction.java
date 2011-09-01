@@ -61,18 +61,25 @@ public class LoadSessionAction extends AbstractAction {
 		props.load(fr);
 		
 		DataMatrixParser dmp = new DataMatrixParser();
-		dmp.parse(model, new File(props.getProperty("data")));
+		File dmpFile = new File(props.getProperty("data"));
+		dmp.parse(model, dmpFile);
+		model.setDataFile(dmpFile.getAbsolutePath());
 		
 		GeneTreeParser gtp   = new GeneTreeParser();
-		gtp.parse(model, new File(props.getProperty("genes")));
+		File gtpFile = new File(props.getProperty("genes"));
+		gtp.parse(model, gtpFile);
+		model.setGeneFile(gtpFile.getAbsolutePath());
 		
 		ConditionTreeParser ctp = new ConditionTreeParser();
-		ctp.parse(model, new File(props.getProperty("conditions")));
+		File ctpFile = new File(props.getProperty("conditions"));
+		ctp.parse(model, ctpFile);
+		model.setConditionFile(ctpFile.getAbsolutePath());
 		
 		String regTreeFile = props.getProperty("regulators");
 		if (regTreeFile != null){
 			RegulatorTreeParser rtp = new RegulatorTreeParser();
 			rtp.parse(model, new File(regTreeFile));
+			model.setRegulatorFile(regTreeFile);
 		}
 		
 		String mvfFileString = props.getProperty("annotations");
@@ -81,6 +88,7 @@ public class LoadSessionAction extends AbstractAction {
 			for (String mvf : mvfFiles){
 				MVFParser mvfp = new MVFParser();
 				mvfp.parse(model, new File(mvf));
+				model.addAnnotationFile(mvf);
 			}
 		}
 		

@@ -14,11 +14,11 @@ public class Model extends Observable{
 	ModuleNetwork modnet = new ModuleNetwork();
 
 	
-	private File dataFile;
-	private File geneFile;
-	private File conditionFile;
-	private File regulatorFile;
-	private List<File> annotationFiles = new ArrayList<File>();
+	private String dataFileName;
+	private String geneFileName;
+	private String conditionFileName;
+	private String regulatorFileName;
+	private List<String> annotationFileNames = new ArrayList<String>();
 	
 	private String version;
 	
@@ -35,55 +35,55 @@ public class Model extends Observable{
 	
 	
 	public boolean isEssentialsLoaded(){
-		return dataFile != null && geneFile != null && conditionFile!= null;
+		return dataFileName != null && geneFileName != null && conditionFileName!= null;
 	}
 
-	public File getDataFile() {
-		return dataFile;
+	public String getDataFile() {
+		return dataFileName;
 	}
 
-	public void setDataFile(File dataFile) {
-		this.dataFile = dataFile;
+	public void setDataFile(String dataFile) {
+		this.dataFileName = dataFile;
 		setChanged();
 		notifyObservers();
 	}
 
-	public File getGeneFile() {
-		return geneFile;
+	public String getGeneFile() {
+		return geneFileName;
 	}
 
-	public void setGeneFile(File geneFile) {
-		this.geneFile = geneFile;
+	public void setGeneFile(String geneFile) {
+		this.geneFileName = geneFile;
 		setChanged();
 		notifyObservers();
 	}
 
-	public File getConditionFile() {
-		return conditionFile;
+	public String getConditionFile() {
+		return conditionFileName;
 	}
 
-	public void setConditionFile(File conditionFile) {
-		this.conditionFile = conditionFile;
+	public void setConditionFile(String conditionFile) {
+		this.conditionFileName = conditionFile;
 		setChanged();
 		notifyObservers();
 	}
 
-	public File getRegulatorFile() {
-		return regulatorFile;
+	public String getRegulatorFile() {
+		return regulatorFileName;
 	}
 
-	public void setRegulatorFile(File regulatorFile) {
-		this.regulatorFile = regulatorFile;
+	public void setRegulatorFile(String regulatorFile) {
+		this.regulatorFileName = regulatorFile;
 		setChanged();
 		notifyObservers();
 	}
 
-	public List<File> getAnnotationFiles() {
-		return annotationFiles;
+	public List<String> getAnnotationFiles() {
+		return annotationFileNames;
 	}
 
-	public void addAnnotationFile(File annotationFile) {
-		this.annotationFiles.add(annotationFile);
+	public void addAnnotationFile(String annotationFile) {
+		this.annotationFileNames.add(annotationFile);
 		setChanged();
 		notifyObservers();
 	}

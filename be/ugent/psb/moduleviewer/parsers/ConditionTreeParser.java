@@ -2,6 +2,7 @@ package be.ugent.psb.moduleviewer.parsers;
 
 import java.io.File;
 import java.io.IOException;
+import java.io.InputStream;
 
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -17,10 +18,10 @@ public class ConditionTreeParser extends TreeParser{
 	}
 
 	@Override
-	public void parse(Model model, File inputFile) throws IOException {
-		parse(inputFile, new ConditionXMLHandler(model.getModnet(), progressListener));
-		model.setConditionFile(inputFile);
+	public void parse(Model model, InputStream input) throws IOException {
+		parse(input, new ConditionXMLHandler(model.getModnet(), progressListener));
 	}
+	
 	
 	
 }

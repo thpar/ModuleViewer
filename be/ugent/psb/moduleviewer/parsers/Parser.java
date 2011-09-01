@@ -1,15 +1,24 @@
 package be.ugent.psb.moduleviewer.parsers;
 
 import java.io.File;
+import java.io.FileInputStream;
 import java.io.IOException;
+import java.io.InputStream;
+
+import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
 
 public abstract class Parser {
 
-	abstract public void parse(Model model, File inputFile) throws IOException;
+	abstract public void parse(Model model, InputStream inputFile) throws IOException;
 
+	public void parse(Model model, File inputFile) throws IOException{
+		InputStream stream = new FileInputStream(inputFile);
+		this.parse(model, stream);
+	}
+	
 	public Parser(){
 		this.progressListener = new ProgressListener(){
 			@Override

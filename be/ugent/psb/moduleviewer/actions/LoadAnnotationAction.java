@@ -71,6 +71,7 @@ public class LoadAnnotationAction extends AbstractAction {
 			MVFParser parser = new MVFParser();
 			
 			parser.parse(model, file);
+			model.addAnnotationFile(file.getAbsolutePath());
 			
 			setProgress(100);
 

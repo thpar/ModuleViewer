@@ -1,7 +1,5 @@
 package be.ugent.psb.moduleviewer.parsers;
 
-import java.io.File;
-import java.io.FileInputStream;
 import java.io.InputStream;
 
 import javax.xml.parsers.SAXParser;
@@ -33,11 +31,10 @@ abstract class TreeParser extends Parser{
 	}
 
 	
-	protected void parse(File inputFile, DefaultHandler handler){
+	protected void parse(InputStream inputStream, DefaultHandler handler){
 		try {
 			
-			InputStream inputStream = new FileInputStream(inputFile);
-			
+		
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser =  factory.newSAXParser();
 			

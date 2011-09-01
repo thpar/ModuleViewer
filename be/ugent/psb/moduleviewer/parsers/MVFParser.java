@@ -2,9 +2,9 @@ package be.ugent.psb.moduleviewer.parsers;
 
 import java.awt.Color;
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -70,6 +70,8 @@ public class MVFParser extends Parser {
 	 * If a gene is linked to a value, this character separated geneId and value
 	 */
 	private static final String DEFAULT_GENE_VALUE_SEPARATOR = ":";
+
+	private static final String BLOCK = "block";
 	
 	
 	private final String keyValueDelimiter = "=";
@@ -83,7 +85,7 @@ public class MVFParser extends Parser {
 	
 	private AnnotationBlockFactory abf;
 
-	private File inputFile;
+//	private File fileName;
 
 	private ParsingType parsingMode;
 
@@ -118,13 +120,13 @@ public class MVFParser extends Parser {
 	}
 	
 	@Override
-	public void parse(Model model, File inputFile) throws IOException {
-		System.out.println("Parsing "+inputFile);
+	public void parse(Model model, InputStream stream) throws IOException {
+//		System.out.println("Parsing "+inputFile);
 		this.modnet = model.getModnet();
-		this.inputFile = inputFile;
+//		this.inputFile = inputFile;
 		counter=0;
 		
-		BufferedReader in = new BufferedReader(new FileReader(inputFile));
+		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 		
 		String line = in.readLine();
 		while (line!=null){
@@ -136,8 +138,6 @@ public class MVFParser extends Parser {
 			line = in.readLine();
 		}
 		
-		
-		model.addAnnotationFile(inputFile);
 		
 	}
 
@@ -189,7 +189,7 @@ public class MVFParser extends Parser {
 		//get the block name
 		String blockName = params.get(ParamKey.NAME);
 		if (blockName==null){
-			blockName = inputFile.getName()+"_"+counter; 
+			blockName = BLOCK+"_"+counter; 
 			counter++;
 		}
 		

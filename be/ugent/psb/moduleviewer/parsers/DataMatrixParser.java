@@ -1,9 +1,9 @@
 package be.ugent.psb.moduleviewer.parsers;
 
 import java.io.BufferedReader;
-import java.io.File;
-import java.io.FileReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.util.InputMismatchException;
 
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
@@ -39,10 +39,10 @@ public class DataMatrixParser extends Parser {
 	}
 
 	@Override
-	public void parse(Model model, File inputFile) throws IOException {
+	public void parse(Model model, InputStream input) throws IOException {
 		ModuleNetwork modnet = model.getModnet();
 		
-		BufferedReader in = new BufferedReader(new FileReader(inputFile));
+		BufferedReader in = new BufferedReader(new InputStreamReader(input));
 
 		String conditionLine = in.readLine();
 		String[] conditionIds = conditionLine.split("\\t");
@@ -81,8 +81,6 @@ public class DataMatrixParser extends Parser {
 			line = in.readLine();
 		}
 		
-		model.setDataFile(inputFile);
-
 		
 	}
 

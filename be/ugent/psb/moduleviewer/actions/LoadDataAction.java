@@ -68,6 +68,7 @@ public class LoadDataAction extends AbstractAction {
 			DataMatrixParser parser = new DataMatrixParser(progListener);
 			
 			parser.parse(model, file);
+			model.setDataFile(file.getAbsolutePath());
 			
 			setProgress(100);
 

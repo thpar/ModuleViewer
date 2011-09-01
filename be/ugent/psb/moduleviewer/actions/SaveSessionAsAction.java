@@ -55,14 +55,14 @@ public class SaveSessionAsAction extends AbstractAction {
 		Properties props = new Properties();
 		FileWriter fw = new FileWriter(file);
 		
-		props.setProperty("data", model.getDataFile().getAbsolutePath());
-		props.setProperty("genes", model.getGeneFile().getAbsolutePath());
-		props.setProperty("regulators", model.getRegulatorFile().getAbsolutePath());
-		props.setProperty("conditions", model.getConditionFile().getAbsolutePath());
+		props.setProperty("data", model.getDataFile());
+		props.setProperty("genes", model.getGeneFile());
+		props.setProperty("regulators", model.getRegulatorFile());
+		props.setProperty("conditions", model.getConditionFile());
 		
 		String anFileNames = new String();
-		for (Iterator<File> it = model.getAnnotationFiles().iterator(); it.hasNext();){
-			anFileNames = anFileNames.concat(it.next().getAbsolutePath());
+		for (Iterator<String> it = model.getAnnotationFiles().iterator(); it.hasNext();){
+			anFileNames = anFileNames.concat(it.next());
 			if (it.hasNext()){
 				anFileNames = anFileNames.concat(";");
 			}

@@ -71,6 +71,7 @@ public class LoadConditionTreeAction extends AbstractAction {
 			ConditionTreeParser parser = new ConditionTreeParser(progListener);
 			
 			parser.parse(model, file);
+			model.setConditionFile(file.getAbsolutePath());
 			
 			setProgress(100);
 
