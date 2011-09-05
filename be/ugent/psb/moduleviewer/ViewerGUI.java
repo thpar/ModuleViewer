@@ -98,13 +98,14 @@ public class ViewerGUI {
 		Model model = new Model();
 		GUIModel guiModel = new GUIModel();
 		
-		try {
-			processURLS(model, guiModel, urls);
-		} catch (IOException e) {
-			e.printStackTrace();
-			System.err.println("Problem loading data over http. Opening client whitout data.");
+		if (urls != null){
+			try {
+				processURLS(model, guiModel, urls);
+			} catch (IOException e) {
+				e.printStackTrace();
+				System.err.println("Problem loading data over http. Opening client whitout data.");
+			}
 		}
-		
 		
 		guiModel.setDrawConditionAnnotationLegend(false);
 		guiModel.setDrawConditionAnnotations(false);
