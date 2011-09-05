@@ -32,5 +32,9 @@ $d->close();
 ?> 
 
 </resources>
-<application-desc main-class="be.ugent.psb.moduleviewer.ModuleViewer" />
+<application-desc main-class="be.ugent.psb.moduleviewer.ModuleViewer" 
+<?php foreach ($_GET as $url) : ?>
+	<argument><?=$url?></argument> 
+<?php endforeach; ?>
+<application-desc/>
 </jnlp>
