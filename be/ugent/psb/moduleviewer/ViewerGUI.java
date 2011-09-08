@@ -2,7 +2,10 @@ package be.ugent.psb.moduleviewer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.io.BufferedReader;
 import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
@@ -73,7 +76,8 @@ public class ViewerGUI {
 
 		if (urls.size()>=4){
 			int remLinks = 3;
-			if (!urls.get(remLinks).getFile().endsWith(".mvf")){
+			if (!(urls.get(remLinks).getFile().endsWith(".mvf") ||
+					checkMagicWord(urls.get(remLinks).openStream(), "MVF"))){
 				RegulatorTreeParser rtp = new RegulatorTreeParser();
 				rtp.parse(model, urls.get(3).openStream());
 				model.setRegulatorFile(urls.get(3).getFile());
@@ -90,6 +94,14 @@ public class ViewerGUI {
 
 		guiModel.refresh();
 
+	}
+	
+	private boolean checkMagicWord(InputStream stream, String magic) throws IOException{
+		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
+		String line = in.readLine();
+		String magicLine = line.substring(1);
+		in.close();
+		return magicLine.equalsIgnoreCase(magic);
 	}
 	
 	public void startGUI() {
