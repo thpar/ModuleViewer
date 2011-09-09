@@ -29,6 +29,8 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 	private JTextField locationField;
 	private Model model;
 	private JButton exportButton;	
+	JButton nextButton = new JButton();
+	JButton prevButton = new JButton();
 	
 	public NavigationToolBar(Model model, GUIModel guiModel){
 		super("ModuleViewer Navigation");
@@ -44,8 +46,6 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		locationField.addKeyListener(this);
 		totalLabel = new JLabel();
 		
-		JButton nextButton = new JButton();
-		JButton prevButton = new JButton();
 		exportButton = new JButton();
 		
 		nextButton.setAction(new NavModuleAction(new ImageIcon(getClass().getResource("/icons/next.png")),+1, guiModel));
@@ -71,6 +71,8 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 	public void update(Observable o, Object arg) {
 		int modnr = guiModel.getDisplayedModule();
 		ModuleNetwork modnet = model.getModnet();
+		prevButton.setEnabled(!modnet.isFirstModule(modnr));
+		nextButton.setEnabled(!modnet.isLastModule(modnr));
 		locationField.setText(String.valueOf(modnr));
 		int totalModnr = 0;
 		String totalString;

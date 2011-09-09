@@ -5,6 +5,7 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.TreeMap;
 
 import be.ugent.psb.moduleviewer.model.UnknownItemException.ItemType;
 
@@ -29,7 +30,7 @@ public class ModuleNetwork{
 	/**
 	 * The modules in which genes are organized
 	 */
-	private Map<Integer, Module> modules = new HashMap<Integer, Module>();
+	private TreeMap<Integer, Module> modules = new TreeMap<Integer, Module>();
 	
 	/**
 	 * All possible regulators?
@@ -177,6 +178,34 @@ public class ModuleNetwork{
 	
 	public Collection<Module> getModules(){
 		return modules.values();
+	}
+	/**
+	 * Returns the previous module id in the list or the current module id if we're at the beginning.
+	 * @param currentModId
+	 * @return
+	 */
+	public int getPrevModuleId(int currentModId){
+		Integer key = modules.lowerKey(currentModId);
+		if (key!=null){
+			return key;
+		} else return currentModId;
+	}
+	/**
+	 * Returns the next module id in the list or the current module id if we're at the end.
+	 * @param currentModId
+	 * @return
+	 */
+	public int getNextModuleId(int currentModId){
+		Integer key = modules.higherKey(currentModId);
+		if (key!=null){
+			return key;
+		} else return currentModId;
+	}
+	public boolean isFirstModule(int modId){
+		return modules.lowerKey(modId) == null;
+	}
+	public boolean isLastModule(int modId){
+		return modules.higherKey(modId) == null;
 	}
 	
 	/**

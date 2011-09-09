@@ -41,6 +41,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	private boolean useGlobalMeans = false;
 	
+	private Model model;
 	
 	private String stateString = "--";
 
@@ -62,6 +63,9 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	private OutputFormat outputFormat = OutputFormat.PDF;
 	
+	public GUIModel(Model model){
+		this.model = model;
+	}
 	
 	
 	public boolean isDrawModule() {
@@ -122,7 +126,12 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	 * @param step
 	 */
 	public void navDisplayedModule(int step) {
-		this.setDisplayedModule(this.getDisplayedModule()+step);
+//		this.setDisplayedModule(this.getDisplayedModule()+step);
+		if (step>0){
+			displayNextModule();
+		} else {
+			displayPrevModule();
+		}
 	}
 	public int getDisplayedModule() {
 		return displayedModule;
@@ -131,6 +140,12 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		this.displayedModule = displayedModule;
 		setChanged();
 		notifyObservers();
+	}
+	public void displayNextModule(){
+		setDisplayedModule(model.getModnet().getNextModuleId(displayedModule));
+	}
+	public void displayPrevModule(){
+		setDisplayedModule(model.getModnet().getPrevModuleId(displayedModule));
 	}
 	public void setTopContainer(Frame window) {
 		this.window = window;

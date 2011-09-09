@@ -108,7 +108,7 @@ public class ViewerGUI {
 		//create and load the module network
 		
 		Model model = new Model();
-		GUIModel guiModel = new GUIModel();
+		GUIModel guiModel = new GUIModel(model);
 		
 		if (urls != null){
 			try {
