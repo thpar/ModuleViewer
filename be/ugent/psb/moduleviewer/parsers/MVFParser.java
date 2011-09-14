@@ -35,6 +35,9 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * Key and value are separated by "=".
  * Keys are in capitals.
  * 
+ * 
+ * ======== MVF specs below are not up to date! =========
+ * 
  * Known key examples:
  * ::TYPE=type
  * ::COLOR=red
@@ -93,7 +96,7 @@ public class MVFParser extends Parser {
 
 //	private boolean parseGeneValues;
 
-	private String parseGeneValuesSeparator; 
+	private String parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR; 
 	
 	/**
 	 * Keys that can be used in the MVF format.
@@ -106,7 +109,8 @@ public class MVFParser extends Parser {
 		COLOR,      //suggests a color for the annotation matrix
 		LABELCOLOR, //?? 
 		OBJECT,     //GENES of CONDITIONS (defines what kind of object is being annotated
-		VALUES;		//when blank: genes and values are separated on default ":". Value of VALUES can indicate an other separator
+		VALUES,		//either none, color, or number: the values linked to individual genes
+		VALUE_SEPARATOR //by default ":", the separator between gene and value
 	}
 	
 	/**
@@ -117,6 +121,15 @@ public class MVFParser extends Parser {
 	 */
 	enum ParsingType{
 		KEYVALUE, ENTRY;
+	}
+	
+	/**
+	 * Kind of values linked to the genes
+	 * @author thpar
+	 *
+	 */
+	enum ValueType{
+		NUMBER, COLOR, NONE;
 	}
 	
 	@Override
@@ -215,12 +228,20 @@ public class MVFParser extends Parser {
 			case LABELCOLOR:
 				break;
 			case VALUES:
-				abf.setGeneSpecificColored(true);
-				if (value.equals("true")){
-					parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR;
-				} else {
-					parseGeneValuesSeparator = value;
+				ValueType valueType = ValueType.valueOf(value);
+				switch(valueType){
+				case COLOR:
+					abf.setGeneSpecificColored(true);
+					break;
+				case NUMBER:
+					break;
+				default:
+				case NONE:
+					break;
 				}
+				break;
+			case VALUE_SEPARATOR:
+				parseGeneValuesSeparator = value;
 				break;
 			case OBJECT:
 			default:
