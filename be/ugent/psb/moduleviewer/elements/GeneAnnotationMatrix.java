@@ -3,8 +3,9 @@ package be.ugent.psb.moduleviewer.elements;
 import java.awt.Color;
 import java.awt.Dimension;
 
+import be.ugent.psb.modulegraphics.elements.ColorMatrix;
 import be.ugent.psb.modulegraphics.elements.LabelList;
-import be.ugent.psb.modulegraphics.elements.Matrix;
+import be.ugent.psb.modulegraphics.elements.NumberMatrix;
 import be.ugent.psb.modulegraphics.elements.PassThroughColorizer;
 import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
 import be.ugent.psb.modulegraphics.elements.Spacer;
@@ -13,6 +14,7 @@ import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
+import be.ugent.psb.moduleviewer.model.NumberedAnnotation;
 
 
 
@@ -26,11 +28,18 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		this.geneRoot = geneRoot;
 		
 		//create matrix
-		if (ab.isItemSpecificColored()){
+		switch(ab.getValueType()){
+		case COLOR:
 			createColoredMatrix();
-		} else {
+			break;
+		case NONE:
 			createBooleanMatrix();			
+			break;
+		case NUMBER:
+			createNumberedMatrix();			
+			break;
 		}
+		
 
 		//create labels (were scanned while creating matrix)
 		LabelList labelList = new LabelList(labels);
@@ -50,6 +59,31 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 	
 	
 	
+	private void createNumberedMatrix() {
+		int numberOfGenes = geneRoot.getWidth();
+		Integer data[][] = new Integer[numberOfGenes][ab.size()];
+
+		int anCount = 0;
+		for (Annotation<Gene> an : ab.getAnnotations()){
+			NumberedAnnotation<Gene> numberAn = (NumberedAnnotation<Gene>)an; 
+			for (int i=0; i<numberOfGenes; i++){
+				Gene gene = geneRoot.getGene(i);
+				if (an.hasItem(gene)){
+					data[i][anCount] = numberAn.getNumber(gene);
+				} else {
+					data[i][anCount] = -1;
+				}
+			}
+			labels.add(an.getName());
+			anCount++;
+		}
+
+		matrix = new NumberMatrix(data);
+	}
+
+
+
+
 	private void createColoredMatrix() {
 		int numberOfGenes = geneRoot.getWidth();
 		Color data[][] = new Color[numberOfGenes][ab.size()];
@@ -70,7 +104,7 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		}
 
 		PassThroughColorizer c = new PassThroughColorizer();
-		matrix = new Matrix<Color>(data, c);
+		matrix = new ColorMatrix<Color>(data, c);
 	}
 
 
@@ -97,7 +131,7 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 
 		Color color = ab.getColor();
 		SimpleColorizer c = new SimpleColorizer(color);
-		matrix = new Matrix<Boolean>(data, c);
+		matrix = new ColorMatrix<Boolean>(data, c);
 	}
 
 

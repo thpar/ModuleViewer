@@ -11,7 +11,7 @@ import java.util.List;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
-import be.ugent.psb.modulegraphics.elements.Matrix;
+import be.ugent.psb.modulegraphics.elements.ColorMatrix;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
@@ -63,7 +63,7 @@ public class ExpressionLeaf extends Canvas{
 			}
 			i++;
 		}
-		Matrix<Double> matrix = new Matrix<Double>(data, c);
+		ColorMatrix<Double> matrix = new ColorMatrix<Double>(data, c);
 		this.add(matrix);
 		this.newRow();
 	}
@@ -103,7 +103,7 @@ public class ExpressionLeaf extends Canvas{
 	 * @return a {@link Point} with {@link Point}.x the hit column and {@link Point}.y the hit row.  
 	 */
 	public Point getHitCoordinates(int x, int y){
-		Matrix<Double> hitMatrix = (Matrix<Double>)this.getHitChild(x, y);
+		ColorMatrix<Double> hitMatrix = (ColorMatrix<Double>)this.getHitChild(x, y);
 		return hitMatrix.getHitSquare(x, y);
 	}
 	
@@ -115,7 +115,7 @@ public class ExpressionLeaf extends Canvas{
 	 * @return
 	 */
 	public Double getHitData(int x, int y){
-		Matrix<Double> hitMatrix = (Matrix<Double>)this.getHitChild(x, y);
+		ColorMatrix<Double> hitMatrix = (ColorMatrix<Double>)this.getHitChild(x, y);
 		return hitMatrix.getHitData(x, y);
 	}
 

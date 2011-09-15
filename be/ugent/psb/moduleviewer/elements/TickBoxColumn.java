@@ -10,7 +10,7 @@ import java.util.Set;
 import be.ugent.psb.modulegraphics.clickable.ElementEventChildForwarder;
 import be.ugent.psb.modulegraphics.elements.Colorizer;
 import be.ugent.psb.modulegraphics.elements.Element;
-import be.ugent.psb.modulegraphics.elements.Matrix;
+import be.ugent.psb.modulegraphics.elements.ColorMatrix;
 import be.ugent.psb.moduleviewer.model.Gene;
 
 /**
@@ -24,7 +24,7 @@ public class TickBoxColumn extends Element implements Colorizer<Boolean>{
 
 
 	private Color color;
-	private Matrix<Boolean> col;
+	private ColorMatrix<Boolean> col;
 
 	
 	public TickBoxColumn(List<Gene> allModuleGenes, List<Gene> checkedGenes, Color color) {
@@ -48,7 +48,7 @@ public class TickBoxColumn extends Element implements Colorizer<Boolean>{
 			data[i][0] = checkedGenes.contains(allModuleGenes.get(i));
 		}
 		
-		this.col = new Matrix<Boolean>(data, this); 
+		this.col = new ColorMatrix<Boolean>(data, this); 
 		addChildElement(col);
 		this.addMouseListener(new ElementEventChildForwarder(this));		
 	}

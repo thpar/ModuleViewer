@@ -14,6 +14,7 @@ import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.ValueType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlockFactory;
 import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
 import be.ugent.psb.moduleviewer.model.Condition;
@@ -21,6 +22,7 @@ import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.NumberedAnnotation;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 
@@ -123,14 +125,7 @@ public class MVFParser extends Parser {
 		KEYVALUE, ENTRY;
 	}
 	
-	/**
-	 * Kind of values linked to the genes
-	 * @author thpar
-	 *
-	 */
-	enum ValueType{
-		NUMBER, COLOR, NONE;
-	}
+	
 	
 	@Override
 	public void parse(Model model, InputStream stream) throws IOException {
@@ -228,17 +223,8 @@ public class MVFParser extends Parser {
 			case LABELCOLOR:
 				break;
 			case VALUES:
-				ValueType valueType = ValueType.valueOf(value);
-				switch(valueType){
-				case COLOR:
-					abf.setGeneSpecificColored(true);
-					break;
-				case NUMBER:
-					break;
-				default:
-				case NONE:
-					break;
-				}
+				ValueType valueType = ValueType.getValueOf(value);
+				abf.setValueType(valueType);
 				break;
 			case VALUE_SEPARATOR:
 				parseGeneValuesSeparator = value;
@@ -298,7 +284,8 @@ public class MVFParser extends Parser {
 			
 			try {
 				for (String it : items){
-					if (abf.isGeneSpecificColored()){
+					switch(abf.getValueType()){
+					case COLOR:
 						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
 						String itemId = itemKeyValue[0];
 						Color geneColor = new Color(Integer.valueOf(itemKeyValue[1]));
@@ -312,7 +299,8 @@ public class MVFParser extends Parser {
 							((ColoredAnnotation<Condition>)annot).addItem(condItem, geneColor);	
 							break;
 						}
-					} else {
+						break;
+					case NONE:
 						switch(ab.getDataType()){
 						case GENES:
 							Gene geneItem = modnet.getGene(it);
@@ -323,6 +311,22 @@ public class MVFParser extends Parser {
 							((Annotation<Condition>)annot).addItem(condItem);	
 							break;
 						}
+						break;
+					case NUMBER:
+						String[] itemKeyValueNumber = it.split(this.parseGeneValuesSeparator);
+						String itemGeneId = itemKeyValueNumber[0];
+						int geneNumber = Integer.valueOf(itemKeyValueNumber[1]);
+						switch(ab.getDataType()){
+						case GENES:
+							Gene geneItem = modnet.getGene(itemGeneId);
+							((NumberedAnnotation<Gene>)annot).addItem(geneItem, geneNumber);	
+							break;
+						case CONDITIONS:
+							Condition condItem = modnet.getCondition(itemGeneId);
+							((NumberedAnnotation<Condition>)annot).addItem(condItem, geneNumber);	
+							break;
+						}
+						break;
 					}
 				}
 			} catch (NumberFormatException e) {

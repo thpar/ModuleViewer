@@ -4,7 +4,7 @@ import java.awt.Color;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.LabelList;
-import be.ugent.psb.modulegraphics.elements.Matrix;
+import be.ugent.psb.modulegraphics.elements.ColorMatrix;
 import be.ugent.psb.modulegraphics.elements.PassThroughColorizer;
 import be.ugent.psb.modulegraphics.elements.SimpleColorizer;
 import be.ugent.psb.moduleviewer.model.Annotation;
@@ -26,11 +26,19 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 		this.setHorizontalSpacing(5);
 		this.setVerticalSpacing(5);
 		
-		if (ab.isItemSpecificColored()){
+		
+		switch(ab.getValueType()){
+		case COLOR:
 			constructColoredMatrix();
-		} else {
+			break;
+		case NONE:
 			constructBooleanMatrix();			
+			break;
+		case NUMBER:
+			constructNumberedMatrix();			
+			break;
 		}
+		
 		
 		LabelList labelList = new LabelList(labels);
 		labelList.setDir(LabelList.Direction.TOP_TO_BOTTOM);
@@ -67,7 +75,7 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 		}
 
 		PassThroughColorizer c = new PassThroughColorizer();
-		matrix = new Matrix<Color>(data, c);
+		matrix = new ColorMatrix<Color>(data, c);
 		this.add(matrix);
 	}
 
@@ -105,7 +113,44 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 
 		Color color = ab.getColor();
 		SimpleColorizer c = new SimpleColorizer(color);
-		matrix = new Matrix<Boolean>(data, c);
+		matrix = new ColorMatrix<Boolean>(data, c);
+		this.add(matrix);
+	}
+	
+	
+	//FIXME NOT WORKING YET!!!
+	private void constructNumberedMatrix() {
+
+		int numberOfConditions = condRoot.getWidth();
+		int numberOfNonTreeConditions = nonTreeConditions.size();
+
+		Boolean data[][] = new Boolean[ab.size()][numberOfConditions + numberOfNonTreeConditions];
+
+		int anCount = 0;
+		for (Annotation<Condition> an : ab.getAnnotations()){
+			for (int i=0; i<numberOfConditions; i++){
+				Condition cond = condRoot.getCondition(i);
+				if (an.hasItem(cond)){
+					data[anCount][i] = true;
+				} else {
+					data[anCount][i] = false;
+				}
+			}
+			for (int i=0; i<numberOfNonTreeConditions; i++){
+				Condition cond = nonTreeConditions.get(i);
+				if (an.hasItem(cond)){
+					data[anCount][i+numberOfConditions] = true;
+				} else {
+					data[anCount][i+numberOfConditions] = false;
+				}
+			}
+			labels.add(an.getName());
+			anCount++;
+		}
+
+		Color color = ab.getColor();
+		SimpleColorizer c = new SimpleColorizer(color);
+		matrix = new ColorMatrix<Boolean>(data, c);
 		this.add(matrix);
 	}
 	

@@ -4,6 +4,7 @@ import java.awt.Color;
 
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.ValueType;
 
 public class AnnotationBlockFactory {
 
@@ -15,7 +16,7 @@ public class AnnotationBlockFactory {
 	private String unknownBlockType;
 	private ModuleNetwork modnet;
 	
-	private boolean geneSpecificColored = false;
+	private ValueType valueType;
 	
 	
 	public AnnotationBlockFactory(String blockName, DataType type, ModuleNetwork modnet){
@@ -28,13 +29,13 @@ public class AnnotationBlockFactory {
 	public AnnotationBlock<?> createNewAnnotationBlock(){
 		switch(type){
 		case GENES:
-			AnnotationBlock<Gene> abg = new AnnotationBlock<Gene>(blockName, modnet, type, geneSpecificColored);			
+			AnnotationBlock<Gene> abg = new AnnotationBlock<Gene>(blockName, modnet, type, valueType);			
 			abg.setColor(color);
 			abg.setBlockType(blockType);
 			abg.setUnknownBlockType(unknownBlockType);
 			return abg;
 		case CONDITIONS:
-			AnnotationBlock<Condition> abc = new AnnotationBlock<Condition>(blockName, modnet, type, geneSpecificColored);
+			AnnotationBlock<Condition> abc = new AnnotationBlock<Condition>(blockName, modnet, type, valueType);
 			abc.setColor(color);
 			abc.setBlockType(blockType);
 			abc.setUnknownBlockType(unknownBlockType);
@@ -75,16 +76,6 @@ public class AnnotationBlockFactory {
 	}
 
 
-	public boolean isGeneSpecificColored() {
-		return geneSpecificColored;
-	}
-
-
-	public void setGeneSpecificColored(boolean geneSpecificColored) {
-		this.geneSpecificColored = geneSpecificColored;
-	}
-
-
 	public BlockType getBlockType() {
 		return blockType;
 	}
@@ -103,6 +94,19 @@ public class AnnotationBlockFactory {
 	public void setUnknownBlockType(String unknownBlockType) {
 		this.unknownBlockType = unknownBlockType;
 	}
+
+
+	public void setValueType(ValueType valueType) {
+		this.valueType = valueType;
+		
+	}
+
+
+	public ValueType getValueType() {
+		return valueType;
+	}
+	
+	
 
 	
 	

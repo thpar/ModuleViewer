@@ -45,6 +45,19 @@ public class AnnotationBlock<T> {
 			}
 		}
 	}
+	/**
+	 * Kind of values linked to the genes
+	 * @author thpar
+	 *
+	 */
+	public enum ValueType{
+		NUMBER, COLOR, NONE;
+		
+		public static ValueType getValueOf(String name){
+			return valueOf(name.toUpperCase());
+		}
+	}
+	
 	private Map<String, Annotation<T>> annotations = new HashMap<String, Annotation<T>>();
 	
 	
@@ -60,7 +73,10 @@ public class AnnotationBlock<T> {
 	private Color color;
 
 
-	private boolean itemSpecificColored = false;
+//	private boolean itemSpecificColored = false;
+
+
+	private ValueType valueType;
 
 	
 	
@@ -76,9 +92,9 @@ public class AnnotationBlock<T> {
 		
 	}
 	
-	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type, boolean geneSpecificColored){
+	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type, ValueType valueType){
 		this(blockName, modnet, type);
-		this.itemSpecificColored = geneSpecificColored;
+		this.valueType = valueType;
 	}
 
 	/**
@@ -129,11 +145,17 @@ public class AnnotationBlock<T> {
 	}
 	
 	public Annotation<T> addNewAnnotation(String label){
-		Annotation<T> annot;
-		if (itemSpecificColored){
+		Annotation<T> annot = null;
+		switch(valueType){
+		case COLOR:
 			annot = new ColoredAnnotation<T>(label, modnet);
-		} else {
+			break;
+		case NONE:			
 			annot = new Annotation<T>(label, modnet);
+			break;
+		case NUMBER:
+			annot = new NumberedAnnotation<T>(label, modnet);
+			break;
 		}
 		this.addAnnotation(annot);
 		return annot;
@@ -155,9 +177,6 @@ public class AnnotationBlock<T> {
 		return this.annotations.size();
 	}
 	
-	public boolean isItemSpecificColored(){
-		return itemSpecificColored ;
-	}
 
 	/**
 	 * The block type is data dependent. A few types have to be processed in their own way.
@@ -178,6 +197,11 @@ public class AnnotationBlock<T> {
 
 	public void setUnknownBlockType(String unknownBlockType) {
 		this.unknownBlockType = unknownBlockType;
+	}
+
+	
+	public ValueType getValueType() {
+		return valueType;
 	}
 
 	/**
