@@ -24,9 +24,16 @@ import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
 import be.ugent.psb.moduleviewer.parsers.MVFParser;
 import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
-
+/**
+ * Main class that takes care of the ModuleViewer GUI. Manages and launches the window object.
+ * @author thpar
+ *
+ */
 public class ViewerGUI {
 	
+	/**
+	 * Main window
+	 */
 	private JFrame window;
 	
 	private List<URL> urls;
@@ -96,6 +103,15 @@ public class ViewerGUI {
 
 	}
 	
+	/**
+	 * Checks if the first line of the given InputStream contains the magic word, indicating 
+	 * the file type without depending on a file extension.
+	 * 
+	 * @param stream
+	 * @param magic
+	 * @return
+	 * @throws IOException
+	 */
 	private boolean checkMagicWord(InputStream stream, String magic) throws IOException{
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 		String line = in.readLine();
@@ -104,6 +120,9 @@ public class ViewerGUI {
 		return magicLine.equalsIgnoreCase(magic);
 	}
 	
+	/**
+	 * Packs and launches the GUI
+	 */
 	public void startGUI() {
 		//create and load the module network
 		

@@ -12,12 +12,26 @@ import javax.swing.JProgressBar;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
+/**
+ * Status bar at the bottom of the screen. Listens to the model, which can set status messages to display.
+ * Also the progress bar while loading files will be shown here.
+ * 
+ * @author thpar
+ *
+ */
 public class StatusBar extends JPanel implements Observer{
 
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
+	
+	/**
+	 * Status message
+	 */
 	private JLabel state;
 	
+	/**
+	 * Progress bar
+	 */
 	private JProgressBar progressBar = new JProgressBar();
 	
 	

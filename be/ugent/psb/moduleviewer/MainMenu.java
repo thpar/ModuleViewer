@@ -27,6 +27,12 @@ import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 
+/**
+ * The classic top screen menu. Observes the model to toggle options when needed.
+ * 
+ * @author thpar
+ *
+ */
 public class MainMenu extends JMenuBar implements Observer{
 
 	

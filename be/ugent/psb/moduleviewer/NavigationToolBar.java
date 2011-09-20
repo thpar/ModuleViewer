@@ -21,6 +21,12 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
+/**
+ * Toolbar with navigation and export buttons.
+ * 
+ * @author thpar
+ *
+ */
 public class NavigationToolBar extends JToolBar implements Observer, FocusListener, KeyListener{
 
 	private static final long serialVersionUID = 1L;
@@ -100,6 +106,9 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		goToModule();
 	}
 
+	/**
+	 * Jumps to the module given in the navigation text field.
+	 */
 	private void goToModule(){
 		String content = locationField.getText();
 		try {

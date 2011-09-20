@@ -9,7 +9,6 @@ import javax.swing.ImageIcon;
 import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.moduleviewer.elements.DefaultCanvas;
-import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
@@ -17,7 +16,12 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
 
-
+/**
+ * The body of the GUI, the label that draws the Canvas with the module figures.
+ * 
+ * @author thpar
+ *
+ */
 public class ModuleLabel extends CanvasLabel implements Observer{
 
 	private static final long serialVersionUID = 1L;
@@ -40,7 +44,10 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		this.setSplash(new ImageIcon(this.getClass().getResource("/icons/lemone.png")));
 	}
 	
-	
+	/**
+	 * Create the Canvas and add it to this label.
+	 * @return
+	 */
 	public Element initCanvas() {
 		//don't even start if we don't have the essential data loaded
 		if (!model.isEssentialsLoaded()) return null;
