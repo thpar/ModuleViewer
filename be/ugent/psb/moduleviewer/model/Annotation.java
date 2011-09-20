@@ -1,6 +1,5 @@
 package be.ugent.psb.moduleviewer.model;
 
-import java.util.Collection;
 import java.util.HashSet;
 import java.util.Set;
 
