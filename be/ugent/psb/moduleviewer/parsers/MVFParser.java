@@ -141,7 +141,13 @@ public class MVFParser extends Parser {
 			if (line.startsWith("#")) parseComment(line);
 			else if (line.isEmpty());
 			else if (line.startsWith("::")) parseKeyValue(line);
-			else parseEntry(line);
+			else {
+				try {
+					parseEntry(line);
+				} catch (LineParseException e) {
+					System.err.println(e.getMessage());
+				}
+			}
 			
 			line = in.readLine();
 		}
@@ -226,9 +232,9 @@ public class MVFParser extends Parser {
 				ValueType valueType = ValueType.getValueOf(value);
 				abf.setValueType(valueType);
 				break;
-			case VALUE_SEPARATOR:
-				parseGeneValuesSeparator = value;
-				break;
+//			case VALUE_SEPARATOR:
+//				parseGeneValuesSeparator = value;
+//				break;
 			case OBJECT:
 			default:
 				break;
@@ -239,7 +245,7 @@ public class MVFParser extends Parser {
 
 
 
-	private void parseEntry(String line){
+	private void parseEntry(String line) throws LineParseException{
 		//if this is the first entry after parsing key values,
 		//first process the gathered key value pairs.
 		if (parsingMode==ParsingType.KEYVALUE){
@@ -329,10 +335,12 @@ public class MVFParser extends Parser {
 						break;
 					}
 				}
+			} catch (ArrayIndexOutOfBoundsException e ){
+				throw new LineParseException(e);
 			} catch (NumberFormatException e) {
-				e.printStackTrace();
+				throw new LineParseException(e);
 			} catch (UnknownItemException e) {
-				e.printStackTrace();
+				throw new LineParseException(e);
 			}
 		} catch (UnknownItemException e) {
 			e.printStackTrace();

@@ -9,7 +9,7 @@ import java.util.Set;
 public class NumberedAnnotation<T> extends Annotation<T> {
 	
 	
-	protected Map<T, Integer> contentColor = new HashMap<T, Integer>();
+	protected Map<T, Integer> contentNumber = new HashMap<T, Integer>();
 	
 	public NumberedAnnotation(String name, ModuleNetwork modnet) {
 		super(name, modnet);
@@ -17,29 +17,29 @@ public class NumberedAnnotation<T> extends Annotation<T> {
 
 	@Override
 	public void addItem(T item) {
-		contentColor.put(item, null);
+		contentNumber.put(item, null);
 	}
 	
 	public void addItem(T item, int c){
-		contentColor.put(item, c);
+		contentNumber.put(item, c);
 	}
 
 	@Override
 	public Set<T> getItems() {
-		return contentColor.keySet();
+		return contentNumber.keySet();
 	}
 
 	public Collection<Entry<T, Integer>> getEntrySet(){
-		return contentColor.entrySet();
+		return contentNumber.entrySet();
 	}
 	
 	public int getNumber(T item){
-		return contentColor.get(item);
+		return contentNumber.get(item);
 	}
 	
 	@Override
 	public boolean hasItem(T item) {
-		return contentColor.containsKey(item);
+		return contentNumber.containsKey(item);
 	}
 
 	

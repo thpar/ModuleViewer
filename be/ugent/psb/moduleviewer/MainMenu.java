@@ -6,6 +6,7 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.ButtonGroup;
+import javax.swing.JCheckBoxMenuItem;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
@@ -24,6 +25,7 @@ import be.ugent.psb.moduleviewer.actions.LoadRegulatorTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadSessionAction;
 import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
+import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 
@@ -114,6 +116,9 @@ public class MainMenu extends JMenuBar implements Observer{
 		settingsMenu.add(outputFormatMenu);
 
 		JMenu helpMenu = new JMenu("Help");
+		
+		JCheckBoxMenuItem debugBoxItem = new JCheckBoxMenuItem(new ToggleDebugModeAction(guiModel));
+		debugBoxItem.setState(guiModel.isDebugMode());
 		JMenuItem aboutItem = new JMenuItem("About...");
 		
 		final String version = model.getVersion();
@@ -123,7 +128,9 @@ public class MainMenu extends JMenuBar implements Observer{
 				JOptionPane.showMessageDialog(guiModel.getTopContainer(), "ModuleViewer "+version+". Written by thpar");
 			}
 		});
-
+		
+		helpMenu.add(debugBoxItem);
+		helpMenu.addSeparator();
 		helpMenu.add(aboutItem);
 		
 		

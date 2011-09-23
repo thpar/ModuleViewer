@@ -10,6 +10,7 @@ import java.util.Map;
 import java.util.Observable;
 
 import be.ugent.psb.modulegraphics.display.CanvasFigure.OutputFormat;
+import be.ugent.psb.modulegraphics.elements.Element;
 
 
 /**
@@ -38,6 +39,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawGeneLinks = true;
 	private boolean drawGeneCheckLists = true;
 	
+	private boolean debugMode = false; 
 	
 	private boolean useGlobalMeans = false;
 	
@@ -249,6 +251,21 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		this.outputFormat = outputFormat;
 		this.setChanged();
 		this.notifyObservers();
+	}
+
+
+	public boolean isDebugMode() {
+		return debugMode;
+	}
+
+
+	public void setDebugMode(boolean debugMode) {
+		if (debugMode != this.debugMode){
+			this.debugMode = debugMode;
+			Element.setDebugMode(debugMode);
+			this.setChanged();
+			this.notifyObservers();
+		}		
 	}
 	
 	

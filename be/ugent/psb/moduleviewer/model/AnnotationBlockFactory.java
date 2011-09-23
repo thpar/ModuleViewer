@@ -16,7 +16,7 @@ public class AnnotationBlockFactory {
 	private String unknownBlockType;
 	private ModuleNetwork modnet;
 	
-	private ValueType valueType;
+	private ValueType valueType = ValueType.NONE;
 	
 	
 	public AnnotationBlockFactory(String blockName, DataType type, ModuleNetwork modnet){

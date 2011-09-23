@@ -19,8 +19,13 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 
 /**
  * A Default layout for a Canvas that looks up which elements to 
- * draw in the graphical model of the module.
+ * draw in the graphical model of the module. It will try to put an expression matrix centrally
+ * in the figure, with gene labels right of it, and condition names under it. 
+ * When available, regulators will be drawn above the matrix. In the order supplied by 
+ * the loaded MVF files, extra annotations will be drawn to the right, and possible 
+ * links between genes as connecting arrows at the left.
  * 
+ * When constructing drastically different figures, an other class should be used, extending Canvas. 
  * 
  * @author thpar
  *
@@ -44,6 +49,10 @@ public class DefaultCanvas extends Canvas {
 
 	}
 
+	/**
+	 * Check in the guiModel which components should be drawn, create them, feed them the 
+	 * data from the model, and add them in the right order to this Canvas.
+	 */
 	private void composeCanvas() {
 		//general settings
 		this.setHorizontalSpacing(5);
@@ -64,7 +73,7 @@ public class DefaultCanvas extends Canvas {
 		Canvas coreCanvas = new Canvas();
 		coreCanvas.setHorizontalSpacing(5);
 		coreCanvas.setVerticalSpacing(5);
-		coreCanvas.setAlignment(Alignment.BOTTOM_CENTER);
+		coreCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
 		//regulator genes
 		GeneNames regNames = null;
@@ -75,7 +84,7 @@ public class DefaultCanvas extends Canvas {
 					new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
 					true, false);
 			coreCanvas.add(regulatorMatrix);
-
+		
 			regNames = new GeneNames(mod.getRegulatorTree());
 			coreCanvas.add(regNames);
 			
@@ -99,12 +108,15 @@ public class DefaultCanvas extends Canvas {
 		Canvas horizontalCanvas = new Canvas();
 		horizontalCanvas.setHorizontalSpacing(5);
 		horizontalCanvas.setVerticalSpacing(5);
-		horizontalCanvas.setAlignment(Alignment.BOTTOM_CENTER);
+		horizontalCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
 		horizontalCanvas.add(coreCanvas);
 		
 		
-		//extra data (bingo, ...)
+		//extra data (bingo, ...) from MVF files
+		//this is the only place where the type of the block is considered.
+		//this information can be used to decide to display a block different from 
+		//a standard annotation block.
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
 		for (AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();

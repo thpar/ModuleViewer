@@ -41,7 +41,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		this.modnet = model.getModnet();
 		this.guiModel = guiModel;
 		this.guiModel.addObserver(this);
-		this.setSplash(new ImageIcon(this.getClass().getResource("/icons/lemone.png")));
+		this.setSplash(new ImageIcon(this.getClass().getResource("/icons/Arctix_50px.png")));
 	}
 	
 	/**

@@ -71,7 +71,7 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 				if (an.hasItem(gene)){
 					data[i][anCount] = numberAn.getNumber(gene);
 				} else {
-					data[i][anCount] = -1;
+					data[i][anCount] = null;
 				}
 			}
 			labels.add(an.getName());
