@@ -23,6 +23,7 @@ import be.ugent.psb.moduleviewer.actions.LoadDataAction;
 import be.ugent.psb.moduleviewer.actions.LoadGeneTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadRegulatorTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadSessionAction;
+import be.ugent.psb.moduleviewer.actions.NewSessionAction;
 import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
@@ -58,6 +59,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		saveSessionAsItem = new JMenuItem(new SaveSessionAsAction(model, guiModel));
 		saveSessionAsItem.setEnabled(false);
 		JMenuItem loadSessionItem = new JMenuItem(new LoadSessionAction(model, guiModel));
+		JMenuItem newSessionItem = new JMenuItem(new NewSessionAction(model, guiModel));
 		
 
 
@@ -79,6 +81,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		
 		fileMenu.addSeparator();
 		
+		fileMenu.add(newSessionItem);
 		fileMenu.add(saveSessionAsItem);
 		fileMenu.add(loadSessionItem);
 		

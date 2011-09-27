@@ -102,6 +102,18 @@ public class Model extends Observable{
 		return version;
 	}
 
+	public void resetData() {
+		this.modnet = new ModuleNetwork();
+		dataFileName = null;
+		geneFileName = null;
+		conditionFileName = null;
+		regulatorFileName = null;
+		annotationFileNames = new ArrayList<String>();
+		
+		setChanged();
+		notifyObservers();
+	}
+
 	
 	
 	

@@ -27,7 +27,6 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
 
-//	private int currentPaintedModule = -1;
 	private ModuleNetwork modnet;
 	
 	private Dimension currentCanvasSize = new Dimension();
@@ -38,6 +37,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		
 	public ModuleLabel(Model model, GUIModel guiModel){
 		this.model = model;
+		this.model.addObserver(this);
 		this.modnet = model.getModnet();
 		this.guiModel = guiModel;
 		this.guiModel.addObserver(this);
