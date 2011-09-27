@@ -90,13 +90,10 @@ public class MVFParser extends Parser {
 	
 	private AnnotationBlockFactory abf;
 
-//	private File fileName;
 
 	private ParsingType parsingMode;
 
-	private int counter;
-
-//	private boolean parseGeneValues;
+	private int blockID;
 
 	private String parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR; 
 	
@@ -106,7 +103,7 @@ public class MVFParser extends Parser {
 	 *
 	 */
 	enum ParamKey{
-		NAME, 		//specific block name
+		TITLE,   //specific block name
 		TYPE,       //Indicates the type of annotation. Will be used as template for name when no name is given.
 		COLOR,      //suggests a color for the annotation matrix
 		LABELCOLOR, //?? 
@@ -132,7 +129,7 @@ public class MVFParser extends Parser {
 //		System.out.println("Parsing "+inputFile);
 		this.modnet = model.getModnet();
 //		this.inputFile = inputFile;
-		counter=0;
+		blockID=0;
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 		
@@ -186,7 +183,6 @@ public class MVFParser extends Parser {
 	}
 	
 	private void processParams(){
-//		parseGeneValues = false;
 		//get object type
 		String objectTypeString = params.get(ParamKey.OBJECT);
 		DataType objectType; 
@@ -200,21 +196,18 @@ public class MVFParser extends Parser {
 			}
 		}
 		
-		//get the block name
-		String blockName = params.get(ParamKey.NAME);
-		if (blockName==null){
-			blockName = BLOCK+"_"+counter; 
-			counter++;
-		}
 		
 		//create factory for annotation blocks 
-		abf = new AnnotationBlockFactory(blockName, objectType, modnet);
+		abf = new AnnotationBlockFactory(blockID++, objectType, modnet);
 		
 		//add other options to the block factory
 		for (Entry<ParamKey, String> pe : params.entrySet()){
 			ParamKey key = pe.getKey();
 			String value = pe.getValue();
 			switch(key){
+			case TITLE:
+				abf.setTitle(value);
+				break;
 			case TYPE:
 				BlockType bt = BlockType.getValueOf(value);
 				abf.setBlockType(bt);
@@ -232,9 +225,6 @@ public class MVFParser extends Parser {
 				ValueType valueType = ValueType.getValueOf(value);
 				abf.setValueType(valueType);
 				break;
-//			case VALUE_SEPARATOR:
-//				parseGeneValuesSeparator = value;
-//				break;
 			case OBJECT:
 			default:
 				break;
@@ -274,7 +264,7 @@ public class MVFParser extends Parser {
 		
 		try {
 			Module mod = modnet.getModule(modId);
-			AnnotationBlock<?> ab = mod.getAnnotationBlock(abf.getBlockName());
+			AnnotationBlock<?> ab = mod.getAnnotationBlock(abf.getBlockID());
 			if (ab==null){
 				ab = abf.createNewAnnotationBlock();
 				mod.addAnnotationBlock(ab);
@@ -285,7 +275,6 @@ public class MVFParser extends Parser {
 			Annotation<?> annot = ab.getAnnotation(label);
 			if (annot==null){
 				annot = ab.addNewAnnotation(label);
-//				ab.addAnnotation(annot);
 			}
 			
 			try {

@@ -27,8 +27,6 @@ public class Annotation<T> {
 	 */
 	protected Set<T> contents = new HashSet<T>();
 	
-//	protected List<Color> colors = new ArrayList<Color>();
-
 		
 	/**
 	 * Create a new annotation list, linked to the modnet
@@ -52,29 +50,11 @@ public class Annotation<T> {
 		this.contents.add(item);
 	}
 	
-
-	
-//	public void addItem(T item, Color color) throws UnknownItemException {
-//		this.addItem(item);
-//		this.colors.add(color);
-//		
-//	}
 	
 	public Set<T> getItems(){
 		return contents;
 	}
 	
-//	public List<Color> getColors(){
-//		return colors;
-//	}
-	
-//	public T getItemAt(int pos){
-//		return contents.get(pos);
-//	}
-//	
-//	public Color getColorAt(int pos){
-//		return colors.get(pos);
-//	}
 	
 	public boolean hasItem(T item){
 		return this.contents.contains(item);

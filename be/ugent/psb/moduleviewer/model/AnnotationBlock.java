@@ -60,8 +60,8 @@ public class AnnotationBlock<T> {
 	
 	private Map<String, Annotation<T>> annotations = new HashMap<String, Annotation<T>>();
 	
-	
-	private String blockName;
+	private int blockID;
+	private String blockTitle;
 	private BlockType blockType;
 	private String unknownBlockType;
 	private DataType dataType;
@@ -85,15 +85,15 @@ public class AnnotationBlock<T> {
 	 * @param blockName name of this block
 	 * @param modnet Module Network for gene and condition lookups
 	 */
-	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type){
-		this.blockName = blockName;
+	public AnnotationBlock(int blockID, ModuleNetwork modnet, DataType type){
+		this.blockID = blockID;
 		this.dataType=type;
 		this.modnet = modnet;
 		
 	}
 	
-	public AnnotationBlock(String blockName, ModuleNetwork modnet, DataType type, ValueType valueType){
-		this(blockName, modnet, type);
+	public AnnotationBlock(int blockID, ModuleNetwork modnet, DataType type, ValueType valueType){
+		this(blockID, modnet, type);
 		this.valueType = valueType;
 	}
 
@@ -110,7 +110,7 @@ public class AnnotationBlock<T> {
 	 * @return name of this block
 	 */
 	public String getBlockName() {
-		return blockName;
+		return blockTitle;
 	}
 	
 	
@@ -136,7 +136,7 @@ public class AnnotationBlock<T> {
 	@Override
 	public String toString(){
 		String out = new String();
-		out+=this.dataType+" Block: "+this.blockName + System.getProperty("line.separator");
+		out+=this.dataType+" Block: "+this.blockTitle + System.getProperty("line.separator");
 		for (Annotation<?> an : annotations.values()){
 			out+=an.toString() + System.getProperty("line.separator");
 		}
@@ -211,4 +211,18 @@ public class AnnotationBlock<T> {
 	public Annotation<T> getAnnotation(){
 		return this.annotations.values().iterator().next();
 	}
+
+	public String getBlockTitle() {
+		return blockTitle;
+	}
+
+	public void setBlockTitle(String blockTitle) {
+		this.blockTitle = blockTitle;
+	}
+
+	public int getBlockID() {
+		return blockID;
+	}
+	
+	
 }

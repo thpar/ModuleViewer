@@ -85,9 +85,9 @@ public class Module {
 	}
 
 	
-	public AnnotationBlock<?> getAnnotationBlock(String blockId){
+	public AnnotationBlock<?> getAnnotationBlock(int blockId){
 		for (AnnotationBlock<?> block : annotationBlocks){
-			if (block.getBlockName().equals(blockId)) return block;
+			if (block.getBlockID()==blockId) return block;
 		}
 		return null;
 	}

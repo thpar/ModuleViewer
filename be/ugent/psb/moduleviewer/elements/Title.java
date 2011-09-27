@@ -19,7 +19,7 @@ public class Title extends Element {
 	public Title(String title){
 		this.label = new Label(title);
 		this.addChildElement(label);
-		this.label.setFont(new Font("SansSerif", Font.BOLD, 10));
+		this.label.setFont(new Font("SansSerif", Font.BOLD, 14));
 	}
 	
 	

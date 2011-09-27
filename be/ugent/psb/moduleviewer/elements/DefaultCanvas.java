@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
@@ -62,8 +63,10 @@ public class DefaultCanvas extends Canvas {
 		
 		//title
 		if (guiModel.isDrawFileName()){
-			this.add(new Title(title));
-			this.getLastAddedElement().setBottomMargin(10);
+			Title titleElement = new Title(title);
+			titleElement.setBottomMargin(10);
+			titleElement.setAlignment(Alignment.TOP_CENTER);
+			this.add(titleElement);
 			this.newRow();
 		}
 		
@@ -113,11 +116,39 @@ public class DefaultCanvas extends Canvas {
 		horizontalCanvas.add(coreCanvas);
 		
 		
+		
+		Canvas annotationCanvas = new Canvas();
+		annotationCanvas.setHorizontalSpacing(5);
+		annotationCanvas.setVerticalSpacing(5);
+		annotationCanvas.setAlignment(Alignment.BOTTOM_LEFT);
+		
 		//extra data (bingo, ...) from MVF files
 		//this is the only place where the type of the block is considered.
 		//this information can be used to decide to display a block different from 
 		//a standard annotation block.
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
+		
+		for(AnnotationBlock<Gene> gab : gabList){
+			BlockType blockType = gab.getBlockType();
+			switch(blockType){
+			case genecolorbox:
+			case regulatorcolorbox:
+			case genegeneinteraction:
+			case regulatorgeneinteraction:
+			case regulatorregulatorinteraction:
+				break;
+			case bingo:
+			case core:
+			case modulelinks:
+			case tfenrichment:
+			case unknown:
+			default: 
+				annotationCanvas.add(new Label(gab.getBlockName()));
+				annotationCanvas.getLastAddedElement().setAlignment(Alignment.BOTTOM_CENTER);
+			}
+		}
+		annotationCanvas.newRow();
+		
 		for (AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			switch(blockType){
@@ -141,24 +172,37 @@ public class DefaultCanvas extends Canvas {
 			case unknown:
 			default:
 				GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
-				horizontalCanvas.add(ganMatrix);
-				horizontalCanvas.getLastAddedElement().setAlignment(Alignment.BOTTOM_LEFT);				
+				annotationCanvas.add(ganMatrix);
+				annotationCanvas.getLastAddedElement().setAlignment(Alignment.BOTTOM_CENTER);				
 				
 			}
 			
 		}
+		horizontalCanvas.add(annotationCanvas);
 		
 		this.add(horizontalCanvas);
 		
 		this.newRow();
+		
+		Canvas condAnnotationCanvas = new Canvas();
+		condAnnotationCanvas.setHorizontalSpacing(5);
+		condAnnotationCanvas.setVerticalSpacing(5);
+		condAnnotationCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
 //		//condition annotations (with labels next to it)
 		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
 		for (AnnotationBlock<Condition> cab : cabList){
 			ConditionAnnotationMatrix canMatrix = 
 				new ConditionAnnotationMatrix(mod.getConditionTree(), mod.getNonTreeConditions(), cab);
-			this.add(canMatrix);
+			condAnnotationCanvas.add(canMatrix);
+			condAnnotationCanvas.add(new Spacer(new Dimension(20,0)));
+			Label condAnnotLabel = new Label(cab.getBlockName());
+			condAnnotLabel.setAlignment(Alignment.CENTER_LEFT);
+			condAnnotLabel.setAngle(-Math.PI/2);
+			condAnnotationCanvas.add(condAnnotLabel);
+			condAnnotationCanvas.newRow();
 		}
+		this.add(condAnnotationCanvas);
 		
 		this.newRow();
 		//condition labels 

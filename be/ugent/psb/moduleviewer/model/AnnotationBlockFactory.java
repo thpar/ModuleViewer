@@ -7,11 +7,12 @@ import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.ValueType;
 
 public class AnnotationBlockFactory {
-
+	
+	private int blockID;
 	
 	private Color color;
 	private DataType type;
-	private String blockName;
+	private String title;
 	private BlockType blockType;
 	private String unknownBlockType;
 	private ModuleNetwork modnet;
@@ -19,8 +20,8 @@ public class AnnotationBlockFactory {
 	private ValueType valueType = ValueType.NONE;
 	
 	
-	public AnnotationBlockFactory(String blockName, DataType type, ModuleNetwork modnet){
-		this.blockName = blockName;
+	public AnnotationBlockFactory(int blockID, DataType type, ModuleNetwork modnet){
+		this.blockID = blockID;
 		this.type = type;
 		this.modnet = modnet;
 	}
@@ -29,16 +30,18 @@ public class AnnotationBlockFactory {
 	public AnnotationBlock<?> createNewAnnotationBlock(){
 		switch(type){
 		case GENES:
-			AnnotationBlock<Gene> abg = new AnnotationBlock<Gene>(blockName, modnet, type, valueType);			
+			AnnotationBlock<Gene> abg = new AnnotationBlock<Gene>(blockID, modnet, type, valueType);			
 			abg.setColor(color);
 			abg.setBlockType(blockType);
 			abg.setUnknownBlockType(unknownBlockType);
+			abg.setBlockTitle(title);
 			return abg;
 		case CONDITIONS:
-			AnnotationBlock<Condition> abc = new AnnotationBlock<Condition>(blockName, modnet, type, valueType);
+			AnnotationBlock<Condition> abc = new AnnotationBlock<Condition>(blockID, modnet, type, valueType);
 			abc.setColor(color);
 			abc.setBlockType(blockType);
 			abc.setUnknownBlockType(unknownBlockType);
+			abc.setBlockTitle(title);
 			return abc;
 		default: return null;
 		}
@@ -66,13 +69,13 @@ public class AnnotationBlockFactory {
 	}
 
 
-	public String getBlockName() {
-		return blockName;
+	public String getBlockTitle() {
+		return title;
 	}
 
 
-	public void setBlockName(String blockName) {
-		this.blockName = blockName;
+	public void setTitle(String blockTitle) {
+		this.title = blockTitle;
 	}
 
 
@@ -104,6 +107,11 @@ public class AnnotationBlockFactory {
 
 	public ValueType getValueType() {
 		return valueType;
+	}
+
+
+	public int getBlockID() {
+		return blockID;
 	}
 	
 	
