@@ -24,7 +24,8 @@ public class NewSessionAction extends AbstractAction{
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int answer = JOptionPane.showConfirmDialog(guiModel.getTopContainer(), "This will unload all data. Are you sure?");
+		int answer = JOptionPane.showConfirmDialog(guiModel.getTopContainer(), 
+				"This will unload all data. Are you sure?", "New Session", JOptionPane.YES_NO_OPTION);
 		if (answer == JOptionPane.YES_OPTION){
 			model.resetData();
 		}

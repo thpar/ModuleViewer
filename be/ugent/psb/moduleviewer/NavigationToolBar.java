@@ -43,6 +43,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 
 		this.model = model;
 		this.guiModel = guiModel;
+		model.addObserver(this);
 		guiModel.addObserver(this);
 		
 		locationField = new JTextField();

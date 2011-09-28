@@ -50,7 +50,10 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	 */
 	public Element initCanvas() {
 		//don't even start if we don't have the essential data loaded
-		if (!model.isEssentialsLoaded()) return null;
+		if (!model.isEssentialsLoaded()){
+			setCanvas(null);
+			return null;
+		}
 		
 		
 		int displayedModule = guiModel.getDisplayedModule();

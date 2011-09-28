@@ -13,7 +13,6 @@ import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
-import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 
 /**
@@ -94,13 +93,12 @@ public class ExpressionMatrix extends Canvas {
 		//draw lines between condition leaves
 		int x = 0;
 		int leafCount = 0;
-		g.setColor(Color.MAGENTA);
+		g.setColor(Color.WHITE);
 		g.setStroke(new BasicStroke(1.5F));
 		for (ExpressionLeaf leaf : leaves){
 				x+=leaf.getDimension(g).width;
-				if (leafCount>0 && leafCount<leaves.size()-1){
-					if (nonTreeConditions.size()>0 && leafCount==leaves.size()-2)
-						g.setColor(Color.WHITE);				
+				if (leafCount<leaves.size()-1){
+					if (nonTreeConditions.size()>0 && leafCount==leaves.size()-2) g.setColor(Color.MAGENTA);				
 					g.drawLine(x + xOffset, yOffset, 
 							x + xOffset, yOffset+drawnDim.height);
 				}
