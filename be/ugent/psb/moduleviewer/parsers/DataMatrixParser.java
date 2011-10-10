@@ -67,12 +67,13 @@ public class DataMatrixParser extends Parser {
 				newGene = new Gene(geneId);
 				newGene.setDescription(descr);
 			}
+
 			modnet.addGene(newGene);
 
 			for (int j = 0; j < numCond; j++) {
 				try {
 					geneData[j] = Double.parseDouble(columns[j + 2]);
-				} catch (InputMismatchException e) {
+				} catch (NumberFormatException e) {
 					geneData[j] = Double.NaN;
 				}
 			}

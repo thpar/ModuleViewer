@@ -17,6 +17,8 @@ public class EnigmaColorizer extends ExpressionColorizer{
 
 	@Override
 	public Color getColor(Double data) {
+		if (Double.isNaN(data))	return Color.WHITE;
+		
 		Color col;
 		float blueperc, yellowperc;
 		blueperc = new Float(upProb(data,mean,sigma));
