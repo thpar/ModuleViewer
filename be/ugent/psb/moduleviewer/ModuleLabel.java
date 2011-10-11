@@ -1,10 +1,12 @@
 package be.ugent.psb.moduleviewer;
 
 import java.awt.Dimension;
+import java.awt.Frame;
 import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.ImageIcon;
+import javax.swing.JFrame;
 
 import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Element;
@@ -32,7 +34,8 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	private Dimension currentCanvasSize = new Dimension();
 	//FIXME DONT DO THIS HARD CODED!
 	private final String GENEFETCH = "http://bioinformatics.psb.ugent.be/webtools/genefetch/search.html";
-	private Model model; 
+	private Model model;
+	private boolean firstload = true; 
 		
 		
 	public ModuleLabel(Model model, GUIModel guiModel){
@@ -52,9 +55,16 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		//don't even start if we don't have the essential data loaded
 		if (!model.isEssentialsLoaded()){
 			setCanvas(null);
+			firstload = true;
 			return null;
+		} else {
+			if (firstload ){
+				Frame window = guiModel.getTopContainer();
+				window.setExtendedState(window.getExtendedState()|JFrame.MAXIMIZED_BOTH);
+				firstload = false;
+			}
 		}
-		
+	
 		
 		int displayedModule = guiModel.getDisplayedModule();
 		Module mod = null;
@@ -89,6 +99,8 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		revalidate();
 		
 //		this.currentPaintedModule = displayedModule;
+		
+		
 		return canvas;
 	}
 
