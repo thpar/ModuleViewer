@@ -83,7 +83,7 @@ public class LoadSessionAction extends AbstractAction {
 		}
 		
 		String mvfFileString = props.getProperty("annotations");
-		if (mvfFileString != null){
+		if (mvfFileString != null && !mvfFileString.isEmpty()){
 			String[] mvfFiles = mvfFileString.split(";");
 			for (String mvf : mvfFiles){
 				MVFParser mvfp = new MVFParser();

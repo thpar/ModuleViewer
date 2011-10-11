@@ -27,6 +27,7 @@ import be.ugent.psb.moduleviewer.actions.NewSessionAction;
 import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
+import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 
@@ -42,10 +43,14 @@ public class MainMenu extends JMenuBar implements Observer{
 	private static final long serialVersionUID = 1L;
 	private JMenuItem saveSessionAsItem;
 	private Model model;
+	private GUIModel guiModel;
+	private JCheckBoxMenuItem treeStructureBoxItem;
+	private JCheckBoxMenuItem debugBoxItem;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
 
 		this.model = model;
+		this.guiModel = guiModel;
 		model.addObserver(this);
 
 		
@@ -96,6 +101,10 @@ public class MainMenu extends JMenuBar implements Observer{
 		
 		JMenu settingsMenu = new JMenu("Settings");
 		JMenuItem outputDirItem = new JMenuItem(new ChangeOutputDirAction(guiModel));
+		treeStructureBoxItem = new JCheckBoxMenuItem(new ToggleShowTreeAction(guiModel));
+		treeStructureBoxItem.setSelected(guiModel.isDrawTreeStructure());
+		settingsMenu.add(treeStructureBoxItem);
+		settingsMenu.addSeparator();
 		settingsMenu.add(outputDirItem);
 		
 		JMenu outputFormatMenu = new JMenu("Output format");
@@ -120,8 +129,8 @@ public class MainMenu extends JMenuBar implements Observer{
 
 		JMenu helpMenu = new JMenu("Help");
 		
-		JCheckBoxMenuItem debugBoxItem = new JCheckBoxMenuItem(new ToggleDebugModeAction(guiModel));
-		debugBoxItem.setState(guiModel.isDebugMode());
+		debugBoxItem = new JCheckBoxMenuItem(new ToggleDebugModeAction(guiModel));
+		debugBoxItem.setSelected(guiModel.isDebugMode());
 		JMenuItem aboutItem = new JMenuItem("About...");
 		
 		final String version = model.getVersion();
@@ -145,5 +154,7 @@ public class MainMenu extends JMenuBar implements Observer{
 	@Override
 	public void update(Observable o, Object arg) {
 		this.saveSessionAsItem.setEnabled(model.isEssentialsLoaded());
+		this.treeStructureBoxItem.setSelected(guiModel.isDrawTreeStructure());
+		this.debugBoxItem.setSelected(guiModel.isDebugMode());
 	}
 }

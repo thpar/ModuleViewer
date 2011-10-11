@@ -6,6 +6,7 @@ import java.util.List;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.Spacer;
+import be.ugent.psb.modulegraphics.elements.TreeStructure;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
@@ -77,6 +78,12 @@ public class DefaultCanvas extends Canvas {
 		coreCanvas.setHorizontalSpacing(5);
 		coreCanvas.setVerticalSpacing(5);
 		coreCanvas.setAlignment(Alignment.BOTTOM_LEFT);
+		
+		if (guiModel.isDrawTreeStructure()){
+			TreeStructure tree = new TreeStructure(mod.getConditionTree());
+			coreCanvas.add(tree);
+			coreCanvas.newRow();
+		}
 		
 		//regulator genes
 		GeneNames regNames = null;

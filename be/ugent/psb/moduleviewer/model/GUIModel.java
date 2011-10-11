@@ -39,6 +39,8 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawGeneLinks = true;
 	private boolean drawGeneCheckLists = true;
 	
+	private boolean drawTreeStructure = true;
+	
 	private boolean debugMode = false; 
 	
 	private boolean useGlobalMeans = false;
@@ -213,6 +215,20 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	}
 	
 	
+	public boolean isDrawTreeStructure() {
+		return drawTreeStructure;
+	}
+
+
+	public void setDrawTreeStructure(boolean drawTreeStructure) {
+		if (drawTreeStructure != this.drawTreeStructure){
+			this.drawTreeStructure = drawTreeStructure;
+			this.setChanged();
+			this.notifyObservers();
+		}		
+	}
+
+
 	/**
 	 * 
 	 * @param modId Module ID
