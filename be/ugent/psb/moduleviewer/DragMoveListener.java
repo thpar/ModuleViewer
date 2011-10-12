@@ -26,9 +26,9 @@ public class DragMoveListener implements MouseListener, MouseMotionListener{
 
 	@Override
 	public void mouseDragged(MouseEvent e) {
-		System.out.println("Start: "+startPt);
+//		System.out.println("Start: "+startPt);
 		Point pt = e.getPoint();
-		System.out.println("To: "+pt);
+//		System.out.println("To: "+pt);
 		move.setLocation(pt.x-startPt.x, pt.y-startPt.y);
 		System.out.println("Move: "+move);
 		startPt.setLocation(pt);
@@ -36,7 +36,7 @@ public class DragMoveListener implements MouseListener, MouseMotionListener{
 		int w = vr.width;
 		int h = vr.height;
         Point ptZero = SwingUtilities.convertPoint(vport,0,0,comp);
-        System.out.println("Point zero"+ptZero);
+//      System.out.println("Point zero"+ptZero);
 		rect.setRect(ptZero.x-move.x, ptZero.y-move.y, w, h);
 		comp.scrollRectToVisible(rect);
 	}
