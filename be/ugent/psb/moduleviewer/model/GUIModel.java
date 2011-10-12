@@ -22,6 +22,7 @@ import be.ugent.psb.modulegraphics.elements.Element;
  *
  */
 public class GUIModel extends Observable implements PropertyChangeListener{
+	
 	private boolean drawModule = true;
 	
 	private boolean drawGOForTopRegulators = true;
@@ -66,6 +67,14 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 
 	
 	private OutputFormat outputFormat = OutputFormat.PDF;
+	
+	
+	public enum PointMode{
+		POINT, PAN;
+	}
+	
+	private PointMode pointMode = PointMode.PAN;
+	
 	
 	public GUIModel(Model model){
 		this.model = model;
@@ -130,7 +139,6 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	 * @param step
 	 */
 	public void navDisplayedModule(int step) {
-//		this.setDisplayedModule(this.getDisplayedModule()+step);
 		if (step>0){
 			displayNextModule();
 		} else {
@@ -284,5 +292,18 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		}		
 	}
 	
+	/**
+	 * 
+	 * @return the use mode of the cursor (pointing, dragging, ...)
+	 */
+	public PointMode getPointMode(){
+		return pointMode;
+	}
+	
+	public void setPointMode(PointMode pm){
+		this.pointMode = pm;
+		this.setChanged();
+		this.notifyObservers(new String("nonredraw"));
+	}
 	
 }

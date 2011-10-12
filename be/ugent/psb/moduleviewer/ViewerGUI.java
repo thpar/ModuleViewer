@@ -2,6 +2,8 @@ package be.ugent.psb.moduleviewer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -10,6 +12,8 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Observable;
+import java.util.Observer;
 
 import javax.swing.BoxLayout;
 import javax.swing.JFrame;
@@ -17,6 +21,7 @@ import javax.swing.JPanel;
 import javax.swing.JScrollPane;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.GUIModel.PointMode;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
@@ -29,7 +34,7 @@ import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
  * @author thpar
  *
  */
-public class ViewerGUI {
+public class ViewerGUI implements Observer {
 	
 	/**
 	 * Main window
@@ -37,6 +42,18 @@ public class ViewerGUI {
 	private JFrame window;
 	
 	private List<URL> urls;
+
+	private ModuleLabel modLabel;
+
+	private JScrollPane scroll;
+
+	private GUIModel guiModel;
+
+	private Model model;
+
+	private DragMoveListener dragMoveListener;
+	
+	private PointMode currentPointMode;
 	
 	public ViewerGUI(){
 		
@@ -126,15 +143,18 @@ public class ViewerGUI {
 	public void startGUI() {
 		//create and load the module network
 		
-		Model model = new Model();
-		GUIModel guiModel = new GUIModel(model);
+		model = new Model();
+		guiModel = new GUIModel(model);
+		
+		guiModel.addObserver(this);
+		
 		
 		if (urls != null){
 			try {
 				processURLS(model, guiModel, urls);
 			} catch (IOException e) {
 				e.printStackTrace();
-				System.err.println("Problem loading data over http. Opening client whitout data.");
+				System.err.println("Problem loading data over http. Opening client without data.");
 			}
 		}
 		
@@ -144,9 +164,17 @@ public class ViewerGUI {
 		this.window = new JFrame("ModuleViewer - "+model.getVersion());
 		guiModel.setTopContainer(window);
 		
-		ModuleLabel modLabel = new ModuleLabel(model, guiModel);
+		modLabel = new ModuleLabel(model, guiModel);
 		
-		JScrollPane scroll = new JScrollPane(modLabel);
+		scroll = new JScrollPane(modLabel);
+		dragMoveListener = new DragMoveListener(scroll.getViewport(), modLabel);
+		if (guiModel.getPointMode()==PointMode.PAN){
+			currentPointMode = PointMode.PAN;
+			modLabel.addMouseMotionListener(dragMoveListener);
+			modLabel.addMouseListener(dragMoveListener);
+		} else {
+			currentPointMode = PointMode.POINT;
+		}
 		
 		JPanel modulePanel = new JPanel();
 		modulePanel.setLayout(new BorderLayout());
@@ -171,9 +199,34 @@ public class ViewerGUI {
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
 	}
+
+	@Override
+	public void update(Observable o, Object arg) {
+		if (currentPointMode != guiModel.getPointMode()){
+			currentPointMode = guiModel.getPointMode();
+			switch(guiModel.getPointMode()){
+			case PAN:
+				modLabel.addMouseMotionListener(dragMoveListener);				
+				modLabel.addMouseListener(dragMoveListener);
+				for (MouseListener ml : modLabel.getMouseListeners()){
+					System.out.println(ml);
+				}
+				for (MouseMotionListener ml : modLabel.getMouseMotionListeners()){
+					System.out.println(ml);
+				}
+				break;
+			case POINT:
+				System.out.println("Update mouselisteners");
+				modLabel.removeMouseMotionListener(dragMoveListener);
+				modLabel.removeMouseListener(dragMoveListener);
+				break;
+			}
+		}
+			
+
+	}
 	
 		
-	
 	
 
 }

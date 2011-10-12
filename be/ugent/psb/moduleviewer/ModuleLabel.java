@@ -1,5 +1,6 @@
 package be.ugent.psb.moduleviewer;
 
+import java.awt.Cursor;
 import java.awt.Dimension;
 import java.awt.Frame;
 import java.util.Observable;
@@ -12,6 +13,7 @@ import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.moduleviewer.elements.DefaultCanvas;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.GUIModel.PointMode;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -35,7 +37,8 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	//FIXME DONT DO THIS HARD CODED!
 	private final String GENEFETCH = "http://bioinformatics.psb.ugent.be/webtools/genefetch/search.html";
 	private Model model;
-	private boolean firstload = true; 
+	private boolean firstload = true;
+	private Cursor cursor; 
 		
 		
 	public ModuleLabel(Model model, GUIModel guiModel){
@@ -53,6 +56,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 	 */
 	public Element initCanvas() {
 		//don't even start if we don't have the essential data loaded
+		System.out.println("Recalculating canvas");
 		if (!model.isEssentialsLoaded()){
 			setCanvas(null);
 			firstload = true;
@@ -65,6 +69,8 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 			}
 		}
 	
+		PointMode pm = guiModel.getPointMode();
+		this.setPointMode(pm);
 		
 		int displayedModule = guiModel.getDisplayedModule();
 		Module mod = null;
@@ -75,13 +81,6 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 			e.printStackTrace();
 		}
 		
-//		ConditionNode n = mod.getConditionTree();
-//		mod.hierarchicalTree = n;
-		
-//		for (TreeNode node : mod.hierarchicalTree.getInternalNodes()){
-//			Collections.sort(node.testSplits);
-//			node.regulationSplit = node.testSplits.get(0);
-//		}
 		
 		String title = "Module "+displayedModule;
 		if (mod.getName()!=null && !mod.getName().isEmpty()){
@@ -104,7 +103,16 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		return canvas;
 	}
 
-
+	private void setPointMode(PointMode pm){
+		switch(pm){
+		case POINT:
+			this.setCursor(Cursor.getPredefinedCursor(Cursor.DEFAULT_CURSOR));
+			break;
+		case PAN:
+			this.setCursor(Cursor.getPredefinedCursor(Cursor.MOVE_CURSOR));
+			break;
+		}
+	}
 
 //	private void addCanvasListeners(DefaultCanvas canvas) {
 //		canvas.getGeneNames().addMouseListener(new MouseAdapter(){
@@ -192,6 +200,10 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 
 	@Override
 	public void update(Observable o, Object arg) {
+		if (arg!=null && arg.toString().equals("nonredraw")){
+			this.setPointMode(guiModel.getPointMode());
+			return;
+		}
 		initCanvas();
 		repaint();
 	}

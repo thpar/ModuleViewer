@@ -9,17 +9,21 @@ import java.util.Observable;
 import java.util.Observer;
 
 import javax.swing.BoxLayout;
+import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JLabel;
 import javax.swing.JTextField;
+import javax.swing.JToggleButton;
 import javax.swing.JToolBar;
 
 import be.ugent.psb.moduleviewer.actions.ExportToFigureAction;
 import be.ugent.psb.moduleviewer.actions.NavModuleAction;
+import be.ugent.psb.moduleviewer.actions.SetPointModeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
+import be.ugent.psb.moduleviewer.model.GUIModel.PointMode;
 
 /**
  * Toolbar with navigation and export buttons.
@@ -37,6 +41,9 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 	private JButton exportButton;	
 	JButton nextButton = new JButton();
 	JButton prevButton = new JButton();
+	JToggleButton pointButton = new JToggleButton();
+	JToggleButton panButton = new JToggleButton();
+	private ButtonGroup pointModes;
 	
 	public NavigationToolBar(Model model, GUIModel guiModel){
 		super("ModuleViewer Navigation");
@@ -60,6 +67,14 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		exportButton.setAction(new ExportToFigureAction(model, guiModel, false));
 		exportButton.setIcon(new ImageIcon(getClass().getResource("/icons/"+guiModel.getOutputFormat()+"_icon.jpg")));
 		
+		pointModes = new ButtonGroup();
+		pointModes.add(pointButton);
+		pointModes.add(panButton);
+		this.setPointMode(guiModel.getPointMode());		
+				
+		pointButton.setAction(new SetPointModeAction(guiModel, PointMode.POINT));
+		panButton.setAction(new SetPointModeAction(guiModel, PointMode.PAN));
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		add(locationField);
@@ -69,6 +84,9 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		add(new JToolBar.Separator());
 		add(exportButton);
+		add(new JToolBar.Separator());
+		add(pointButton);
+		add(panButton);
 		
 		this.update(null, null);
 	}
@@ -90,8 +108,21 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 			totalString = new String("--");
 		}
 		totalLabel.setText(totalString);
+		setPointMode(guiModel.getPointMode());
 		
 		exportButton.setIcon(new ImageIcon(getClass().getResource("/icons/"+guiModel.getOutputFormat()+"_icon.jpg")));
+	}
+
+
+	private void setPointMode(PointMode pointMode) {	
+		switch(pointMode){
+		case POINT:
+			pointModes.setSelected(pointButton.getModel(), true);
+			break;
+		case PAN:
+			pointModes.setSelected(panButton.getModel(), true);
+			break;
+		}
 	}
 
 

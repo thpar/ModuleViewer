@@ -79,7 +79,7 @@ public class DefaultCanvas extends Canvas {
 		coreCanvas.setVerticalSpacing(5);
 		coreCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
-		if (guiModel.isDrawTreeStructure()){
+		if (guiModel.isDrawTreeStructure() && mod.getConditionTree().getLeaves().size()>1){
 			TreeStructure tree = new TreeStructure(mod.getConditionTree());
 			coreCanvas.add(tree);
 			coreCanvas.newRow();
