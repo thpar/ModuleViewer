@@ -75,6 +75,13 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		pointButton.setAction(new SetPointModeAction(guiModel, PointMode.POINT));
 		panButton.setAction(new SetPointModeAction(guiModel, PointMode.PAN));
 		
+		pointButton.setText(null);
+		panButton.setText(null);
+		
+		//TODO disabling the point button as long as panning is the only useful thing to do
+		pointButton.setEnabled(false);
+		
+		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
 		add(locationField);
