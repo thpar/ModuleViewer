@@ -68,6 +68,44 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	private OutputFormat outputFormat = OutputFormat.PDF;
 	
+	/**
+	 * Scope how to calculate data statistics (mean and sigma)
+	 * @author thpar
+	 *
+	 */
+	public enum MeanScopeModNet{
+		MODULE_WIDE, 
+		NETWORK_WIDE;
+
+		@Override
+		public String toString() {
+			switch(this){
+			case MODULE_WIDE: return "By Module";
+			case NETWORK_WIDE:return "Network wide";
+			default: return new String();
+			}
+		}
+		
+		
+	}
+
+	public enum MeanScopeGeneReg{
+		REGS_GENES_JOINED,
+		REGS_GENES_SEPARATE;
+		
+		@Override
+		public String toString() {
+			switch(this){
+			case REGS_GENES_JOINED: return "Genes and regulators together";
+			case REGS_GENES_SEPARATE:return "Genes and regulators separate";
+			default: return new String();
+			}
+		}
+	}
+
+	
+	private MeanScopeModNet meanScopeModNet = MeanScopeModNet.NETWORK_WIDE;
+	private MeanScopeGeneReg meanScopeGeneReg = MeanScopeGeneReg.REGS_GENES_JOINED;
 	
 	public enum PointMode{
 		POINT, PAN;
@@ -305,5 +343,44 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		this.setChanged();
 		this.notifyObservers(new String("nonredraw"));
 	}
+
+
+	public MeanScopeModNet getMeanScopeModNet() {
+		return meanScopeModNet;
+	}
+
+
+	public void setMeanScopeModNet(MeanScopeModNet meanScopeModNet) {
+		if (this.meanScopeModNet != meanScopeModNet){
+			this.setChanged();
+		}
+		this.meanScopeModNet = meanScopeModNet;
+		
+		//network wide, we just take all data anyway, genes and regulators together
+		if (meanScopeModNet == MeanScopeModNet.NETWORK_WIDE){
+			this.setMeanScopeGeneReg(MeanScopeGeneReg.REGS_GENES_JOINED);
+		}
+		this.notifyObservers();
+	}
+
+
+	public MeanScopeGeneReg getMeanScopeGeneReg() {
+		return meanScopeGeneReg;
+	}
+
+
+	public void setMeanScopeGeneReg(MeanScopeGeneReg meanScopeGeneReg) {
+		if (this.meanScopeGeneReg != meanScopeGeneReg){
+			this.setChanged();
+		}
+		this.meanScopeGeneReg = meanScopeGeneReg;
+		this.notifyObservers();
+	}
+
+
+	
+
+	
+	
 	
 }

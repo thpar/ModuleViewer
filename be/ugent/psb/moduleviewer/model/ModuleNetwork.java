@@ -51,6 +51,7 @@ public class ModuleNetwork{
 
 	private double dataMax;
 
+		
 	private boolean dataChanged = true;
 
 	private List<Condition> conditionList = new ArrayList<Condition>();
@@ -217,6 +218,7 @@ public class ModuleNetwork{
 		double sumSquare = 0.0;
 		this.dataMean = 0.0;
 		this.dataSigma = 0.0;
+		
 		this.dataMin = Double.POSITIVE_INFINITY;
 		this.dataMax = Double.NEGATIVE_INFINITY;
 		for (Gene gene : genes.values()){

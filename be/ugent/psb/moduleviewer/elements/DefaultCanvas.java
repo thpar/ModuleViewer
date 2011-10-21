@@ -88,10 +88,30 @@ public class DefaultCanvas extends Canvas {
 		//regulator genes
 		GeneNames regNames = null;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTree()!=null){
+			double regSigma = 0;
+			double regMean = 0;
+			switch(guiModel.getMeanScopeModNet()){
+			case MODULE_WIDE:
+				switch(guiModel.getMeanScopeGeneReg()){
+				case REGS_GENES_JOINED:	
+					regMean = mod.getMeanAll();
+					regSigma = mod.getSigmaAll();
+					break;
+				case REGS_GENES_SEPARATE:
+					regMean = mod.getMeanRegs();
+					regSigma = mod.getSigmaRegs();
+					break;
+				}
+				break;
+			case NETWORK_WIDE:
+				regSigma = modnet.getSigma();
+				regMean = modnet.getMean();
+				break;
+			}
 			ExpressionMatrix regulatorMatrix = new ExpressionMatrix(mod.getRegulatorTree(),
 					mod.getConditionTree(),
 					mod.getNonTreeConditions(),
-					new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
+					new EnigmaColorizer(regSigma,regMean),
 					true, false);
 			coreCanvas.add(regulatorMatrix);
 		
@@ -104,10 +124,30 @@ public class DefaultCanvas extends Canvas {
 		}
 		
 		//expression matrix
+		double geneSigma = 0;
+		double geneMean = 0;
+		switch(guiModel.getMeanScopeModNet()){
+		case MODULE_WIDE:
+			switch(guiModel.getMeanScopeGeneReg()){
+			case REGS_GENES_JOINED:	
+				geneMean = mod.getMeanAll();
+				geneSigma = mod.getSigmaAll();
+				break;
+			case REGS_GENES_SEPARATE:
+				geneMean = mod.getMeanGenes();
+				geneSigma = mod.getSigmaGenes();
+				break;
+			}
+			break;
+		case NETWORK_WIDE:
+			geneSigma = modnet.getSigma();
+			geneMean = modnet.getMean();
+			break;
+		}
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
 				mod.getNonTreeConditions(),
-				new EnigmaColorizer(modnet.getSigma(),modnet.getMean()),
+				new EnigmaColorizer(geneSigma,geneMean),
 				true, true);
 		coreCanvas.add(expressionMatrix);
 		

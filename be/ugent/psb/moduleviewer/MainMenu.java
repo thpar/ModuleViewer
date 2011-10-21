@@ -25,10 +25,14 @@ import be.ugent.psb.moduleviewer.actions.LoadRegulatorTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadSessionAction;
 import be.ugent.psb.moduleviewer.actions.NewSessionAction;
 import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
+import be.ugent.psb.moduleviewer.actions.SetMeanScopeGeneRegAction;
+import be.ugent.psb.moduleviewer.actions.SetMeanScopeModNetAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeGeneReg;
+import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeModNet;
 import be.ugent.psb.moduleviewer.model.Model;
 
 /**
@@ -46,12 +50,16 @@ public class MainMenu extends JMenuBar implements Observer{
 	private GUIModel guiModel;
 	private JCheckBoxMenuItem treeStructureBoxItem;
 	private JCheckBoxMenuItem debugBoxItem;
+	private ButtonGroup regulatorMeanGroup;
+	private JRadioButtonMenuItem regSeparateItem;
+	private JRadioButtonMenuItem regJoinedItem;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
 
 		this.model = model;
 		this.guiModel = guiModel;
 		model.addObserver(this);
+		guiModel.addObserver(this);
 
 		
 		JMenu fileMenu = new JMenu("File");
@@ -99,12 +107,54 @@ public class MainMenu extends JMenuBar implements Observer{
 		fileMenu.add(exitItem);
 		
 		
-		JMenu settingsMenu = new JMenu("Settings");
-		JMenuItem outputDirItem = new JMenuItem(new ChangeOutputDirAction(guiModel));
+		JMenu viewMenu = new JMenu("View");
 		treeStructureBoxItem = new JCheckBoxMenuItem(new ToggleShowTreeAction(guiModel));
 		treeStructureBoxItem.setSelected(guiModel.isDrawTreeStructure());
-		settingsMenu.add(treeStructureBoxItem);
-		settingsMenu.addSeparator();
+		viewMenu.add(treeStructureBoxItem);
+		viewMenu.addSeparator();
+		
+		JMenu sigmaMeanMenu = new JMenu("Sigma/Mean scope");
+		viewMenu.add(sigmaMeanMenu);
+		ButtonGroup moduleMeanGroup = new ButtonGroup();
+		JRadioButtonMenuItem moduleWideItem = new JRadioButtonMenuItem(new SetMeanScopeModNetAction(guiModel, MeanScopeModNet.MODULE_WIDE));
+		JRadioButtonMenuItem networkWideItem = new JRadioButtonMenuItem(new SetMeanScopeModNetAction(guiModel, MeanScopeModNet.NETWORK_WIDE));
+		moduleMeanGroup.add(moduleWideItem);
+		moduleMeanGroup.add(networkWideItem);
+		
+		switch(guiModel.getMeanScopeModNet()){
+		case MODULE_WIDE:
+			moduleMeanGroup.setSelected(moduleWideItem.getModel(), true);
+			break;
+		case NETWORK_WIDE:
+			moduleMeanGroup.setSelected(networkWideItem.getModel(), true);
+			break;
+		}
+		
+		regulatorMeanGroup = new ButtonGroup();
+		regSeparateItem = new JRadioButtonMenuItem(new SetMeanScopeGeneRegAction(guiModel, MeanScopeGeneReg.REGS_GENES_SEPARATE));
+		regJoinedItem = new JRadioButtonMenuItem(new SetMeanScopeGeneRegAction(guiModel, MeanScopeGeneReg.REGS_GENES_JOINED));
+		regulatorMeanGroup.add(regSeparateItem);
+		regulatorMeanGroup.add(regJoinedItem);
+		
+		switch(guiModel.getMeanScopeGeneReg()){
+		case REGS_GENES_JOINED:
+			regulatorMeanGroup.setSelected(regJoinedItem.getModel(), true);
+			break;
+		case REGS_GENES_SEPARATE:
+			regulatorMeanGroup.setSelected(regSeparateItem.getModel(), true);
+			break;
+		}
+		
+		sigmaMeanMenu.add(moduleWideItem);
+		sigmaMeanMenu.add(networkWideItem);
+		sigmaMeanMenu.addSeparator();
+		sigmaMeanMenu.add(regSeparateItem);
+		sigmaMeanMenu.add(regJoinedItem);
+		
+		
+		
+		JMenu settingsMenu = new JMenu("Settings");
+		JMenuItem outputDirItem = new JMenuItem(new ChangeOutputDirAction(guiModel));
 		settingsMenu.add(outputDirItem);
 		
 		JMenu outputFormatMenu = new JMenu("Output format");
@@ -147,6 +197,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		
 		
 		add(fileMenu);
+		add(viewMenu);
 		add(settingsMenu);
 		add(helpMenu);
 	}
@@ -156,5 +207,18 @@ public class MainMenu extends JMenuBar implements Observer{
 		this.saveSessionAsItem.setEnabled(model.isEssentialsLoaded());
 		this.treeStructureBoxItem.setSelected(guiModel.isDrawTreeStructure());
 		this.debugBoxItem.setSelected(guiModel.isDebugMode());
+		
+		//switch from genes and regs joined to separate if guiModel says so
+		switch(guiModel.getMeanScopeGeneReg()){
+		case REGS_GENES_JOINED:
+			this.regulatorMeanGroup.setSelected(this.regJoinedItem.getModel(), true);
+			break;
+		case REGS_GENES_SEPARATE:
+			this.regulatorMeanGroup.setSelected(this.regSeparateItem.getModel(), true);
+			break;
+		}
+		//those options should only be available if data points are calculate over a module
+		regSeparateItem.setEnabled(guiModel.getMeanScopeModNet() == MeanScopeModNet.MODULE_WIDE);
+		regJoinedItem.setEnabled(guiModel.getMeanScopeModNet() == MeanScopeModNet.MODULE_WIDE);
 	}
 }
