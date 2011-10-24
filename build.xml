@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <project name="ModuleViewer" default="jar" basedir=".">
 
-	<property name="version" value="2.3.3" />
+	<property name="version" value="2.3.4" />
 	
 	<property name="src" value="." />
 	<property name="build" value="build" />
