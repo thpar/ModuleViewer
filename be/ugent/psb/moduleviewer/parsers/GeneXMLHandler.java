@@ -270,7 +270,7 @@ public class GeneXMLHandler extends DefaultHandler {
 			this.mod.setGeneTree(rootNode);			
 			break;
 		case REGULATORS:
-			this.mod.setRegulatorTree(rootNode);			
+			this.mod.addRegulatorTree(rootNode);			
 			break;
 		}
 	}

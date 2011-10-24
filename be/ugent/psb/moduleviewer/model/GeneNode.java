@@ -33,7 +33,9 @@ public class GeneNode implements ITreeNode<Gene>{
 	 */
 	List<Gene> genes = new ArrayList<Gene>();
 	
-	
+	private double sigma;
+	private double mean;
+	private boolean dataChanged = true;
 	
 	public GeneNode() {
 	}
@@ -132,6 +134,46 @@ public class GeneNode implements ITreeNode<Gene>{
 
 	public void addGene(Gene gene) {
 		this.genes.add(gene);
+	}
+	
+	
+	public double getSigma(){
+		if (dataChanged){
+			calculateStats();
+			dataChanged = false;
+		}
+		return this.sigma;
+	}
+	public double getMean(){
+		if (dataChanged){
+			calculateStats();
+			dataChanged = false;
+		}
+		return this.mean;
+	}
+	
+	
+	/**
+	 * 
+	 * @param tree
+	 * @return [mean, sigma]
+	 */
+	private void calculateStats() {
+		double nrDataPoints = 0;
+		double sumSquare = 0.0;
+		this.mean = 0.0;
+		this.sigma = 0.0;
+			for (Gene gene : this.getGenes()){
+				for (double value : gene.getData()) {
+					if (!Double.isNaN(value)) {
+						mean += value;
+						sumSquare += Math.pow(value, 2);
+						nrDataPoints++;
+					}
+				}
+			}
+		mean /= (double) nrDataPoints;
+		sigma = Math.sqrt(sumSquare - nrDataPoints * Math.pow(mean, 2)) / Math.sqrt((double) nrDataPoints);
 	}
 	
 }

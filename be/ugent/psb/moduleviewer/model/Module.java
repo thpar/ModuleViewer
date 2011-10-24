@@ -29,19 +29,10 @@ public class Module {
 	private GeneNode geneTree;
 	
 	/**
-	 * Root node of the regulator tree
+	 * Root nodes of the regulator trees
 	 */
-	private GeneNode regulatorTree;
-	
-	private double meanGenes;
-	private double meanRegs;
-	private double sigmaGenes;
-	private double sigmaRegs;
-	private double meanAll;
-	private double sigmaAll;
-	
-	//TODO implement caching. For now, we treat every request as a new one.
-	private boolean dataChanged = true;
+	private List<GeneNode> regulatorTrees = new ArrayList<GeneNode>();
+		
 	
 	private List<AnnotationBlock<?>> annotationBlocks = new ArrayList<AnnotationBlock<?>>();
 	
@@ -80,12 +71,12 @@ public class Module {
 		this.geneTree = geneTree;
 	}
 
-	public GeneNode getRegulatorTree() {
-		return regulatorTree;
+	public List<GeneNode> getRegulatorTrees() {
+		return regulatorTrees;
 	}
 
-	public void setRegulatorTree(GeneNode regulatorTree) {
-		this.regulatorTree = regulatorTree;
+	public void addRegulatorTree(GeneNode regulatorTree) {
+		this.regulatorTrees.add(regulatorTree);
 	}
 
 	public int getId() {
@@ -146,90 +137,46 @@ public class Module {
 		return nonTreeConditions;
 	}
 
-
-	
-	public double getMeanGenes() {
-		if (dataChanged){
-			double[] output;
-			output = calcDataPoints(this.geneTree);
-			this.meanGenes = output[0];
-			this.sigmaGenes = output[1];
-		}
-		return this.meanGenes;
-	}
-	public double getSigmaGenes() {
-		if (dataChanged){
-			double[] output;
-			output = calcDataPoints(this.geneTree);
-			this.meanGenes = output[0];
-			this.sigmaGenes = output[1];
-		}
-		return this.sigmaGenes;
-	}
-	
-	
-	public double getMeanRegs() {
-		if (dataChanged){
-			double[] output;
-			output = calcDataPoints(this.regulatorTree);
-			this.meanRegs = output[0];
-			this.sigmaRegs = output[1];
-		}
-		return this.meanRegs;
-	}
-
-	public double getSigmaRegs() {
-		if (dataChanged){
-			double[] output;
-			output = calcDataPoints(this.regulatorTree);
-			this.meanRegs = output[0];
-			this.sigmaRegs = output[1];
-		}
-		return this.sigmaRegs;
-	}
 	
 	public double getMeanAll() {
-		if (dataChanged){
-			double[] output;
-			GeneNode allTree = new GeneNode();
-			allTree.setLeft(geneTree);
-			allTree.setRight(regulatorTree);
-			output = calcDataPoints(allTree);
-			this.meanAll = output[0];
-			this.sigmaAll = output[1];
+		List<GeneNode> trees = new ArrayList<GeneNode>();
+		trees.add(geneTree);
+		for (GeneNode rt : regulatorTrees){
+			trees.add(rt);
 		}
-		return this.meanAll;
+		double[] output = calcDataPoints(trees);
+		return output[0];
 	}
 
 	public double getSigmaAll() {
-		if (dataChanged){
-			double output[];
-			GeneNode allTree = new GeneNode();
-			allTree.setLeft(geneTree);
-			allTree.setRight(regulatorTree);
-			output = calcDataPoints(allTree);
-			this.meanAll = output[0];
-			this.sigmaAll = output[1];
+		List<GeneNode> trees = new ArrayList<GeneNode>();
+		trees.add(geneTree);
+		for (GeneNode rt : regulatorTrees){
+			trees.add(rt);
 		}
-		return this.sigmaAll;
+		double[] output = calcDataPoints(trees);
+		return output[1];
 	}
+	
 	
 	/**
 	 * 
 	 * @param tree
 	 * @return [mean, sigma]
 	 */
-	private double[] calcDataPoints(GeneNode tree) {
+	private double[] calcDataPoints(List<GeneNode> trees) {
 		double nrDataPoints = 0;
 		double sumSquare = 0.0;
 		double mean = 0.0;
 		double sigma = 0.0;
-		for (Gene gene : tree.getGenes()){
-			for (double value : gene.getData()) {
-				if (!Double.isNaN(value)) {
-					mean += value;
-					sumSquare += Math.pow(value, 2);
-					nrDataPoints++;
+		for (GeneNode tree : trees){
+			for (Gene gene : tree.getGenes()){
+				for (double value : gene.getData()) {
+					if (!Double.isNaN(value)) {
+						mean += value;
+						sumSquare += Math.pow(value, 2);
+						nrDataPoints++;
+					}
 				}
 			}
 		}
