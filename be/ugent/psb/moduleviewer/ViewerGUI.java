@@ -116,7 +116,7 @@ public class ViewerGUI implements Observer {
 			
 		}
 
-		guiModel.refresh();
+//		guiModel.refresh();
 
 	}
 	
