@@ -5,7 +5,6 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.ConnectArrows;
-import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
@@ -90,11 +89,12 @@ public class DefaultCanvas extends Canvas {
 		
 		//regulator genes
 		GeneNames regNames = null;
-		ConnectArrows regArrows = new ConnectArrows();
+		GeneLinks regArrows = new GeneLinks();
 		double regSigma = 0;
 		double regMean = 0;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTrees().size()>0){
 			for (GeneNode regTree : mod.getRegulatorTrees()){
+				regArrows.setGenes(regTree);
 				coreCanvas.add(regArrows);
 				
 				switch(guiModel.getMeanScopeModNet()){
@@ -223,9 +223,7 @@ public class DefaultCanvas extends Canvas {
 				//TODO take care of interactions
 				break;
 			case regulatorregulatorinteraction:
-				Annotation<Gene> arrows = gab.getAnnotation();
-				
-				
+				regArrows.setAnnotationBlock(gab);
 				break;
 			case bingo:
 			case core:

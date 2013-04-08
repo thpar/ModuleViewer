@@ -5,6 +5,14 @@ import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
 
+
+/**
+ * Designed to keep track of gene/gene interactions.
+ * 
+ * @author thpar
+ * @deprecated Lets's store these links as {@link GeneAnnotations}, rather than separate properties
+ */
+@Deprecated
 public class GeneLinks {
 
 	

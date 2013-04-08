@@ -62,6 +62,7 @@ public class Annotation<T> {
 
 	
 	
+	
 	@Override
 	public String toString(){
 		String out = new String();
@@ -75,6 +76,15 @@ public class Annotation<T> {
 
 	public ModuleNetwork getModnet() {
 		return modnet;
+	}
+	
+	/**
+	 * If the name of this annotation is supposed to be a {@link Gene}, find the object in the
+	 * {@link ModuleNetwork}.
+	 * @return
+	 */
+	public Gene getNameAsGene() throws UnknownItemException{
+		return this.modnet.getGene(this.name);
 	}
 	
 	

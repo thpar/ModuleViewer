@@ -100,6 +100,7 @@ public class GeneNode implements ITreeNode<Gene>{
 		}
 	}
 	
+	
 	/**
 	 * Get the gene in the given columns, counted over all nodes.
 	 * 
@@ -109,7 +110,24 @@ public class GeneNode implements ITreeNode<Gene>{
 	public Gene getGene(int geneNumber){
 		return getColumns().get(geneNumber);
 	}
+	
+	/**
+	 * 
+	 * @param gene
+	 * @return the first occurrence of the given gene in this list.
+	 * @throws {@link GeneNotFoundException} if the gene is not in this list.
+	 */
+	public int getGeneLocation(Gene gene) throws GeneNotFoundException{
+		List<Gene> list = getColumns();
+		int index = list.indexOf(gene);			
+		if (index >= 0){
+			return index;
+		} else {
+			throw new GeneNotFoundException(gene);
+		}
+	}
 
+	
 	public void setLeaf(boolean isLeaf) {
 		this.isLeaf = isLeaf;
 	}
