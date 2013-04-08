@@ -4,6 +4,8 @@ import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.modulegraphics.elements.ConnectArrows;
+import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
@@ -88,10 +90,13 @@ public class DefaultCanvas extends Canvas {
 		
 		//regulator genes
 		GeneNames regNames = null;
+		ConnectArrows regArrows = new ConnectArrows();
 		double regSigma = 0;
 		double regMean = 0;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTrees().size()>0){
 			for (GeneNode regTree : mod.getRegulatorTrees()){
+				coreCanvas.add(regArrows);
+				
 				switch(guiModel.getMeanScopeModNet()){
 				case MODULE_WIDE:
 					switch(guiModel.getMeanScopeGeneReg()){
@@ -182,12 +187,14 @@ public class DefaultCanvas extends Canvas {
 		for(AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			switch(blockType){
+			//special cases, process later
 			case genecolorbox:
 			case regulatorcolorbox:
 			case genegeneinteraction:
 			case regulatorgeneinteraction:
 			case regulatorregulatorinteraction:
 				break;
+			//annotation blocks
 			case bingo:
 			case core:
 			case modulelinks:
@@ -213,8 +220,12 @@ public class DefaultCanvas extends Canvas {
 				break;
 			case genegeneinteraction:
 			case regulatorgeneinteraction:
-			case regulatorregulatorinteraction:
 				//TODO take care of interactions
+				break;
+			case regulatorregulatorinteraction:
+				Annotation<Gene> arrows = gab.getAnnotation();
+				
+				
 				break;
 			case bingo:
 			case core:
