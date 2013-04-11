@@ -4,7 +4,6 @@ import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
-import be.ugent.psb.modulegraphics.elements.ConnectArrows;
 import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
@@ -83,6 +82,7 @@ public class DefaultCanvas extends Canvas {
 		
 		if (guiModel.isDrawTreeStructure() && mod.getConditionTree().getLeaves().size()>1){
 			TreeStructure tree = new TreeStructure(mod.getConditionTree());
+			coreCanvas.add(new Spacer());
 			coreCanvas.add(tree);
 			coreCanvas.newRow();
 		}
@@ -153,6 +153,9 @@ public class DefaultCanvas extends Canvas {
 			geneMean = modnet.getMean();
 			break;
 		}
+		
+		GeneLinks geneArrows = new GeneLinks(mod.getGeneTree());
+		coreCanvas.add(geneArrows);
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
 				mod.getNonTreeConditions(),
@@ -219,8 +222,11 @@ public class DefaultCanvas extends Canvas {
 				regNames.colorBackgrounds(ansReg.getItems(), gab.getColor());
 				break;
 			case genegeneinteraction:
-			case regulatorgeneinteraction:
-				//TODO take care of interactions
+				geneArrows.setAnnotationBlock(gab);
+				break;
+			case regulatorgeneinteraction:				
+				//TODO take care gene/reg interactions
+				//FIXME needs Element overlap...
 				break;
 			case regulatorregulatorinteraction:
 				regArrows.setAnnotationBlock(gab);
@@ -262,10 +268,12 @@ public class DefaultCanvas extends Canvas {
 			condAnnotationCanvas.add(condAnnotLabel);
 			condAnnotationCanvas.newRow();
 		}
+//		this.add(new Spacer());
 		this.add(condAnnotationCanvas);
 		
 		this.newRow();
-		//condition labels 
+		//condition labels
+//		this.add(new Spacer());
 		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
 		this.add(condLabels);
 		

@@ -4,10 +4,18 @@ import java.awt.Color;
 import java.awt.Frame;
 import java.beans.PropertyChangeEvent;
 import java.beans.PropertyChangeListener;
+import java.io.BufferedReader;
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileReader;
+import java.io.FileWriter;
+import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Observable;
+import java.util.Properties;
 
 import be.ugent.psb.modulegraphics.display.CanvasFigure.OutputFormat;
 import be.ugent.psb.modulegraphics.elements.Element;
@@ -58,6 +66,8 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private File currentDir;
 	
 	private File outputDir;
+	
+	private List<File> recentSessions = new ArrayList<File>();
 
 	private int progressBarProgress;
 
@@ -67,6 +77,9 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 
 	
 	private OutputFormat outputFormat = OutputFormat.PDF;
+	
+	private static String preferenceFileString = ".moduleviewer"; 
+	private File prefFile;
 	
 	/**
 	 * Scope how to calculate data statistics (mean and sigma)
@@ -112,13 +125,37 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	}
 	
 	private PointMode pointMode = PointMode.PAN;
+
 	
 	
 	public GUIModel(Model model){
 		this.model = model;
+		try {
+			loadPreferences();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
+	private void loadPreferences() throws IOException{
+		String homeDir = System.getProperty("user.home");
+		this.prefFile = new File(homeDir+System.getProperty("file.separator")+preferenceFileString);
+		if (prefFile.exists()){
+			Properties props = new Properties();
+			props.load(new BufferedReader(new FileReader(prefFile)));
+			String recentString = props.getProperty("recent", "");
+			String[] recents = recentString.split(":");
+			for (String rec : recents){
+				File recFile = new File(rec);
+				if (recFile.exists()){
+					this.addRecentSession(recFile);					
+				}
+			}
+		}
+	}
+
+
 	public boolean isDrawModule() {
 		return drawModule;
 	}
@@ -377,8 +414,45 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		this.notifyObservers();
 	}
 
-
+	/**
+	 * Keep track of five last saved or opened sessions. Move session to the top 
+	 * if it already was in the list.
+	 * 
+	 * @param session
+	 */
+	public void addRecentSession(File session){
+		if (recentSessions.contains(session)){
+			int index = recentSessions.indexOf(session);
+			recentSessions.remove(index);
+		}
+		
+		this.recentSessions.add(0, session);
+		
+		if (recentSessions.size()>5){
+			recentSessions.remove(5);
+		}
+		this.setChanged();
+		this.notifyObservers();
+	}
 	
+	public List<File> getRecentSessions(){
+		return recentSessions;
+	}
+
+
+	public void saveState() throws IOException {
+		System.out.println("Saving state");
+		Properties props = new Properties();
+		String recentString = new String();
+		for (int i=recentSessions.size()-1; i>=0; i--){
+			recentString+=recentSessions.get(i);
+			if (i!=0){
+				recentString+=":";
+			}
+		}
+		props.setProperty("recent", recentString);
+		props.store(new BufferedWriter(new FileWriter(prefFile)), "ModuleViewer settings");
+	}
 
 	
 	

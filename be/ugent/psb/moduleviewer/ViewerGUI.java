@@ -4,6 +4,8 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.MouseListener;
 import java.awt.event.MouseMotionListener;
+import java.awt.event.WindowEvent;
+import java.awt.event.WindowListener;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
@@ -34,7 +36,7 @@ import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
  * @author thpar
  *
  */
-public class ViewerGUI implements Observer {
+public class ViewerGUI implements Observer, WindowListener {
 	
 	/**
 	 * Main window
@@ -195,7 +197,7 @@ public class ViewerGUI implements Observer {
 		modLabel.initCanvas();
 		window.pack();
 		
-		
+		window.addWindowListener(this);
 		window.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		window.setVisible(true);
 	}
@@ -224,6 +226,52 @@ public class ViewerGUI implements Observer {
 		}
 			
 
+	}
+
+	@Override
+	public void windowOpened(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowClosing(WindowEvent e) {
+		try {
+			guiModel.saveState();
+		} catch (IOException e1) {
+			// TODO Auto-generated catch block
+			e1.printStackTrace();
+		}
+		System.exit(0);
+	}
+
+	@Override
+	public void windowClosed(WindowEvent e) {		
+		// TODO Auto-generated method stub
+	}
+
+	@Override
+	public void windowIconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeiconified(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowActivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void windowDeactivated(WindowEvent e) {
+		// TODO Auto-generated method stub
+		
 	}
 	
 		

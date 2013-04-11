@@ -2,6 +2,7 @@ package be.ugent.psb.moduleviewer;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -53,6 +54,7 @@ public class MainMenu extends JMenuBar implements Observer{
 	private ButtonGroup regulatorMeanGroup;
 	private JRadioButtonMenuItem regSeparateItem;
 	private JRadioButtonMenuItem regJoinedItem;
+	private JMenu recentSessionMenu;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
 
@@ -71,6 +73,15 @@ public class MainMenu extends JMenuBar implements Observer{
 		
 		saveSessionAsItem = new JMenuItem(new SaveSessionAsAction(model, guiModel));
 		saveSessionAsItem.setEnabled(false);
+		
+		recentSessionMenu = new JMenu("Recent sessions");
+		for (File recentSession : guiModel.getRecentSessions()){
+			recentSessionMenu.add(new LoadRecentSessionAction(model, guiModel, recentSession));
+		}
+		if (guiModel.getRecentSessions().size()==0){
+			recentSessionMenu.setEnabled(false);
+		}
+		
 		JMenuItem loadSessionItem = new JMenuItem(new LoadSessionAction(model, guiModel));
 		JMenuItem newSessionItem = new JMenuItem(new NewSessionAction(model, guiModel));
 		
@@ -95,6 +106,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		fileMenu.addSeparator();
 		
 		fileMenu.add(newSessionItem);
+		fileMenu.add(recentSessionMenu);
 		fileMenu.add(saveSessionAsItem);
 		fileMenu.add(loadSessionItem);
 		
@@ -220,5 +232,15 @@ public class MainMenu extends JMenuBar implements Observer{
 		//those options should only be available if data points are calculate over a module
 		regSeparateItem.setEnabled(guiModel.getMeanScopeModNet() == MeanScopeModNet.MODULE_WIDE);
 		regJoinedItem.setEnabled(guiModel.getMeanScopeModNet() == MeanScopeModNet.MODULE_WIDE);
+		
+		recentSessionMenu.removeAll();
+		for (File recentSession : guiModel.getRecentSessions()){
+			recentSessionMenu.add(new LoadRecentSessionAction(model, guiModel, recentSession));
+		}
+		if (guiModel.getRecentSessions().size()==0){
+			recentSessionMenu.setEnabled(false);
+		} else {
+			recentSessionMenu.setEnabled(true);
+		}
 	}
 }

@@ -28,15 +28,19 @@ import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 public class LoadSessionAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
-	private GUIModel guiModel;
-	private Model model;
+	protected GUIModel guiModel;
+	protected Model model;
 
 	
 	public LoadSessionAction(Model model, GUIModel guiModel){
-		super("Load session...");
+		this("Load session...", model, guiModel);
+	}
+	public LoadSessionAction(String label, Model model, GUIModel guiModel){
+		super(label);
 		this.guiModel = guiModel;
 		this.model = model;
 	}
+	
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -47,6 +51,7 @@ public class LoadSessionAction extends AbstractAction {
 			final File file = fc.getSelectedFile();	
 			try {
 				loadFromFile(file);
+				guiModel.addRecentSession(file);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}
@@ -54,7 +59,7 @@ public class LoadSessionAction extends AbstractAction {
 		guiModel.setCurrentDir(fc.getCurrentDirectory());
 	}
 
-	private void loadFromFile(File file) throws IOException{
+	protected void loadFromFile(File file) throws IOException{
 		Properties props = new Properties();
 		
 		FileReader fr = new FileReader(file);

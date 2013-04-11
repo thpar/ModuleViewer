@@ -44,6 +44,7 @@ public class SaveSessionAsAction extends AbstractAction {
 			final File file = fc.getSelectedFile();	
 			try {
 				writeToFile(file);
+				guiModel.addRecentSession(file);
 			} catch (IOException e1) {
 				e1.printStackTrace();
 			}

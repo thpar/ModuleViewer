@@ -46,8 +46,12 @@ public class GeneLinks extends ConnectArrows{
 		this.setAnnotationBlock(ab);
 	}
 	
-	public void setGenes(GeneNode regTree) {
-		this.geneRoot = regTree;
+	public GeneLinks(GeneNode geneRoot) {
+		this.geneRoot = geneRoot;
+	}
+	
+	public void setGenes(GeneNode geneRoot) {
+		this.geneRoot = geneRoot;
 	}
 	
 	
