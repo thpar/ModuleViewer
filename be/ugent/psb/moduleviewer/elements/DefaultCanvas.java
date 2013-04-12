@@ -5,6 +5,7 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Label;
+import be.ugent.psb.modulegraphics.elements.RelativeSpacer;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
 import be.ugent.psb.moduleviewer.model.Annotation;
@@ -254,8 +255,9 @@ public class DefaultCanvas extends Canvas {
 		condAnnotationCanvas.setHorizontalSpacing(5);
 		condAnnotationCanvas.setVerticalSpacing(5);
 		condAnnotationCanvas.setAlignment(Alignment.BOTTOM_LEFT);
+		condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
 		
-//		//condition annotations (with labels next to it)
+		//condition annotations (with labels next to it)
 		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
 		for (AnnotationBlock<Condition> cab : cabList){
 			ConditionAnnotationMatrix canMatrix = 
@@ -268,16 +270,14 @@ public class DefaultCanvas extends Canvas {
 			condAnnotationCanvas.add(condAnnotLabel);
 			condAnnotationCanvas.newRow();
 		}
-//		this.add(new Spacer());
-		this.add(condAnnotationCanvas);
 		
 		this.newRow();
 		//condition labels
-//		this.add(new Spacer());
+		condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
 		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
-		this.add(condLabels);
+		condAnnotationCanvas.add(condLabels);
 		
-		
+		this.add(condAnnotationCanvas);
 	}
 
 	
