@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.modulegraphics.elements.ElementStack;
 import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.RelativeSpacer;
 import be.ugent.psb.modulegraphics.elements.Spacer;
@@ -81,22 +82,41 @@ public class DefaultCanvas extends Canvas {
 		coreCanvas.setVerticalSpacing(5);
 		coreCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
+		boolean drawnTree = false;
+		TreeStructure tree = null;
 		if (guiModel.isDrawTreeStructure() && mod.getConditionTree().getLeaves().size()>1){
-			TreeStructure tree = new TreeStructure(mod.getConditionTree());
-			coreCanvas.add(new Spacer());
+			tree = new TreeStructure(mod.getConditionTree());
 			coreCanvas.add(tree);
 			coreCanvas.newRow();
+			drawnTree = true;
 		}
+		
+		//arrows
+		ElementStack arrowStack = new ElementStack();
+		Canvas arrowCanvas = new Canvas();
+		arrowCanvas.setVerticalSpacing(5);
+		arrowStack.addElement(arrowCanvas);
+		if (drawnTree){
+			arrowCanvas.add(new RelativeSpacer(null, tree));
+			arrowCanvas.newRow();
+		}
+		GeneLinks regArrows = new GeneLinks();
+		arrowCanvas.add(regArrows);
+		arrowCanvas.newRow();
+		arrowCanvas.add(new Spacer(new Dimension(0,10)));
+		arrowCanvas.newRow();
+		GeneLinks geneArrows = new GeneLinks(mod.getGeneTree());
+		arrowCanvas.add(geneArrows);
+		//TODO add reg-gene arrows
+		
 		
 		//regulator genes
 		GeneNames regNames = null;
-		GeneLinks regArrows = new GeneLinks();
 		double regSigma = 0;
 		double regMean = 0;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTrees().size()>0){
 			for (GeneNode regTree : mod.getRegulatorTrees()){
 				regArrows.setGenes(regTree);
-				coreCanvas.add(regArrows);
 				
 				switch(guiModel.getMeanScopeModNet()){
 				case MODULE_WIDE:
@@ -155,8 +175,7 @@ public class DefaultCanvas extends Canvas {
 			break;
 		}
 		
-		GeneLinks geneArrows = new GeneLinks(mod.getGeneTree());
-		coreCanvas.add(geneArrows);
+		
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
 				mod.getNonTreeConditions(),
@@ -167,13 +186,20 @@ public class DefaultCanvas extends Canvas {
 		GeneNames geneNames = new GeneNames(mod.getGeneTree());
 		coreCanvas.add(geneNames);
 		
+		Canvas coreAndArrowCanvas = new Canvas();
+		coreAndArrowCanvas.setHorizontalSpacing(5);
+		coreAndArrowCanvas.setVerticalSpacing(5);
+		coreAndArrowCanvas.setAlignment(Alignment.BOTTOM_LEFT);
+		coreAndArrowCanvas.add(arrowStack);
+		coreAndArrowCanvas.add(coreCanvas);
 		
 		Canvas horizontalCanvas = new Canvas();
 		horizontalCanvas.setHorizontalSpacing(5);
 		horizontalCanvas.setVerticalSpacing(5);
 		horizontalCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
-		horizontalCanvas.add(coreCanvas);
+		
+		horizontalCanvas.add(coreAndArrowCanvas);
 		
 		
 		
@@ -255,11 +281,11 @@ public class DefaultCanvas extends Canvas {
 		condAnnotationCanvas.setHorizontalSpacing(5);
 		condAnnotationCanvas.setVerticalSpacing(5);
 		condAnnotationCanvas.setAlignment(Alignment.BOTTOM_LEFT);
-		condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
 		
 		//condition annotations (with labels next to it)
 		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
 		for (AnnotationBlock<Condition> cab : cabList){
+			condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
 			ConditionAnnotationMatrix canMatrix = 
 				new ConditionAnnotationMatrix(mod.getConditionTree(), mod.getNonTreeConditions(), cab);
 			condAnnotationCanvas.add(canMatrix);

@@ -47,11 +47,12 @@ public class GeneLinks extends ConnectArrows{
 	}
 	
 	public GeneLinks(GeneNode geneRoot) {
-		this.geneRoot = geneRoot;
+		this.setGenes(geneRoot);
 	}
 	
 	public void setGenes(GeneNode geneRoot) {
 		this.geneRoot = geneRoot;
+		this.setFixedNumber(geneRoot.getWidth());
 	}
 	
 	
