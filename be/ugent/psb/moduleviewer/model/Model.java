@@ -110,6 +110,8 @@ public class Model extends Observable{
 		regulatorFileName = null;
 		annotationFileNames = new ArrayList<String>();
 		
+		
+		
 		setChanged();
 		notifyObservers();
 	}

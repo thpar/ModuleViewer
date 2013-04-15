@@ -1,11 +1,13 @@
 package be.ugent.psb.moduleviewer.elements;
 
+import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.ElementStack;
 import be.ugent.psb.modulegraphics.elements.Label;
+import be.ugent.psb.modulegraphics.elements.Rectangle;
 import be.ugent.psb.modulegraphics.elements.RelativeSpacer;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
@@ -93,9 +95,21 @@ public class DefaultCanvas extends Canvas {
 		
 		//arrows
 		ElementStack arrowStack = new ElementStack();
+		
+		Canvas regGeneArrowCanvas = new Canvas();
+		regGeneArrowCanvas.setVerticalSpacing(5);
+		if (drawnTree){
+			regGeneArrowCanvas.add(new RelativeSpacer(null, tree));
+			regGeneArrowCanvas.newRow();
+		}
+		//15px gap = spacer + vertical spacing
+		GeneCrossLinks regGeneArrows = new GeneCrossLinks(mod.getGeneTree(), 20);
+		regGeneArrowCanvas.add(regGeneArrows);
+		arrowStack.add(regGeneArrowCanvas);
+		
 		Canvas arrowCanvas = new Canvas();
 		arrowCanvas.setVerticalSpacing(5);
-		arrowStack.addElement(arrowCanvas);
+		arrowStack.add(arrowCanvas);
 		if (drawnTree){
 			arrowCanvas.add(new RelativeSpacer(null, tree));
 			arrowCanvas.newRow();
@@ -107,8 +121,6 @@ public class DefaultCanvas extends Canvas {
 		arrowCanvas.newRow();
 		GeneLinks geneArrows = new GeneLinks(mod.getGeneTree());
 		arrowCanvas.add(geneArrows);
-		//TODO add reg-gene arrows
-		
 		
 		//regulator genes
 		GeneNames regNames = null;
@@ -117,6 +129,8 @@ public class DefaultCanvas extends Canvas {
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTrees().size()>0){
 			for (GeneNode regTree : mod.getRegulatorTrees()){
 				regArrows.setGenes(regTree);
+				//TODO will not play nice yet with multiple reg trees
+				regGeneArrows.setRegGenes(regTree);
 				
 				switch(guiModel.getMeanScopeModNet()){
 				case MODULE_WIDE:
@@ -252,8 +266,7 @@ public class DefaultCanvas extends Canvas {
 				geneArrows.setAnnotationBlock(gab);
 				break;
 			case regulatorgeneinteraction:				
-				//TODO take care gene/reg interactions
-				//FIXME needs Element overlap...
+				regGeneArrows.setAnnotationBlock(gab);
 				break;
 			case regulatorregulatorinteraction:
 				regArrows.setAnnotationBlock(gab);

@@ -4,7 +4,6 @@ import java.awt.Color;
 import java.util.Set;
 
 import be.ugent.psb.modulegraphics.elements.ConnectArrows;
-import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
@@ -13,51 +12,40 @@ import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.GeneNotFoundException;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
+public class GeneCrossLinks extends ConnectArrows {
 
+	private GeneNode regTree;
+	private GeneNode geneTree;
+	private boolean rainbow;
 
-/**
- * This element takes a list of {@link Gene}s, grouped into a {@link GeneNode}
- * and a {@link ColoredAnnotationBlock} that contains the from/to information and edge colors.
- * 
- * 
- * @author thpar
- *
- */
-public class GeneLinks extends ConnectArrows{
-
-	private GeneNode geneRoot;
+	public GeneCrossLinks(){	
+	}
 	
 	/**
-	 * if true, all edges can have their own color
+	 * 
+	 * @param geneTree list of genes. (regulators should be set at later stage)
+	 * @param gap The gap (in px) between regulators and genes
 	 */
-	private boolean rainbow = false;
+	public GeneCrossLinks(GeneNode geneTree, int gap){
+		this.geneTree = geneTree;
+		this.setGap(gap);
+	}
+	public GeneCrossLinks(GeneNode regulatorTree, GeneNode geneTree, int gap) {
+		this.regTree = regulatorTree;
+		this.geneTree = geneTree;
+		this.setGap(gap);
+	}
+	
+	public void setRegGenes(GeneNode regTree) {
+		this.regTree = regTree;
+	}
+	public void setGenes(GeneNode geneTree){
+		this.geneTree = geneTree;
+	}
 
-	
-	
-	/**
-	 * Create place holder {@link Element}
-	 */
-	public GeneLinks(){
-	}
-	
-	public GeneLinks(GeneNode geneRoot, AnnotationBlock<Gene> ab){
-		this.geneRoot = geneRoot;
-		this.setAnnotationBlock(ab);
-	}
-	
-	public GeneLinks(GeneNode geneRoot) {
-		this.setGenes(geneRoot);
-	}
-	
-	public void setGenes(GeneNode geneRoot) {
-		this.geneRoot = geneRoot;
-		this.setFixedNumber(geneRoot.getWidth());
-	}
-	
-	
 	public void setAnnotationBlock(AnnotationBlock<Gene> gab) {
 		this.reset();
-		
+
 		//each annotation in the block contains a 'from' and a set of 'to' genes
 		switch(gab.getValueType()){
 		case COLOR:
@@ -72,21 +60,22 @@ public class GeneLinks extends ConnectArrows{
 		}
 		for (Annotation<Gene> an : gab.getAnnotations()){
 			try {
-				//in this case, the name of the block is the from gene
-				Gene fromGene = an.getNameAsGene();
+				//in this case, the name of the block is the from gene (regulator)
+				Gene reg = an.getNameAsGene();
+				int regCount = regTree.getWidth();
 				if (rainbow){
 					ColoredAnnotation<Gene> can = (ColoredAnnotation<Gene>)an;
 					Set<Gene> toSet = can.getItems();
 					for (Gene toGene : toSet){
 						Color color = can.getColor(toGene);
-						this.addEdge(geneRoot.getGeneLocation(fromGene), 
-								geneRoot.getGeneLocation(toGene), color);					
+						this.addEdge(regTree.getGeneLocation(reg), 
+								geneTree.getGeneLocation(toGene)+regCount, color);					
 					}
 				} else {
 					Set<Gene> toSet = an.getItems();
 					for (Gene toGene : toSet){
-						this.addEdge(geneRoot.getGeneLocation(fromGene), 
-								geneRoot.getGeneLocation(toGene));					
+						this.addEdge(regTree.getGeneLocation(reg), 
+								geneTree.getGeneLocation(toGene));					
 					}
 				}
 			} catch (UnknownItemException e) {
@@ -97,6 +86,7 @@ public class GeneLinks extends ConnectArrows{
 			}
 		}
 	}
+	
 
 
 }
