@@ -56,9 +56,9 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	private Model model;
 	
-	private String stateString = "--";
+	private String stateString;
 
-	private int displayedModule = 0;
+	private int displayedModule = 1;
 	
 
 	private Frame window;
@@ -202,8 +202,18 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	
 	public String getStateString() {
-		return this.stateString;
+		if (this.stateString !=null){
+			return this.stateString;			
+		} else {
+			return "--";
+		}
 	}
+	
+	/**
+	 * Set message in status bar
+	 * 
+	 * @param stateString message to appear in the status bar
+	 */
 	public void setStateString(String stateString) {
 		this.stateString = stateString;
 		setChanged();

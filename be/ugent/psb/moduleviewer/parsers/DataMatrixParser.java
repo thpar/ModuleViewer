@@ -5,8 +5,11 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.InputMismatchException;
+import java.util.List;
 
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
+import be.ugent.psb.moduleviewer.model.Condition;
+import be.ugent.psb.moduleviewer.model.ConditionNode;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
@@ -51,7 +54,13 @@ public class DataMatrixParser extends Parser {
 		for (int i=2; i<conditionIds.length; i++){
 			modnet.addCondition(conditionIds[i]);
 		}
-
+		//make a single leaf node of the condition list
+		List<Condition> condList = modnet.getConditionList();
+		ConditionNode condNode = new ConditionNode();
+		condNode.setLeaf(true);
+		condNode.setConditions(condList);
+		modnet.setConditionTree(condNode);
+				
 		String line = in.readLine();
 		while (line!=null){
 			String[] columns = line.split("\\t");
@@ -81,8 +90,7 @@ public class DataMatrixParser extends Parser {
 			
 			line = in.readLine();
 		}
-		
-		
+		in.close();
 	}
 
 

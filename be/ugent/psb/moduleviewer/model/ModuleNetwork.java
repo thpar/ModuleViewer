@@ -1,10 +1,12 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import be.ugent.psb.moduleviewer.model.UnknownItemException.ItemType;
@@ -55,6 +57,11 @@ public class ModuleNetwork{
 	private boolean dataChanged = true;
 
 	private List<Condition> conditionList = new ArrayList<Condition>();
+	
+	/**
+	 * Fallback condition tree: one single leaf, constructed while parsing the expression matrix 
+	 */
+	private ConditionNode conditionTree;
 
 	
 	
@@ -209,6 +216,14 @@ public class ModuleNetwork{
 		return modules.higherKey(modId) == null;
 	}
 	
+	public int getFirstModuleId(){
+		Integer[] moduleKeys = new Integer[0];
+		moduleKeys = this.modules.keySet().toArray(moduleKeys);
+		Arrays.sort(moduleKeys);
+		Integer first = moduleKeys[0]; 
+		return first;
+	}
+	
 	/**
 	 * Calculates basic stats for the data in this network (as seen in the fromXML method from LeMoNe ModuleNetwork)
 	 * Mean, Sigma, Min and Max
@@ -290,6 +305,14 @@ public class ModuleNetwork{
 			calcDataPoints();
 		}
 		return dataMax;
+	}
+
+	public ConditionNode getConditionTree() {
+		return conditionTree;
+	}
+
+	public void setConditionTree(ConditionNode conditionTree) {
+		this.conditionTree = conditionTree;
 	}
 
 	

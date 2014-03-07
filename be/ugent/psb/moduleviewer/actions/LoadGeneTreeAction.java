@@ -1,7 +1,9 @@
 package be.ugent.psb.moduleviewer.actions;
 
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -9,6 +11,7 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
+import be.ugent.psb.moduleviewer.parsers.GeneListParser;
 import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
 
 /**
@@ -35,7 +38,9 @@ public class LoadGeneTreeAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
 		fc.setDialogTitle("Load gene modules");
-		fc.setFileFilter(new FileNameRegexFilter("gene tree files", ".*\\.xml"));
+		fc.addChoosableFileFilter(new FileNameRegexFilter("All gene files", ".*\\.(xml|mvf)"));
+		fc.addChoosableFileFilter(new FileNameRegexFilter("Gene tree files", ".*\\.xml"));
+		fc.addChoosableFileFilter(new FileNameRegexFilter("Gene list files", ".*\\.mvf"));
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
 			final File file = fc.getSelectedFile();
@@ -46,6 +51,7 @@ public class LoadGeneTreeAction extends AbstractAction {
 			
 		}
 		guiModel.setCurrentDir(fc.getCurrentDirectory());
+		
 	}
 	
 	
@@ -58,23 +64,45 @@ public class LoadGeneTreeAction extends AbstractAction {
 		
 		@Override
 		protected Void doInBackground() throws Exception {
+			//decide on file format
+			BufferedReader input = new BufferedReader(new FileReader(file));
+			String firstLine = input.readLine();
+			input.close();
+			
 			guiModel.showProgressBar(true);
 			setProgress(0);
-			
 			ProgressListener progListener = new ProgressListener(){
 				@Override
 				public void setMyProgress(int percent) {
 					setProgress(percent);
 				}
 			};
+			if (firstLine.startsWith("<?xml")){
+				//Enigma style tree structure
+				guiModel.setStateString("Loading XML gene tree structure from "+file);
+				GeneTreeParser parser = new GeneTreeParser(progListener);
+				
+				parser.parse(model, file);
+				
+			} else {
+				//mvf style gene list
+				guiModel.setStateString("Loading flat gene structure from "+file);
+				GeneListParser parser = new GeneListParser();
+				
+				parser.parse(model, file);
+				
+			}
 			
-			GeneTreeParser parser = new GeneTreeParser(progListener);
-			
-			parser.parse(model, file);
 			model.setGeneFile(file.getAbsolutePath());
 			
+			
+			//set the displayed module to the first in the map
+//			int firstModule = model.getModnet().getFirstModuleId();
+//			System.out.println("first module: "+firstModule);
+//			guiModel.setDisplayedModule(firstModule);
+			
+			guiModel.setStateString(null);
 			setProgress(100);
-
 			return null;
 		}
 		

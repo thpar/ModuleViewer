@@ -32,9 +32,15 @@ public class Model extends Observable{
 	
 	
 	
-	
+	/**
+	 * Checks if essential data is loaded to draw a minimal figure.
+	 * This includes the expression matrix and a list (or tree) of genes for each
+	 * module.  
+	 * 
+	 * @return true if enough data is loaded to generate a figure.
+	 */
 	public boolean isEssentialsLoaded(){
-		return dataFileName != null && geneFileName != null && conditionFileName!= null;
+		return dataFileName != null && geneFileName != null;
 	}
 
 	public String getDataFile() {

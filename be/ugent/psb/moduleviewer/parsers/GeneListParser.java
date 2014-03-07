@@ -56,7 +56,7 @@ public class GeneListParser extends Parser {
 		
 		ModuleNetwork modnet = model.getModnet();
 		Module module = new Module(modnet, modId);
-
+		
 		GeneNode geneList = new GeneNode();
 		geneList.setLeaf(true);
 		for (String geneName : genes){

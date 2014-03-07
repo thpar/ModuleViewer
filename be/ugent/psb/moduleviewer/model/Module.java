@@ -52,11 +52,18 @@ public class Module {
 
 
 	/**
-	 * Returns the root node of the condition tree
-	 * @return
+	 * Returns the root node of the condition tree.
+	 * If the condition tree is not set specifically for this module, the parent modnet is asked
+	 * for a single leaf node containing all conditions. 
+	 * 
+	 * @return root node of the condition tree
 	 */
 	public ConditionNode getConditionTree() {
-		return conditionTree;
+		if (this.conditionTree!=null){
+			return conditionTree;			
+		} else {
+			return this.modnet.getConditionTree();
+		}
 	}
 
 	public void setConditionTree(ConditionNode rootNode) {
