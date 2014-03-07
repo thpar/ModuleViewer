@@ -67,7 +67,7 @@ public class MVFParser extends Parser {
 
 
 	/**
-	 * Separated genes from eachother in a list
+	 * Separate genes from each other in a list
 	 */
 	private final String geneDelimiter = "\\|";
 	
@@ -126,9 +126,7 @@ public class MVFParser extends Parser {
 	
 	@Override
 	public void parse(Model model, InputStream stream) throws IOException {
-//		System.out.println("Parsing "+inputFile);
 		this.modnet = model.getModnet();
-//		this.inputFile = inputFile;
 		blockID=0;
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
