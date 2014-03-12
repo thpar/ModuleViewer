@@ -219,6 +219,13 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		setChanged();
 		notifyObservers();
 	}
+	
+	public void clearStateString(){
+		this.stateString = null;
+		setChanged();
+		notifyObservers();
+	}
+	
 	/**
 	 * Adds the value of step to the currently displayed module number.
 	 * @param step

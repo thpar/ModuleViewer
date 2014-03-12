@@ -67,11 +67,13 @@ public class LoadDataAction extends AbstractAction {
 			
 			DataMatrixParser parser = new DataMatrixParser(progListener);
 			
+			guiModel.setStateString("Loading expression data from: "+file);
 			parser.parse(model, file);
 			model.setDataFile(file.getAbsolutePath());
 			
+			guiModel.clearStateString();
 			setProgress(100);
-
+			
 			return null;
 		}
 		

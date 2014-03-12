@@ -97,11 +97,9 @@ public class LoadGeneTreeAction extends AbstractAction {
 			int firstModule = model.getModnet().getFirstModuleId();
 			guiModel.setDisplayedModule(firstModule);
 			
-			System.out.println("set first module "+firstModule);
-			
 			model.setGeneFile(file.getAbsolutePath());
 			
-			guiModel.setStateString(null);
+			guiModel.clearStateString();
 			setProgress(100);
 			return null;
 		}
