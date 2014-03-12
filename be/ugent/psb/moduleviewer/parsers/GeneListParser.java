@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -33,6 +34,10 @@ public class GeneListParser extends Parser {
 	 * Indicate a comment line
 	 */
 	private final String COMMENT_SIGN = "#";
+	
+	public GeneListParser(ProgressListener progListener) {
+		super(progListener);
+	}
 	
 	@Override
 	public void parse(Model model, InputStream stream) throws IOException {

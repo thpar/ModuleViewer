@@ -87,19 +87,19 @@ public class LoadGeneTreeAction extends AbstractAction {
 			} else {
 				//mvf style gene list
 				guiModel.setStateString("Loading flat gene structure from "+file);
-				GeneListParser parser = new GeneListParser();
+				GeneListParser parser = new GeneListParser(progListener);
 				
 				parser.parse(model, file);
 				
 			}
 			
-			model.setGeneFile(file.getAbsolutePath());
-			
-			
 			//set the displayed module to the first in the map
-//			int firstModule = model.getModnet().getFirstModuleId();
-//			System.out.println("first module: "+firstModule);
-//			guiModel.setDisplayedModule(firstModule);
+			int firstModule = model.getModnet().getFirstModuleId();
+			guiModel.setDisplayedModule(firstModule);
+			
+			System.out.println("set first module "+firstModule);
+			
+			model.setGeneFile(file.getAbsolutePath());
 			
 			guiModel.setStateString(null);
 			setProgress(100);
