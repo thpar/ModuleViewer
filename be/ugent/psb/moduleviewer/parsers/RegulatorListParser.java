@@ -13,17 +13,7 @@ import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
-/**
- * Read in a list of genes, formatted more or less in the MVF format.
- * 
- * module# \t gene_list
- * 
- * where gene_list is a pipe separated list of ATG names.
- * 
- * @author Thomas Van Parys
- *
- */
-public class GeneListParser extends Parser {
+public class RegulatorListParser extends Parser{
 	
 	/**
 	 * Separate genes from each other in a list
@@ -35,12 +25,14 @@ public class GeneListParser extends Parser {
 	 */
 	private final String COMMENT_SIGN = "#";
 	
-	public GeneListParser(ProgressListener progListener) {
+	
+	public RegulatorListParser(ProgressListener progListener) {
 		super(progListener);
 	}
-	
+
 	@Override
 	public void parse(Model model, InputStream stream) throws IOException {
+
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 
 		String line = in.readLine();
@@ -52,30 +44,35 @@ public class GeneListParser extends Parser {
 			}
 			line = in.readLine();
 		}
-	}
-
-	private void parseLine(String line, Model model) {
-		String[] cols = line.split("\t");
-		int modId = Integer.valueOf(cols[0]);
-		String[] genes = cols[1].split(GENE_DELIMITER);
-		
-		ModuleNetwork modnet = model.getModnet();
-		Module module = new Module(modnet, modId);
-		
-		GeneNode geneList = new GeneNode();
-		geneList.setLeaf(true);
-		for (String geneName : genes){
-			try {
-				Gene gene = modnet.getGene(geneName);
-				geneList.addGene(gene);
-			} catch (UnknownItemException e) {
-				System.err.println(e);
-			}
-		}
-		
-		module.setGeneTree(geneList);
-		modnet.addModule(module);
 		
 	}
 	
+	private void parseLine(String line, Model model) {
+		String[] cols = line.split("\t");
+		int modId = Integer.valueOf(cols[0]);
+		String[] regulators = cols[1].split(GENE_DELIMITER);
+		
+		ModuleNetwork modnet = model.getModnet();
+		
+		try {
+			Module module = modnet.getModule(modId);
+			
+			GeneNode regList = new GeneNode();
+			regList.setLeaf(true);
+			for (String regName : regulators){
+				try {
+					Gene gene = modnet.getGene(regName);
+					regList.addGene(gene);
+				} catch (UnknownItemException e) {
+					System.err.println(e);
+				}
+			}
+			
+			module.addRegulatorTree(regList);
+		} catch (UnknownItemException e) {
+			e.printStackTrace();
+		}
+		
+	}
+
 }
