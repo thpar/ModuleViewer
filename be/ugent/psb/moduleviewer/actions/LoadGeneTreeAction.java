@@ -99,7 +99,6 @@ public class LoadGeneTreeAction extends AbstractAction {
 			
 			model.setGeneFile(file.getAbsolutePath());
 			
-			guiModel.clearStateString();
 			setProgress(100);
 			return null;
 		}
@@ -108,6 +107,7 @@ public class LoadGeneTreeAction extends AbstractAction {
 		
 		@Override
 		protected void done() {
+			guiModel.clearStateString();
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

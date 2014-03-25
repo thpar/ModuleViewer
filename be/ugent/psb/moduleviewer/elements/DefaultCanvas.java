@@ -1,13 +1,11 @@
 package be.ugent.psb.moduleviewer.elements;
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.ElementStack;
 import be.ugent.psb.modulegraphics.elements.Label;
-import be.ugent.psb.modulegraphics.elements.Rectangle;
 import be.ugent.psb.modulegraphics.elements.RelativeSpacer;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;

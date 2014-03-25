@@ -1,7 +1,9 @@
 package be.ugent.psb.moduleviewer.actions;
 
 import java.awt.event.ActionEvent;
+import java.io.BufferedReader;
 import java.io.File;
+import java.io.FileReader;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -9,6 +11,7 @@ import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
+import be.ugent.psb.moduleviewer.parsers.RegulatorListParser;
 import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
 /**
@@ -35,7 +38,9 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
 		fc.setDialogTitle("Load regulator modules");
-		fc.setFileFilter(new FileNameRegexFilter("regulator tree files", ".*\\.xml"));
+		fc.addChoosableFileFilter(new FileNameRegexFilter("All gene files", ".*\\.(xml|mvf)"));
+		fc.addChoosableFileFilter(new FileNameRegexFilter("Regulator tree files", ".*\\.xml"));
+		fc.addChoosableFileFilter(new FileNameRegexFilter("Regulator list files", ".*\\.mvf"));
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){
 			final File file = fc.getSelectedFile();
@@ -58,6 +63,11 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 		
 		@Override
 		protected Void doInBackground() throws Exception {
+			//decide on file format
+			BufferedReader input = new BufferedReader(new FileReader(file));
+			String firstLine = input.readLine();
+			input.close();
+			
 			guiModel.showProgressBar(true);
 			setProgress(0);
 			
@@ -68,9 +78,22 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 				}
 			};
 			
-			RegulatorTreeParser parser = new RegulatorTreeParser(progListener);
-			
-			parser.parse(model, file);
+			if (firstLine.startsWith("<?xml")){
+				System.out.println("XML");
+				//Enigma style tree structure
+				guiModel.setStateString("Loading XML gene tree structure from "+file);
+				RegulatorTreeParser parser = new RegulatorTreeParser(progListener);
+				
+				parser.parse(model, file);
+				
+			} else {
+				//mvf style gene list
+				guiModel.setStateString("Loading flat regulator structure from "+file);
+				RegulatorListParser parser = new RegulatorListParser(progListener);
+				
+				parser.parse(model, file);
+				
+			}
 			model.setRegulatorFile(file.getAbsolutePath());
 			
 			setProgress(100);
@@ -82,6 +105,7 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 		
 		@Override
 		protected void done() {
+			guiModel.clearStateString();
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

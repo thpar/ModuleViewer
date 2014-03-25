@@ -79,6 +79,7 @@ public class Model extends Observable{
 
 	public void setRegulatorFile(String regulatorFile) {
 		this.regulatorFileName = regulatorFile;
+		System.out.println("Setting regulator file: "+regulatorFile);
 		setChanged();
 		notifyObservers();
 	}

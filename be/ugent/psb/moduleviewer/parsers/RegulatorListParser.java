@@ -40,15 +40,17 @@ public class RegulatorListParser extends Parser{
 			if (line.startsWith(COMMENT_SIGN) || line.isEmpty()){
 				//skip line
 			} else {
-				parseLine(line, model);
+				String[] cols = line.split("\t");
+				if (cols.length==2 && !cols[1].isEmpty()){
+					parseLine(cols, model);					
+				}
 			}
 			line = in.readLine();
 		}
-		
+		in.close();
 	}
 	
-	private void parseLine(String line, Model model) {
-		String[] cols = line.split("\t");
+	private void parseLine(String[] cols, Model model) {
 		int modId = Integer.valueOf(cols[0]);
 		String[] regulators = cols[1].split(GENE_DELIMITER);
 		
