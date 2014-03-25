@@ -79,7 +79,6 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 			};
 			
 			if (firstLine.startsWith("<?xml")){
-				System.out.println("XML");
 				//Enigma style tree structure
 				guiModel.setStateString("Loading XML gene tree structure from "+file);
 				RegulatorTreeParser parser = new RegulatorTreeParser(progListener);

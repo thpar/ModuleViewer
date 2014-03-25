@@ -107,7 +107,7 @@ public class MVFParser extends Parser {
 		TYPE,       //Indicates the type of annotation. Will be used as template for name when no name is given.
 		COLOR,      //suggests a color for the annotation matrix
 		LABELCOLOR, //?? 
-		OBJECT,     //GENES of CONDITIONS (defines what kind of object is being annotated
+		OBJECT,     //GENES, CONDITIONS or REGULATORS (defines what kind of object is being annotated)
 		VALUES,		//either none, color, or number: the values linked to individual genes
 		VALUE_SEPARATOR //by default ":", the separator between gene and value
 	}
@@ -267,8 +267,6 @@ public class MVFParser extends Parser {
 				ab = abf.createNewAnnotationBlock();
 				mod.addAnnotationBlock(ab);
 			}
-			
-
 			
 			Annotation<?> annot = ab.getAnnotation(label);
 			if (annot==null){

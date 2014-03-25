@@ -463,7 +463,6 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 
 
 	public void saveState() throws IOException {
-		System.out.println("Saving state");
 		Properties props = new Properties();
 		
 		String recentString = new String();

@@ -68,7 +68,6 @@ public class SaveSessionAsAction extends AbstractAction {
 				anFileNames = anFileNames.concat(";");
 			}
 		}
-		System.out.println(model.getAnnotationFiles().size());
 		props.setProperty("annotations", anFileNames);
 		
 		//TODO store GUIModel settings on later point

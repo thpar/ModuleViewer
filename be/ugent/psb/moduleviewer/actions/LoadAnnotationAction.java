@@ -60,6 +60,7 @@ public class LoadAnnotationAction extends AbstractAction {
 		protected Void doInBackground() throws Exception {
 			guiModel.showProgressBar(true);
 			setProgress(0);
+			guiModel.setStateString("Loading annotation: "+file);
 			
 //			ProgressListener progListener = new ProgressListener(){
 //				@Override
@@ -83,6 +84,7 @@ public class LoadAnnotationAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.showProgressBar(false);
+			guiModel.clearStateString();
 			guiModel.refresh();
 		}
 	}

@@ -19,7 +19,7 @@ public class AnnotationBlock<T> {
 	 *
 	 */
 	public enum DataType{
-		GENES, CONDITIONS;
+		GENES, CONDITIONS, REGULATORS;
 	}
 	public enum BlockType{
 		bingo,

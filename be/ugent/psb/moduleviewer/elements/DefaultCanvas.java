@@ -220,12 +220,16 @@ public class DefaultCanvas extends Canvas {
 		annotationCanvas.setVerticalSpacing(5);
 		annotationCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
+		
+		//TODO: where to put the regulator annotations?
+		
 		//extra data (bingo, ...) from MVF files
 		//this is the only place where the type of the block is considered.
 		//this information can be used to decide to display a block different from 
 		//a standard annotation block.
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
 		
+		//annotation block labels
 		for(AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			switch(blockType){
@@ -249,6 +253,7 @@ public class DefaultCanvas extends Canvas {
 		}
 		annotationCanvas.newRow();
 		
+		//annotation blocks
 		for (AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			switch(blockType){
