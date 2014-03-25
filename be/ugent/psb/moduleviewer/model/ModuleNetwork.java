@@ -63,7 +63,11 @@ public class ModuleNetwork{
 	 */
 	private ConditionNode conditionTree;
 
-	
+	/**
+	 * The ID to be assigned to the next {@link AnnotationBlock} in this network.
+	 * Will be incremented every time a new {@link AnnotationBlockFactory} is created.
+	 */
+	private int nextAnnotationBlockID = 0;
 	
 	
 	/**
@@ -315,6 +319,12 @@ public class ModuleNetwork{
 		this.conditionTree = conditionTree;
 	}
 
-	
+	public int getNextAnnotationBlockID() {
+		return nextAnnotationBlockID;
+	}
+
+	public void incrementNextAnnotationBlockID(){
+		this.nextAnnotationBlockID++;
+	}
 	
 }

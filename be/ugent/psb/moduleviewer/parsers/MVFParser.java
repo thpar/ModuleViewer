@@ -75,8 +75,6 @@ public class MVFParser extends Parser {
 	 * If a gene is linked to a value, this character separated geneId and value
 	 */
 	private static final String DEFAULT_GENE_VALUE_SEPARATOR = ":";
-
-	private static final String BLOCK = "block";
 	
 	
 	private final String keyValueDelimiter = "=";
@@ -92,8 +90,6 @@ public class MVFParser extends Parser {
 
 
 	private ParsingType parsingMode;
-
-	private int blockID;
 
 	private String parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR; 
 	
@@ -127,7 +123,6 @@ public class MVFParser extends Parser {
 	@Override
 	public void parse(Model model, InputStream stream) throws IOException {
 		this.modnet = model.getModnet();
-		blockID=0;
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 		
@@ -196,7 +191,8 @@ public class MVFParser extends Parser {
 		
 		
 		//create factory for annotation blocks 
-		abf = new AnnotationBlockFactory(blockID++, objectType, modnet);
+		abf = new AnnotationBlockFactory(modnet.getNextAnnotationBlockID(), objectType, modnet);
+		modnet.incrementNextAnnotationBlockID();
 		
 		//add other options to the block factory
 		for (Entry<ParamKey, String> pe : params.entrySet()){
