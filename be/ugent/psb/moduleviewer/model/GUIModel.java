@@ -144,6 +144,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		if (prefFile.exists()){
 			Properties props = new Properties();
 			props.load(new BufferedReader(new FileReader(prefFile)));
+			
 			String recentString = props.getProperty("recent", "");
 			String[] recents = recentString.split(":");
 			for (String rec : recents){
@@ -152,6 +153,10 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 					this.addRecentSession(recFile);					
 				}
 			}
+			
+			String currentDir = props.getProperty("currentDir",homeDir);
+			this.setCurrentDir(new File(currentDir));
+			
 		}
 	}
 
@@ -460,6 +465,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	public void saveState() throws IOException {
 		System.out.println("Saving state");
 		Properties props = new Properties();
+		
 		String recentString = new String();
 		for (int i=recentSessions.size()-1; i>=0; i--){
 			recentString+=recentSessions.get(i);
@@ -468,6 +474,10 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 			}
 		}
 		props.setProperty("recent", recentString);
+		
+		String currentDir = this.getCurrentDir().getAbsolutePath();
+		props.setProperty("currentDir", currentDir);
+		
 		props.store(new BufferedWriter(new FileWriter(prefFile)), "ModuleViewer settings");
 	}
 
