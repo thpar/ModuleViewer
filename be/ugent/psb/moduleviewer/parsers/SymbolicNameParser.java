@@ -31,7 +31,8 @@ public class SymbolicNameParser extends Parser {
 			try{
 				parseLine(line);
 			} catch(UnknownItemException e){
-				System.err.println(e);
+				//don't output unknown genes here
+				//there will usualy be mappings for more genes than only the loaded ones
 			}
 			line = in.readLine();
 		}
