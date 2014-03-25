@@ -30,6 +30,7 @@ import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeGeneRegAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeModNetAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
+import be.ugent.psb.moduleviewer.actions.SortGenesAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -166,7 +167,10 @@ public class MainMenu extends JMenuBar implements Observer{
 		sigmaMeanMenu.add(regSeparateItem);
 		sigmaMeanMenu.add(regJoinedItem);
 		
+		JMenu editMenu = new JMenu("Edit");
+		JMenuItem sortGenesItem = new JMenuItem(new SortGenesAction(model, guiModel));
 		
+		editMenu.add(sortGenesItem);
 		
 		JMenu settingsMenu = new JMenu("Settings");
 		JMenuItem outputDirItem = new JMenuItem(new ChangeOutputDirAction(guiModel));
@@ -212,6 +216,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		
 		
 		add(fileMenu);
+		add(editMenu);
 		add(viewMenu);
 		add(settingsMenu);
 		add(helpMenu);

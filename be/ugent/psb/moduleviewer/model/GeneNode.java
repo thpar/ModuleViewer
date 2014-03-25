@@ -1,6 +1,8 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
@@ -192,6 +194,34 @@ public class GeneNode implements ITreeNode<Gene>{
 			}
 		mean /= (double) nrDataPoints;
 		sigma = Math.sqrt(sumSquare - nrDataPoints * Math.pow(mean, 2)) / Math.sqrt((double) nrDataPoints);
+	}
+	
+	/**
+	 * Comparator to order genes alphabetically. 
+	 * For ordering, the alias is used. If no alias is available, the gene id is used.
+	 */
+	private class GeneComparator implements Comparator<Gene>{
+		@Override
+		public int compare(Gene o1, Gene o2) {
+			return o1.getAliasOrName().compareTo(o2.getAliasOrName());
+		}
+		
+	}
+	
+	/**
+	 * If this node is a leaf, rearrange the genes in the list to order them alphabetically. 
+	 * For ordering, the alias is used. If no alias is available, the gene id is used.
+	 */
+	public void sortLeavesAlphabetically(){
+		sortLeavesAlphabetically(this);
+	}
+	private void sortLeavesAlphabetically(GeneNode node){
+		if(node.isLeaf){
+			Collections.sort(node.genes, new GeneComparator());
+		} else {
+			sortLeavesAlphabetically(node.left);
+			sortLeavesAlphabetically(node.right);
+		}
 	}
 	
 }
