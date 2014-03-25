@@ -24,6 +24,7 @@ import be.ugent.psb.moduleviewer.actions.LoadDataAction;
 import be.ugent.psb.moduleviewer.actions.LoadGeneTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadRegulatorTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadSessionAction;
+import be.ugent.psb.moduleviewer.actions.LoadSymbolicNamesAction;
 import be.ugent.psb.moduleviewer.actions.NewSessionAction;
 import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeGeneRegAction;
@@ -67,6 +68,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		JMenu fileMenu = new JMenu("File");
 		JMenuItem loadDataItem = new JMenuItem(new LoadDataAction(model, guiModel));
 		JMenuItem loadGeneTreeItem = new JMenuItem(new LoadGeneTreeAction(model, guiModel));
+		JMenuItem loadSymbolicNameItem = new JMenuItem(new LoadSymbolicNamesAction(model, guiModel));
 		JMenuItem loadConditionTreeItem = new JMenuItem(new LoadConditionTreeAction(model, guiModel));
 		JMenuItem loadRegTreeItem = new JMenuItem(new LoadRegulatorTreeAction(model, guiModel));
 		JMenuItem loadAnnotItem = new JMenuItem(new LoadAnnotationAction(model, guiModel));
@@ -99,6 +101,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		});
 		fileMenu.add(loadDataItem);
 		fileMenu.add(loadGeneTreeItem);
+		fileMenu.add(loadSymbolicNameItem);
 		fileMenu.add(loadConditionTreeItem);
 		fileMenu.add(loadRegTreeItem);
 		fileMenu.add(loadAnnotItem);
