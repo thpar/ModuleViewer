@@ -52,14 +52,14 @@ public class SortConditionsAction extends AbstractAction {
 			
 			setProgress(0);
 			Collection<Module> modules = model.getModnet().getModules();
-			int prog = 0;
-			int step = 100/modules.size();
+			double prog = 0;
+			double step = 100d/(double)modules.size();
 			
 			for (Module module : modules){
 				module.sortConditionsByMeanExpression();
 				
 				prog+=step;
-				setProgress(prog);
+				setProgress((int)Math.round(prog));
 			}
 			
 			setProgress(100);
