@@ -1,7 +1,10 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
+import java.util.Map;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
@@ -31,7 +34,7 @@ public class ConditionNode implements ITreeNode<Condition>{
 	 * This attribute is not null only for leave nodes. Internal nodes just
 	 * take the concatenation of the conditions of their children.
 	 */
-	List<Condition> conditions = new ArrayList<Condition>();
+	private List<Condition> conditions = new ArrayList<Condition>();
 	
 	
 	
@@ -136,5 +139,65 @@ public class ConditionNode implements ITreeNode<Condition>{
 	public void addCondition(Condition condition) {
 		this.conditions.add(condition);
 	}
+	
+	public class ConditionComparator implements Comparator<Condition>{
+
+		private Map<Condition, Double> condMeanMap;
+
+		public ConditionComparator(Map<Condition, Double> condMeanMap){
+			this.condMeanMap = condMeanMap;
+		}
+		
+		@Override
+		public int compare(Condition o1, Condition o2) {
+			double mean1 = condMeanMap.get(o1);
+			double mean2 = condMeanMap.get(o2);
+			if (mean1 == mean2){
+				return 0;
+			} else if (mean1<mean2){
+				return -1;
+			} else {
+				return 1;
+			}
+		}
+		
+	}
+	
+	/**
+	 * Traverse the tree recursively and sort the conditions in the leaves from low to high 
+	 * according the mean expression in the module.
+	 */
+	public void sortLeavesByMeanExpression(Map<Condition, Double> condMeanMap){
+		ConditionComparator comparator = new ConditionComparator(condMeanMap);
+		this.sortLeavesByMeanExpression(this, comparator);
+	}
+	private void sortLeavesByMeanExpression(ConditionNode node, ConditionComparator comparator){
+		if (node.isLeaf){
+			Collections.sort(node.conditions, comparator);
+		} else {
+			sortLeavesByMeanExpression(node.left, comparator);
+			sortLeavesByMeanExpression(node.right, comparator);
+		}
+	}
+
+	@Override
+	public ConditionNode clone(){
+		return clone(this);
+	}
+	private ConditionNode clone(ConditionNode oldNode){
+		ConditionNode newNode = new ConditionNode();
+		if (oldNode.isLeaf){
+			for (Condition condition : oldNode.conditions){
+				newNode.addCondition(condition);
+				newNode.setLeaf(true);
+			}
+		} else {
+			newNode.left = clone(oldNode.left);
+			newNode.right = clone(oldNode.right);
+		}
+		return newNode;
+	}
+	
+	
 	
 }

@@ -33,7 +33,7 @@ public class GeneNode implements ITreeNode<Gene>{
 	 * This attribute is not null only for leave nodes. Internal nodes just
 	 * take the concatenation of the conditions of their children.
 	 */
-	List<Gene> genes = new ArrayList<Gene>();
+	private List<Gene> genes = new ArrayList<Gene>();
 	
 	private double sigma;
 	private double mean;
@@ -209,7 +209,7 @@ public class GeneNode implements ITreeNode<Gene>{
 	}
 	
 	/**
-	 * If this node is a leaf, rearrange the genes in the list to order them alphabetically. 
+	 * Traverse the tree recursively and sort the genes in the leaves alphabetically.
 	 * For ordering, the alias is used. If no alias is available, the gene id is used.
 	 */
 	public void sortLeavesAlphabetically(){

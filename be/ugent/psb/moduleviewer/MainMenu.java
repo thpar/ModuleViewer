@@ -30,6 +30,7 @@ import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeGeneRegAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeModNetAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
+import be.ugent.psb.moduleviewer.actions.SortConditionsAction;
 import be.ugent.psb.moduleviewer.actions.SortGenesAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
@@ -129,6 +130,13 @@ public class MainMenu extends JMenuBar implements Observer{
 		viewMenu.add(treeStructureBoxItem);
 		viewMenu.addSeparator();
 		
+		JMenuItem sortGenesItem = new JMenuItem(new SortGenesAction(model, guiModel));
+		JMenuItem sortConditionsItem = new JMenuItem(new SortConditionsAction(model, guiModel));
+		viewMenu.add(sortGenesItem);
+		viewMenu.add(sortConditionsItem);
+		
+		viewMenu.addSeparator();
+		
 		JMenu sigmaMeanMenu = new JMenu("Sigma/Mean scope");
 		viewMenu.add(sigmaMeanMenu);
 		ButtonGroup moduleMeanGroup = new ButtonGroup();
@@ -167,10 +175,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		sigmaMeanMenu.add(regSeparateItem);
 		sigmaMeanMenu.add(regJoinedItem);
 		
-		JMenu editMenu = new JMenu("Edit");
-		JMenuItem sortGenesItem = new JMenuItem(new SortGenesAction(model, guiModel));
 		
-		editMenu.add(sortGenesItem);
 		
 		JMenu settingsMenu = new JMenu("Settings");
 		JMenuItem outputDirItem = new JMenuItem(new ChangeOutputDirAction(guiModel));
@@ -216,7 +221,6 @@ public class MainMenu extends JMenuBar implements Observer{
 		
 		
 		add(fileMenu);
-		add(editMenu);
 		add(viewMenu);
 		add(settingsMenu);
 		add(helpMenu);

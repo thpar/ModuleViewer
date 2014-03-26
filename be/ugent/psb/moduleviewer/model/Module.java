@@ -1,7 +1,9 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 
@@ -195,6 +197,45 @@ public class Module {
 		return output;
 	}
 	
+	/**
+	 * Calculates the mean expression value for this condition over all genes in this module.
+	 * @return mean expression value for this condition over all genes in this module.
+	 */
+	public Map<Condition, Double> getMeanExpressionLevelByCondition(){
+		Map<Condition, Double> condMap = new HashMap<Condition, Double>();
+		List<Condition> allConditions = new ArrayList<Condition>();
+		allConditions.addAll(this.conditionTree.getConditions());
+		allConditions.addAll(nonTreeConditions);
+		
+		List<Gene> allGenes = this.geneTree.getGenes();
+		for (Condition cond : allConditions){
+			double total = 0;
+			for (Gene gene : allGenes){
+				total+=gene.getValue(cond);
+			}
+			double mean = total/allGenes.size();
+			condMap.put(cond, mean);
+		}
+		return condMap;
+	}
 	
+	/**
+	 * Sorts conditions by there mean expression level in this module.
+	 * 
+	 * If the condition tree is shared through the {@link ModuleNetwork}, a clone 
+	 * will be created first and stored in this {@link Module} to do the sorting on.
+	 */
+	public void sortConditionsByMeanExpression() {
+		//clone a private condition tree for this module
+		if (this.conditionTree == null){
+			ConditionNode sharedTree = this.modnet.getConditionTree();
+			this.conditionTree = sharedTree.clone();
+		}
+		//calculate mean expression for each condition
+		Map<Condition, Double> condMeanMap = this.getMeanExpressionLevelByCondition();
+		
+		//do the sorting
+		this.conditionTree.sortLeavesByMeanExpression(condMeanMap);
+	}
 	
 }

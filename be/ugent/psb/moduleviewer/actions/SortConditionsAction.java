@@ -1,30 +1,33 @@
 package be.ugent.psb.moduleviewer.actions;
 
 import java.awt.event.ActionEvent;
+import java.io.File;
 import java.util.Collection;
 
 import javax.swing.AbstractAction;
+import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
+import be.ugent.psb.moduleviewer.parsers.SymbolicNameParser;
 
 /**
- * Runs over all modules and sorts genes alphabetically within their tree structure.
+ * Runs over all modules and sorts conditions within their tree structure, according to mean expression in the module (low to high)
  * 
  * @author Thomas Van Parys
  *
  */
-public class SortGenesAction extends AbstractAction {
+public class SortConditionsAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
 	private GUIModel guiModel;
 	private Model model;
 
 	
-	public SortGenesAction(Model model, GUIModel guiModel){
-		super("Sort genes alphabetically");
+	public SortConditionsAction(Model model, GUIModel guiModel){
+		super("Sort conditions");
 		this.guiModel = guiModel;
 		this.model = model;
 	}
@@ -45,7 +48,7 @@ public class SortGenesAction extends AbstractAction {
 		@Override
 		protected Void doInBackground() throws Exception {			
 			guiModel.showProgressBar(true);
-			guiModel.setStateString("Sorting genes");
+			guiModel.setStateString("Sorting conditions");
 			
 			setProgress(0);
 			Collection<Module> modules = model.getModnet().getModules();
@@ -53,7 +56,7 @@ public class SortGenesAction extends AbstractAction {
 			int step = 100/modules.size();
 			
 			for (Module module : modules){
-				module.getGeneTree().sortLeavesAlphabetically();
+				module.sortConditionsByMeanExpression();
 				
 				prog+=step;
 				setProgress(prog);
