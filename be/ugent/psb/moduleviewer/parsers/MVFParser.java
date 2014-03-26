@@ -275,7 +275,7 @@ public class MVFParser extends Parser {
 					case COLOR:
 						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
 						String itemId = itemKeyValue[0];
-						Color geneColor = new Color(Integer.valueOf(itemKeyValue[1]));
+						Color geneColor = ColorFactory.decodeColor(itemKeyValue[1]);
 						switch(ab.getDataType()){
 						case GENES:
 							Gene geneItem = modnet.getGene(itemId);

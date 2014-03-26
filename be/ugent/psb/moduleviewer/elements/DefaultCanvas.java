@@ -223,22 +223,49 @@ public class DefaultCanvas extends Canvas {
 		
 		//TODO: where to put the regulator annotations?
 		
+		//only use for exactly one regulator tree
+		if (mod.getRegulatorTrees().size()==1){
+			System.out.print("Trying to draw regulator annotations");
+			List<AnnotationBlock<Gene>> rabList = mod.getAnnotationBlocks(DataType.REGULATORS);
+			for (AnnotationBlock<Gene> rab : rabList){
+				BlockType blockType = rab.getBlockType();
+				switch(blockType){
+				case regulatorcolorbox:
+					Annotation<Gene> ansReg = rab.getAnnotation();
+					regNames.colorBackgrounds(ansReg.getItems(), rab.getColor());
+					break;
+				case regulatorregulatorinteraction:
+					regArrows.setAnnotationBlock(rab);
+					break;
+				case regulatorgeneinteraction:				
+					regGeneArrows.setAnnotationBlock(rab);
+					break;
+				case unknown:
+				default:
+					//add default annotation blocks next to the regulators
+					System.out.println("Default regulator annotation");
+					GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getRegulatorTrees().get(0), rab);
+					annotationCanvas.add(ganMatrix);
+					annotationCanvas.getLastAddedElement().setAlignment(Alignment.BOTTOM_CENTER);
+				}
+			}
+		}
+		
+		
+		
 		//extra data (bingo, ...) from MVF files
 		//this is the only place where the type of the block is considered.
 		//this information can be used to decide to display a block different from 
 		//a standard annotation block.
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
-		
 		//annotation block labels
 		for(AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			switch(blockType){
 			//special cases, process later
 			case genecolorbox:
-			case regulatorcolorbox:
 			case genegeneinteraction:
 			case regulatorgeneinteraction:
-			case regulatorregulatorinteraction:
 				break;
 			//annotation blocks
 			case bingo:
@@ -261,18 +288,11 @@ public class DefaultCanvas extends Canvas {
 				Annotation<Gene> ansGene = gab.getAnnotation();
 				geneNames.colorBackgrounds(ansGene.getItems(), gab.getColor());
 				break;
-			case regulatorcolorbox:
-				Annotation<Gene> ansReg = gab.getAnnotation();
-				regNames.colorBackgrounds(ansReg.getItems(), gab.getColor());
-				break;
 			case genegeneinteraction:
 				geneArrows.setAnnotationBlock(gab);
 				break;
 			case regulatorgeneinteraction:				
 				regGeneArrows.setAnnotationBlock(gab);
-				break;
-			case regulatorregulatorinteraction:
-				regArrows.setAnnotationBlock(gab);
 				break;
 			case bingo:
 			case core:

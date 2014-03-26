@@ -30,6 +30,7 @@ public class AnnotationBlockFactory {
 	public AnnotationBlock<?> createNewAnnotationBlock(){
 		switch(type){
 		case GENES:
+		case REGULATORS:
 			AnnotationBlock<Gene> abg = new AnnotationBlock<Gene>(blockID, modnet, type, valueType);			
 			abg.setColor(color);
 			abg.setBlockType(blockType);
