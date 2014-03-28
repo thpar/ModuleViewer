@@ -18,6 +18,8 @@ public class AnnotationBlockFactory {
 	private ModuleNetwork modnet;
 	
 	private ValueType valueType = ValueType.NONE;
+
+	private boolean global;
 	
 	
 	public AnnotationBlockFactory(int blockID, DataType type, ModuleNetwork modnet){
@@ -113,6 +115,15 @@ public class AnnotationBlockFactory {
 
 	public int getBlockID() {
 		return blockID;
+	}
+
+
+	public void setGlobal(boolean b) {
+		this.global = b;
+	}
+	
+	public boolean isGlobal(){
+		return this.global;
 	}
 	
 	

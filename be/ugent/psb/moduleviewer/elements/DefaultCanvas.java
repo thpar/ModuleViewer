@@ -320,6 +320,9 @@ public class DefaultCanvas extends Canvas {
 		
 		//condition annotations (with labels next to it)
 		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
+		List<AnnotationBlock<Condition>> globalCabList = modnet.getGlobalAnnotationBlocks(DataType.CONDITIONS);
+		cabList.addAll(globalCabList);
+		
 		for (AnnotationBlock<Condition> cab : cabList){
 			condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
 			ConditionAnnotationMatrix canMatrix = 

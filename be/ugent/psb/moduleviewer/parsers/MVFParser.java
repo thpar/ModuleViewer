@@ -50,7 +50,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * 
  * COLOR is an optional setting to tell the viewer which color to use when displaying this data.
  * 
- * SEP optional separator value. When set, each gene entry from a list will be considered to exist of GeneID<SEP>value
+ * VALUE_SEPARATOR optional separator value. When set, each gene entry from a list will be considered to exist of GeneID<SEP>value
  * 
  * LABELCOLOR
  * 
@@ -105,7 +105,8 @@ public class MVFParser extends Parser {
 		LABELCOLOR, //?? 
 		OBJECT,     //GENES, CONDITIONS or REGULATORS (defines what kind of object is being annotated)
 		VALUES,		//either none, color, or number: the values linked to individual genes
-		VALUE_SEPARATOR //by default ":", the separator between gene and value
+		VALUE_SEPARATOR, //by default ":", the separator between gene and value
+		GLOBAL    //indicates that this block does not have the module column.
 	}
 	
 	/**
@@ -219,6 +220,9 @@ public class MVFParser extends Parser {
 				ValueType valueType = ValueType.getValueOf(value);
 				abf.setValueType(valueType);
 				break;
+			case GLOBAL:
+				abf.setGlobal(true);
+				break;
 			case OBJECT:
 			default:
 				break;
@@ -241,12 +245,23 @@ public class MVFParser extends Parser {
 		
 		String[] columns = line.split("\t");
 		
-		int modId = Integer.parseInt(columns[0]);
-		
-		String[] items = columns[1].split(geneDelimiter);
+		int modId = -1;
+		String[] items;
+		int labelCol;
+		int itemCol;
 		String label;
-		if (columns.length>=3){
-			label = columns[2];			
+		
+		if (abf.isGlobal()){
+			itemCol = 0;
+			labelCol = 1;
+		} else {
+			modId = Integer.parseInt(columns[0]);
+			itemCol = 1;
+			labelCol = 2;
+		}
+		items = columns[itemCol].split(geneDelimiter);
+		if (columns.length>=labelCol+1){
+			label = columns[labelCol];			
 		} else {
 			if (abf.getBlockType()!=BlockType.unknown){
 				label = abf.getBlockType().toString();
@@ -254,14 +269,23 @@ public class MVFParser extends Parser {
 				label = abf.getUnknownBlockType();
 			}
 		}
-
+		
 		
 		try {
-			Module mod = modnet.getModule(modId);
-			AnnotationBlock<?> ab = mod.getAnnotationBlock(abf.getBlockID());
-			if (ab==null){
-				ab = abf.createNewAnnotationBlock();
-				mod.addAnnotationBlock(ab);
+			AnnotationBlock<?>  ab;
+			if (abf.isGlobal()){
+				ab = modnet.getGlobalAnnotationBlock(abf.getBlockID());
+				if (ab==null){
+					ab = abf.createNewAnnotationBlock();
+					modnet.addGlobalAnnotationBlock(ab);
+				}
+			} else {
+				Module mod = modnet.getModule(modId);				
+				ab = mod.getAnnotationBlock(abf.getBlockID());
+				if (ab==null){
+					ab = abf.createNewAnnotationBlock();
+					mod.addAnnotationBlock(ab);
+				}
 			}
 			
 			Annotation<?> annot = ab.getAnnotation(label);
@@ -331,7 +355,7 @@ public class MVFParser extends Parser {
 
 
 	private void parseComment(String line) {
-//		System.out.println(line);
+		//nothing interesting, often column headers
 	}
 
 

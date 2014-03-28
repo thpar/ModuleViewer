@@ -6,9 +6,9 @@ import java.util.Collection;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 import java.util.TreeMap;
 
+import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.UnknownItemException.ItemType;
 
 public class ModuleNetwork{
@@ -68,6 +68,8 @@ public class ModuleNetwork{
 	 * Will be incremented every time a new {@link AnnotationBlockFactory} is created.
 	 */
 	private int nextAnnotationBlockID = 0;
+
+	private List<AnnotationBlock<?>> globalAnnotationBlocks = new ArrayList<AnnotationBlock<?>>();
 	
 	
 	/**
@@ -326,5 +328,34 @@ public class ModuleNetwork{
 	public void incrementNextAnnotationBlockID(){
 		this.nextAnnotationBlockID++;
 	}
+
+	public AnnotationBlock<?> getGlobalAnnotationBlock(int blockID) {
+		for (AnnotationBlock<?> block : this.globalAnnotationBlocks){
+			if(block.getBlockID() == blockID){
+				return block;
+			}
+		}
+		return null;
+	}
+
+	public void addGlobalAnnotationBlock(AnnotationBlock<?> ab) {
+		this.globalAnnotationBlocks.add(ab);
+	}
+	
+	public <Q> List<AnnotationBlock<Q>> getGlobalAnnotationBlocks(DataType type){
+		List<AnnotationBlock<Q>> blockList = new ArrayList<AnnotationBlock<Q>>();
+		for (AnnotationBlock<?> block : globalAnnotationBlocks){
+			if (block.getDataType() == type){
+				blockList.add((AnnotationBlock<Q>)block);
+			}
+		}
+		return blockList;
+	}
+
+	public List<AnnotationBlock<?>> getGlobalAnnotationBlocks() {
+		return globalAnnotationBlocks;
+	}
+	
+	
 	
 }
