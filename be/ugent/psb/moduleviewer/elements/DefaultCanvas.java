@@ -336,8 +336,10 @@ public class DefaultCanvas extends Canvas {
 		this.newRow();
 		//condition labels
 		condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
-		ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
-		condAnnotationCanvas.add(condLabels);
+		if (guiModel.isDrawConditionLabels()){			
+			ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
+			condAnnotationCanvas.add(condLabels);
+		}
 		
 		this.add(condAnnotationCanvas);
 	}

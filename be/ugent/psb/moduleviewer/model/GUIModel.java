@@ -38,6 +38,8 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawAracyc = false;
 	private boolean drawConditionAnnotations = false;
 	private boolean drawConditionAnnotationLegend = false;
+	private boolean drawConditionLabels = true;
+	
 	private boolean drawFileName = true;
 	
 	
@@ -480,7 +482,22 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		props.store(new BufferedWriter(new FileWriter(prefFile)), "ModuleViewer settings");
 	}
 
-	
-	
+
+	public boolean isDrawConditionLabels() {
+		return drawConditionLabels;
+	}
+
+	/**
+	 * Toggle the condition labels at the bottom of the figure.
+	 * @param drawConditionLabels
+	 */
+	public void setDrawConditionsLabels(boolean drawConditionLabels) {
+		if (drawConditionLabels != this.drawConditionLabels){
+			this.drawConditionLabels = drawConditionLabels;
+			this.setChanged();
+			this.notifyObservers();
+		}		
+	}
+
 	
 }

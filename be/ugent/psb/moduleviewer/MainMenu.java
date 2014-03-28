@@ -33,6 +33,7 @@ import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
 import be.ugent.psb.moduleviewer.actions.SortConditionsAction;
 import be.ugent.psb.moduleviewer.actions.SortGenesAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
+import be.ugent.psb.moduleviewer.actions.ToggleShowConditionLabelsAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeGeneReg;
@@ -58,6 +59,7 @@ public class MainMenu extends JMenuBar implements Observer{
 	private JRadioButtonMenuItem regSeparateItem;
 	private JRadioButtonMenuItem regJoinedItem;
 	private JMenu recentSessionMenu;
+	private JCheckBoxMenuItem conditionLabelBoxItem;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
 
@@ -128,6 +130,11 @@ public class MainMenu extends JMenuBar implements Observer{
 		treeStructureBoxItem = new JCheckBoxMenuItem(new ToggleShowTreeAction(guiModel));
 		treeStructureBoxItem.setSelected(guiModel.isDrawTreeStructure());
 		viewMenu.add(treeStructureBoxItem);
+		
+		conditionLabelBoxItem = new JCheckBoxMenuItem(new ToggleShowConditionLabelsAction(guiModel));
+		conditionLabelBoxItem.setSelected(guiModel.isDrawConditionLabels());
+		viewMenu.add(conditionLabelBoxItem);
+		
 		viewMenu.addSeparator();
 		
 		JMenuItem sortGenesItem = new JMenuItem(new SortGenesAction(model, guiModel));
@@ -230,6 +237,7 @@ public class MainMenu extends JMenuBar implements Observer{
 	public void update(Observable o, Object arg) {
 		this.saveSessionAsItem.setEnabled(model.isEssentialsLoaded());
 		this.treeStructureBoxItem.setSelected(guiModel.isDrawTreeStructure());
+		this.conditionLabelBoxItem.setSelected(guiModel.isDrawConditionLabels());
 		this.debugBoxItem.setSelected(guiModel.isDebugMode());
 		
 		//switch from genes and regs joined to separate if guiModel says so
