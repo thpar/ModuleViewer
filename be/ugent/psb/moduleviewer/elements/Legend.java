@@ -2,6 +2,7 @@ package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
@@ -25,6 +26,7 @@ public class Legend extends Canvas {
 		for (String label : labels){
 			Canvas labelCanvas = new Canvas();
 			Label labelElement = new Label(label);
+			labelElement.setFont(new Font("SansSerif", Font.BOLD, 14));
 			labelElement.setMargin(10, 0);
 			labelCanvas.add(labelElement);
 			labelCanvas.newRow();
@@ -41,6 +43,7 @@ public class Legend extends Canvas {
 			}
 			LabelList labelList = new LabelList(keyList);
 			labelList.setDirection(Direction.TOP_TO_BOTTOM);
+			labelList.setMargin(0, 5, 0, 0);
 			matrixCanvas.add(labelList);
 			
 			ColorMatrix<Color> colorMatrix = new ColorMatrix<>(colorList, new PassThroughColorizer());
