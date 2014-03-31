@@ -1,11 +1,14 @@
 package be.ugent.psb.moduleviewer.model;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashMap;
+import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 import java.util.TreeMap;
 
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
@@ -70,6 +73,20 @@ public class ModuleNetwork{
 	private int nextAnnotationBlockID = 0;
 
 	private List<AnnotationBlock<?>> globalAnnotationBlocks = new ArrayList<AnnotationBlock<?>>();
+
+	public class LegendKeyColorPair{
+		public LegendKeyColorPair(String key, Color value) {
+			this.key = key;
+			this.color = value;
+		}
+		public String key;
+		public Color color;
+	}
+	
+	/**
+	 * BlockID -> label -> list of keys with colors
+	 */
+	private Map<Integer, Map<String, List<LegendKeyColorPair>>> legendEntries = new HashMap<Integer, Map<String, List<LegendKeyColorPair>>>();
 	
 	
 	/**
@@ -355,7 +372,50 @@ public class ModuleNetwork{
 	public List<AnnotationBlock<?>> getGlobalAnnotationBlocks() {
 		return globalAnnotationBlocks;
 	}
+
+	/**
+	 * Add an entry to a global legend block.
+	 * 
+	 * @param blockID the blockID for which this legend is constructed
+	 * @param label the name of a sub list of this legend
+	 * @param key the name of the category
+	 * @param value the color the category is drawn in
+	 */
+	public void addLegend(int blockID, String label, String key, Color value) {
+		Map<String, List<LegendKeyColorPair>> legend = this.legendEntries.get(blockID);
+		if (legend == null){
+			legend = new HashMap<String, List<LegendKeyColorPair>>();
+			this.legendEntries.put(blockID, legend);
+		}
+		List<LegendKeyColorPair> keyColorList = legend.get(label);
+		if (keyColorList==null){
+			keyColorList = new ArrayList<LegendKeyColorPair>();
+			legend.put(label, keyColorList);
+		}
+		keyColorList.add(new LegendKeyColorPair(key, value));
+	}
 	
+	/**
+	 * Gets the legend labels for a certain blockID
+	 * 
+	 * @param blockID
+	 * @return the list of legend labels for this block
+	 */
+	public Set<String> getLegendLabels(int blockID){
+		Map<String, List<LegendKeyColorPair>> labelMap = this.legendEntries.get(blockID);
+		if (labelMap == null){
+			return new HashSet<String>();
+		} else {
+			return labelMap.keySet();
+		}
+	}
 	
+	public List<LegendKeyColorPair> getLegendEntries(int blockID, String label){
+		return this.legendEntries.get(blockID).get(label);
+	}
+	
+	public Set<Integer> getLegendBlockIds(){
+		return this.legendEntries.keySet();
+	}
 	
 }

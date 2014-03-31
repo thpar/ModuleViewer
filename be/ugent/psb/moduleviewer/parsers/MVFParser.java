@@ -5,7 +5,9 @@ import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
 
@@ -44,6 +46,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * ::TYPE=type
  * ::COLOR=red
  * ::LABELCOLOR=
+ * ::LEGEND=
  * 
  * OBJECT defines the type of data we're reading. Can be used as a label for the 
  * matrix that is drawn.
@@ -91,7 +94,9 @@ public class MVFParser extends Parser {
 
 	private ParsingType parsingMode;
 
-	private String parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR; 
+	private String parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR;
+
+	private List<String> legendLines = new ArrayList<String>();
 	
 	/**
 	 * Keys that can be used in the MVF format.
@@ -106,7 +111,8 @@ public class MVFParser extends Parser {
 		OBJECT,     //GENES, CONDITIONS or REGULATORS (defines what kind of object is being annotated)
 		VALUES,		//either none, color, or number: the values linked to individual genes
 		VALUE_SEPARATOR, //by default ":", the separator between gene and value
-		GLOBAL    //indicates that this block does not have the module column.
+		GLOBAL,    //indicates that this block does not have the module column.
+		LEGEND
 	}
 	
 	/**
@@ -155,6 +161,7 @@ public class MVFParser extends Parser {
 		if (parsingMode!=ParsingType.KEYVALUE){
 			parsingMode = ParsingType.KEYVALUE;
 			params = new HashMap<ParamKey, String>();
+			legendLines = new ArrayList<String>();
 			unknownParameters = new HashMap<String, String>();
 		}
 		
@@ -169,7 +176,11 @@ public class MVFParser extends Parser {
 		
 		try {
 			ParamKey pk = ParamKey.valueOf(keyString);
-			params.put(pk, value);
+			if (pk==ParamKey.LEGEND){
+				legendLines.add(value);
+			} else {
+				params.put(pk, value);				
+			}
 		} catch (IllegalArgumentException e) {
 			System.err.println("Ignored unknown parameter: "+ keyString);
 			unknownParameters.put(keyString, value);
@@ -192,8 +203,11 @@ public class MVFParser extends Parser {
 		
 		
 		//create factory for annotation blocks 
-		abf = new AnnotationBlockFactory(modnet.getNextAnnotationBlockID(), objectType, modnet);
+		int blockID = modnet.getNextAnnotationBlockID();
+		abf = new AnnotationBlockFactory(blockID, objectType, modnet);
 		modnet.incrementNextAnnotationBlockID();
+		
+		
 		
 		//add other options to the block factory
 		for (Entry<ParamKey, String> pe : params.entrySet()){
@@ -216,6 +230,9 @@ public class MVFParser extends Parser {
 				break;
 			case LABELCOLOR:
 				break;
+			case VALUE_SEPARATOR:
+				this.parseGeneValuesSeparator = value;
+				break;
 			case VALUES:
 				ValueType valueType = ValueType.getValueOf(value);
 				abf.setValueType(valueType);
@@ -229,6 +246,19 @@ public class MVFParser extends Parser {
 			}
 		}
 		
+		//add legend lines to the module network
+		for (String legendLine : legendLines){
+			String[] legendCols = legendLine.split("\t");
+			String keyValueString = legendCols[0];
+			String label = legendCols[1];
+			String[] keyValues = keyValueString.split(geneDelimiter);
+			for (String keyValue : keyValues){
+				String[] keyValueArray = keyValue.split(parseGeneValuesSeparator);
+				String key = keyValueArray[0];
+				Color color = ColorFactory.decodeColor(keyValueArray[1]);
+				modnet.addLegend(blockID, label, key, color);
+			}
+		}
 	}
 
 
