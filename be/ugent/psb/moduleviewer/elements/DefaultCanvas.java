@@ -347,10 +347,12 @@ public class DefaultCanvas extends Canvas {
 		this.add(condAnnotationCanvas);
 		this.newRow();
 		
+		Canvas legendCanvas = new Canvas();
 		for (Integer blockId : modnet.getLegendBlockIds()){
 			Legend legend = new Legend(modnet, blockId);
-			this.add(legend);
+			legendCanvas.add(legend);
 		}
+		this.add(legendCanvas);
 	}
 
 	
