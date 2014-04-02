@@ -205,8 +205,9 @@ public class DefaultCanvas extends Canvas {
 		coreAndArrowCanvas.add(arrowStack);
 		coreAndArrowCanvas.add(coreCanvas);
 		
+		//horizontal canvas contains two canvas: arrow/core and annotations
 		Canvas horizontalCanvas = new Canvas();
-		horizontalCanvas.setHorizontalSpacing(5);
+		horizontalCanvas.setHorizontalSpacing(25);
 		horizontalCanvas.setVerticalSpacing(5);
 		horizontalCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
