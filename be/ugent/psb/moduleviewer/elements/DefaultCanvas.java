@@ -226,7 +226,6 @@ public class DefaultCanvas extends Canvas {
 		
 		//only use for exactly one regulator tree
 		if (mod.getRegulatorTrees().size()==1){
-			System.out.print("Trying to draw regulator annotations");
 			List<AnnotationBlock<Gene>> rabList = mod.getAnnotationBlocks(DataType.REGULATORS);
 			for (AnnotationBlock<Gene> rab : rabList){
 				BlockType blockType = rab.getBlockType();
@@ -259,6 +258,9 @@ public class DefaultCanvas extends Canvas {
 		//this information can be used to decide to display a block different from 
 		//a standard annotation block.
 		List<AnnotationBlock<Gene>> gabList = mod.getAnnotationBlocks(DataType.GENES);
+		List<AnnotationBlock<Gene>> globalGabList = modnet.getGlobalAnnotationBlocks(DataType.GENES);
+		gabList.addAll(globalGabList);
+		
 		//annotation block labels
 		for(AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
@@ -284,6 +286,7 @@ public class DefaultCanvas extends Canvas {
 		//annotation blocks
 		for (AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
+			System.out.println(blockType);
 			switch(blockType){
 			case genecolorbox:
 				Annotation<Gene> ansGene = gab.getAnnotation();
