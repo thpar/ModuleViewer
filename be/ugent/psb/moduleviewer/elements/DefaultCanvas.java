@@ -226,6 +226,9 @@ public class DefaultCanvas extends Canvas {
 		//TODO: where to put the regulator annotations?
 		
 		//only use for exactly one regulator tree
+		int regregBowCount = 2;
+		int reggeneBowCount = 2;
+		int genegeneBowCount = 2;
 		if (mod.getRegulatorTrees().size()==1){
 			List<AnnotationBlock<Gene>> rabList = mod.getAnnotationBlocks(DataType.REGULATORS);
 			for (AnnotationBlock<Gene> rab : rabList){
@@ -239,12 +242,14 @@ public class DefaultCanvas extends Canvas {
 					GeneLinks regArrows = new GeneLinks();
 					regArrows.setGenes(mod.getRegulatorTrees().get(0));
 					regArrows.setAnnotationBlock(rab);
+					regArrows.setBowWidth(regregBowCount+=2);
 					regArrowPlaceHolder.add(regArrows);
 					break;
 				case regulatorgeneinteraction:				
 					GeneCrossLinks regGeneArrows = new GeneCrossLinks();
 					regGeneArrows.setGenes(mod.getGeneTree());
 					regGeneArrows.setRegGenes(mod.getRegulatorTrees().get(0));
+					regGeneArrows.setBowWidth(reggeneBowCount+=2);
 					regGeneArrows.setAnnotationBlock(rab);
 					regGeneArrowPlaceHolder.add(regGeneArrows);
 					break;
@@ -292,6 +297,7 @@ public class DefaultCanvas extends Canvas {
 		annotationCanvas.newRow();
 		
 		//annotation **BLOCKS**
+		regregBowCount=2;
 		for (AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			System.out.println(blockType);
@@ -304,6 +310,7 @@ public class DefaultCanvas extends Canvas {
 				GeneLinks geneArrows = new GeneLinks();
 				geneArrows.setGenes(mod.getGeneTree());
 				geneArrows.setAnnotationBlock(gab);
+				geneArrows.setBowWidth(genegeneBowCount+=2);
 				geneArrowPlaceHolder.add(geneArrows);
 				break;
 			case regulatorgeneinteraction:				
@@ -311,6 +318,7 @@ public class DefaultCanvas extends Canvas {
 				GeneCrossLinks regGeneArrows = new GeneCrossLinks();
 				regGeneArrows.setGenes(mod.getGeneTree());
 				regGeneArrows.setRegGenes(mod.getRegulatorTrees().get(0));
+				regGeneArrows.setBowWidth(reggeneBowCount+=2);
 				regGeneArrows.setAnnotationBlock(gab);
 				regGeneArrowPlaceHolder.add(regGeneArrows);
 				break;
