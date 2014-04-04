@@ -332,6 +332,7 @@ public class MVFParser extends Parser {
 						Color geneColor = ColorFactory.decodeColor(itemKeyValue[1]);
 						switch(ab.getDataType()){
 						case GENES:
+						case REGULATORS:
 							Gene geneItem = modnet.getGene(itemId);
 							((ColoredAnnotation<Gene>)annot).addItem(geneItem, geneColor);	
 							break;
@@ -344,6 +345,7 @@ public class MVFParser extends Parser {
 					case NONE:
 						switch(ab.getDataType()){
 						case GENES:
+						case REGULATORS:
 							Gene geneItem = modnet.getGene(it);
 							((Annotation<Gene>)annot).addItem(geneItem);	
 							break;
@@ -359,6 +361,7 @@ public class MVFParser extends Parser {
 						int geneNumber = Integer.valueOf(itemKeyValueNumber[1]);
 						switch(ab.getDataType()){
 						case GENES:
+						case REGULATORS:
 							Gene geneItem = modnet.getGene(itemGeneId);
 							((NumberedAnnotation<Gene>)annot).addItem(geneItem, geneNumber);	
 							break;

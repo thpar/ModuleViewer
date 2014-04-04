@@ -4,6 +4,7 @@ import java.awt.Dimension;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ElementStack;
 import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.RelativeSpacer;
@@ -130,8 +131,6 @@ public class DefaultCanvas extends Canvas {
 		double regMean = 0;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTrees().size()>0){
 			for (GeneNode regTree : mod.getRegulatorTrees()){
-//				//TODO will not play nice yet with multiple reg trees
-				
 				switch(guiModel.getMeanScopeModNet()){
 				case MODULE_WIDE:
 					switch(guiModel.getMeanScopeGeneReg()){
@@ -237,7 +236,7 @@ public class DefaultCanvas extends Canvas {
 					regNames.colorBackgrounds(ansReg.getItems(), rab.getColor());
 					break;
 				case regulatorregulatorinteraction:
-					GeneLinks regArrows= new GeneLinks();
+					GeneLinks regArrows = new GeneLinks();
 					regArrows.setGenes(mod.getRegulatorTrees().get(0));
 					regArrows.setAnnotationBlock(rab);
 					regArrowPlaceHolder.add(regArrows);
@@ -345,7 +344,7 @@ public class DefaultCanvas extends Canvas {
 		cabList.addAll(globalCabList);
 		
 		for (AnnotationBlock<Condition> cab : cabList){
-			condAnnotationCanvas.add(new RelativeSpacer(geneArrowPlaceHolder, null));
+			condAnnotationCanvas.add(new RelativeSpacer(arrowStack, null));
 			ConditionAnnotationMatrix canMatrix = 
 				new ConditionAnnotationMatrix(mod.getConditionTree(), mod.getNonTreeConditions(), cab);
 			condAnnotationCanvas.add(canMatrix);
@@ -359,7 +358,7 @@ public class DefaultCanvas extends Canvas {
 		
 		this.newRow();
 		//condition labels
-		condAnnotationCanvas.add(new RelativeSpacer(geneArrowPlaceHolder, null));
+		condAnnotationCanvas.add(new RelativeSpacer(arrowStack, null));
 		if (guiModel.isDrawConditionLabels()){			
 			ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
 			condAnnotationCanvas.add(condLabels);
