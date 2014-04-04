@@ -9,6 +9,7 @@ import be.ugent.psb.modulegraphics.elements.Label;
 import be.ugent.psb.modulegraphics.elements.RelativeSpacer;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
+import be.ugent.psb.modulegraphics.elements.UnitSpacer;
 import be.ugent.psb.moduleviewer.model.Annotation;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
@@ -91,7 +92,7 @@ public class DefaultCanvas extends Canvas {
 			drawnTree = true;
 		}
 		
-		//arrows
+		//arrow scaffolds
 		ElementStack arrowStack = new ElementStack();
 		
 		Canvas regGeneArrowCanvas = new Canvas();
@@ -100,9 +101,8 @@ public class DefaultCanvas extends Canvas {
 			regGeneArrowCanvas.add(new RelativeSpacer(null, tree));
 			regGeneArrowCanvas.newRow();
 		}
-		//15px gap = spacer + vertical spacing
-		GeneCrossLinks regGeneArrows = new GeneCrossLinks(mod.getGeneTree(), 20);
-		regGeneArrowCanvas.add(regGeneArrows);
+		ElementStack regGeneArrowPlaceHolder = new ElementStack();
+		regGeneArrowCanvas.add(regGeneArrowPlaceHolder);
 		arrowStack.add(regGeneArrowCanvas);
 		
 		Canvas arrowCanvas = new Canvas();
@@ -112,13 +112,17 @@ public class DefaultCanvas extends Canvas {
 			arrowCanvas.add(new RelativeSpacer(null, tree));
 			arrowCanvas.newRow();
 		}
-		GeneLinks regArrows = new GeneLinks();
-		arrowCanvas.add(regArrows);
+		ElementStack regArrowPlaceHolder = new ElementStack();
+		if (mod.getRegulatorTrees().size() > 0){
+			regArrowPlaceHolder.add(new UnitSpacer(0, mod.getRegulatorTrees().get(0).getGenes().size()));			
+		}
+		arrowCanvas.add(regArrowPlaceHolder);
 		arrowCanvas.newRow();
 		arrowCanvas.add(new Spacer(new Dimension(0,10)));
 		arrowCanvas.newRow();
-		GeneLinks geneArrows = new GeneLinks(mod.getGeneTree());
-		arrowCanvas.add(geneArrows);
+		ElementStack geneArrowPlaceHolder = new ElementStack();
+		arrowCanvas.add(geneArrowPlaceHolder);
+				
 		
 		//regulator genes
 		GeneNames regNames = null;
@@ -126,9 +130,7 @@ public class DefaultCanvas extends Canvas {
 		double regMean = 0;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTrees().size()>0){
 			for (GeneNode regTree : mod.getRegulatorTrees()){
-				regArrows.setGenes(regTree);
-				//TODO will not play nice yet with multiple reg trees
-				regGeneArrows.setRegGenes(regTree);
+//				//TODO will not play nice yet with multiple reg trees
 				
 				switch(guiModel.getMeanScopeModNet()){
 				case MODULE_WIDE:
@@ -235,10 +237,17 @@ public class DefaultCanvas extends Canvas {
 					regNames.colorBackgrounds(ansReg.getItems(), rab.getColor());
 					break;
 				case regulatorregulatorinteraction:
+					GeneLinks regArrows= new GeneLinks();
+					regArrows.setGenes(mod.getRegulatorTrees().get(0));
 					regArrows.setAnnotationBlock(rab);
+					regArrowPlaceHolder.add(regArrows);
 					break;
 				case regulatorgeneinteraction:				
+					GeneCrossLinks regGeneArrows = new GeneCrossLinks();
+					regGeneArrows.setGenes(mod.getGeneTree());
+					regGeneArrows.setRegGenes(mod.getRegulatorTrees().get(0));
 					regGeneArrows.setAnnotationBlock(rab);
+					regGeneArrowPlaceHolder.add(regGeneArrows);
 					break;
 				case unknown:
 				default:
@@ -261,7 +270,7 @@ public class DefaultCanvas extends Canvas {
 		List<AnnotationBlock<Gene>> globalGabList = modnet.getGlobalAnnotationBlocks(DataType.GENES);
 		gabList.addAll(globalGabList);
 		
-		//annotation block labels
+		//annotation block **LABELS**
 		for(AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			switch(blockType){
@@ -283,7 +292,7 @@ public class DefaultCanvas extends Canvas {
 		}
 		annotationCanvas.newRow();
 		
-		//annotation blocks
+		//annotation **BLOCKS**
 		for (AnnotationBlock<Gene> gab : gabList){
 			BlockType blockType = gab.getBlockType();
 			System.out.println(blockType);
@@ -293,10 +302,18 @@ public class DefaultCanvas extends Canvas {
 				geneNames.colorBackgrounds(ansGene.getItems(), gab.getColor());
 				break;
 			case genegeneinteraction:
+				GeneLinks geneArrows = new GeneLinks();
+				geneArrows.setGenes(mod.getGeneTree());
 				geneArrows.setAnnotationBlock(gab);
+				geneArrowPlaceHolder.add(geneArrows);
 				break;
 			case regulatorgeneinteraction:				
+				//same processing as in REGULATOR blocks... depends on how the user defined this block
+				GeneCrossLinks regGeneArrows = new GeneCrossLinks();
+				regGeneArrows.setGenes(mod.getGeneTree());
+				regGeneArrows.setRegGenes(mod.getRegulatorTrees().get(0));
 				regGeneArrows.setAnnotationBlock(gab);
+				regGeneArrowPlaceHolder.add(regGeneArrows);
 				break;
 			case bingo:
 			case core:
@@ -328,7 +345,7 @@ public class DefaultCanvas extends Canvas {
 		cabList.addAll(globalCabList);
 		
 		for (AnnotationBlock<Condition> cab : cabList){
-			condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
+			condAnnotationCanvas.add(new RelativeSpacer(geneArrowPlaceHolder, null));
 			ConditionAnnotationMatrix canMatrix = 
 				new ConditionAnnotationMatrix(mod.getConditionTree(), mod.getNonTreeConditions(), cab);
 			condAnnotationCanvas.add(canMatrix);
@@ -342,7 +359,7 @@ public class DefaultCanvas extends Canvas {
 		
 		this.newRow();
 		//condition labels
-		condAnnotationCanvas.add(new RelativeSpacer(geneArrows, null));
+		condAnnotationCanvas.add(new RelativeSpacer(geneArrowPlaceHolder, null));
 		if (guiModel.isDrawConditionLabels()){			
 			ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
 			condAnnotationCanvas.add(condLabels);

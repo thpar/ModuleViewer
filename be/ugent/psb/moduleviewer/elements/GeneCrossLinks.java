@@ -12,6 +12,12 @@ import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.GeneNotFoundException;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
+/**
+ * Edges between regulators and genes.
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class GeneCrossLinks extends ConnectArrows {
 
 	private GeneNode regTree;
