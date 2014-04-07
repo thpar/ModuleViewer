@@ -103,17 +103,21 @@ public class DefaultCanvas extends Canvas {
 			regGeneArrowCanvas.newRow();
 		}
 		ElementStack regGeneArrowPlaceHolder = new ElementStack();
+		regGeneArrowPlaceHolder.setAlignment(Alignment.TOP_RIGHT);
 		regGeneArrowCanvas.add(regGeneArrowPlaceHolder);
+		regGeneArrowCanvas.setAlignment(Alignment.TOP_RIGHT);
 		arrowStack.add(regGeneArrowCanvas);
 		
 		Canvas arrowCanvas = new Canvas();
 		arrowCanvas.setVerticalSpacing(5);
+		arrowCanvas.setAlignment(Alignment.TOP_RIGHT);
 		arrowStack.add(arrowCanvas);
 		if (drawnTree){
 			arrowCanvas.add(new RelativeSpacer(null, tree));
 			arrowCanvas.newRow();
 		}
 		ElementStack regArrowPlaceHolder = new ElementStack();
+		regArrowPlaceHolder.setAlignment(Alignment.TOP_RIGHT);
 		if (mod.getRegulatorTrees().size() > 0){
 			regArrowPlaceHolder.add(new UnitSpacer(0, mod.getRegulatorTrees().get(0).getGenes().size()));			
 		}
@@ -122,6 +126,7 @@ public class DefaultCanvas extends Canvas {
 		arrowCanvas.add(new Spacer(new Dimension(0,10)));
 		arrowCanvas.newRow();
 		ElementStack geneArrowPlaceHolder = new ElementStack();
+		geneArrowPlaceHolder.setAlignment(Alignment.TOP_RIGHT);
 		arrowCanvas.add(geneArrowPlaceHolder);
 				
 		
@@ -243,6 +248,7 @@ public class DefaultCanvas extends Canvas {
 					regArrows.setGenes(mod.getRegulatorTrees().get(0));
 					regArrows.setAnnotationBlock(rab);
 					regArrows.setBowWidth(regregBowCount+=2);
+					regArrows.setAlignment(Alignment.TOP_RIGHT);
 					regArrowPlaceHolder.add(regArrows);
 					break;
 				case regulatorgeneinteraction:				
@@ -250,6 +256,7 @@ public class DefaultCanvas extends Canvas {
 					regGeneArrows.setGenes(mod.getGeneTree());
 					regGeneArrows.setRegGenes(mod.getRegulatorTrees().get(0));
 					regGeneArrows.setBowWidth(reggeneBowCount+=2);
+					regGeneArrows.setAlignment(Alignment.TOP_RIGHT);
 					regGeneArrows.setAnnotationBlock(rab);
 					regGeneArrowPlaceHolder.add(regGeneArrows);
 					break;
@@ -311,6 +318,7 @@ public class DefaultCanvas extends Canvas {
 				geneArrows.setGenes(mod.getGeneTree());
 				geneArrows.setAnnotationBlock(gab);
 				geneArrows.setBowWidth(genegeneBowCount+=2);
+				geneArrows.setAlignment(Alignment.TOP_RIGHT);
 				geneArrowPlaceHolder.add(geneArrows);
 				break;
 			case regulatorgeneinteraction:				
@@ -319,6 +327,7 @@ public class DefaultCanvas extends Canvas {
 				regGeneArrows.setGenes(mod.getGeneTree());
 				regGeneArrows.setRegGenes(mod.getRegulatorTrees().get(0));
 				regGeneArrows.setBowWidth(reggeneBowCount+=2);
+				regGeneArrows.setAlignment(Alignment.TOP_RIGHT);
 				regGeneArrows.setAnnotationBlock(gab);
 				regGeneArrowPlaceHolder.add(regGeneArrows);
 				break;
