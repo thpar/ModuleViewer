@@ -22,8 +22,16 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 
 	private AnnotationBlock<Gene> ab;
 	private GeneNode geneRoot;
-		
+	
+	enum LabelPosition{
+		TOP, BOTTOM, NONE;
+	}
+	
 	public GeneAnnotationMatrix(GeneNode geneRoot, AnnotationBlock<Gene> ab){
+		this(geneRoot, ab, LabelPosition.BOTTOM);
+	}
+	
+	public GeneAnnotationMatrix(GeneNode geneRoot, AnnotationBlock<Gene> ab, LabelPosition labelPosition){
 		this.ab = ab;
 		this.geneRoot = geneRoot;
 		
@@ -40,20 +48,39 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 			break;
 		}
 		
-
-		//create labels (were scanned while creating matrix)
 		LabelList labelList = new LabelList(labels);
-		labelList.setrAngle(LabelList.ReadingAngle.LEFT);
-		labelList.setDir(LabelList.Direction.LEFT_TO_RIGHT);
-		labelList.setLabelAlignment(LabelList.Alignment.BOTTOM);
-		labelList.setAlignment(Alignment.BOTTOM_CENTER);
 		
-		//add stuff
-		this.add(labelList);
-		this.newRow();
-		this.add(new Spacer(new Dimension(0,10)));
-		this.newRow();
+		switch(labelPosition){
+		default:
+		case BOTTOM:
+			labelList.setrAngle(LabelList.ReadingAngle.LEFT);
+			labelList.setDir(LabelList.Direction.LEFT_TO_RIGHT);
+			labelList.setLabelAlignment(LabelList.Alignment.TOP);
+			labelList.setAlignment(Alignment.TOP_CENTER);
+			break;
+		case TOP:
+			labelList.setrAngle(LabelList.ReadingAngle.LEFT);
+			labelList.setDir(LabelList.Direction.LEFT_TO_RIGHT);
+			labelList.setLabelAlignment(LabelList.Alignment.BOTTOM);
+			labelList.setAlignment(Alignment.BOTTOM_CENTER);
+			break;
+		case NONE:
+			break;
+		}
+		
+		if (labelPosition==LabelPosition.TOP){
+			this.add(labelList);			
+			this.newRow();
+			this.add(new Spacer(new Dimension(0,10)));
+			this.newRow();
+		}
 		this.add(matrix);
+		if (labelPosition==LabelPosition.BOTTOM){
+			this.newRow();
+			this.add(new Spacer(new Dimension(0,10)));
+			this.newRow();
+			this.add(labelList);			
+		}
 	}
 	
 	
@@ -135,8 +162,5 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 	}
 
 
-
-
-	
 	
 }
