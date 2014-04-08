@@ -325,6 +325,10 @@ public class MVFParser extends Parser {
 			
 			try {
 				for (String it : items){
+					//don't bother with empty items
+					if (it.isEmpty()){
+						continue;
+					}
 					switch(abf.getValueType()){
 					case COLOR:
 						String[] itemKeyValue = it.split(this.parseGeneValuesSeparator);
