@@ -34,7 +34,7 @@ public class LoadAnnotationAction extends AbstractAction {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
-		fc.setDialogTitle("Load gene modules");
+		fc.setDialogTitle("Load Annotations");
 		fc.setFileFilter(new FileNameRegexFilter("module viewer format", ".*\\.mvf"));
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
 		if (answer == JFileChooser.APPROVE_OPTION){

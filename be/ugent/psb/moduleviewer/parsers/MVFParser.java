@@ -135,10 +135,13 @@ public class MVFParser extends Parser {
 		
 		String line = in.readLine();
 		while (line!=null){
-			if (line.startsWith("#")) parseComment(line);
-			else if (line.isEmpty());
-			else if (line.startsWith("::")) parseKeyValue(line);
-			else {
+			if (line.startsWith("#")){
+				parseComment(line);
+			} else if (line.isEmpty()){
+				//empty line
+			} else if (line.startsWith("::")) {
+				parseKeyValue(line);
+			} else {
 				try {
 					parseEntry(line);
 				} catch (LineParseException e) {
@@ -289,7 +292,13 @@ public class MVFParser extends Parser {
 			itemCol = 1;
 			labelCol = 2;
 		}
-		items = columns[itemCol].split(geneDelimiter);
+		
+		if (columns.length>=itemCol+1){
+			items = columns[itemCol].split(geneDelimiter);			
+		} else {
+			items = new String[0];
+		}
+		
 		if (columns.length>=labelCol+1){
 			label = columns[labelCol];			
 		} else {
