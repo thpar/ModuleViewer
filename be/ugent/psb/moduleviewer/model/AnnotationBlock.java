@@ -1,8 +1,9 @@
 package be.ugent.psb.moduleviewer.model;
 
 import java.awt.Color;
-import java.util.Collection;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -59,6 +60,7 @@ public class AnnotationBlock<T> {
 	}
 	
 	private Map<String, Annotation<T>> annotations = new HashMap<String, Annotation<T>>();
+	private List<String> labelOrder = new ArrayList<String>();
 	
 	private int blockID;
 	private String blockTitle;
@@ -103,6 +105,7 @@ public class AnnotationBlock<T> {
 	 */
 	public void addAnnotation(Annotation<T> annot){
 		this.annotations.put(annot.getName(), annot);
+		this.labelOrder.add(annot.getName());
 	}
 	
 	/**
@@ -169,8 +172,12 @@ public class AnnotationBlock<T> {
 	}
 
 	
-	public Collection<Annotation<T>> getAnnotations(){
-		return this.annotations.values();
+	public List<Annotation<T>> getAnnotations(){
+		List<Annotation<T>> list = new ArrayList<Annotation<T>>();
+		for (String label : labelOrder){
+			list.add(annotations.get(label));
+		}
+		return list;
 	}
 	
 	public int size(){
@@ -209,7 +216,7 @@ public class AnnotationBlock<T> {
 	 * @return
 	 */
 	public Annotation<T> getAnnotation(){
-		return this.annotations.values().iterator().next();
+		return this.annotations.get(this.labelOrder.get(0));
 	}
 
 	public String getBlockTitle() {
