@@ -14,7 +14,6 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
-import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
 
 
 

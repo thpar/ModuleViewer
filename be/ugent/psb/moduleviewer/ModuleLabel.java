@@ -6,7 +6,6 @@ import java.awt.Frame;
 import java.util.Observable;
 import java.util.Observer;
 
-import javax.swing.ImageIcon;
 import javax.swing.JFrame;
 
 import be.ugent.psb.modulegraphics.display.CanvasLabel;

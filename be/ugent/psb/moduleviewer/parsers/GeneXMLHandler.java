@@ -181,6 +181,8 @@ public class GeneXMLHandler extends DefaultHandler {
 				case RIGHT:
 					node = (GeneNode) node.right();
 					break;
+				case ROOT:
+					break;
 				}
 			}
 

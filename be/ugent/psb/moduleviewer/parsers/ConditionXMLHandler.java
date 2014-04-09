@@ -161,6 +161,8 @@ public class ConditionXMLHandler extends DefaultHandler {
 				case RIGHT:
 					node = (ConditionNode) node.right();
 					break;
+				case ROOT:
+					break;
 				}
 			}
 
@@ -206,6 +208,12 @@ public class ConditionXMLHandler extends DefaultHandler {
 			case NONTREECONDITIONS:
 				mod.addNonTreeCondition(Integer.parseInt(condId));
 				break;
+			case NA:
+			case MODULENETWORK:
+			case MODULE:
+			case CONDITION:
+			case CONDITIONTREE:
+			break;
 			}
 		} catch (NumberFormatException e) {
 			e.printStackTrace();

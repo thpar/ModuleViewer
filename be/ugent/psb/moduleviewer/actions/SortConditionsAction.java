@@ -1,17 +1,14 @@
 package be.ugent.psb.moduleviewer.actions;
 
 import java.awt.event.ActionEvent;
-import java.io.File;
 import java.util.Collection;
 
 import javax.swing.AbstractAction;
-import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.Module;
-import be.ugent.psb.moduleviewer.parsers.SymbolicNameParser;
 
 /**
  * Runs over all modules and sorts conditions within their tree structure, according to mean expression in the module (low to high)

@@ -119,7 +119,7 @@ public class ParserTest {
 		try {
 			Module mod0 = modnet.getModule(0);
 			System.out.println("Annotation for module "+mod0.getId());
-			for (AnnotationBlock ab : mod0.getAnnotationBlocks()){
+			for (AnnotationBlock<?> ab : mod0.getAnnotationBlocks()){
 				System.out.println(ab);
 			}
 		} catch (UnknownItemException e) {
