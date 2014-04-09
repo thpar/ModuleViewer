@@ -192,8 +192,10 @@ public class MainMenu extends JMenuBar implements Observer{
 		ButtonGroup outputFormatGroup = new ButtonGroup();
 		JMenuItem epsItem = new JRadioButtonMenuItem(new SetOutputFormatAction(guiModel, OutputFormat.EPS));
 		JMenuItem pdfItem = new JRadioButtonMenuItem(new SetOutputFormatAction(guiModel, OutputFormat.PDF));
+		JMenuItem pngItem = new JRadioButtonMenuItem(new SetOutputFormatAction(guiModel, OutputFormat.PNG));
 		outputFormatGroup.add(epsItem);
 		outputFormatGroup.add(pdfItem);
+		outputFormatGroup.add(pngItem);
 		switch(guiModel.getOutputFormat()){
 		case EPS:
 			outputFormatGroup.setSelected(epsItem.getModel(), true);			
@@ -202,10 +204,12 @@ public class MainMenu extends JMenuBar implements Observer{
 			outputFormatGroup.setSelected(pdfItem.getModel(), true);			
 			break;
 		case PNG:
+			outputFormatGroup.setSelected(pngItem.getModel(), true);			
 			break;
 		}
 		outputFormatMenu.add(epsItem);
 		outputFormatMenu.add(pdfItem);
+		outputFormatMenu.add(pngItem);
 		settingsMenu.add(outputFormatMenu);
 
 		JMenu helpMenu = new JMenu("Help");
