@@ -78,7 +78,7 @@ public class DefaultCanvas extends Canvas {
 		}
 		
 		/**
-		 * coreCanvas groups regulator matrix, expression matrix and gene names
+		 * groups regulator matrix, expression matrix and gene names
 		 */
 		Canvas coreCanvas = new Canvas();
 		coreCanvas.setHorizontalSpacing(5);
@@ -205,12 +205,12 @@ public class DefaultCanvas extends Canvas {
 		GeneNames geneNames = new GeneNames(mod.getGeneTree());
 		coreCanvas.add(geneNames);
 		
-		Canvas coreAndArrowCanvas = new Canvas();
-		coreAndArrowCanvas.setHorizontalSpacing(5);
-		coreAndArrowCanvas.setVerticalSpacing(5);
-		coreAndArrowCanvas.setAlignment(Alignment.TOP_LEFT);
-		coreAndArrowCanvas.add(arrowStack);
-		coreAndArrowCanvas.add(coreCanvas);
+		Canvas leftCanvas = new Canvas();
+		leftCanvas.setHorizontalSpacing(5);
+		leftCanvas.setVerticalSpacing(5);
+		leftCanvas.setAlignment(Alignment.TOP_LEFT);
+		leftCanvas.add(arrowStack);
+		leftCanvas.add(coreCanvas);
 		
 		//horizontal canvas contains two canvas: arrow/core and annotations
 		Canvas horizontalCanvas = new Canvas();
@@ -219,14 +219,14 @@ public class DefaultCanvas extends Canvas {
 		horizontalCanvas.setAlignment(Alignment.BOTTOM_LEFT);
 		
 		
-		horizontalCanvas.add(coreAndArrowCanvas);
+		horizontalCanvas.add(leftCanvas);
 		
 		
 		
-		Canvas annotationCanvas = new Canvas();
-		annotationCanvas.setHorizontalSpacing(5);
-		annotationCanvas.setVerticalSpacing(5);
-		annotationCanvas.setAlignment(Alignment.TOP_LEFT);
+		Canvas rightCanvas = new Canvas();
+		rightCanvas.setHorizontalSpacing(5);
+		rightCanvas.setVerticalSpacing(5);
+		rightCanvas.setAlignment(Alignment.TOP_LEFT);
 		
 		//only use for exactly one regulator tree
 		//arrow blocks are not capable of handling more
@@ -265,18 +265,18 @@ public class DefaultCanvas extends Canvas {
 					//add default annotation blocks next to the regulators
 					//TODO for now, don't show labels for the regulator annotation matrices
 					GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getRegulatorTrees().get(0), rab, LabelPosition.NONE);
-					annotationCanvas.add(ganMatrix);
-					annotationCanvas.getLastAddedElement().setAlignment(Alignment.TOP_CENTER);
+					rightCanvas.add(ganMatrix);
+					rightCanvas.getLastAddedElement().setAlignment(Alignment.TOP_CENTER);
 					regulatorAnnotationBlocks++;
 				}
 			}
 			//if we haven't added any actual regulator annotation blocks: add a spacer
 			if (regulatorAnnotationBlocks==0){
-				annotationCanvas.add(new UnitSpacer(0, mod.getRegulatorTrees().get(0).getGenes().size()));
+				rightCanvas.add(new UnitSpacer(0, mod.getRegulatorTrees().get(0).getGenes().size()));
 			}
-			annotationCanvas.newRow();
-			annotationCanvas.add(new Spacer(new Dimension(0,10)));
-			annotationCanvas.newRow();
+			rightCanvas.newRow();
+			rightCanvas.add(new Spacer(new Dimension(0,10)));
+			rightCanvas.newRow();
 		}
 		
 		
@@ -324,14 +324,14 @@ public class DefaultCanvas extends Canvas {
 			case unknown:
 			default:
 				GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
-				annotationCanvas.add(ganMatrix);
-				annotationCanvas.getLastAddedElement().setAlignment(Alignment.TOP_CENTER);				
+				rightCanvas.add(ganMatrix);
+				rightCanvas.getLastAddedElement().setAlignment(Alignment.TOP_CENTER);				
 				
 			}
 			
 		}
 		
-		annotationCanvas.newRow();
+		rightCanvas.newRow();
 		
 		//annotation **BLOCK LABELS**
 		for(AnnotationBlock<Gene> gab : gabList){
@@ -349,53 +349,55 @@ public class DefaultCanvas extends Canvas {
 			case tfenrichment:
 			case unknown:
 			default: 
-				annotationCanvas.add(new Label(gab.getBlockName()));
-				Element lastLabel = annotationCanvas.getLastAddedElement();
+				rightCanvas.add(new Label(gab.getBlockName()));
+				Element lastLabel = rightCanvas.getLastAddedElement();
 				lastLabel.setAlignment(Alignment.BOTTOM_CENTER);
 				lastLabel.setMargin(10, 0, 0, 0);
 			}
 		}
 		
 		
-		horizontalCanvas.add(annotationCanvas);
+		horizontalCanvas.add(rightCanvas);
 		
 		this.add(horizontalCanvas);
 		
 		
 		//condition annotations (with labels next to it)
-		coreAndArrowCanvas.newRow();
-		coreAndArrowCanvas.newRow();
+		leftCanvas.newRow();
+		leftCanvas.newRow();
 		List<AnnotationBlock<Condition>> cabList = mod.getAnnotationBlocks(DataType.CONDITIONS);
 		List<AnnotationBlock<Condition>> globalCabList = modnet.getGlobalAnnotationBlocks(DataType.CONDITIONS);
 		cabList.addAll(globalCabList);
 		
 		for (AnnotationBlock<Condition> cab : cabList){
-			coreAndArrowCanvas.add(new RelativeSpacer(arrowStack, null));
+			leftCanvas.add(new RelativeSpacer(arrowStack, null));
 			ConditionAnnotationMatrix canMatrix = 
 				new ConditionAnnotationMatrix(mod.getConditionTree(), mod.getNonTreeConditions(), cab);
-			coreAndArrowCanvas.add(canMatrix);
-			coreAndArrowCanvas.add(new Spacer(new Dimension(20,0)));
+			leftCanvas.add(canMatrix);
+			leftCanvas.add(new Spacer(new Dimension(20,0)));
 			Label condAnnotLabel = new Label(cab.getBlockName());
 			condAnnotLabel.setAlignment(Alignment.CENTER_LEFT);
 			condAnnotLabel.setAngle(-Math.PI/2);
-			coreAndArrowCanvas.add(condAnnotLabel);
-			coreAndArrowCanvas.newRow();
+			leftCanvas.add(condAnnotLabel);
+			leftCanvas.newRow();
 		}
 		
 		//condition labels
-		coreAndArrowCanvas.add(new RelativeSpacer(arrowStack, null));
+		leftCanvas.add(new RelativeSpacer(arrowStack, null));
 		if (guiModel.isDrawConditionLabels()){			
 			ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
-			coreAndArrowCanvas.add(condLabels);
+			leftCanvas.add(condLabels);
 		}
 				
-		this.newRow();
+		leftCanvas.newRow();
 		Canvas legendCanvas = new Canvas();
+		legendCanvas.setMargin(20, 0);
 		for (Integer blockId : modnet.getLegendBlockIds()){
 			Legend legend = new Legend(modnet, blockId);
 			legendCanvas.add(legend);
 		}
-		this.add(legendCanvas);
+		leftCanvas.add(new RelativeSpacer(arrowStack, null));
+		leftCanvas.add(legendCanvas);
 	}
 
 	
