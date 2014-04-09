@@ -58,6 +58,8 @@ public class LoadSymbolicNamesAction extends AbstractAction {
 			SymbolicNameParser parser = new SymbolicNameParser();
 			parser.parse(model, file);
 			
+			model.setSymbolMappingFile(file.getAbsolutePath());
+			
 			setProgress(100);
 			return null;
 		}

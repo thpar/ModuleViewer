@@ -15,11 +15,14 @@ public class Model extends Observable{
 	
 	private String dataFileName;
 	private String geneFileName;
+	private String symbolMappingFileName;
 	private String conditionFileName;
 	private String regulatorFileName;
 	private List<String> annotationFileNames = new ArrayList<String>();
 	
 	private String version;
+
+
 	
 	
 	public ModuleNetwork getModnet() {
@@ -82,6 +85,16 @@ public class Model extends Observable{
 		setChanged();
 		notifyObservers();
 	}
+	
+	public void setSymbolMappingFile(String symbolMappingFile){
+		this.symbolMappingFileName = symbolMappingFile;
+		setChanged();
+		notifyObservers();
+	}
+	
+	public String getSymbolMappingFile(){
+		return this.symbolMappingFileName;
+	}
 
 	public List<String> getAnnotationFiles() {
 		return annotationFileNames;
@@ -115,8 +128,6 @@ public class Model extends Observable{
 		conditionFileName = null;
 		regulatorFileName = null;
 		annotationFileNames = new ArrayList<String>();
-		
-		
 		
 		setChanged();
 		notifyObservers();

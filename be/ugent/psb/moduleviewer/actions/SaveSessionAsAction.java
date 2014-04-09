@@ -58,8 +58,20 @@ public class SaveSessionAsAction extends AbstractAction {
 		
 		props.setProperty("data", model.getDataFile());
 		props.setProperty("genes", model.getGeneFile());
-		props.setProperty("regulators", model.getRegulatorFile());
-		props.setProperty("conditions", model.getConditionFile());
+		
+		if (model.getSymbolMappingFile() !=null){
+			props.setProperty("symbols", model.getSymbolMappingFile());			
+		}
+		if (model.getRegulatorFile()!=null){
+			props.setProperty("regulators", model.getRegulatorFile());			
+		}
+		if (model.getConditionFile()!=null){
+			props.setProperty("conditions", model.getConditionFile());			
+		}
+		
+		props.setProperty("show_tree", guiModel.isDrawTreeStructure()?"On":"Off");
+		props.setProperty("show_cond_labels", guiModel.isDrawConditionLabels()?"On":"Off");
+		
 		
 		String anFileNames = new String();
 		for (Iterator<String> it = model.getAnnotationFiles().iterator(); it.hasNext();){
