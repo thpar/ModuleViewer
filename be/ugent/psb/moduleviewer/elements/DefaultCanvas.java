@@ -124,7 +124,7 @@ public class DefaultCanvas extends Canvas {
 		}
 		arrowCanvas.add(regArrowPlaceHolder);
 		arrowCanvas.newRow();
-		arrowCanvas.add(new Spacer(new Dimension(0,10)));
+		arrowCanvas.add(new Spacer(new Dimension(0,10)));			
 		arrowCanvas.newRow();
 		ElementStack geneArrowPlaceHolder = new ElementStack();
 		geneArrowPlaceHolder.setAlignment(Alignment.TOP_RIGHT);
@@ -137,38 +137,39 @@ public class DefaultCanvas extends Canvas {
 		double regMean = 0;
 		if (model.getRegulatorFile()!=null && mod.getRegulatorTrees().size()>0){
 			for (GeneNode regTree : mod.getRegulatorTrees()){
-				switch(guiModel.getMeanScopeModNet()){
-				case MODULE_WIDE:
-					switch(guiModel.getMeanScopeGeneReg()){
-					case REGS_GENES_JOINED:	
-						regMean = mod.getMeanAll();
-						regSigma = mod.getSigmaAll();
+				if (regTree.getGenes().size()>0){
+					switch(guiModel.getMeanScopeModNet()){
+					case MODULE_WIDE:
+						switch(guiModel.getMeanScopeGeneReg()){
+						case REGS_GENES_JOINED:	
+							regMean = mod.getMeanAll();
+							regSigma = mod.getSigmaAll();
+							break;
+						case REGS_GENES_SEPARATE:
+							regMean = regTree.getMean();
+							regSigma = regTree.getSigma();
+							break;
+						}
 						break;
-					case REGS_GENES_SEPARATE:
-						regMean = regTree.getMean();
-						regSigma = regTree.getSigma();
+					case NETWORK_WIDE:
+						regSigma = modnet.getSigma();
+						regMean = modnet.getMean();
 						break;
 					}
-					break;
-				case NETWORK_WIDE:
-					regSigma = modnet.getSigma();
-					regMean = modnet.getMean();
-					break;
+					ExpressionMatrix regulatorMatrix = new ExpressionMatrix(regTree,
+							mod.getConditionTree(),
+							mod.getNonTreeConditions(),
+							new EnigmaColorizer(regSigma,regMean),
+							true, false);
+					coreCanvas.add(regulatorMatrix);
+
+					regNames = new GeneNames(regTree);
+					coreCanvas.add(regNames);
+
+					coreCanvas.newRow();
+					coreCanvas.add(new Spacer(new Dimension(0,10)));
+					coreCanvas.newRow();
 				}
-				ExpressionMatrix regulatorMatrix = new ExpressionMatrix(regTree,
-						mod.getConditionTree(),
-						mod.getNonTreeConditions(),
-						new EnigmaColorizer(regSigma,regMean),
-						true, false);
-				coreCanvas.add(regulatorMatrix);
-
-
-				regNames = new GeneNames(regTree);
-				coreCanvas.add(regNames);
-
-				coreCanvas.newRow();
-				coreCanvas.add(new Spacer(new Dimension(0,10)));
-				coreCanvas.newRow();
 			}
 		}
 		
