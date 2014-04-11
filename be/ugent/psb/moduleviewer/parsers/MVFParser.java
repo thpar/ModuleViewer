@@ -112,6 +112,8 @@ public class MVFParser extends Parser {
 		VALUES,		//either none, color, or number: the values linked to individual genes
 		VALUE_SEPARATOR, //by default ":", the separator between gene and value
 		GLOBAL,    //indicates that this block does not have the module column.
+		LABELS,    //"ON" by default. "OFF" hides the individual annotation labels for this block 
+		BLOCKLABELS, //"ON" by default. "OFF" hides the block label for this block 
 		LEGEND
 	}
 	
@@ -242,6 +244,16 @@ public class MVFParser extends Parser {
 				break;
 			case GLOBAL:
 				abf.setGlobal(true);
+				break;
+			case LABELS:
+				if (value=="OFF"){
+					abf.setHideLabels(true);
+				}
+				break;
+			case BLOCKLABELS:
+				if (value=="OFF"){
+					abf.setHideBlockLabels(true);
+				}
 				break;
 			case OBJECT:
 			default:

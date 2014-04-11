@@ -75,10 +75,10 @@ public class AnnotationBlock<T> {
 	private Color color;
 
 
-//	private boolean itemSpecificColored = false;
-
-
 	private ValueType valueType;
+	
+	private boolean hideLabels = false;
+	private boolean hideBlockLabel = false;
 
 	
 	
@@ -229,6 +229,22 @@ public class AnnotationBlock<T> {
 
 	public int getBlockID() {
 		return blockID;
+	}
+
+	public boolean isHideLabels() {
+		return hideLabels;
+	}
+
+	public void setHideLabels(boolean hideLabels) {
+		this.hideLabels = hideLabels;
+	}
+
+	public boolean isHideBlockLabel() {
+		return hideBlockLabel;
+	}
+
+	public void setHideBlockLabel(boolean hideBlockLabel) {
+		this.hideBlockLabel = hideBlockLabel;
 	}
 	
 	

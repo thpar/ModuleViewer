@@ -20,6 +20,10 @@ public class AnnotationBlockFactory {
 	private ValueType valueType = ValueType.NONE;
 
 	private boolean global;
+
+	private boolean hideLabels = false;
+
+	private boolean hideBlockLabels = false;
 	
 	
 	public AnnotationBlockFactory(int blockID, DataType type, ModuleNetwork modnet){
@@ -38,6 +42,8 @@ public class AnnotationBlockFactory {
 			abg.setBlockType(blockType);
 			abg.setUnknownBlockType(unknownBlockType);
 			abg.setBlockTitle(title);
+			abg.setHideBlockLabel(this.hideBlockLabels);
+			abg.setHideLabels(this.hideLabels);
 			return abg;
 		case CONDITIONS:
 			AnnotationBlock<Condition> abc = new AnnotationBlock<Condition>(blockID, modnet, type, valueType);
@@ -45,6 +51,8 @@ public class AnnotationBlockFactory {
 			abc.setBlockType(blockType);
 			abc.setUnknownBlockType(unknownBlockType);
 			abc.setBlockTitle(title);
+			abc.setHideBlockLabel(this.hideBlockLabels);
+			abc.setHideLabels(this.hideLabels);
 			return abc;
 		default: return null;
 		}
@@ -124,6 +132,26 @@ public class AnnotationBlockFactory {
 	
 	public boolean isGlobal(){
 		return this.global;
+	}
+
+
+	public void setHideLabels(boolean b) {
+		this.hideLabels = b;
+	}
+
+
+	public boolean isHideLabels() {
+		return hideLabels;
+	}
+
+
+	public void setHideBlockLabels(boolean b) {
+		this.hideBlockLabels = b;
+	}
+
+
+	public boolean isHideBlockLabels() {
+		return hideBlockLabels;
 	}
 	
 	
