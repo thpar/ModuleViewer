@@ -20,12 +20,17 @@ public class GradientTest {
 	public void run(){
 		Canvas c = new Canvas();
 		
-		Gradient g = new Gradient(new EnigmaColorizer(0.2, -0.5));
+		double sigma = 0.7;
+		double mean = 0.0;
+		double min = -2;
+		double max = 2;
+		
+		Gradient g = new Gradient(new EnigmaColorizer(sigma, mean));
 		
 		g.setWidth(20);
-		g.addCheckPoint("min", -2);
-		g.addCheckPoint("avg", 0);
-		g.addCheckPoint("max", 2);
+		g.addCheckPoint(String.valueOf(min), min);
+		g.addCheckPoint(String.valueOf(mean), mean);
+		g.addCheckPoint(String.valueOf(max), max);
 		
 		c.add(g);
 		
