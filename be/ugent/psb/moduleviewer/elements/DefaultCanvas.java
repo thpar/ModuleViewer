@@ -7,6 +7,7 @@ import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ElementStack;
 import be.ugent.psb.modulegraphics.elements.Label;
+import be.ugent.psb.modulegraphics.elements.LegendGradient;
 import be.ugent.psb.modulegraphics.elements.RelativeSpacer;
 import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.modulegraphics.elements.TreeStructure;
@@ -397,6 +398,13 @@ public class DefaultCanvas extends Canvas {
 			Legend legend = new Legend(modnet, blockId);
 			legendCanvas.add(legend);
 		}
+		LegendGradient gradient = new LegendGradient(modnet.getMin(), modnet.getMax(), 
+				new EnigmaColorizer(modnet.getSigma(), modnet.getMean()));
+		gradient.setWidth(20);
+		gradient.addLabel(modnet.getMean());
+		gradient.setAlignment(Alignment.BOTTOM_CENTER);
+		legendCanvas.add(gradient);
+		
 		leftCanvas.add(new RelativeSpacer(arrowStack, null));
 		leftCanvas.add(legendCanvas);
 	}
