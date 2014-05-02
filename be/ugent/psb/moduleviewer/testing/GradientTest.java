@@ -6,7 +6,7 @@ import javax.swing.JFrame;
 
 import be.ugent.psb.modulegraphics.display.CanvasLabel;
 import be.ugent.psb.modulegraphics.elements.Canvas;
-import be.ugent.psb.modulegraphics.elements.Gradient;
+import be.ugent.psb.modulegraphics.elements.LegendGradient;
 import be.ugent.psb.moduleviewer.elements.EnigmaColorizer;
 
 public class GradientTest {
@@ -20,17 +20,15 @@ public class GradientTest {
 	public void run(){
 		Canvas c = new Canvas();
 		
-		double sigma = 0.7;
-		double mean = 0.0;
+		double sigma = 0.3;
+		double mean = 0.5;
 		double min = -2;
 		double max = 2;
 		
-		Gradient g = new Gradient(new EnigmaColorizer(sigma, mean));
-		
+		LegendGradient g = new LegendGradient(min, max, new EnigmaColorizer(sigma, mean));
 		g.setWidth(20);
-		g.addCheckPoint(String.valueOf(min), min);
-		g.addCheckPoint(String.valueOf(mean), mean);
-		g.addCheckPoint(String.valueOf(max), max);
+		g.addLabel(mean);
+
 		
 		c.add(g);
 		
