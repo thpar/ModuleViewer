@@ -401,6 +401,7 @@ public class DefaultCanvas extends Canvas {
 		LegendGradient gradient = new LegendGradient(modnet.getMin(), modnet.getMax(), 
 				new EnigmaColorizer(modnet.getSigma(), modnet.getMean()));
 		gradient.setWidth(20);
+		gradient.setTitle("Expression ratios");
 		gradient.addLabel(modnet.getMean());
 		gradient.setAlignment(Alignment.BOTTOM_CENTER);
 		legendCanvas.add(gradient);
