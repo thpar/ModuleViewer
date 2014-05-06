@@ -398,7 +398,9 @@ public class DefaultCanvas extends Canvas {
 			Legend legend = new Legend(modnet, blockId);
 			legendCanvas.add(legend);
 		}
-		LegendGradient gradient = new LegendGradient(modnet.getMin(), modnet.getMax(), 
+		LegendGradient gradient = new LegendGradient(
+				modnet.getMean()-modnet.getSigma()*2, 
+				modnet.getMean()+modnet.getSigma()*2, 
 				new EnigmaColorizer(modnet.getSigma(), modnet.getMean()));
 		gradient.setWidth(20);
 		gradient.setTitle("Expression ratios");
