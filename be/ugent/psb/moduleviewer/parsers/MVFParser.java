@@ -142,6 +142,7 @@ public class MVFParser extends Parser {
 			} else if (line.isEmpty()){
 				//empty line
 			} else if (line.startsWith("::")) {
+				System.out.println("BLOCK: "+line);
 				parseKeyValue(line);
 			} else {
 				try {
@@ -168,6 +169,7 @@ public class MVFParser extends Parser {
 			params = new HashMap<ParamKey, String>();
 			legendLines = new ArrayList<String>();
 			unknownParameters = new HashMap<String, String>();
+			parseGeneValuesSeparator = DEFAULT_GENE_VALUE_SEPARATOR;
 		}
 		
 		String[] keyValue = line.substring(2).split(keyValueDelimiter);
@@ -287,7 +289,6 @@ public class MVFParser extends Parser {
 		}
 		
 		//now work on the entry itself
-		
 		String[] columns = line.split("\t");
 		
 		int modId = -1;
