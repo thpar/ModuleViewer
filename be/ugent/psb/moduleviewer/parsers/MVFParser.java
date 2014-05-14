@@ -142,7 +142,6 @@ public class MVFParser extends Parser {
 			} else if (line.isEmpty()){
 				//empty line
 			} else if (line.startsWith("::")) {
-				System.out.println("BLOCK: "+line);
 				parseKeyValue(line);
 			} else {
 				try {

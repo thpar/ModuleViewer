@@ -122,11 +122,11 @@ public class DefaultCanvas extends Canvas {
 		regArrowPlaceHolder.setAlignment(Alignment.TOP_RIGHT);
 		if (mod.getRegulatorTrees().size() > 0){
 			regArrowPlaceHolder.add(new UnitSpacer(0, mod.getRegulatorTrees().get(0).getGenes().size()));			
+			arrowCanvas.add(regArrowPlaceHolder);
+			arrowCanvas.newRow();
+			arrowCanvas.add(new Spacer(new Dimension(0,10)));			
+			arrowCanvas.newRow();
 		}
-		arrowCanvas.add(regArrowPlaceHolder);
-		arrowCanvas.newRow();
-		arrowCanvas.add(new Spacer(new Dimension(0,10)));			
-		arrowCanvas.newRow();
 		ElementStack geneArrowPlaceHolder = new ElementStack();
 		geneArrowPlaceHolder.setAlignment(Alignment.TOP_RIGHT);
 		arrowCanvas.add(geneArrowPlaceHolder);
@@ -214,7 +214,7 @@ public class DefaultCanvas extends Canvas {
 		leftCanvas.add(arrowStack);
 		leftCanvas.add(coreCanvas);
 		
-		//horizontal canvas contains two canvas: arrow/core and annotations
+		//horizontal canvas contains two canvas: arrow/core and annotations (left/right)
 		Canvas horizontalCanvas = new Canvas();
 		horizontalCanvas.setHorizontalSpacing(25);
 		horizontalCanvas.setVerticalSpacing(5);
