@@ -109,7 +109,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		int totalModnr = 0;
 		String totalString;
 		if (modnet.getModules() != null && modnet.getModules().size()>0){
-			totalModnr=	modnet.getModules().size()-1;
+			totalModnr = modnet.getLastModuleId();
 			totalString = new String("/"+totalModnr);
 		} else {
 			totalString = new String("--");

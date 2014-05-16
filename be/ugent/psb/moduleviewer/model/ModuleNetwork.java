@@ -247,6 +247,14 @@ public class ModuleNetwork{
 		return first;
 	}
 	
+	public int getLastModuleId(){
+		Integer[] moduleKeys = new Integer[0];
+		moduleKeys = this.modules.keySet().toArray(moduleKeys);
+		Arrays.sort(moduleKeys);
+		Integer last = moduleKeys[moduleKeys.length-1]; 
+		return last;
+	}
+	
 	/**
 	 * Calculates basic stats for the data in this network (as seen in the fromXML method from LeMoNe ModuleNetwork)
 	 * Mean, Sigma, Min and Max
