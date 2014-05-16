@@ -73,7 +73,7 @@ public class ConditionLabels extends Canvas {
 		
 		LabelList labels = new LabelList(labelStrings);
 		
-		labels.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		labels.setFont(new Font("SansSerif", Font.PLAIN, 8));
 		labels.setDirection(Direction.LEFT_TO_RIGHT);
 		labels.setrAngle(ReadingAngle.LEFT);
 		return labels;

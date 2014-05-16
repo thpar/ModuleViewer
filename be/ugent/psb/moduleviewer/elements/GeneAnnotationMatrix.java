@@ -2,6 +2,7 @@ package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
 import java.awt.Dimension;
+import java.awt.Font;
 
 import be.ugent.psb.modulegraphics.elements.ColorMatrix;
 import be.ugent.psb.modulegraphics.elements.LabelList;
@@ -49,6 +50,7 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		}
 		
 		LabelList labelList = new LabelList(labels);
+		labelList.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		
 		switch(labelPosition){
 		default:
