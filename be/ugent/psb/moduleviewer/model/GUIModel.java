@@ -38,7 +38,8 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawAracyc = false;
 	private boolean drawConditionAnnotations = false;
 	private boolean drawConditionAnnotationLegend = false;
-	private boolean drawConditionLabels = true;
+	
+	private boolean drawConditionLabels = false;
 	
 	private boolean drawFileName = true;
 	
@@ -50,7 +51,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawGeneLinks = true;
 	private boolean drawGeneCheckLists = true;
 	
-	private boolean drawTreeStructure = true;
+	private boolean drawTreeStructure = false;
 	
 	private boolean debugMode = false; 
 	
