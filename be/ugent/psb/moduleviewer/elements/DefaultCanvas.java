@@ -394,6 +394,7 @@ public class DefaultCanvas extends Canvas {
 		leftCanvas.newRow();
 		Canvas legendCanvas = new Canvas();
 		legendCanvas.setMargin(20, 0);
+		legendCanvas.setHorizontalSpacing(30);
 		for (Integer blockId : modnet.getLegendBlockIds()){
 			Legend legend = new Legend(modnet, blockId);
 			legendCanvas.add(legend);
@@ -405,7 +406,7 @@ public class DefaultCanvas extends Canvas {
 		gradient.setWidth(20);
 		gradient.setTitle("Expression ratios");
 		gradient.addLabel(modnet.getMean());
-		gradient.setAlignment(Alignment.BOTTOM_CENTER);
+		gradient.setAlignment(Alignment.CENTER);
 		legendCanvas.add(gradient);
 		
 		leftCanvas.add(new RelativeSpacer(arrowStack, null));

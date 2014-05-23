@@ -28,6 +28,7 @@ public class Legend extends Canvas {
 			Label labelElement = new Label(label);
 			labelElement.setFont(new Font("SansSerif", Font.BOLD, 14));
 			labelElement.setMargin(10, 0);
+			labelElement.setAlignment(Alignment.TOP_CENTER);
 			labelCanvas.add(labelElement);
 			labelCanvas.newRow();
 			
