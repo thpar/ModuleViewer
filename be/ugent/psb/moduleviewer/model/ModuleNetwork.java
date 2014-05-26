@@ -87,6 +87,10 @@ public class ModuleNetwork{
 	 * BlockID -> label -> list of keys with colors
 	 */
 	private Map<Integer, Map<String, List<LegendKeyColorPair>>> legendEntries = new HashMap<Integer, Map<String, List<LegendKeyColorPair>>>();
+	/**
+	 * BlockID -> order of labels
+	 */
+	private Map<Integer, List<String>> legendLabelOrders = new HashMap<Integer, List<String>>();
 	
 	
 	/**
@@ -394,13 +398,24 @@ public class ModuleNetwork{
 		if (legend == null){
 			legend = new HashMap<String, List<LegendKeyColorPair>>();
 			this.legendEntries.put(blockID, legend);
+			
 		}
+		List<String> legendOrder = this.legendLabelOrders.get(blockID);
+		if (legendOrder == null){
+			legendOrder = new ArrayList<String>();
+			this.legendLabelOrders.put(blockID, legendOrder);
+		}
+		if (!legendOrder.contains(label)){
+			legendOrder.add(label);			
+		}
+		
 		List<LegendKeyColorPair> keyColorList = legend.get(label);
 		if (keyColorList==null){
 			keyColorList = new ArrayList<LegendKeyColorPair>();
 			legend.put(label, keyColorList);
 		}
 		keyColorList.add(new LegendKeyColorPair(key, value));
+		
 	}
 	
 	/**
@@ -409,12 +424,12 @@ public class ModuleNetwork{
 	 * @param blockID
 	 * @return the list of legend labels for this block
 	 */
-	public Set<String> getLegendLabels(int blockID){
-		Map<String, List<LegendKeyColorPair>> labelMap = this.legendEntries.get(blockID);
-		if (labelMap == null){
-			return new HashSet<String>();
+	public List<String> getLegendLabels(int blockID){
+		List<String> labels = this.legendLabelOrders.get(blockID);
+		if (labels == null){
+			return new ArrayList<String>();
 		} else {
-			return labelMap.keySet();
+			return labels;
 		}
 	}
 	

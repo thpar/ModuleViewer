@@ -21,7 +21,7 @@ public class Legend extends Canvas {
 	
 	
 	public Legend(ModuleNetwork modnet, int blockID){		
-		Set<String> labels = modnet.getLegendLabels(blockID);
+		List<String> labels = modnet.getLegendLabels(blockID);
 				
 		for (String label : labels){
 			Canvas labelCanvas = new Canvas();
