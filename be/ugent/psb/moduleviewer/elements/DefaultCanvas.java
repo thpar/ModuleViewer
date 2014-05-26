@@ -406,7 +406,7 @@ public class DefaultCanvas extends Canvas {
 		gradient.setWidth(20);
 		gradient.setTitle("Expression ratios");
 		gradient.addLabel(modnet.getMean());
-		gradient.setAlignment(Alignment.CENTER);
+		gradient.setAlignment(Alignment.BOTTOM_LEFT);
 		legendCanvas.add(gradient);
 		
 		leftCanvas.add(new RelativeSpacer(arrowStack, null));
