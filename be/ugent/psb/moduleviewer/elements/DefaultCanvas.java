@@ -399,10 +399,15 @@ public class DefaultCanvas extends Canvas {
 			Legend legend = new Legend(modnet, blockId);
 			legendCanvas.add(legend);
 		}
+		double minGradValue = modnet.getMean()-modnet.getSigma()*2;
+		double maxGradValue = modnet.getMean()+modnet.getSigma()*2;
+		
 		LegendGradient gradient = new LegendGradient(
-				modnet.getMean()-modnet.getSigma()*2, 
-				modnet.getMean()+modnet.getSigma()*2, 
+				minGradValue, 
+				maxGradValue, 
 				new EnigmaColorizer(modnet.getSigma(), modnet.getMean()));
+		gradient.setMinLabel("<= "+Math.round(minGradValue*10)/10d);
+		gradient.setMaxLabel(">= "+Math.round(maxGradValue*10)/10d);
 		gradient.setWidth(20);
 		gradient.setTitle("Expression ratios");
 		gradient.addLabel(modnet.getMean());
