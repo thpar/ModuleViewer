@@ -6,18 +6,18 @@ $siteroot = 'http://' . $_SERVER["HTTP_HOST"] . str_replace(basename($_SERVER["P
 
 <jnlp spec="1.0+" codebase="<?php echo $siteroot;?>">
 <information>
-  <title>Module Viewer</title>
+  <title>ModuleViewer</title>
   <vendor>VIB :: Plant Systems Biology :: Bioinformatics :: Thomas Van Parys</vendor>
   <homepage href="http://bioinformatics.psb.ugent.be" />
-  <description>Module Viewer (for LeMoNe/Enigma data)</description>
+  <description>ModuleViewer</description>
 </information>
 <security>
   <all-permissions />
 </security>
 <resources>
-  <j2se version="1.6+" initial-heap-size="128M" max-heap-size="500M"/>
+  <j2se version="1.7+" initial-heap-size="128M" max-heap-size="500M"/>
 
-  <jar href="<?php echo($siteroot."ModuleViewer-2.3.4.jar");?>" />
+  <jar href="<?php echo($siteroot."ModuleViewer-2.5.1.jar");?>" />
 <?php 
 $d = dir("./lib");
 while($entry = $d->read()): 
