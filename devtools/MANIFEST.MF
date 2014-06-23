@@ -1,2 +1,2 @@
 Main-Class: be.ugent.psb.moduleviewer.ModuleViewer
-Class-Path: lib/ModuleGraphics-1.1.jar lib/epsgraphics-1.1.jar
+Class-Path: lib/ModuleGraphics-1.28.jar lib/epsgraphics-1.1.jar
