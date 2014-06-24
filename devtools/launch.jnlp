@@ -36,5 +36,5 @@ $d->close();
 <?php foreach ($_GET as $url) : ?>
 	<argument><?=$url?></argument> 
 <?php endforeach; ?>
-<application-desc/>
+</application-desc>
 </jnlp>
