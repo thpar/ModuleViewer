@@ -40,6 +40,9 @@ public class LoadingWizard extends JDialog implements ActionListener{
 		this.setTitle(pages.get(currentPageNumber).getTitle());
 		mainPanel.add(pages.get(currentPageNumber), BorderLayout.CENTER);
 		mainPanel.add(createButtonPanel(), BorderLayout.SOUTH);
+		
+		this.validate();
+		this.pack();
 
 	}
 	
@@ -55,7 +58,7 @@ public class LoadingWizard extends JDialog implements ActionListener{
 		
 		JButton cancelButton = new JButton("Cancel");
 		cancelButton.setActionCommand(CANCEL);
-		
+		cancelButton.addActionListener(this);
 		
 		JButton nextButton = new JButton("Next >>");
 		nextButton.setActionCommand(NEXT);
@@ -81,6 +84,8 @@ public class LoadingWizard extends JDialog implements ActionListener{
 			nextPage();
 		} else if (action.equals(BACK)){
 			previousPage();
+		} else if (action.equals(CANCEL)){
+			this.dispose();
 		}
 	}
 	
