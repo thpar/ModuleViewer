@@ -50,14 +50,27 @@ public class WizardPage extends JPanel implements ActionListener{
 		this.add(browseButton);
 		
 	}
+	
+	
 
+	public boolean isOptional() {
+		return optional;
+	}
+	public void setOptional(boolean optional) {
+		this.optional = optional;
+	}
 	public String getTitle() {
 		return this.title;
 	}
 
 	
 	public File getFile() {
-		return new File(fileTextField.getText());
+		File file = new File(this.fileTextField.getText());
+		if (file.exists()){
+			return file;
+		} else {
+			return null;
+		}
 	}
 
 	@Override

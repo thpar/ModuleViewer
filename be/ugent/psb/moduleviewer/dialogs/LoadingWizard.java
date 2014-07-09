@@ -38,6 +38,10 @@ public class LoadingWizard extends JDialog implements ActionListener{
 	private GUIModel guiModel;
 
 	private JButton finishButton;
+
+	private JButton nextButton;
+
+	private JButton backButton;
 	
 	public LoadingWizard(GUIModel guiModel){
 		this.guiModel = guiModel;
@@ -71,7 +75,8 @@ public class LoadingWizard extends JDialog implements ActionListener{
 		pages.add(new WizardPage(guiModel, "Load condition clusters",
 				"<html>Subclustering of conditions with similar expression patterns.</html>", new FileNameRegexFilter("XML files", ".*\\.xml"), true));
 		pages.add(new WizardPage(guiModel, "Load regulator clusters", 
-				"<html>The list of regulators for each module. Each line needs a module id and a pipe delimited list of regulator gene ids.</html>", true));
+				"<html>The list of regulators for each module. Each line needs a module id "
+				+ "and a pipe delimited list of regulator gene ids.</html>", true));
 		pages.add(new WizardPage(guiModel, "Load annotations", 
 				"<html>All integrated data that needs to be mapped onto the expression data in .mvf format. "
 				+ "the .mvf file can contain multiple annotation blocks. Each block should"
@@ -89,16 +94,20 @@ public class LoadingWizard extends JDialog implements ActionListener{
 		cancelButton.setActionCommand(CANCEL);
 		cancelButton.addActionListener(this);
 		
-		JButton nextButton = new JButton("Next >>");
+		nextButton = new JButton("Next >>");
 		nextButton.setActionCommand(NEXT);
 		nextButton.addActionListener(this);
-		JButton backButton = new JButton("<< Back");
+		nextButton.setEnabled(this.currentPageNumber<pages.size()-1);
+		
+		backButton = new JButton("<< Back");
 		backButton.setActionCommand(BACK);
 		backButton.addActionListener(this);
+		backButton.setEnabled(this.currentPageNumber>0);
 		
 		finishButton = new JButton("Finish");
 		finishButton.setActionCommand(FINISH);
 		finishButton.addActionListener(this);
+		finishButton.setEnabled(this.ready());
 		
 		buttonPanel.add(Box.createHorizontalGlue());
 		buttonPanel.add(cancelButton);
@@ -110,6 +119,15 @@ public class LoadingWizard extends JDialog implements ActionListener{
 	}
 	
 	
+
+	private boolean ready() {
+		for (WizardPage page : pages){
+			if (!page.isOptional() && page.getFile()==null){
+				return false;
+			}
+		}
+		return true;
+	}
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
@@ -160,6 +178,11 @@ public class LoadingWizard extends JDialog implements ActionListener{
 			this.setTitle(currentPage.getTitle());
 			this.mainPanel.remove(oldPage);
 			this.mainPanel.add(currentPage, BorderLayout.CENTER);
+			
+			nextButton.setEnabled(this.currentPageNumber<pages.size()-1);
+			backButton.setEnabled(this.currentPageNumber>0);
+			finishButton.setEnabled(this.ready());
+			
 			this.revalidate();
 			this.repaint();
 		}
