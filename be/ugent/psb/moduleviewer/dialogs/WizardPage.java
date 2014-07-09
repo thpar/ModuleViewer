@@ -3,7 +3,6 @@ package be.ugent.psb.moduleviewer.dialogs;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
-import java.util.List;
 
 import javax.swing.BorderFactory;
 import javax.swing.BoxLayout;
@@ -22,16 +21,27 @@ public class WizardPage extends JPanel implements ActionListener{
 	private String title;
 	private JTextField fileTextField;
 	private GUIModel guiModel;
+	private FileNameRegexFilter filter;
+	private boolean optional = false;
 	
-	
-	public WizardPage(GUIModel guiModel, String title, String descr, List<String> extentions){
+	public WizardPage(GUIModel guiModel, String title, String descr){
+		this(guiModel, title, descr, null, false);
+	}
+	public WizardPage(GUIModel guiModel, String title, String descr, boolean optional){
+		this(guiModel, title, descr, null, optional);
+	}
+	public WizardPage(GUIModel guiModel, String title, String descr, FileNameRegexFilter extensions, boolean optional){
 		this.guiModel = guiModel;
 		this.title = title;
-		
+		this.filter = extensions;
+		this.optional = optional;
 		this.setLayout(new BoxLayout(this, BoxLayout.PAGE_AXIS));
 		this.setBorder(BorderFactory.createLoweredBevelBorder());
 		
 		this.add(new JLabel(descr));
+		if (optional){
+			this.add(new JLabel("(Optional)"));			
+		}
 		
 		fileTextField = new JTextField();
 		this.add(fileTextField);
@@ -54,8 +64,13 @@ public class WizardPage extends JPanel implements ActionListener{
 	public void actionPerformed(ActionEvent e) {
 		JFileChooser fc = new JFileChooser(guiModel.getCurrentDir());
 		fc.setDialogTitle(title);
-		fc.setFileFilter(new FileNameRegexFilter("condition tree files", ".*\\.xml"));
+		if (filter != null){
+			fc.setFileFilter(filter);			
+		}
 		int answer = fc.showOpenDialog(guiModel.getTopContainer());
+		if (answer == JFileChooser.APPROVE_OPTION){
+			this.fileTextField.setText(fc.getSelectedFile().getAbsolutePath());
+		}
 		
 	}
 	
