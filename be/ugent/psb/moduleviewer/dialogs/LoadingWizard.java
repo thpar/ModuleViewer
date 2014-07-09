@@ -11,6 +11,7 @@ import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.JButton;
 import javax.swing.JDialog;
+import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 public class LoadingWizard extends JDialog implements ActionListener{
@@ -22,7 +23,6 @@ public class LoadingWizard extends JDialog implements ActionListener{
 	
 	private final static String CANCEL = "cancel"; 
 
-	
 	
 	List<WizardPage> pages = new ArrayList<WizardPage>();
 
@@ -40,6 +40,8 @@ public class LoadingWizard extends JDialog implements ActionListener{
 		this.setTitle(pages.get(currentPageNumber).getTitle());
 		mainPanel.add(pages.get(currentPageNumber), BorderLayout.CENTER);
 		mainPanel.add(createButtonPanel(), BorderLayout.SOUTH);
+		
+		this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		
 		this.validate();
 		this.pack();
