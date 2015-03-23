@@ -290,7 +290,7 @@ public class MVFParser extends Parser {
 		//now work on the entry itself
 		String[] columns = line.split("\t");
 		
-		int modId = -1;
+		String modId = null;
 		String[] items;
 		int labelCol;
 		int itemCol;
@@ -300,7 +300,7 @@ public class MVFParser extends Parser {
 			itemCol = 0;
 			labelCol = 1;
 		} else {
-			modId = Integer.parseInt(columns[0]);
+			modId = columns[0];
 			itemCol = 1;
 			labelCol = 2;
 		}

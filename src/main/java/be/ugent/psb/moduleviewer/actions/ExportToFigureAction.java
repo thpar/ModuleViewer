@@ -42,7 +42,7 @@ public class ExportToFigureAction extends AbstractAction {
 	
 	@Override
 	public void actionPerformed(ActionEvent e) {
-		int modId = guiModel.getDisplayedModule();
+		String modId = guiModel.getDisplayedModule();
 		ModuleNetwork modnet = model.getModnet();
 		
 		Module mod = null;

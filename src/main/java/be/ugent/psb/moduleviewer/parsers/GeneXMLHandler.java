@@ -145,7 +145,7 @@ public class GeneXMLHandler extends DefaultHandler {
 			progListener.setMyProgress(10);
 			break;
 		case MODULE:
-			int modId = Integer.parseInt(attributes.getValue("id"));
+			String modId = attributes.getValue("id");
 			String name = attributes.getValue("name");
 				switch(geneType){
 				case GENES:

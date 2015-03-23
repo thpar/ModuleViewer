@@ -71,7 +71,7 @@ public class ParserTest {
 			
 		//test genes
 		try {
-			Module mod0 = modnet.getModule(44);
+			Module mod0 = modnet.getModule("44");
 			System.out.println("Testing module 44 genes: "+mod0.getName());
 			for (ITreeNode<Gene> l : mod0.getGeneTree().getLeaves()){
 				for (Gene gene : l.getColumns()){
@@ -89,7 +89,7 @@ public class ParserTest {
 			
 		//test conditions
 		try {
-			Module mod0 = modnet.getModule(18);
+			Module mod0 = modnet.getModule("18");
 			System.out.println("Testing module 18 conditions: "+mod0.getName());
 
 
@@ -117,7 +117,7 @@ public class ParserTest {
 		//test annotations
 		
 		try {
-			Module mod0 = modnet.getModule(0);
+			Module mod0 = modnet.getModule("0");
 			System.out.println("Annotation for module "+mod0.getId());
 			for (AnnotationBlock<?> ab : mod0.getAnnotationBlocks()){
 				System.out.println(ab);

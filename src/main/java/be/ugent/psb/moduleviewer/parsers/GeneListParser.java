@@ -56,7 +56,7 @@ public class GeneListParser extends Parser {
 
 	private void parseLine(String line, Model model) {
 		String[] cols = line.split("\t");
-		int modId = Integer.valueOf(cols[0]);
+		String modId = cols[0];
 		String[] genes = cols[1].split(GENE_DELIMITER);
 		
 		ModuleNetwork modnet = model.getModnet();

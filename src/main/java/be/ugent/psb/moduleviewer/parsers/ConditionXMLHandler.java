@@ -130,7 +130,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 			break;
 		case MODULE:
 			try {
-				int modId = Integer.parseInt(attributes.getValue("id"));
+				String modId = attributes.getValue("id");
 				String modName = attributes.getValue("name");
 				this.mod = modnet.getModule(modId);
 				this.mod.setName(modName);

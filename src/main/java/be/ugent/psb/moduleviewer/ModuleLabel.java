@@ -70,7 +70,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		PointMode pm = guiModel.getPointMode();
 		this.setPointMode(pm);
 		
-		int displayedModule = guiModel.getDisplayedModule();
+		String displayedModule = guiModel.getDisplayedModule();
 		Module mod = null;
 		try {
 			mod = modnet.getModule(displayedModule);

@@ -11,7 +11,7 @@ public class Module {
 
 	
 	private ModuleNetwork modnet;
-	private int id;
+	private String id;
 	private String name;
 	
 	
@@ -40,12 +40,12 @@ public class Module {
 	
 	
 	
-	public Module(ModuleNetwork modnet, int id) {
+	public Module(ModuleNetwork modnet, String id) {
 		this.modnet = modnet;
 		this.id = id;
 	}
 	
-	public Module(ModuleNetwork modnet, int id, String name) {
+	public Module(ModuleNetwork modnet, String id, String name) {
 		this.modnet = modnet;
 		this.id = id;
 		this.name = name;
@@ -88,7 +88,7 @@ public class Module {
 		this.regulatorTrees.add(regulatorTree);
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
