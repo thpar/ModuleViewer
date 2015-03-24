@@ -55,9 +55,10 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		locationField = new JTextField();
 		locationField.setColumns(4);
-		locationField.setMaximumSize(new Dimension(30, 50));
+		locationField.setMaximumSize(new Dimension(80, 50));
 		locationField.addFocusListener(this);
 		locationField.addKeyListener(this);
+		locationField.setEnabled(false);
 		totalLabel = new JLabel();
 		
 		exportButton = new JButton();
@@ -101,18 +102,25 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 
 	@Override
 	public void update(Observable o, Object arg) {
-		int modnr = guiModel.getDisplayedModule();
+		String modId = guiModel.getDisplayedModule();
 		ModuleNetwork modnet = model.getModnet();
-		prevButton.setEnabled(!modnet.isFirstModule(modnr));
-		nextButton.setEnabled(!modnet.isLastModule(modnr));
-		locationField.setText(String.valueOf(modnr));
-		int totalModnr = 0;
+		if (modnet.getModules().isEmpty()){
+			locationField.setEnabled(false);
+			prevButton.setEnabled(false);
+			nextButton.setEnabled(false);
+		} else {
+			locationField.setEnabled(true);
+			prevButton.setEnabled(!modnet.isFirstModule(modId));
+			nextButton.setEnabled(!modnet.isLastModule(modId));			
+		}
+		locationField.setText(modId);
+		String totalModnr = null;
 		String totalString;
-		if (modnet.getModules() != null && modnet.getModules().size()>0){
+		if (!modnet.getModules().isEmpty()){
 			totalModnr = modnet.getLastModuleId();
 			totalString = new String("/"+totalModnr);
 		} else {
-			totalString = new String("--");
+			totalString = new String("/--");
 		}
 		totalLabel.setText(totalString);
 		setPointMode(guiModel.getPointMode());
@@ -151,8 +159,8 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 	private void goToModule(){
 		String content = locationField.getText();
 		try {
-			int contNr = Integer.parseInt(content);
-			guiModel.setDisplayedModule(contNr);
+			String contID = content;
+			guiModel.setDisplayedModule(contID);
 		} catch (NumberFormatException e1) {
 			locationField.setText(String.valueOf(guiModel.getDisplayedModule()));
 		}		

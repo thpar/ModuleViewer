@@ -2,14 +2,13 @@ package be.ugent.psb.moduleviewer.model;
 
 import java.awt.Color;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
 import java.util.Set;
-import java.util.TreeMap;
 
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.UnknownItemException.ItemType;
@@ -35,7 +34,12 @@ public class ModuleNetwork{
 	/**
 	 * The modules in which genes are organized
 	 */
-	private TreeMap<Integer, Module> modules = new TreeMap<Integer, Module>();
+	private HashMap<String, Module> modules = new HashMap<String, Module>();
+	
+	/**
+	 * Ordered list of module ids
+	 */
+	private List<String> moduleIds = new ArrayList<String>();
 	
 	/**
 	 * All possible regulators?
@@ -204,9 +208,11 @@ public class ModuleNetwork{
 	
 	public void addModule(Module mod) {
 		this.modules.put(mod.getId(), mod);
+		this.moduleIds.add(mod.getId());
+		Collections.sort(this.moduleIds, new ModuleComparator());
 	}
 
-	public Module getModule(int modId) throws UnknownItemException{
+	public Module getModule(String modId) throws UnknownItemException{
 		if (!modules.containsKey(modId)) throw new UnknownItemException(UnknownItemException.ItemType.MODULE, modId);
 		return modules.get(modId);
 	}
@@ -219,44 +225,42 @@ public class ModuleNetwork{
 	 * @param currentModId
 	 * @return
 	 */
-	public int getPrevModuleId(int currentModId){
-		Integer key = modules.lowerKey(currentModId);
-		if (key!=null){
-			return key;
-		} else return currentModId;
+	public String getPrevModuleId(String currentModId){
+		int currentIndex = moduleIds.indexOf(currentModId);
+		if (currentIndex == 0){
+			return currentModId;
+		} else {
+			return moduleIds.get(currentIndex-1);
+		}
 	}
 	/**
 	 * Returns the next module id in the list or the current module id if we're at the end.
 	 * @param currentModId
 	 * @return
 	 */
-	public int getNextModuleId(int currentModId){
-		Integer key = modules.higherKey(currentModId);
-		if (key!=null){
-			return key;
-		} else return currentModId;
+	public String getNextModuleId(String currentModId){
+		int currentIndex = moduleIds.indexOf(currentModId);
+		if (currentIndex == moduleIds.size()-1){
+			return currentModId;
+		} else {
+			return moduleIds.get(currentIndex+1);
+		}
 	}
-	public boolean isFirstModule(int modId){
-		return modules.lowerKey(modId) == null;
+	public boolean isFirstModule(String modId){
+		int index = moduleIds.indexOf(modId);
+		return index == 0;
 	}
-	public boolean isLastModule(int modId){
-		return modules.higherKey(modId) == null;
-	}
-	
-	public int getFirstModuleId(){
-		Integer[] moduleKeys = new Integer[0];
-		moduleKeys = this.modules.keySet().toArray(moduleKeys);
-		Arrays.sort(moduleKeys);
-		Integer first = moduleKeys[0]; 
-		return first;
+	public boolean isLastModule(String modId){
+		int index = moduleIds.indexOf(modId);
+		return index == moduleIds.size()-1;
 	}
 	
-	public int getLastModuleId(){
-		Integer[] moduleKeys = new Integer[0];
-		moduleKeys = this.modules.keySet().toArray(moduleKeys);
-		Arrays.sort(moduleKeys);
-		Integer last = moduleKeys[moduleKeys.length-1]; 
-		return last;
+	public String getFirstModuleId(){
+		return moduleIds.get(0);
+	}
+	
+	public String getLastModuleId(){
+		return moduleIds.get(moduleIds.size()-1);
 	}
 	
 	/**
@@ -441,4 +445,26 @@ public class ModuleNetwork{
 		return this.legendEntries.keySet();
 	}
 	
+	public class ModuleComparator implements Comparator<String>{
+
+		@Override
+		public int compare(String o1, String o2) {
+			//try to compare the input strings as integers
+			//if one of the two fails to parse, compare as regular strings
+			try {
+				int o1Int = Integer.valueOf(o1);
+				int o2Int = Integer.valueOf(o2);
+				if (o1Int < o2Int){
+					return -1;
+				} else if (o1Int > o2Int){
+					return 1;
+				} else {
+					return 0;
+				}
+			} catch (NumberFormatException e) {
+				return o1.compareTo(o2);
+			}
+		}
+		
+	}
 }

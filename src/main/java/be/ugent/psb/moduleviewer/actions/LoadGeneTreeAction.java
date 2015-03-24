@@ -94,7 +94,7 @@ public class LoadGeneTreeAction extends AbstractAction {
 			}
 			
 			//set the displayed module to the first in the map
-			int firstModule = model.getModnet().getFirstModuleId();
+			String firstModule = model.getModnet().getFirstModuleId();
 			guiModel.setDisplayedModule(firstModule);
 			
 			model.setGeneFile(file.getAbsolutePath());

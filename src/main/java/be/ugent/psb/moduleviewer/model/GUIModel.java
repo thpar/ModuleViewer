@@ -61,8 +61,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	private String stateString;
 
-	private int displayedModule = 0;
-	
+	private String displayedModule = "";
 
 	private Frame window;
 
@@ -245,10 +244,20 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 			displayPrevModule();
 		}
 	}
-	public int getDisplayedModule() {
+	
+	/**
+	 * 
+	 * @return the currently displayed module id. Null if no modules are loaded yet.
+	 */
+	public String getDisplayedModule() {
 		return displayedModule;
 	}
-	public void setDisplayedModule(int displayedModule) {
+	
+	/**
+	 * 
+	 * Set the currently displayed module id.
+	 */
+	public void setDisplayedModule(String displayedModule) {
 		this.displayedModule = displayedModule;
 		setChanged();
 		notifyObservers();
@@ -500,5 +509,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		}		
 	}
 
+	
+	
 	
 }

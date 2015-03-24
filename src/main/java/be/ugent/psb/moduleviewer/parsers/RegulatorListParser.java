@@ -51,7 +51,7 @@ public class RegulatorListParser extends Parser{
 	}
 	
 	private void parseLine(String[] cols, Model model) {
-		int modId = Integer.valueOf(cols[0]);
+		String modId = cols[0];
 		String[] regulators = cols[1].split(GENE_DELIMITER);
 		
 		ModuleNetwork modnet = model.getModnet();
