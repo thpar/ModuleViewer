@@ -8,6 +8,7 @@ import java.awt.event.KeyListener;
 import java.util.Observable;
 import java.util.Observer;
 
+import javax.swing.Box;
 import javax.swing.BoxLayout;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
@@ -87,6 +88,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		add(locationField);
 		add(totalLabel);
+		add(Box.createRigidArea(new Dimension(10,0)));
 		add(prevButton);
 		add(nextButton);
 		
