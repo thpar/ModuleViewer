@@ -159,6 +159,8 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 			String currentDir = props.getProperty("currentDir",homeDir);
 			this.setCurrentDir(new File(currentDir));
 			
+		} else {
+			this.setCurrentDir(new File(homeDir));
 		}
 	}
 
