@@ -55,7 +55,7 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		
 		locationField = new JTextField();
 		locationField.setColumns(4);
-		locationField.setMaximumSize(new Dimension(30, 50));
+		locationField.setMaximumSize(new Dimension(80, 50));
 		locationField.addFocusListener(this);
 		locationField.addKeyListener(this);
 		locationField.setEnabled(false);

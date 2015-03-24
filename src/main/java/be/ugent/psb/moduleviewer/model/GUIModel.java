@@ -62,7 +62,6 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private String stateString;
 
 	private String displayedModule = "";
-	
 
 	private Frame window;
 
@@ -510,5 +509,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 		}		
 	}
 
+	
+	
 	
 }
