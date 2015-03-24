@@ -3,6 +3,8 @@ package be.ugent.psb.moduleviewer.model;
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Collection;
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -207,6 +209,7 @@ public class ModuleNetwork{
 	public void addModule(Module mod) {
 		this.modules.put(mod.getId(), mod);
 		this.moduleIds.add(mod.getId());
+		Collections.sort(this.moduleIds, new ModuleComparator());
 	}
 
 	public Module getModule(String modId) throws UnknownItemException{
@@ -442,4 +445,26 @@ public class ModuleNetwork{
 		return this.legendEntries.keySet();
 	}
 	
+	public class ModuleComparator implements Comparator<String>{
+
+		@Override
+		public int compare(String o1, String o2) {
+			//try to compare the input strings as integers
+			//if one of the two fails to parse, compare as regular strings
+			try {
+				int o1Int = Integer.valueOf(o1);
+				int o2Int = Integer.valueOf(o2);
+				if (o1Int < o2Int){
+					return -1;
+				} else if (o1Int > o2Int){
+					return 1;
+				} else {
+					return 0;
+				}
+			} catch (NumberFormatException e) {
+				return o1.compareTo(o2);
+			}
+		}
+		
+	}
 }
