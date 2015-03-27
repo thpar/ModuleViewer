@@ -50,7 +50,7 @@ public class ExportAllFiguresAction extends AbstractAction {
 			if (answer == JFileChooser.APPROVE_OPTION){
 				guiModel.setOutputDir(fc.getSelectedFile());
 			} else {
-				guiModel.setOutputDir(guiModel.getCurrentDir());
+				return;
 			}
 			
 		}
@@ -91,11 +91,12 @@ public class ExportAllFiguresAction extends AbstractAction {
 			guiModel.setStateString("Exporting images...");
 			
 			int modCount = 0;
-			int totModCount = modnet.getModules().size();
+			int totModCount = modnet.getModuleIds().size();
 			
-			for (Module mod : modnet.getModules()){
-				String title = "Module "+mod.getId();
-				String file_id = String.valueOf(mod.getId());
+			for (String modId : modnet.getModuleIds()){
+				Module mod = modnet.getModule(modId);
+				String title = "Module "+modId;
+				String file_id = modId;
 				if (mod.getName()!=null && !mod.getName().isEmpty()){
 					title+=" - "+mod.getName();
 					file_id+="_"+mod.getName();

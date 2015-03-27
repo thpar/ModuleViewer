@@ -445,6 +445,17 @@ public class ModuleNetwork{
 		return this.legendEntries.keySet();
 	}
 	
+	/**
+	 * 
+	 * @return an ordered list of all module ids
+	 */
+	public List<String> getModuleIds() {
+		return moduleIds;
+	}
+
+
+
+
 	public class ModuleComparator implements Comparator<String>{
 
 		@Override

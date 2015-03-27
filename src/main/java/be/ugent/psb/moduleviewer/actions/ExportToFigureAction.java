@@ -62,7 +62,7 @@ public class ExportToFigureAction extends AbstractAction {
 			if (answer == JFileChooser.APPROVE_OPTION){
 				guiModel.setOutputDir(fc.getSelectedFile());
 			} else {
-				guiModel.setOutputDir(guiModel.getCurrentDir());
+				return;
 			}
 			
 		}
