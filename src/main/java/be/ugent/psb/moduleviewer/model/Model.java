@@ -7,6 +7,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Observable;
 
+import be.ugent.psb.moduleviewer.Logger;
+
 public class Model extends Observable{
 
 	
@@ -22,6 +24,7 @@ public class Model extends Observable{
 	
 	private String version;
 
+	private Logger logger = new Logger();
 
 	
 	
@@ -131,6 +134,10 @@ public class Model extends Observable{
 		
 		setChanged();
 		notifyObservers();
+	}
+
+	public Logger getLogger() {
+		return logger;
 	}
 
 	

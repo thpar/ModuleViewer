@@ -2,6 +2,7 @@ package be.ugent.psb.moduleviewer.actions;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
+import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
@@ -104,9 +105,13 @@ public class ExportAllFiguresAction extends AbstractAction {
 				String fileName = guiModel.getOutputDir() + System.getProperty("file.separator") + 
 				guiModel.getFileNameTemplate(file_id)+"."+guiModel.getOutputFormat();
 				
-				Canvas canvas = new DefaultCanvas(mod, model, guiModel, title);
-				CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
-				figCanvas.writeToFigure(guiModel.getOutputFormat());
+				try {
+					Canvas canvas = new DefaultCanvas(mod, model, guiModel, title);
+					CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
+					figCanvas.writeToFigure(guiModel.getOutputFormat());
+				} catch (Exception e) {
+					model.getLogger().addEntry(e, "Failed to export figure "+fileName);
+				}
 				
 				modCount++;
 				int prog = (int)Math.round(((double)modCount/(double)totModCount) * 100);

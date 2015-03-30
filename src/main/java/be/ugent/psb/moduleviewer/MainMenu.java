@@ -35,6 +35,7 @@ import be.ugent.psb.moduleviewer.actions.SortGenesAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowConditionLabelsAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
+import be.ugent.psb.moduleviewer.dialogs.LogDialog;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeGeneReg;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeModNet;
@@ -182,7 +183,9 @@ public class MainMenu extends JMenuBar implements Observer{
 		sigmaMeanMenu.add(regSeparateItem);
 		sigmaMeanMenu.add(regJoinedItem);
 		
-		
+		viewMenu.addSeparator();
+		JMenuItem logItem = new JMenuItem(new ShowErrorLogAction(model));
+		viewMenu.add(logItem);
 		
 		JMenu settingsMenu = new JMenu("Settings");
 		JMenuItem outputDirItem = new JMenuItem(new ChangeOutputDirAction(guiModel));
