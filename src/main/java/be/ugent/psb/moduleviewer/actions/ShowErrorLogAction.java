@@ -1,4 +1,4 @@
-package be.ugent.psb.moduleviewer;
+package be.ugent.psb.moduleviewer.actions;
 
 import java.awt.event.ActionEvent;
 

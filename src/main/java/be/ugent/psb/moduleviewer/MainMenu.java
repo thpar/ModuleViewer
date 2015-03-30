@@ -30,6 +30,7 @@ import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeGeneRegAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeModNetAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
+import be.ugent.psb.moduleviewer.actions.ShowErrorLogAction;
 import be.ugent.psb.moduleviewer.actions.SortConditionsAction;
 import be.ugent.psb.moduleviewer.actions.SortGenesAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
