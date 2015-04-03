@@ -235,7 +235,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 		case MODULENETWORK:
 			break;
 		case MODULE:
-			modnet.addModule(mod);
+			//no need for action
 			break;
 		case CONDITIONTREE:
 			parseRootNodeEnd();

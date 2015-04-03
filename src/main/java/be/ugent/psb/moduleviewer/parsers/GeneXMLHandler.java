@@ -240,7 +240,9 @@ public class GeneXMLHandler extends DefaultHandler {
 			System.out.println("Done reading Modules");
 			break;
 		case MODULE:
-			modnet.addModule(mod);
+			if (geneType == GeneType.GENES){
+				modnet.addModule(mod);				
+			}
 			break;
 		case GENETREE:
 		case REGULATORTREE:
