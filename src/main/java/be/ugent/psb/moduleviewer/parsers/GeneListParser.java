@@ -5,7 +5,9 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
+import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
+import be.ugent.psb.moduleviewer.model.DuplicateModuleIdException;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -34,9 +36,12 @@ public class GeneListParser extends Parser {
 	 * Indicate a comment line
 	 */
 	private final String COMMENT_SIGN = "#";
+
+	private Logger logger;
 	
-	public GeneListParser(ProgressListener progListener) {
+	public GeneListParser(ProgressListener progListener, Logger logger) {
 		super(progListener);
+		this.logger = logger;
 	}
 	
 	@Override
@@ -74,7 +79,11 @@ public class GeneListParser extends Parser {
 		}
 		
 		module.setGeneTree(geneList);
-		modnet.addModule(module);
+		try {
+			modnet.addModule(module);
+		} catch (DuplicateModuleIdException e) {
+			logger.addEntry(e, "Duplicate module id");
+		}
 		
 	}
 	

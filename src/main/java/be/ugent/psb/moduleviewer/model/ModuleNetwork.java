@@ -200,13 +200,16 @@ public class ModuleNetwork{
 		this.regulators = regulators;
 	}
 
-	public void setModules(List<Module> modset) {
+	public void setModules(List<Module> modset) throws DuplicateModuleIdException{
 		for (Module mod : modset){
 			this.addModule(mod);
 		}
 	}
 	
-	public void addModule(Module mod) {
+	public void addModule(Module mod) throws DuplicateModuleIdException{
+		if (this.moduleIds.contains(mod.getId())){
+			throw new DuplicateModuleIdException(mod.getId());
+		}
 		this.modules.put(mod.getId(), mod);
 		this.moduleIds.add(mod.getId());
 		Collections.sort(this.moduleIds, new ModuleComparator());

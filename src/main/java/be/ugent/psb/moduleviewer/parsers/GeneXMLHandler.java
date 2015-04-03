@@ -8,7 +8,9 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
+import be.ugent.psb.moduleviewer.model.DuplicateModuleIdException;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.Module;
@@ -101,6 +103,8 @@ public class GeneXMLHandler extends DefaultHandler {
 	 * Parsing genes or regulators?
 	 */
 	private GeneType geneType;
+
+	private Logger logger;
 	
 
 
@@ -112,10 +116,11 @@ public class GeneXMLHandler extends DefaultHandler {
 	 * @param progressListener
 	 */
 	public GeneXMLHandler(ModuleNetwork modnet,
-			ProgressListener progListener, GeneType geneType) {
+			ProgressListener progListener, GeneType geneType, Logger logger) {
 		this.modnet = modnet;
 		this.progListener = progListener;
 		this.geneType = geneType;
+		this.logger = logger;
 	}
 
 	@Override
@@ -241,7 +246,11 @@ public class GeneXMLHandler extends DefaultHandler {
 			break;
 		case MODULE:
 			if (geneType == GeneType.GENES){
-				modnet.addModule(mod);				
+				try {
+					modnet.addModule(mod);
+				} catch (DuplicateModuleIdException e) {
+					logger.addEntry(e, "Duplicate module id");
+				}				
 			}
 			break;
 		case GENETREE:
