@@ -36,16 +36,14 @@ public class GeneListParser extends Parser {
 	 * Indicate a comment line
 	 */
 	private final String COMMENT_SIGN = "#";
-
-	private Logger logger;
 	
-	public GeneListParser(ProgressListener progListener, Logger logger) {
+	public GeneListParser(ProgressListener progListener) {
 		super(progListener);
-		this.logger = logger;
 	}
 	
 	@Override
 	public void parse(Model model, InputStream stream) throws IOException {
+		this.logger = model.getLogger();
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 
 		String line = in.readLine();

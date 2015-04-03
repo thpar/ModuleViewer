@@ -8,6 +8,7 @@ import org.xml.sax.Attributes;
 import org.xml.sax.SAXException;
 import org.xml.sax.helpers.DefaultHandler;
 
+import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
@@ -83,6 +84,8 @@ public class ConditionXMLHandler extends DefaultHandler {
 
 	private ConditionNode node;
 
+	private Logger logger;
+
 
 	/**
 	 * Create an XML handler to fill the given modnet with data.
@@ -92,9 +95,10 @@ public class ConditionXMLHandler extends DefaultHandler {
 	 * @param progressListener
 	 */
 	public ConditionXMLHandler(ModuleNetwork modnet,
-			ProgressListener progListener) {
+			ProgressListener progListener, Logger logger) {
 		this.modnet = modnet;
 		this.progListener = progListener;
+		this.logger = logger;
 	}
 
 	@Override

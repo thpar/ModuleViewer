@@ -34,7 +34,8 @@ public class RegulatorListParser extends Parser{
 	public void parse(Model model, InputStream stream) throws IOException {
 
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
-
+		this.logger = model.getLogger();
+		
 		String line = in.readLine();
 		while (line!=null){
 			if (line.startsWith(COMMENT_SIGN) || line.isEmpty()){

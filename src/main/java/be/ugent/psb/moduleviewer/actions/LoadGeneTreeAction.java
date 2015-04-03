@@ -87,7 +87,7 @@ public class LoadGeneTreeAction extends AbstractAction {
 			} else {
 				//mvf style gene list
 				guiModel.setStateString("Loading flat gene structure from "+file);
-				GeneListParser parser = new GeneListParser(progListener, model.getLogger());
+				GeneListParser parser = new GeneListParser(progListener);
 				
 				parser.parse(model, file);
 				

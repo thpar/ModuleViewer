@@ -6,6 +6,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
+import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
@@ -43,6 +44,7 @@ public class DataMatrixParser extends Parser {
 	@Override
 	public void parse(Model model, InputStream input) throws IOException {
 		ModuleNetwork modnet = model.getModnet();
+		this.logger = model.getLogger();
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(input));
 

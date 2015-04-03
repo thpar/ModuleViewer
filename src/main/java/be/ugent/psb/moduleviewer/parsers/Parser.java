@@ -7,6 +7,7 @@ import java.io.InputStream;
 
 import javax.swing.SwingWorker;
 
+import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
 
@@ -29,6 +30,7 @@ public abstract class Parser {
 	}
 	
 	protected ProgressListener progressListener;
+	protected Logger logger;
 	
 	/**
 	 * this progress listener should be implemented inside a {@link SwingWorker} 

@@ -132,6 +132,7 @@ public class MVFParser extends Parser {
 	@Override
 	public void parse(Model model, InputStream stream) throws IOException {
 		this.modnet = model.getModnet();
+		this.logger = model.getLogger();
 		
 		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
 		

@@ -24,6 +24,8 @@ public class SymbolicNameParser extends Parser {
 	@Override
 	public void parse(Model model, InputStream inputFile) throws IOException {
 		this.modnet = model.getModnet();
+		this.logger = model.getLogger();
+		
 		BufferedReader in = new BufferedReader(new InputStreamReader(inputFile));
 		
 		String line = in.readLine();

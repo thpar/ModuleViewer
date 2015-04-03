@@ -7,6 +7,7 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.helpers.DefaultHandler;
 
+import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 
 
@@ -34,7 +35,6 @@ abstract class TreeParser extends Parser{
 	protected void parse(InputStream inputStream, DefaultHandler handler){
 		try {
 			
-		
 			SAXParserFactory factory = SAXParserFactory.newInstance();
 			SAXParser saxParser =  factory.newSAXParser();
 			
