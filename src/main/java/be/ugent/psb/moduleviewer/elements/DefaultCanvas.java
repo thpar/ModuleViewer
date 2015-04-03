@@ -224,11 +224,15 @@ public class DefaultCanvas extends Canvas {
 		horizontalCanvas.add(leftCanvas);
 		
 		
-		
 		Canvas rightCanvas = new Canvas();
 		rightCanvas.setHorizontalSpacing(5);
 		rightCanvas.setVerticalSpacing(5);
 		rightCanvas.setAlignment(Alignment.TOP_LEFT);
+		
+		if (drawnTree){
+			rightCanvas.add(new RelativeSpacer(null, tree));
+			rightCanvas.newRow();
+		}
 		
 		//only use for exactly one regulator tree
 		//arrow blocks are not capable of handling more
