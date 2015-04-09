@@ -32,9 +32,8 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 
 	private ModuleNetwork modnet;
 	
-	private Dimension currentCanvasSize = new Dimension();
-	//FIXME DONT DO THIS HARD CODED!
-	private final String GENEFETCH = "http://bioinformatics.psb.ugent.be/webtools/genefetch/search.html";
+//	private Dimension currentCanvasSize = new Dimension();
+
 	private Model model;
 	private boolean firstload = true;
 	private Cursor cursor; 
@@ -90,10 +89,8 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		
 //		addCanvasListeners(canvas);
 		
-				
-		currentCanvasSize = canvas.getDimension(this.getGraphics());
-		setPreferredSize(currentCanvasSize);
-		revalidate();
+		
+		this.setZoomLevel(guiModel.getZoomLevel());
 		
 //		this.currentPaintedModule = displayedModule;
 		
@@ -206,10 +203,7 @@ public class ModuleLabel extends CanvasLabel implements Observer{
 		repaint();
 	}
 
-	public Dimension getCurrentCanvasSize() {
-		return currentCanvasSize;
-	}
-	
+
 	
 	
 	

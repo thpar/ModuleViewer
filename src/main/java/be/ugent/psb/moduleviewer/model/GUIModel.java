@@ -53,6 +53,8 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	private boolean drawTreeStructure = false;
 	
+	private double zoomLevel = 1;
+	
 	private boolean debugMode = false; 
 	
 	private boolean useGlobalMeans = false;
@@ -510,6 +512,40 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 			this.notifyObservers();
 		}		
 	}
+
+
+	/**
+	 * 
+	 * @return the current zoom level. 1 is normal scale.
+	 */
+	public double getZoomLevel() {
+		return zoomLevel;
+	}
+
+	/**
+	 * Set the zoom level. 
+	 * 
+	 * @param zoomLevel scaling to be applied. 1 is not scaled.
+	 */
+	public void setZoomLevel(double zoomLevel) {
+		if (this.zoomLevel != zoomLevel){
+			this.zoomLevel = zoomLevel;
+			setChanged();
+			notifyObservers();
+		}
+	}
+
+
+	public void decZoomLevel(double d) {
+		this.setZoomLevel(Math.max(zoomLevel-d, 0));
+	}
+
+
+	public void incZoomLevel(double d) {
+		this.setZoomLevel(Math.min(zoomLevel+d, 3));
+	}
+	
+	
 
 	
 	

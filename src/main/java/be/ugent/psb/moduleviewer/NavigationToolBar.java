@@ -21,10 +21,12 @@ import javax.swing.JToolBar;
 import be.ugent.psb.moduleviewer.actions.ExportToFigureAction;
 import be.ugent.psb.moduleviewer.actions.NavModuleAction;
 import be.ugent.psb.moduleviewer.actions.SetPointModeAction;
+import be.ugent.psb.moduleviewer.actions.ZoomInAction;
+import be.ugent.psb.moduleviewer.actions.ZoomOutAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.GUIModel.PointMode;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
-import be.ugent.psb.moduleviewer.model.GUIModel.PointMode;
 
 /**
  * Toolbar with navigation and export buttons.
@@ -83,6 +85,12 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		//TODO disabling the point button as long as panning is the only useful thing to do
 		pointButton.setEnabled(false);
 		
+		JButton zoomOutButton = new JButton();
+		zoomOutButton.setAction(new ZoomOutAction(guiModel));
+		zoomOutButton.setIcon(new ImageIcon(getClass().getResource("/icons/zoom_out.png")));
+		JButton zoomInButton = new JButton();
+		zoomInButton.setAction(new ZoomInAction(guiModel));
+		zoomInButton.setIcon(new ImageIcon(getClass().getResource("/icons/zoom_in.png")));
 		
 		setLayout(new BoxLayout(this, BoxLayout.X_AXIS));
 		
@@ -97,6 +105,10 @@ public class NavigationToolBar extends JToolBar implements Observer, FocusListen
 		add(new JToolBar.Separator());
 		add(pointButton);
 		add(panButton);
+		add(new JToolBar.Separator());
+		add(zoomOutButton);
+		add(zoomInButton);
+		
 		
 		this.update(null, null);
 	}
