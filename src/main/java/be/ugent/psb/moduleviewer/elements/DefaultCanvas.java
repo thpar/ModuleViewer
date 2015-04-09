@@ -403,9 +403,31 @@ public class DefaultCanvas extends Canvas {
 			Legend legend = new Legend(modnet, blockId);
 			legendCanvas.add(legend);
 		}
-		double minGradValue = modnet.getMean()-modnet.getSigma()*2;
-		double maxGradValue = modnet.getMean()+modnet.getSigma()*2;
 		
+		double legendMean = 0;
+		double legendSigma = 0;
+		
+		switch(guiModel.getMeanScopeModNet()){
+		case MODULE_WIDE:
+			switch(guiModel.getMeanScopeGeneReg()){
+			case REGS_GENES_JOINED:	
+				legendMean = mod.getMeanAll();
+				legendSigma = mod.getSigmaAll();
+				break;
+			case REGS_GENES_SEPARATE:
+				legendMean = mod.getGeneTree().getMean();
+				legendSigma = mod.getGeneTree().getSigma();
+				break;
+			}
+			break;
+		case NETWORK_WIDE:
+			legendMean = modnet.getMean();
+			legendSigma = modnet.getSigma();
+			break;
+		}
+		
+		double minGradValue = legendMean-legendSigma*2;
+		double maxGradValue = legendMean+legendSigma*2;
 		LegendGradient gradient = new LegendGradient(
 				minGradValue, 
 				maxGradValue, 
