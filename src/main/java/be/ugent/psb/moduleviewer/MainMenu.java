@@ -62,6 +62,12 @@ public class MainMenu extends JMenuBar implements Observer{
 	private JRadioButtonMenuItem regJoinedItem;
 	private JMenu recentSessionMenu;
 	private JCheckBoxMenuItem conditionLabelBoxItem;
+	private JMenuItem loadDataItem;
+	private JMenuItem loadGeneTreeItem;
+	private JMenuItem loadRegTreeItem;
+	private JMenuItem loadSymbolicNameItem;
+	private JMenuItem loadConditionTreeItem;
+	private JMenuItem loadAnnotItem;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
 
@@ -72,12 +78,13 @@ public class MainMenu extends JMenuBar implements Observer{
 
 		
 		JMenu fileMenu = new JMenu("File");
-		JMenuItem loadDataItem = new JMenuItem(new LoadDataAction(model, guiModel));
-		JMenuItem loadGeneTreeItem = new JMenuItem(new LoadGeneTreeAction(model, guiModel));
-		JMenuItem loadSymbolicNameItem = new JMenuItem(new LoadSymbolicNamesAction(model, guiModel));
-		JMenuItem loadConditionTreeItem = new JMenuItem(new LoadConditionTreeAction(model, guiModel));
-		JMenuItem loadRegTreeItem = new JMenuItem(new LoadRegulatorTreeAction(model, guiModel));
-		JMenuItem loadAnnotItem = new JMenuItem(new LoadAnnotationAction(model, guiModel));
+		loadDataItem = new JMenuItem(new LoadDataAction(model, guiModel));
+		loadGeneTreeItem = new JMenuItem(new LoadGeneTreeAction(model, guiModel));
+		loadSymbolicNameItem = new JMenuItem(new LoadSymbolicNamesAction(model, guiModel));
+		loadConditionTreeItem = new JMenuItem(new LoadConditionTreeAction(model, guiModel));
+		loadRegTreeItem = new JMenuItem(new LoadRegulatorTreeAction(model, guiModel));
+		loadAnnotItem = new JMenuItem(new LoadAnnotationAction(model, guiModel));
+		
 		
 		saveSessionAsItem = new JMenuItem(new SaveSessionAsAction(model, guiModel));
 		saveSessionAsItem.setEnabled(false);
@@ -98,6 +105,8 @@ public class MainMenu extends JMenuBar implements Observer{
 		JMenuItem exportItem = new JMenuItem(new ExportToFigureAction(model, guiModel));
 		JMenuItem exportAllItem = new JMenuItem(new ExportAllFiguresAction(model, guiModel));
 		
+		enableDataLoadItems();
+		
 		JMenuItem exitItem = new JMenuItem("Exit");
 		exitItem.addActionListener(new ActionListener(){
 			@Override
@@ -105,6 +114,9 @@ public class MainMenu extends JMenuBar implements Observer{
 				System.exit(0);
 			}
 		});
+		
+		
+		
 		fileMenu.add(loadDataItem);
 		fileMenu.add(loadGeneTreeItem);
 		fileMenu.add(loadSymbolicNameItem);
@@ -240,6 +252,39 @@ public class MainMenu extends JMenuBar implements Observer{
 		add(settingsMenu);
 		add(helpMenu);
 	}
+	
+	private void enableDataLoadItems(){
+		//enable/disable loading items
+		if (model.getDataFile()==null){
+			this.loadDataItem.setEnabled(true);
+			
+			this.loadGeneTreeItem.setEnabled(false);
+			this.loadRegTreeItem.setEnabled(false);
+			this.loadSymbolicNameItem.setEnabled(false);
+			this.loadConditionTreeItem.setEnabled(false);
+			this.loadAnnotItem.setEnabled(false);
+		} else {
+			this.loadDataItem.setEnabled(false);
+			
+			if (model.getGeneFile()==null){
+				this.loadGeneTreeItem.setEnabled(true);
+				
+				this.loadRegTreeItem.setEnabled(false);
+				this.loadSymbolicNameItem.setEnabled(false);
+				this.loadConditionTreeItem.setEnabled(false);
+				this.loadAnnotItem.setEnabled(false);
+			} else {
+				this.loadGeneTreeItem.setEnabled(false);
+				
+				this.loadRegTreeItem.setEnabled(model.getRegulatorFile()==null);				
+				this.loadConditionTreeItem.setEnabled(model.getConditionFile()==null);
+				
+				this.loadSymbolicNameItem.setEnabled(true);
+				this.loadAnnotItem.setEnabled(true);
+			}
+		}
+		
+	}
 
 	@Override
 	public void update(Observable o, Object arg) {
@@ -247,6 +292,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		this.treeStructureBoxItem.setSelected(guiModel.isDrawTreeStructure());
 		this.conditionLabelBoxItem.setSelected(guiModel.isDrawConditionLabels());
 		this.debugBoxItem.setSelected(guiModel.isDebugMode());
+		
 		
 		//switch from genes and regs joined to separate if guiModel says so
 		switch(guiModel.getMeanScopeGeneReg()){
@@ -270,5 +316,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		} else {
 			recentSessionMenu.setEnabled(true);
 		}
+		
+		enableDataLoadItems();
 	}
 }
