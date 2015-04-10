@@ -5,7 +5,6 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 
-import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.DuplicateModuleIdException;
 import be.ugent.psb.moduleviewer.model.Gene;

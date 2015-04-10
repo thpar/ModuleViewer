@@ -5,7 +5,6 @@ import java.awt.Dimension;
 import java.awt.Font;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Set;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.ColorMatrix;

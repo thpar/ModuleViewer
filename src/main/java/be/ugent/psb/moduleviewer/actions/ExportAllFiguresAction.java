@@ -2,7 +2,6 @@ package be.ugent.psb.moduleviewer.actions;
 
 import java.awt.event.ActionEvent;
 import java.io.File;
-import java.util.Date;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;

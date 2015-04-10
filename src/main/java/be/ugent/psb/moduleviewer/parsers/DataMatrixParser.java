@@ -6,7 +6,6 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.util.List;
 
-import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;

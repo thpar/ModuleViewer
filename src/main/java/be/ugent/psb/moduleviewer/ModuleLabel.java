@@ -1,7 +1,6 @@
 package be.ugent.psb.moduleviewer;
 
 import java.awt.Cursor;
-import java.awt.Dimension;
 import java.awt.Frame;
 import java.util.Observable;
 import java.util.Observer;

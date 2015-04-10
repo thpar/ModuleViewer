@@ -7,7 +7,6 @@ import javax.xml.parsers.SAXParserFactory;
 
 import org.xml.sax.helpers.DefaultHandler;
 
-import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 
 

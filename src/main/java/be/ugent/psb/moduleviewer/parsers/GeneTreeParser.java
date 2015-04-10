@@ -3,7 +3,6 @@ package be.ugent.psb.moduleviewer.parsers;
 import java.io.IOException;
 import java.io.InputStream;
 
-import be.ugent.psb.moduleviewer.Logger;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
 
