@@ -84,6 +84,7 @@ public class LoadAnnotationAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.showProgressBar(false);
+			model.getLogger().addEntry("Annotation data loaded: "+file);
 			guiModel.clearStateString();
 			guiModel.refresh();
 		}

@@ -128,6 +128,7 @@ public class ExportAllFiguresAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.showProgressBar(false);
+			model.getLogger().addEntry("All figures exported to: "+guiModel.getOutputDir());
 			guiModel.refresh();
 		}
 	}

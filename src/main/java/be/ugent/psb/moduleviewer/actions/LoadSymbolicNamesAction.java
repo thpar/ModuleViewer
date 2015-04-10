@@ -66,6 +66,7 @@ public class LoadSymbolicNamesAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.clearStateString();
+			model.getLogger().addEntry("Symbolic name mapping loaded: "+file);
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

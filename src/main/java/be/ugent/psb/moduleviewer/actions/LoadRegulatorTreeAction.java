@@ -105,6 +105,7 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.clearStateString();
+			model.getLogger().addEntry("Regulator data loaded: "+file);
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

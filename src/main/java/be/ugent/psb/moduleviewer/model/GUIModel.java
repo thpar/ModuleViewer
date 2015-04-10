@@ -51,7 +51,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private boolean drawGeneLinks = true;
 	private boolean drawGeneCheckLists = true;
 	
-	private boolean drawTreeStructure = false;
+	private boolean drawTreeStructure = true;
 	
 	private double zoomLevel = 1;
 	

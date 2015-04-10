@@ -83,6 +83,7 @@ public class LoadConditionTreeAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.showProgressBar(false);
+			model.getLogger().addEntry("Condition data loaded: "+file);
 			guiModel.refresh();
 		}
 	}

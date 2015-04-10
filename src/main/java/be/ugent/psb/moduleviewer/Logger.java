@@ -24,10 +24,20 @@ public class Logger extends Observable{
 		notifyObservers();
 	}
 	
+	public void addEntry(String message){
+		entries.add(new LogEntry(message));
+		setChanged();
+		notifyObservers();
+	}
+	
 	public List<String> getLog(){
 		List<String> log = new ArrayList<String>();
 		for (LogEntry entry : entries){
-			log.add(entry.timestamp+": "+entry.e.getMessage()+"\n"+entry.message+"\n");
+			if (entry.e != null){
+				log.add(entry.timestamp+": "+entry.e.getMessage()+"\n"+entry.message+"\n");				
+			} else {
+				log.add(entry.timestamp+": "+entry.message+"\n");				
+			}
 		}
 		return log;
 	}
@@ -39,6 +49,12 @@ public class Logger extends Observable{
 		
 		public LogEntry(Exception e, String message){
 			this.e = e;
+			this.message = message;
+			this.timestamp = new Date();
+		}
+		
+		public LogEntry(String message){
+			this.e = null;
 			this.message = message;
 			this.timestamp = new Date();
 		}

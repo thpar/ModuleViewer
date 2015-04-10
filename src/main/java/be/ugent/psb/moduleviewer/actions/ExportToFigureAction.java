@@ -80,6 +80,7 @@ public class ExportToFigureAction extends AbstractAction {
 					+ guiModel.getFileNameTemplate(fileId) + "."
 					+ guiModel.getOutputFormat();
 			guiModel.setStateString("figure saved to: " + fileName);
+			model.getLogger().addEntry("figure saved to: " + fileName);
 			Canvas canvas = new DefaultCanvas(mod, model, guiModel, title);
 			CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
 			figCanvas.writeToFigure(guiModel.getOutputFormat());

@@ -81,6 +81,7 @@ public class LoadDataAction extends AbstractAction {
 		
 		@Override
 		protected void done() {
+			model.getLogger().addEntry("Expression matrix loaded: "+file);
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

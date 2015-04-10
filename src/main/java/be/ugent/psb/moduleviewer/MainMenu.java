@@ -30,13 +30,12 @@ import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeGeneRegAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeModNetAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
-import be.ugent.psb.moduleviewer.actions.ShowErrorLogAction;
+import be.ugent.psb.moduleviewer.actions.ShowLogAction;
 import be.ugent.psb.moduleviewer.actions.SortConditionsAction;
 import be.ugent.psb.moduleviewer.actions.SortGenesAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowConditionLabelsAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
-import be.ugent.psb.moduleviewer.dialogs.LogDialog;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeGeneReg;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeModNet;
@@ -197,7 +196,7 @@ public class MainMenu extends JMenuBar implements Observer{
 		sigmaMeanMenu.add(regJoinedItem);
 		
 		viewMenu.addSeparator();
-		JMenuItem logItem = new JMenuItem(new ShowErrorLogAction(model));
+		JMenuItem logItem = new JMenuItem(new ShowLogAction(model));
 		viewMenu.add(logItem);
 		
 		JMenu settingsMenu = new JMenu("Settings");

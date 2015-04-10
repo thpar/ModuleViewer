@@ -108,6 +108,7 @@ public class LoadGeneTreeAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.clearStateString();
+			model.getLogger().addEntry("Gene and module data loaded: "+file);
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}
