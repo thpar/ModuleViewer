@@ -71,7 +71,7 @@ public class GeneListParser extends Parser {
 				Gene gene = modnet.getGene(geneName);
 				geneList.addGene(gene);
 			} catch (UnknownItemException e) {
-				System.err.println(e);
+				logger.addEntry(e, "Unknown gene");
 			}
 		}
 		

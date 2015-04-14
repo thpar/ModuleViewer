@@ -131,7 +131,7 @@ public class GeneXMLHandler extends DefaultHandler {
 	@Override
 	public void endDocument() throws SAXException {
 		for (XMLTag tag : notCaught) {
-//			System.out.println(tag);
+			logger.addEntry("Uncaught tag: "+tag);
 		}
 	}
 
@@ -157,7 +157,7 @@ public class GeneXMLHandler extends DefaultHandler {
 						this.mod = modnet.getModule(modId);
 						break;
 					} catch (UnknownItemException e) {
-						e.printStackTrace();
+						throw new SAXException("Unknown module: "+modId);
 					}
 				}
 			break;
@@ -212,7 +212,7 @@ public class GeneXMLHandler extends DefaultHandler {
 		}
 	}
 
-	private void parseGeneAttributes(Attributes attributes) {
+	private void parseGeneAttributes(Attributes attributes) throws SAXException{
 		String name = attributes.getValue("name");
 		String alias = attributes.getValue("alias");
 		try {
@@ -222,7 +222,7 @@ public class GeneXMLHandler extends DefaultHandler {
 			}
 			node.addGene(addingGene);
 		} catch (UnknownItemException e) {
-			e.printStackTrace();
+			throw new SAXException("Unknown gene");
 		}
 		
 	}
@@ -266,7 +266,6 @@ public class GeneXMLHandler extends DefaultHandler {
 		case NA:
 			throw new SAXException("Unknown tag: "+qName);
 		default:
-//			System.err.println("Tag end not caught: "+el);
 		}
 	
 		opened.pop();

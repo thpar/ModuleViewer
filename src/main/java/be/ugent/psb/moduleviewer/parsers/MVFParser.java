@@ -148,7 +148,7 @@ public class MVFParser extends Parser {
 				try {
 					parseEntry(line);
 				} catch (LineParseException e) {
-					System.err.println(e.getMessage());
+					logger.addEntry(e, "Skipping line");
 				}
 			}
 			
@@ -189,7 +189,7 @@ public class MVFParser extends Parser {
 				params.put(pk, value);				
 			}
 		} catch (IllegalArgumentException e) {
-			System.err.println("Ignored unknown parameter: "+ keyString);
+			logger.addEntry(e,"Ignored unknown parameter: "+ keyString);
 			unknownParameters.put(keyString, value);
 		}
 	}
@@ -204,7 +204,9 @@ public class MVFParser extends Parser {
 			try {
 				objectType=DataType.valueOf(objectTypeString);
 			} catch (IllegalArgumentException e) {
+				//fallback to default
 				objectType=DataType.GENES;
+				logger.addEntry("Falling back to default type GENES. Unknown type: "+objectTypeString);
 			}
 		}
 		

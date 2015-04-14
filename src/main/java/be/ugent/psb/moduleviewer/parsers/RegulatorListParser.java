@@ -67,13 +67,13 @@ public class RegulatorListParser extends Parser{
 					Gene gene = modnet.getGene(regName);
 					regList.addGene(gene);
 				} catch (UnknownItemException e) {
-					System.err.println(e);
+					logger.addEntry(e, "Unknown regulator gene");
 				}
 			}
 			
 			module.addRegulatorTree(regList);
 		} catch (UnknownItemException e) {
-			e.printStackTrace();
+			logger.addEntry(e, "Unknown module ID");
 		}
 		
 	}

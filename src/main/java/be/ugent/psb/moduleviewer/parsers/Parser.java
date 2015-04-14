@@ -13,9 +13,9 @@ import be.ugent.psb.moduleviewer.model.Model;
 
 public abstract class Parser {
 
-	abstract public void parse(Model model, InputStream inputFile) throws IOException;
+	abstract public void parse(Model model, InputStream inputFile) throws IOException, ParseException;
 
-	public void parse(Model model, File inputFile) throws IOException{
+	public void parse(Model model, File inputFile) throws IOException, ParseException{
 		InputStream stream = new FileInputStream(inputFile);
 		this.parse(model, stream);
 	}

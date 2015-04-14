@@ -16,6 +16,7 @@ import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
 import be.ugent.psb.moduleviewer.parsers.MVFParser;
+import be.ugent.psb.moduleviewer.parsers.ParseException;
 import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
 /**
@@ -56,14 +57,19 @@ public class LoadSessionAction extends AbstractAction {
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
 						"Could not load session file: "+file,
-						"Parsing error",
+						"Read error",
+						JOptionPane.ERROR_MESSAGE);
+			} catch (ParseException e1) {
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not load session file: "+file,
+						"Parse error",
 						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		guiModel.setCurrentDir(fc.getCurrentDirectory());
 	}
 
-	protected void loadFromFile(File file) throws IOException{
+	protected void loadFromFile(File file) throws IOException, ParseException{
 		Properties props = new Properties();
 		
 		FileReader fr = new FileReader(file);

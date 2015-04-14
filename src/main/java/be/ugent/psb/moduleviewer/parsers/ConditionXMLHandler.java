@@ -103,15 +103,13 @@ public class ConditionXMLHandler extends DefaultHandler {
 
 	@Override
 	public void startDocument() throws SAXException {		
-		// even init when no parameters will be read,
-		// to conform to the DOM method
-
+		
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
 		for (XMLTag tag : notCaught) {
-//			System.out.println(tag);
+			logger.addEntry("Uncaught XML tag: "+tag);
 		}
 	}
 
@@ -126,15 +124,15 @@ public class ConditionXMLHandler extends DefaultHandler {
 			progListener.setMyProgress(10);
 			break;
 		case MODULE:
+			String modId = new String();
 			try {
-				String modId = attributes.getValue("id");
+				modId = attributes.getValue("id");
 				String modName = attributes.getValue("name");
 				this.mod = modnet.getModule(modId);
 				this.mod.setName(modName);
-			} catch (NumberFormatException e) {
-				e.printStackTrace();
 			} catch (UnknownItemException e) {
-				e.printStackTrace();
+				//TODO this could actually be skipped/recovered
+				throw new SAXException("Referencing unknown module "+modId);
 			}
 			break;
 		case CONDITIONTREE:
@@ -177,20 +175,19 @@ public class ConditionXMLHandler extends DefaultHandler {
 				treePath.push(Dir.LEFT);
 			} else {
 				node.setLeaf(true);
-//				parseTreeNodeAtts(attributes);
 			}
 			break;
 		case CONDITION: 
 			parseConditionAttributes(attributes);
 			break;
 		case NA:
-			throw new SAXException("Unknown tag: " + qName);
+			throw new SAXException("Unknown XML tag: " + qName);
 		default:
 			notCaught.add(el);
 		}
 	}
 
-	private void parseConditionAttributes(Attributes attributes) {
+	private void parseConditionAttributes(Attributes attributes) throws SAXException{
 		String condId = attributes.getValue("id");
 		try {
 			//retrieve parent tag
@@ -213,9 +210,9 @@ public class ConditionXMLHandler extends DefaultHandler {
 			break;
 			}
 		} catch (NumberFormatException e) {
-			e.printStackTrace();
+			throw new SAXException("Corrupt condition ID: "+condId);
 		} catch (UnknownItemException e) {
-			e.printStackTrace();
+			throw new SAXException("Unknown condition");
 		}
 		
 	}
@@ -223,8 +220,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 
 	
 	@Override
-	public void endElement(String uri, String localName, String qName)
-	throws SAXException {
+	public void endElement(String uri, String localName, String qName) throws SAXException {
 		XMLTag el = XMLTag.getValue(qName);
 		//the closing tag we're reading should be the one on top of the stack. 
 		if (el != opened.peek()) throw new SAXException("Incorrectly nested tags.");
@@ -253,7 +249,6 @@ public class ConditionXMLHandler extends DefaultHandler {
 		case NA:
 			throw new SAXException("Unknown tag: "+qName);
 		default:
-//			System.err.println("Tag end not caught: "+el);
 		}
 	
 		opened.pop();

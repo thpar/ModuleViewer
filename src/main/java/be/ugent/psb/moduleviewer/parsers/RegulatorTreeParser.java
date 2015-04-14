@@ -17,7 +17,7 @@ public class RegulatorTreeParser extends TreeParser{
 	}
 
 	@Override
-	public void parse(Model model, InputStream input) throws IOException {
+	public void parse(Model model, InputStream input) throws IOException, ParseException {
 		parse(input, new GeneXMLHandler(model.getModnet(), progressListener, GeneXMLHandler.GeneType.REGULATORS, model.getLogger()));
 	}
 	

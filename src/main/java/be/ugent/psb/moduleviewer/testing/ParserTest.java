@@ -1,7 +1,6 @@
 package be.ugent.psb.moduleviewer.testing;
 
 import java.io.File;
-import java.io.IOException;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock;
@@ -36,7 +35,7 @@ public class ParserTest {
 		try {
 			Parser dmParser = new DataMatrixParser();
 			dmParser.parse(model, dataInput);
-		} catch (IOException e2) {
+		} catch (Exception e2) {
 			e2.printStackTrace();
 		}
 		
@@ -44,28 +43,28 @@ public class ParserTest {
 		try {
 			Parser geneParser = new GeneTreeParser();
 			geneParser.parse(model, geneXML);
-		} catch (IOException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
 			Parser geneParser = new GeneTreeParser();
 			geneParser.parse(model, regulatorXML);
-		} catch (IOException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
 			Parser condParser = new ConditionTreeParser();
 			condParser.parse(model, conditionXML);
-		} catch (IOException e1) {
+		} catch (Exception e1) {
 			e1.printStackTrace();
 		}
 		
 		try {
 			Parser p = new MVFParser();
 			p.parse(model, mvfInput);	
-		} catch (IOException e) {
+		} catch (Exception e) {
 			e.printStackTrace();
 		}
 			

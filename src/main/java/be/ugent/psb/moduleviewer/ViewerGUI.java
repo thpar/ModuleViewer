@@ -2,8 +2,6 @@ package be.ugent.psb.moduleviewer;
 
 import java.awt.BorderLayout;
 import java.awt.Dimension;
-import java.awt.event.MouseListener;
-import java.awt.event.MouseMotionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.BufferedReader;
@@ -29,6 +27,7 @@ import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
 import be.ugent.psb.moduleviewer.parsers.MVFParser;
+import be.ugent.psb.moduleviewer.parsers.ParseException;
 import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
 /**
@@ -87,7 +86,7 @@ public class ViewerGUI implements Observer, WindowListener {
 		}
 	}
 	
-	private void processURLS(Model model, GUIModel guiModel, List<URL> urls) throws IOException{
+	private void processURLS(Model model, GUIModel guiModel, List<URL> urls) throws IOException, ParseException{
 		DataMatrixParser dmp = new DataMatrixParser();
 		dmp.parse(model, urls.get(0).openStream());
 		model.setDataFile(urls.get(0).getFile());
@@ -157,6 +156,9 @@ public class ViewerGUI implements Observer, WindowListener {
 			} catch (IOException e) {
 				e.printStackTrace();
 				System.err.println("Problem loading data over http. Opening client without data.");
+			} catch (ParseException e) {
+				e.printStackTrace();
+				System.err.println("Parse errors while loading data over http. Opening client without data.");
 			}
 		}
 		
