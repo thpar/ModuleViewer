@@ -125,17 +125,13 @@ public class GeneXMLHandler extends DefaultHandler {
 
 	@Override
 	public void startDocument() throws SAXException {
-		System.out.println("Started reading");
-
 
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("Done reading");
-		System.out.println("Tags not parsed:");
 		for (XMLTag tag : notCaught) {
-			System.out.println(tag);
+//			System.out.println(tag);
 		}
 	}
 
@@ -242,7 +238,6 @@ public class GeneXMLHandler extends DefaultHandler {
 		switch(el){
 		case MODULENETWORK:
 			progListener.setMyProgress(80);
-			System.out.println("Done reading Modules");
 			break;
 		case MODULE:
 			if (geneType == GeneType.GENES){

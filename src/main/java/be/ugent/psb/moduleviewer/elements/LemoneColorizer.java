@@ -21,7 +21,6 @@ public class LemoneColorizer extends ExpressionColorizer {
 	@Override
 	public Color getColor(Double value) {
 		if (value==null || Double.isNaN(value)) {
-			System.err.println("No data?");
 			return Color.WHITE;
 		}
 		

@@ -210,15 +210,8 @@ public class ViewerGUI implements Observer, WindowListener {
 			case PAN:
 				modLabel.addMouseMotionListener(dragMoveListener);				
 				modLabel.addMouseListener(dragMoveListener);
-				for (MouseListener ml : modLabel.getMouseListeners()){
-					System.out.println(ml);
-				}
-				for (MouseMotionListener ml : modLabel.getMouseMotionListeners()){
-					System.out.println(ml);
-				}
 				break;
 			case POINT:
-				System.out.println("Update mouselisteners");
 				modLabel.removeMouseMotionListener(dragMoveListener);
 				modLabel.removeMouseListener(dragMoveListener);
 				break;

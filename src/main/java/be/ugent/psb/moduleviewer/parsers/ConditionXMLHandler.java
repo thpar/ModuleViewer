@@ -102,23 +102,16 @@ public class ConditionXMLHandler extends DefaultHandler {
 	}
 
 	@Override
-	public void startDocument() throws SAXException {
-		System.out.println("Started reading");
-
-		
+	public void startDocument() throws SAXException {		
 		// even init when no parameters will be read,
 		// to conform to the DOM method
-
-		// modnet.parameters = new HashMap<String, String>();
 
 	}
 
 	@Override
 	public void endDocument() throws SAXException {
-		System.out.println("Done reading");
-		System.out.println("Tags not parsed:");
 		for (XMLTag tag : notCaught) {
-			System.out.println(tag);
+//			System.out.println(tag);
 		}
 	}
 
