@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -54,19 +55,26 @@ public class LoadSymbolicNamesAction extends AbstractAction {
 			guiModel.showProgressBar(true);
 			setProgress(0);
 			
-			SymbolicNameParser parser = new SymbolicNameParser();
-			parser.parse(model, file);
+			try {
+				SymbolicNameParser parser = new SymbolicNameParser();
+				parser.parse(model, file);
+				model.setSymbolMappingFile(file.getAbsolutePath());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not parse file: "+file,
+						"Parsing error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 			
-			model.setSymbolMappingFile(file.getAbsolutePath());
-			
+			model.getLogger().addEntry("Symbolic name mapping loaded: "+file);
 			setProgress(100);
+			
 			return null;
 		}
 		
 		@Override
 		protected void done() {
 			guiModel.clearStateString();
-			model.getLogger().addEntry("Symbolic name mapping loaded: "+file);
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

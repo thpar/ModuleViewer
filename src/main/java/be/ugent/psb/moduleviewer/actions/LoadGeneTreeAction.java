@@ -7,6 +7,7 @@ import java.io.FileReader;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -77,28 +78,37 @@ public class LoadGeneTreeAction extends AbstractAction {
 					setProgress(percent);
 				}
 			};
-			if (firstLine.startsWith("<?xml")){
-				//Enigma style tree structure
-				guiModel.setStateString("Loading XML gene tree structure from "+file);
-				GeneTreeParser parser = new GeneTreeParser(progListener);
+			
+			
+			try {
+				if (firstLine.startsWith("<?xml")){
+					//Enigma style tree structure
+					guiModel.setStateString("Loading XML gene tree structure from "+file);
+					GeneTreeParser parser = new GeneTreeParser(progListener);
+					
+					parser.parse(model, file);
+					
+				} else {
+					//mvf style gene list
+					guiModel.setStateString("Loading flat gene structure from "+file);
+					GeneListParser parser = new GeneListParser(progListener);
+					
+					parser.parse(model, file);
+					
+				}
 				
-				parser.parse(model, file);
-				
-			} else {
-				//mvf style gene list
-				guiModel.setStateString("Loading flat gene structure from "+file);
-				GeneListParser parser = new GeneListParser(progListener);
-				
-				parser.parse(model, file);
-				
+				//set the displayed module to the first in the map
+				String firstModule = model.getModnet().getFirstModuleId();
+				guiModel.setDisplayedModule(firstModule);
+				model.setGeneFile(file.getAbsolutePath());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not parse file: "+file,
+						"Parsing error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 			
-			//set the displayed module to the first in the map
-			String firstModule = model.getModnet().getFirstModuleId();
-			guiModel.setDisplayedModule(firstModule);
-			
-			model.setGeneFile(file.getAbsolutePath());
-			
+			model.getLogger().addEntry("Gene and module data loaded: "+file);
 			setProgress(100);
 			return null;
 		}
@@ -108,7 +118,6 @@ public class LoadGeneTreeAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.clearStateString();
-			model.getLogger().addEntry("Gene and module data loaded: "+file);
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

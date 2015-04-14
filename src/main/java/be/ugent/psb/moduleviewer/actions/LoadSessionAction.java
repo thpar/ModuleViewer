@@ -8,6 +8,7 @@ import java.util.Properties;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -53,7 +54,10 @@ public class LoadSessionAction extends AbstractAction {
 				loadFromFile(file);
 				guiModel.addRecentSession(file);
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not load session file: "+file,
+						"Parsing error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		guiModel.setCurrentDir(fc.getCurrentDirectory());

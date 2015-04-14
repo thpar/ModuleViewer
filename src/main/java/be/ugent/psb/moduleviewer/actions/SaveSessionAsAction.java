@@ -9,6 +9,7 @@ import java.util.Properties;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -45,7 +46,10 @@ public class SaveSessionAsAction extends AbstractAction {
 				writeToFile(file);
 				guiModel.addRecentSession(file);
 			} catch (IOException e1) {
-				e1.printStackTrace();
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not save session file: "+file,
+						"Write error",
+						JOptionPane.ERROR_MESSAGE);
 			}
 		}
 		guiModel.setCurrentDir(fc.getCurrentDirectory());

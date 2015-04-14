@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 
 import be.ugent.psb.modulegraphics.display.CanvasFigure;
 import be.ugent.psb.modulegraphics.elements.Canvas;
@@ -73,8 +74,9 @@ public class ExportToFigureAction extends AbstractAction {
 			fileId+="_"+mod.getName();
 		}
 		
+		String fileName = new String();
 		try {
-			String fileName = guiModel.getOutputDir()
+			fileName = guiModel.getOutputDir()
 					+ System.getProperty("file.separator")
 					+ guiModel.getFileNameTemplate(fileId) + "."
 					+ guiModel.getOutputFormat();
@@ -84,7 +86,10 @@ public class ExportToFigureAction extends AbstractAction {
 			CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
 			figCanvas.writeToFigure(guiModel.getOutputFormat());
 		} catch (Exception ex) {
-			ex.printStackTrace();
+			JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+					"Could not export figure: "+fileName,
+					"Export error",
+					JOptionPane.ERROR_MESSAGE);
 		}
 		
 	}

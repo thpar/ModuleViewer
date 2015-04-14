@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -70,9 +71,17 @@ public class LoadConditionTreeAction extends AbstractAction {
 			
 			ConditionTreeParser parser = new ConditionTreeParser(progListener);
 			
-			parser.parse(model, file);
-			model.setConditionFile(file.getAbsolutePath());
+			try {
+				parser.parse(model, file);
+				model.setConditionFile(file.getAbsolutePath());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not parse file: "+file,
+						"Parsing error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 			
+			model.getLogger().addEntry("Condition data loaded: "+file);
 			setProgress(100);
 
 			return null;
@@ -83,7 +92,6 @@ public class LoadConditionTreeAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.showProgressBar(false);
-			model.getLogger().addEntry("Condition data loaded: "+file);
 			guiModel.refresh();
 		}
 	}

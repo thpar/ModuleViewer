@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -68,10 +69,19 @@ public class LoadDataAction extends AbstractAction {
 			DataMatrixParser parser = new DataMatrixParser(progListener);
 			
 			guiModel.setStateString("Loading expression data from: "+file);
-			parser.parse(model, file);
-			model.setDataFile(file.getAbsolutePath());
 			
-			guiModel.clearStateString();
+			
+			try {
+				parser.parse(model, file);
+				model.setDataFile(file.getAbsolutePath());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not parse file: "+file,
+						"Parsing error",
+						JOptionPane.ERROR_MESSAGE);
+			}
+			
+			model.getLogger().addEntry("Expression matrix loaded: "+file);
 			setProgress(100);
 			
 			return null;
@@ -81,8 +91,8 @@ public class LoadDataAction extends AbstractAction {
 		
 		@Override
 		protected void done() {
-			model.getLogger().addEntry("Expression matrix loaded: "+file);
 			guiModel.showProgressBar(false);
+			guiModel.clearStateString();
 			guiModel.refresh();
 		}
 	}

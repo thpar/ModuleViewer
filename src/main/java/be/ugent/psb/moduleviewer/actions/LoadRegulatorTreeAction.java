@@ -7,6 +7,7 @@ import java.io.FileReader;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -78,23 +79,31 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 				}
 			};
 			
-			if (firstLine.startsWith("<?xml")){
-				//Enigma style tree structure
-				guiModel.setStateString("Loading XML gene tree structure from "+file);
-				RegulatorTreeParser parser = new RegulatorTreeParser(progListener);
-				
-				parser.parse(model, file);
-				
-			} else {
-				//mvf style gene list
-				guiModel.setStateString("Loading flat regulator structure from "+file);
-				RegulatorListParser parser = new RegulatorListParser(progListener);
-				
-				parser.parse(model, file);
-				
+			try {
+				if (firstLine.startsWith("<?xml")){
+					//Enigma style tree structure
+					guiModel.setStateString("Loading XML gene tree structure from "+file);
+					RegulatorTreeParser parser = new RegulatorTreeParser(progListener);
+					
+					parser.parse(model, file);
+					
+				} else {
+					//mvf style gene list
+					guiModel.setStateString("Loading flat regulator structure from "+file);
+					RegulatorListParser parser = new RegulatorListParser(progListener);
+					
+					parser.parse(model, file);
+					
+				}
+				model.setRegulatorFile(file.getAbsolutePath());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not parse file: "+file,
+						"Parsing error",
+						JOptionPane.ERROR_MESSAGE);
 			}
-			model.setRegulatorFile(file.getAbsolutePath());
 			
+			model.getLogger().addEntry("Regulator data loaded: "+file);
 			setProgress(100);
 
 			return null;
@@ -105,7 +114,6 @@ public class LoadRegulatorTreeAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.clearStateString();
-			model.getLogger().addEntry("Regulator data loaded: "+file);
 			guiModel.showProgressBar(false);
 			guiModel.refresh();
 		}

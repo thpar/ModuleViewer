@@ -5,6 +5,7 @@ import java.io.File;
 
 import javax.swing.AbstractAction;
 import javax.swing.JFileChooser;
+import javax.swing.JOptionPane;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -71,9 +72,17 @@ public class LoadAnnotationAction extends AbstractAction {
 			
 			MVFParser parser = new MVFParser();
 			
-			parser.parse(model, file);
-			model.addAnnotationFile(file.getAbsolutePath());
+			try {
+				parser.parse(model, file);
+				model.addAnnotationFile(file.getAbsolutePath());
+			} catch (Exception e) {
+				JOptionPane.showMessageDialog(guiModel.getTopContainer(), 
+						"Could not parse file: "+file,
+						"Parsing error",
+						JOptionPane.ERROR_MESSAGE);
+			}
 			
+			model.getLogger().addEntry("Annotation data loaded: "+file);
 			setProgress(100);
 
 			return null;
@@ -84,7 +93,6 @@ public class LoadAnnotationAction extends AbstractAction {
 		@Override
 		protected void done() {
 			guiModel.showProgressBar(false);
-			model.getLogger().addEntry("Annotation data loaded: "+file);
 			guiModel.clearStateString();
 			guiModel.refresh();
 		}
