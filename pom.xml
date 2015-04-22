@@ -44,6 +44,10 @@
 							<addClasspath>true</addClasspath>
 							<classpathPrefix>lib/</classpathPrefix>
 					    </manifest>
+					    <manifestEntries>
+    						<Permissions>all-permissions</Permissions>
+    						<Codebase>http://bioinformatics.psb.ugent.be</Codebase>
+  						</manifestEntries>
 	  				</archive>
 				</configuration>
     		</plugin>
