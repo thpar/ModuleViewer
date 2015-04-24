@@ -16,10 +16,15 @@ import org.apache.commons.cli.Options;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
+import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 import be.ugent.psb.moduleviewer.parsers.GeneListParser;
 import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
+import be.ugent.psb.moduleviewer.parsers.MVFParser;
 import be.ugent.psb.moduleviewer.parsers.ParseException;
+import be.ugent.psb.moduleviewer.parsers.RegulatorListParser;
+import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
+import be.ugent.psb.moduleviewer.parsers.SymbolicNameParser;
 
 /**
  * Processes commandline and URL arguments
@@ -61,6 +66,12 @@ public class ArgumentLoader {
 				.withLongOpt("regulators")
 				.create('r');
 
+		Option conds = OptionBuilder.withArgName("condition file")
+				.hasArg()
+				.withDescription("Condition tree file")
+				.withLongOpt("conditions")
+				.create('c');
+		
 		Option synonyms = OptionBuilder.withArgName("synonym file")
 				.hasArg()
 				.withDescription("Gene ID - synonym mapping")
@@ -83,6 +94,7 @@ public class ArgumentLoader {
 		options.addOption(expMatrix);
 		options.addOption(modules);
 		options.addOption(regs);
+		options.addOption(conds);
 		options.addOption(synonyms);
 		options.addOption(annotations);
 				
@@ -125,27 +137,47 @@ public class ArgumentLoader {
 		model.setGeneFile(modules);		
 
 		
-//		ConditionTreeParser ctp = new ConditionTreeParser();
-//		ctp.parse(model, urls.get(2).openStream());
-//		model.setConditionFile(urls.get(2).getFile());
-//
-//		if (urls.size()>=4){
-//			int remLinks = 3;
-//			if (!(urls.get(remLinks).getFile().endsWith(".mvf") ||
-//					checkMagicWord(urls.get(remLinks).openStream(), "MVF"))){
-//				RegulatorTreeParser rtp = new RegulatorTreeParser();
-//				rtp.parse(model, urls.get(3).openStream());
-//				model.setRegulatorFile(urls.get(3).getFile());
-//				remLinks++;
-//			}
-//			while (remLinks<urls.size()){
-//				MVFParser mvfp = new MVFParser();
-//				mvfp.parse(model, urls.get(remLinks).openStream());
-//				model.addAnnotationFile(urls.get(remLinks).getFile());
-//				remLinks++;
-//			}
-//			
-//		}
+		//regulator files
+		if (line.hasOption("regulators")){
+			String regs = line.getOptionValue("regulators");
+			InputStream regStream = createStream(regs);
+			if (isXML(regs)){
+				RegulatorTreeParser rtp = new RegulatorTreeParser();
+				rtp.parse(model, regStream);
+			} else {
+				RegulatorListParser rlp = new RegulatorListParser();
+				rlp.parse(model, regStream);
+			}
+			model.setRegulatorFile(regs);				
+		}
+		
+		//condition files
+		if (line.hasOption("conditions")){
+			String conditions = line.getOptionValue("conditions");
+			ConditionTreeParser ctp = new ConditionTreeParser();
+			ctp.parse(model, createStream(conditions));
+			model.setConditionFile(conditions);			
+		}
+		
+		
+		if (line.hasOption("annotations")){
+			String[] annots = line.getOptionValues("annotations");
+			for (String annot : annots){
+				InputStream annotStream = createStream(annot);
+				MVFParser mvfp = new MVFParser();
+				mvfp.parse(model, annotStream);
+				model.addAnnotationFile(annot);
+			}
+		}
+		
+		//synonym file
+		if (line.hasOption("synonyms")){
+			String syns = line.getOptionValue("synonyms");
+			SymbolicNameParser snp = new SymbolicNameParser();
+			snp.parse(model, createStream(syns));
+			model.setSymbolMappingFile(syns);
+		}
+		
 	}
 	
 	public InputStream createStream(String input) throws IOException{
@@ -166,20 +198,4 @@ public class ArgumentLoader {
 		return URI.endsWith(".xml") || URI.endsWith(".XML");
 	}
 	
-	/**
-	 * Checks if the first line of the given InputStream contains the magic word, indicating 
-	 * the file type without depending on a file extension.
-	 * 
-	 * @param stream
-	 * @param magic
-	 * @return
-	 * @throws IOException
-	 */
-	private boolean checkMagicWord(InputStream stream, String magic) throws IOException{
-		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
-		String line = in.readLine();
-		String magicLine = line.substring(1);
-		in.close();
-		return magicLine.equalsIgnoreCase(magic);
-	}
 }
