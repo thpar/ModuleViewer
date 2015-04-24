@@ -14,7 +14,6 @@ public class ModuleViewer {
 		ViewerGUI gui = new ViewerGUI(args);
 		gui.startGUI();
 
-
 	}
 
 }

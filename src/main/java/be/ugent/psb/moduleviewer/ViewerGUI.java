@@ -5,10 +5,6 @@ import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -34,8 +30,6 @@ public class ViewerGUI implements Observer, WindowListener {
 	 */
 	private JFrame window;
 	
-	private List<URL> urls;
-
 	private ModuleLabel modLabel;
 
 	private JScrollPane scroll;
@@ -47,39 +41,21 @@ public class ViewerGUI implements Observer, WindowListener {
 	private DragMoveListener dragMoveListener;
 	
 	private PointMode currentPointMode;
+
+	private String[] args;
 	
 	public ViewerGUI(){
 		
 	}
 
 	/**
-	 * Loads the moduleviewer with online data.
-	 * Not very robust! It expects the links in this order
-	 * 
-	 *  - data
-	 *  - genes
-	 *  - conditions
-	 *  - regulators (optional)
-	 *  - mvf files (optional)
-	 *  
+	 * Loads the moduleviewer
+
 	 * @param links
 	 */
-	public ViewerGUI(String[] links){
-		if (links != null && links.length>0){
-			urls = new ArrayList<URL>();
-			for (String link : links){
-				try {
-					URL url = new URL(link);
-					this.urls.add(url);
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	public ViewerGUI(String[] args){
+		this.args = args;
 	}
-	
-	
-	
 	
 	
 	/**
@@ -90,22 +66,22 @@ public class ViewerGUI implements Observer, WindowListener {
 		
 		model = new Model();
 		guiModel = new GUIModel(model);
-		
 		guiModel.addObserver(this);
+
+		ArgumentLoader loader = new ArgumentLoader(model);
 		
-		
-		if (urls != null){
+		if (args.length != 0){
 			try {
-				ArgumentLoader argLoader = new ArgumentLoader(model);
-				argLoader.processURLS(urls);
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.err.println("Problem loading data over http. Opening client without data.");
+				loader.processArguments(args);
 			} catch (ParseException e) {
+				System.err.println("Failed to parse initial data. Starting GUI without data.");
 				e.printStackTrace();
-				System.err.println("Parse errors while loading data over http. Opening client without data.");
+			} catch (IOException e){
+				System.err.println("Failed to load initial data files. Starting GUI without data.");
+				e.printStackTrace();
 			}
 		}
+		
 		
 		guiModel.setDrawConditionAnnotationLegend(false);
 		guiModel.setDrawConditionAnnotations(false);
