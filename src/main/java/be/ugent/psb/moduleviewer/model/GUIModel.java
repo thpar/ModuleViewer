@@ -251,10 +251,17 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	/**
 	 * 
-	 * @return the currently displayed module id. Null if no modules are loaded yet.
+	 * @return the currently displayed module id. The first one if no display module was set yet. Null if no modules are loaded yet.
 	 */
 	public String getDisplayedModule() {
-		return displayedModule;
+		if (!this.displayedModule.isEmpty()){
+			return displayedModule;			
+		} else if (!model.getModnet().getModules().isEmpty()){
+			this.displayedModule = model.modnet.getFirstModuleId(); 
+			return displayedModule; 
+		} else {
+			return null;
+		}
 	}
 	
 	/**

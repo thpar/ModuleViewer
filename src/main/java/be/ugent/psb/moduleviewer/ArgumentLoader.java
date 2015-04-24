@@ -1,6 +1,5 @@
 package be.ugent.psb.moduleviewer;
 import java.io.BufferedReader;
-import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
@@ -15,14 +14,12 @@ import org.apache.commons.cli.Option;
 import org.apache.commons.cli.OptionBuilder;
 import org.apache.commons.cli.Options;
 
+import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 import be.ugent.psb.moduleviewer.parsers.GeneListParser;
 import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
-import be.ugent.psb.moduleviewer.parsers.MVFParser;
 import be.ugent.psb.moduleviewer.parsers.ParseException;
-import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
 /**
  * Processes commandline and URL arguments
@@ -34,11 +31,13 @@ public class ArgumentLoader {
 	
 	private Model model;
 	private Options options;
+	private GUIModel guiModel;
 
 	
 	
-	public ArgumentLoader(Model model) {
+	public ArgumentLoader(Model model, GUIModel guiModel) {
 		this.model = model;
+		this.guiModel = guiModel;
 		
 		this.options = new Options();
 		
@@ -123,7 +122,7 @@ public class ArgumentLoader {
 			GeneListParser glp = new GeneListParser();
 			glp.parse(model, moduleStream);
 		}
-		model.setGeneFile(modules);			
+		model.setGeneFile(modules);		
 
 		
 //		ConditionTreeParser ctp = new ConditionTreeParser();

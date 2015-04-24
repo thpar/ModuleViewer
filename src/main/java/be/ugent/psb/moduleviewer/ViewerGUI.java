@@ -68,7 +68,7 @@ public class ViewerGUI implements Observer, WindowListener {
 		guiModel = new GUIModel(model);
 		guiModel.addObserver(this);
 
-		ArgumentLoader loader = new ArgumentLoader(model);
+		ArgumentLoader loader = new ArgumentLoader(model, guiModel);
 		
 		if (args.length != 0){
 			try {
