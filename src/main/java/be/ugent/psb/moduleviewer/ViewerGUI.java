@@ -4,14 +4,7 @@ import java.awt.BorderLayout;
 import java.awt.Dimension;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
-import java.io.BufferedReader;
 import java.io.IOException;
-import java.io.InputStream;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.Observable;
 import java.util.Observer;
 
@@ -23,12 +16,7 @@ import javax.swing.JScrollPane;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.GUIModel.PointMode;
 import be.ugent.psb.moduleviewer.model.Model;
-import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
-import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
-import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
-import be.ugent.psb.moduleviewer.parsers.MVFParser;
 import be.ugent.psb.moduleviewer.parsers.ParseException;
-import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
 
 /**
  * Main class that takes care of the ModuleViewer GUI. Manages and launches the window object.
@@ -42,8 +30,6 @@ public class ViewerGUI implements Observer, WindowListener {
 	 */
 	private JFrame window;
 	
-	private List<URL> urls;
-
 	private ModuleLabel modLabel;
 
 	private JScrollPane scroll;
@@ -55,88 +41,22 @@ public class ViewerGUI implements Observer, WindowListener {
 	private DragMoveListener dragMoveListener;
 	
 	private PointMode currentPointMode;
+
+	private String[] args;
 	
 	public ViewerGUI(){
 		
 	}
 
 	/**
-	 * Loads the moduleviewer with online data.
-	 * Not very robust! It expects the links in this order
-	 * 
-	 *  - data
-	 *  - genes
-	 *  - conditions
-	 *  - regulators (optional)
-	 *  - mvf files (optional)
-	 *  
+	 * Loads the moduleviewer
+
 	 * @param links
 	 */
-	public ViewerGUI(String[] links){
-		if (links != null && links.length>0){
-			urls = new ArrayList<URL>();
-			for (String link : links){
-				try {
-					URL url = new URL(link);
-					this.urls.add(url);
-				} catch (MalformedURLException e) {
-					e.printStackTrace();
-				}
-			}
-		}
+	public ViewerGUI(String[] args){
+		this.args = args;
 	}
 	
-	private void processURLS(Model model, GUIModel guiModel, List<URL> urls) throws IOException, ParseException{
-		DataMatrixParser dmp = new DataMatrixParser();
-		dmp.parse(model, urls.get(0).openStream());
-		model.setDataFile(urls.get(0).getFile());
-
-		GeneTreeParser gtp   = new GeneTreeParser();
-		gtp.parse(model, urls.get(1).openStream());
-		model.setGeneFile(urls.get(1).getFile());
-
-		ConditionTreeParser ctp = new ConditionTreeParser();
-		ctp.parse(model, urls.get(2).openStream());
-		model.setConditionFile(urls.get(2).getFile());
-
-		if (urls.size()>=4){
-			int remLinks = 3;
-			if (!(urls.get(remLinks).getFile().endsWith(".mvf") ||
-					checkMagicWord(urls.get(remLinks).openStream(), "MVF"))){
-				RegulatorTreeParser rtp = new RegulatorTreeParser();
-				rtp.parse(model, urls.get(3).openStream());
-				model.setRegulatorFile(urls.get(3).getFile());
-				remLinks++;
-			}
-			while (remLinks<urls.size()){
-				MVFParser mvfp = new MVFParser();
-				mvfp.parse(model, urls.get(remLinks).openStream());
-				model.addAnnotationFile(urls.get(remLinks).getFile());
-				remLinks++;
-			}
-			
-		}
-
-//		guiModel.refresh();
-
-	}
-	
-	/**
-	 * Checks if the first line of the given InputStream contains the magic word, indicating 
-	 * the file type without depending on a file extension.
-	 * 
-	 * @param stream
-	 * @param magic
-	 * @return
-	 * @throws IOException
-	 */
-	private boolean checkMagicWord(InputStream stream, String magic) throws IOException{
-		BufferedReader in = new BufferedReader(new InputStreamReader(stream));
-		String line = in.readLine();
-		String magicLine = line.substring(1);
-		in.close();
-		return magicLine.equalsIgnoreCase(magic);
-	}
 	
 	/**
 	 * Packs and launches the GUI
@@ -146,21 +66,22 @@ public class ViewerGUI implements Observer, WindowListener {
 		
 		model = new Model();
 		guiModel = new GUIModel(model);
-		
 		guiModel.addObserver(this);
+
+		ArgumentLoader loader = new ArgumentLoader(model, guiModel);
 		
-		
-		if (urls != null){
+		if (args.length != 0){
 			try {
-				processURLS(model, guiModel, urls);
-			} catch (IOException e) {
-				e.printStackTrace();
-				System.err.println("Problem loading data over http. Opening client without data.");
+				loader.processArguments(args);
 			} catch (ParseException e) {
+				System.err.println("Failed to parse initial data. Starting GUI without data.");
 				e.printStackTrace();
-				System.err.println("Parse errors while loading data over http. Opening client without data.");
+			} catch (IOException e){
+				System.err.println("Failed to load initial data files. Starting GUI without data.");
+				e.printStackTrace();
 			}
 		}
+		
 		
 		guiModel.setDrawConditionAnnotationLegend(false);
 		guiModel.setDrawConditionAnnotations(false);

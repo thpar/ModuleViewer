@@ -36,6 +36,10 @@ public class GeneListParser extends Parser {
 	 */
 	private final String COMMENT_SIGN = "#";
 	
+	public GeneListParser(){
+		
+	}
+	
 	public GeneListParser(ProgressListener progListener) {
 		super(progListener);
 	}

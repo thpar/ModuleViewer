@@ -25,6 +25,9 @@ public class RegulatorListParser extends Parser{
 	 */
 	private final String COMMENT_SIGN = "#";
 	
+	public RegulatorListParser(){
+		
+	}
 	
 	public RegulatorListParser(ProgressListener progListener) {
 		super(progListener);
