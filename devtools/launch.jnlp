@@ -17,7 +17,7 @@ $siteroot = 'http://' . $_SERVER["HTTP_HOST"] . str_replace(basename($_SERVER["P
 <resources>
   <j2se version="1.7+" initial-heap-size="128M" max-heap-size="500M"/>
 
-  <jar href="<?php echo($siteroot."moduleviewer-2.5.2.jar");?>" />
+  <jar href="<?php echo($siteroot."moduleviewer-2.5.2-RC.jar");?>" />
 <?php 
 $d = dir("./lib");
 while($entry = $d->read()): 

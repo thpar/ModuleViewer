@@ -47,6 +47,7 @@
 					    <manifestEntries>
     						<Permissions>all-permissions</Permissions>
     						<Codebase>http://bioinformatics.psb.ugent.be</Codebase>
+					    	<Application-Name>ModuleViewer</Application-Name>
   						</manifestEntries>
 	  				</archive>
 				</configuration>
