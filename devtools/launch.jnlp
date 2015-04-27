@@ -17,7 +17,7 @@ $siteroot = 'http://' . $_SERVER["HTTP_HOST"] . str_replace(basename($_SERVER["P
 <resources>
   <j2se version="1.7+" initial-heap-size="128M" max-heap-size="500M"/>
 
-  <jar href="<?php echo($siteroot."ModuleViewer-2.5.1.jar");?>" />
+  <jar href="<?php echo($siteroot."moduleviewer-2.5.2.jar");?>" />
 <?php 
 $d = dir("./lib");
 while($entry = $d->read()): 
@@ -33,8 +33,8 @@ $d->close();
 
 </resources>
 <application-desc main-class="be.ugent.psb.moduleviewer.ModuleViewer">
-<?php foreach ($_GET as $url) : ?>
-	<argument><?=$url?></argument> 
+<?php foreach ($_GET as $key => $url) : ?>
+	<argument>--<?=$key?></argument><argument><?=$url?></argument> 
 <?php endforeach; ?>
 </application-desc>
 </jnlp>
