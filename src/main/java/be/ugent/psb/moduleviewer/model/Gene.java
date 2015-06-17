@@ -14,8 +14,6 @@ public class Gene {
 	 */
 	private String alias;
 	
-	private String description;
-	
 	/**
 	 * The original data for this gene
 	 * The corresponding line from the data matrix 
@@ -89,15 +87,6 @@ public class Gene {
 
 	public double getValue(Condition cond){
 		return data[cond.getNumber()];
-	}
-
-	public String getDescription() {
-		return description;
-	}
-
-
-	public void setDescription(String description) {
-		this.description = description;
 	}
 
 	@Override
