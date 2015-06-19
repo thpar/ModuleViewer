@@ -111,7 +111,95 @@
 					</execution>
 				</executions>
 			</plugin>
+			<!--  Add licenses -->
+			<plugin>
+			    <groupId>org.codehaus.mojo</groupId>
+    			<artifactId>license-maven-plugin</artifactId>
+    			<version>1.7</version>
+    			<executions>
+        			<execution>
+        				<id>license</id>
+    					<configuration>
+        					<licenseName>lgpl_v3</licenseName>
+        					<projectName>ModuleViewer</projectName>
+        					<organizationName>VIB/PSB/UGent - Thomas Van Parys</organizationName>
+        					<inceptionYear>2015</inceptionYear>
+							<generateBundle>true</generateBundle>
+        					<verbose>true</verbose>
+        					<bundleLicensePath>META-INF/LICENSE.txt</bundleLicensePath>
+    					</configuration>
+            			<goals>
+                			<goal>update-project-license</goal>
+            			</goals>
+        			</execution>
+        			<execution>
+        				<id>headers</id>
+            			<configuration>
+            				<licenseName>lgpl_v3</licenseName>
+            				<projectName>ModuleViewer</projectName>
+            				<organizationName>VIB/PSB/UGent - Thomas Van Parys</organizationName>
+            				<inceptionYear>2015</inceptionYear>
+            				<canUpdateCopyright>false</canUpdateCopyright>
+            				<canUpdateDescription>false</canUpdateDescription>
+            				<canUpdateLicense>false</canUpdateLicense>
+            				<verbose>true</verbose>
+            				<roots>
+                				<root>src/main/java</root>
+                				<root>src/test</root>
+              				</roots>
+            			</configuration>
+            			<phase>process-sources</phase>
+            			<goals>
+              				<goal>update-file-header</goal>
+            			</goals>
+          			</execution>
+    			</executions>
+			</plugin>
 		</plugins>
+		
+		<pluginManagement>
+			<plugins>
+				<!--This plugin's configuration is used to store Eclipse m2e settings only. It has no influence on the Maven build itself.-->
+				<plugin>
+					<groupId>org.eclipse.m2e</groupId>
+					<artifactId>lifecycle-mapping</artifactId>
+					<version>1.0.0</version>
+					<configuration>
+						<lifecycleMappingMetadata>
+							<pluginExecutions>
+								<pluginExecution>
+									<pluginExecutionFilter>
+										<groupId>
+											org.codehaus.mojo
+										</groupId>
+										<artifactId>
+											license-maven-plugin
+										</artifactId>
+										<versionRange>
+											[1.7,)
+										</versionRange>
+										<goals>
+											<goal>
+												update-project-license
+											</goal>
+											<goal>
+												update-file-header
+											</goal>
+										</goals>
+									</pluginExecutionFilter>
+									<action>
+										<ignore></ignore>
+									</action>
+								</pluginExecution>
+							</pluginExecutions>
+						</lifecycleMappingMetadata>
+					</configuration>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		
+		
+		
 	</build>
 
 	<dependencies>
