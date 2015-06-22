@@ -35,8 +35,9 @@ import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.parsers.DataMatrixParser;
 
 /**
+ * Load expression data matrix
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class LoadDataAction extends AbstractAction {

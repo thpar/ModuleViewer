@@ -35,6 +35,12 @@ import javax.swing.JTextArea;
 
 import be.ugent.psb.moduleviewer.Logger;
 
+/**
+ * The log window. Display the list of log messages.
+ *  
+ * @author Thomas Van Parys
+ *
+ */
 public class LogDialog extends JDialog implements Observer{
 
 

@@ -29,6 +29,12 @@ import javax.swing.JFileChooser;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
+/**
+ * Dialog window to set output directory
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ChangeOutputDirAction extends AbstractAction {
 
 

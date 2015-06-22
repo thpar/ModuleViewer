@@ -38,6 +38,12 @@ import javax.swing.JSpinner;
 import javax.swing.JTextField;
 import javax.swing.SpinnerNumberModel;
 
+/**
+ * Part of Wizard dialog. Not used at this point.
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class LoadCheckListDialog extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;

@@ -46,7 +46,7 @@ import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
  * Safes the 'session' to a file.
  * A session should consist of all loaded files and the GUIModel settings.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class LoadSessionAction extends AbstractAction {

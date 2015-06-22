@@ -29,7 +29,12 @@ import java.awt.Graphics2D;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.Label;
 
-
+/**
+ * Title to display above the figure
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class Title extends Element {
 
 	private Label label;

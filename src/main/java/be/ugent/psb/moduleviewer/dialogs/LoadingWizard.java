@@ -43,6 +43,7 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
 /**
  * This modal dialogue presents the user with the list of required and optional loading options.
  * 
+ * (not used at this point)
  * 
  * @author Thomas Van Parys
  *

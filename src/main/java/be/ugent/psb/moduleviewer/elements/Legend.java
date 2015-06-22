@@ -38,6 +38,12 @@ import be.ugent.psb.modulegraphics.elements.Spacer;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork.LegendKeyColorPair;
 
+/**
+ * Legend drawn underneath the figure
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class Legend extends Canvas {
 	
 	

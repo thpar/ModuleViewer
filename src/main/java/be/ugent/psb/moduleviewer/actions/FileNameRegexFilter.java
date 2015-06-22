@@ -28,11 +28,23 @@ import java.util.regex.Pattern;
 
 import javax.swing.filechooser.FileFilter;
 
+/**
+ * Filter for a file dialog, depending on a given regular expression
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class FileNameRegexFilter extends FileFilter {
 
 	private String descr;
 	private Pattern pattern;
 
+	/**
+	 * A file filter with given description and regular expression
+	 * 
+	 * @param descr description of file type
+	 * @param pattern regular expression for files to show in the file loading dialog
+	 */
 	public FileNameRegexFilter(String descr, String pattern){
 		this.descr = descr;
 		this.pattern = Pattern.compile(pattern);

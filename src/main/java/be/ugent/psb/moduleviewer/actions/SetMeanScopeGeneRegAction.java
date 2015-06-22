@@ -31,7 +31,7 @@ import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeGeneReg;
 
 /**
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class SetMeanScopeGeneRegAction extends AbstractAction {

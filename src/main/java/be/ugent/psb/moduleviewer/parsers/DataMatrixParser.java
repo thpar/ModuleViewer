@@ -44,10 +44,10 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  * line 1 : tab delimited list of conditions (ids) col 0 and 1 are headers and can be skipped.
  * other lines: tab delimited list: 
  * column 0: gene id
- * column 1: optional description
+ * column 1: symbolic gene name
  * column 2 and further: values in same order as conditions
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class DataMatrixParser extends Parser {

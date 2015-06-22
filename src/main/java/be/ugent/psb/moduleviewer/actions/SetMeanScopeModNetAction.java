@@ -31,7 +31,7 @@ import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeModNet;
 
 /**
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class SetMeanScopeModNetAction extends AbstractAction {

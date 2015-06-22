@@ -28,6 +28,12 @@ import java.io.InputStream;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
 
+/**
+ * Parser for a tree structure of regulator genes per module
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class RegulatorTreeParser extends TreeParser{
 
 	public RegulatorTreeParser() {

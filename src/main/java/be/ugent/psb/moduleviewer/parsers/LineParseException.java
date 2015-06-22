@@ -22,6 +22,12 @@ package be.ugent.psb.moduleviewer.parsers;
  * #L%
  */
 
+/**
+ * Thrown when a line in an MVF file gives an error
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class LineParseException extends Exception {
 
 	private static final long serialVersionUID = 1L;

@@ -22,6 +22,12 @@ package be.ugent.psb.moduleviewer.model;
  * #L%
  */
 
+/**
+ * A single condition, identified by its name and column number in the input expression matrix 
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class Condition{
 
 	/**

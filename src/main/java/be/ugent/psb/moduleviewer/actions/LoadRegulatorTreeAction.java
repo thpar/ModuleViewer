@@ -41,7 +41,7 @@ import be.ugent.psb.moduleviewer.parsers.RegulatorTreeParser;
  * Loads an xml file that classifies regulators into modules and organizes them 
  * into a tree structure within each module.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class LoadRegulatorTreeAction extends AbstractAction {

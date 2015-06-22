@@ -40,7 +40,7 @@ import be.ugent.psb.moduleviewer.model.GeneNode;
 /**
  * Iterates {@link ConditionNode}s and constructs the Expression Matrix on a {@link Canvas}
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class ExpressionMatrix extends Canvas {

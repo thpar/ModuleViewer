@@ -31,6 +31,12 @@ import java.util.Observable;
 
 import be.ugent.psb.moduleviewer.Logger;
 
+/**
+ * Access point to loaded data 
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class Model extends Observable{
 
 	

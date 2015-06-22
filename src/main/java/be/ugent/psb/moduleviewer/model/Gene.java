@@ -23,7 +23,11 @@ package be.ugent.psb.moduleviewer.model;
  */
 
 
-
+/**
+ * A single gene, identified by its gene id
+ * @author Thomas Van Parys
+ *
+ */
 public class Gene {
 
 	/**

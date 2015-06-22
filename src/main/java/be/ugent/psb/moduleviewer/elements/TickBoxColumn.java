@@ -39,7 +39,7 @@ import be.ugent.psb.moduleviewer.model.Gene;
  * The tickbox matrix simply checks if a genes is present in a list and colors
  * it if it does.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class TickBoxColumn extends Element implements Colorizer<Boolean>{

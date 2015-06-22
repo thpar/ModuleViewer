@@ -44,6 +44,7 @@ import be.ugent.psb.moduleviewer.actions.LoadAnnotationAction;
 import be.ugent.psb.moduleviewer.actions.LoadConditionTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadDataAction;
 import be.ugent.psb.moduleviewer.actions.LoadGeneTreeAction;
+import be.ugent.psb.moduleviewer.actions.LoadRecentSessionAction;
 import be.ugent.psb.moduleviewer.actions.LoadRegulatorTreeAction;
 import be.ugent.psb.moduleviewer.actions.LoadSessionAction;
 import be.ugent.psb.moduleviewer.actions.LoadSymbolicNamesAction;
@@ -66,7 +67,7 @@ import be.ugent.psb.moduleviewer.model.Model;
 /**
  * The classic top screen menu. Observes the model to toggle options when needed.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class MainMenu extends JMenuBar implements Observer{

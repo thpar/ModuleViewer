@@ -38,6 +38,12 @@ import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 
+/**
+ * One 'leaf' of an expression matrix that's organized in a tree structure
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ExpressionLeaf extends Canvas{
 	
 

@@ -42,6 +42,8 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
 /**
  * A page from the data {@link LoadingWizard}.
  * 
+ * (not used at this point)
+ * 
  * @author Thomas Van Parys
  *
  */

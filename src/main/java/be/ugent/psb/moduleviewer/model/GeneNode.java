@@ -29,6 +29,12 @@ import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
+/**
+ * A node in the gene tree
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class GeneNode implements ITreeNode<Gene>{
 	/**
 	 * Left child

@@ -26,6 +26,12 @@ import java.awt.Color;
 
 import be.ugent.psb.modulegraphics.elements.Colorizer;
 
+/**
+ * Calculate a color based on an expression value (double)
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 abstract public class ExpressionColorizer implements Colorizer<Double> {
 
 	@Override

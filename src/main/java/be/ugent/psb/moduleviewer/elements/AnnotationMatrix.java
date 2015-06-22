@@ -28,6 +28,13 @@ import java.util.List;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.modulegraphics.elements.Matrix;
 
+/**
+ * Default representation for annotation data
+ * 
+ * @author Thomas Van Parys
+ *
+ * @param <T> What to annotate: {@link Gene} or {@link Condition}
+ */
 public class AnnotationMatrix<T> extends Canvas{
 
 	protected Matrix<?> matrix;

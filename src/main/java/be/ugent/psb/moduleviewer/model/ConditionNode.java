@@ -30,6 +30,12 @@ import java.util.Map;
 
 import be.ugent.psb.modulegraphics.elements.ITreeNode;
 
+/**
+ * A node in the condition tree
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ConditionNode implements ITreeNode<Condition>{
 	/**
 	 * Left child

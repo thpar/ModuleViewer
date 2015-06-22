@@ -58,7 +58,7 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
  * 
  * When constructing drastically different figures, an other class should be used, extending Canvas. 
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class DefaultCanvas extends Canvas {

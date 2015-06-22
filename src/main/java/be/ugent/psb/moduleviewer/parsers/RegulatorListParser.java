@@ -35,6 +35,12 @@ import be.ugent.psb.moduleviewer.model.Module;
 import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 import be.ugent.psb.moduleviewer.model.UnknownItemException;
 
+/**
+ * Parser for a simple list of regulators per module
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class RegulatorListParser extends Parser{
 	
 	/**

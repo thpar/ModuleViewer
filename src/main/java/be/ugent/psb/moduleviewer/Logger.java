@@ -30,7 +30,7 @@ import java.util.Observable;
 /**
  * Keeps track off non-fatal exceptions to be shown in the log dialog.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class Logger extends Observable{

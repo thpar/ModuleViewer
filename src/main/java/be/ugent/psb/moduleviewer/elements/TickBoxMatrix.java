@@ -29,7 +29,7 @@ import be.ugent.psb.modulegraphics.elements.Canvas;
 /**
  * The tickbox matrix lays out a list of {@link TickBoxColumn}}
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class TickBoxMatrix extends Canvas{

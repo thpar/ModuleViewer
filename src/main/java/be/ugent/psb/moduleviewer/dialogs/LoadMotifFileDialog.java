@@ -36,6 +36,12 @@ import javax.swing.JLabel;
 import javax.swing.JPanel;
 import javax.swing.JTextField;
 
+/**
+ * Part of loading wizard. Not used at this point
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class LoadMotifFileDialog extends JDialog implements ActionListener{
 
 	private static final long serialVersionUID = 1L;

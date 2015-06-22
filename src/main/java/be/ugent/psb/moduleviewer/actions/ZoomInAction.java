@@ -28,6 +28,12 @@ import javax.swing.AbstractAction;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
+/**
+ * Zoom in action.
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ZoomInAction extends AbstractAction {
 
 

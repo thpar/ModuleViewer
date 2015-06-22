@@ -42,7 +42,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * and a {@link ColoredAnnotationBlock} that contains the from/to information and edge colors.
  * 
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class GeneLinks extends ConnectArrows{

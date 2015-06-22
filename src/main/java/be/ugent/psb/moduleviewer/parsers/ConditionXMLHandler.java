@@ -42,7 +42,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * Handles the XML that describes a {@link ConditionAnnotation} tree. Invoked by
  * the {@link TreeParser}
  * 
- * @author thpar
+ * @author Thomas Van Parys
  * 
  */
 public class ConditionXMLHandler extends DefaultHandler {
@@ -50,7 +50,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 	 * The XML tags we're expecting. Enums are in all capitals, but will match
 	 * case insensitive.
 	 * 
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 * 
 	 */
 	enum XMLTag {
@@ -75,7 +75,7 @@ public class ConditionXMLHandler extends DefaultHandler {
 	/**
 	 * Did we go left or right? (or just started at the root)
 	 * 
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 * 
 	 */
 	enum Dir {

@@ -28,6 +28,12 @@ import be.ugent.psb.moduleviewer.model.AnnotationBlock.BlockType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.ValueType;
 
+/**
+ * Takes default values for creating new annotation blocks
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class AnnotationBlockFactory {
 	
 	private int blockID;

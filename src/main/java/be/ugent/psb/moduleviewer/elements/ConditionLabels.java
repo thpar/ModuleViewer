@@ -39,7 +39,7 @@ import be.ugent.psb.moduleviewer.model.ConditionNode;
 /**
  * Draw the names of Conditions under the expression matrix.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class ConditionLabels extends Canvas {

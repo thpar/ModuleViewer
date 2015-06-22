@@ -85,7 +85,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * Col 2 : Optional. Describes which set this list of genes belongs to (a GO term, etc...) When empty, the TYPE value will be
  * used.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class MVFParser extends Parser {
@@ -122,7 +122,7 @@ public class MVFParser extends Parser {
 	
 	/**
 	 * Keys that can be used in the MVF format.
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 *
 	 */
 	enum ParamKey{
@@ -142,7 +142,7 @@ public class MVFParser extends Parser {
 	/**
 	 * Part of the MVF file
 	 * 
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 *
 	 */
 	enum ParsingType{

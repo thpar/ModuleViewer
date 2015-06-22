@@ -38,7 +38,7 @@ import be.ugent.psb.moduleviewer.parsers.MVFParser;
  * Loads an MVF file. These files represent several kinds of annotations for 
  * genes and conditions.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class LoadAnnotationAction extends AbstractAction {

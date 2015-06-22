@@ -53,7 +53,7 @@ import be.ugent.psb.moduleviewer.model.ModuleNetwork;
 /**
  * Toolbar with navigation and export buttons.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class NavigationToolBar extends JToolBar implements Observer, FocusListener, KeyListener{

@@ -31,6 +31,12 @@ import javax.swing.UIManager;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 
+/**
+ * Unload all data and start a new session
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class NewSessionAction extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;

@@ -30,7 +30,7 @@ import java.util.Set;
  * 
  * T : class of objects to be annotated
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  * @param <T> Type of contents ({@link Gene} or {@link Condition})
  */

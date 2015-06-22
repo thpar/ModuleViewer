@@ -28,6 +28,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * Annotation data needed to draw a numbered matrix. 
+ * 
+ * @author Thomas Van Parys
+ *
+ * @param <T>
+ */
 public class NumberedAnnotation<T> extends Annotation<T> {
 	
 	

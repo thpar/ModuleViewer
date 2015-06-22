@@ -35,6 +35,12 @@ import be.ugent.psb.moduleviewer.model.ColoredAnnotation;
 import be.ugent.psb.moduleviewer.model.Condition;
 import be.ugent.psb.moduleviewer.model.ConditionNode;
 
+/**
+ * Annotation matrix for {@link Condition}s
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 
 	private AnnotationBlock<Condition> ab;
@@ -140,7 +146,6 @@ public class ConditionAnnotationMatrix extends AnnotationMatrix<Condition> {
 	}
 	
 	
-	//FIXME NOT WORKING YET!!!
 	private void constructNumberedMatrix() {
 
 		int numberOfConditions = condRoot.getWidth();

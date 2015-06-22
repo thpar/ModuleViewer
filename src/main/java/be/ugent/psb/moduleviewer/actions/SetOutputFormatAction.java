@@ -30,10 +30,9 @@ import be.ugent.psb.modulegraphics.display.CanvasFigure.OutputFormat;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
 /**
- * Loads an MVF file. These files represent several kinds of annotations for 
- * genes and conditions.
+ * Action to switch output format (pdf, png, eps, ...)
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class SetOutputFormatAction extends AbstractAction {

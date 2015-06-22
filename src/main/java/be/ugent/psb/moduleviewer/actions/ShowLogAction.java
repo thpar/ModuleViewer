@@ -29,6 +29,12 @@ import javax.swing.AbstractAction;
 import be.ugent.psb.moduleviewer.dialogs.LogDialog;
 import be.ugent.psb.moduleviewer.model.Model;
 
+/**
+ * Show the log window
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ShowLogAction extends AbstractAction{
 
 	private static final long serialVersionUID = 1L;

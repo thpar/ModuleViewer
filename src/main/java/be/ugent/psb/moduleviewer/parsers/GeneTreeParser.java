@@ -28,6 +28,12 @@ import java.io.InputStream;
 import be.ugent.psb.moduleviewer.actions.ProgressListener;
 import be.ugent.psb.moduleviewer.model.Model;
 
+/**
+ * Parse a gene tree from XML
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class GeneTreeParser extends TreeParser{
 
 	public GeneTreeParser() {

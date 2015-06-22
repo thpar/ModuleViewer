@@ -29,6 +29,12 @@ import java.util.Map;
 
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 
+/**
+ * A module of co-expressed genes, to be displayed as a single figure
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class Module {
 
 	

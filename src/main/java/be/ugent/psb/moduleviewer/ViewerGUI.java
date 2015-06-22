@@ -42,7 +42,7 @@ import be.ugent.psb.moduleviewer.parsers.ParseException;
 
 /**
  * Main class that takes care of the ModuleViewer GUI. Manages and launches the window object.
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class ViewerGUI implements Observer, WindowListener {

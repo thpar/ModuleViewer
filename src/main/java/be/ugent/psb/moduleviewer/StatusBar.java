@@ -38,7 +38,7 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
  * Status bar at the bottom of the screen. Listens to the model, which can set status messages to display.
  * Also the progress bar while loading files will be shown here.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class StatusBar extends JPanel implements Observer{

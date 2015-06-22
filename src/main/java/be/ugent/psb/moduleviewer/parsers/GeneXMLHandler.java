@@ -46,7 +46,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
  * The genes described in the XML file are grouped by module and organised into a tree structure.
  * They either represent genes or regulators.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  * 
  */
 public class GeneXMLHandler extends DefaultHandler {
@@ -60,7 +60,7 @@ public class GeneXMLHandler extends DefaultHandler {
 	 * The XML tags we're expecting. Enums are in all capitals, but will match
 	 * case insensitive.
 	 * 
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 * 
 	 */
 	enum XMLTag {
@@ -85,7 +85,7 @@ public class GeneXMLHandler extends DefaultHandler {
 	/**
 	 * Did we go left or right? (or just started at the root)
 	 * 
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 * 
 	 */
 	enum Dir {

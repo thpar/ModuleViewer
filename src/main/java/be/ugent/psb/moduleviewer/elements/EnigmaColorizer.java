@@ -24,6 +24,13 @@ package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
 
+/**
+ * Calculate the colors for expression values in the same way as originally done in the output figures 
+ * of the Enigma clustering tool.
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class EnigmaColorizer extends ExpressionColorizer{
 
 	
@@ -36,8 +43,6 @@ public class EnigmaColorizer extends ExpressionColorizer{
 	 * For low expression to high, make the scale blue to yellow or the
 	 * other way around?
 	 * 
-	 * @author Thomas Van Parys
-	 *
 	 */
 	enum Scale{
 		YELLOW_TO_BLUE, BLUE_TO_YELLOW;

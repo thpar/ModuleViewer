@@ -22,6 +22,12 @@ package be.ugent.psb.moduleviewer.model;
  * #L%
  */
 
+/**
+ * Thrown when a module id already exists.
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class DuplicateModuleIdException extends Exception {
 
 	private static final long serialVersionUID = 1L;

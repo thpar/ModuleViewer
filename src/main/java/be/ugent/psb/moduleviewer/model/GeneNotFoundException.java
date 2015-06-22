@@ -25,7 +25,7 @@ package be.ugent.psb.moduleviewer.model;
 /**
  * Thrown when a Gene object can not be found in a list where it's expected.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class GeneNotFoundException extends Exception {

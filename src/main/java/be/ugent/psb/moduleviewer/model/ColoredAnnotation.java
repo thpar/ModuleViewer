@@ -29,6 +29,13 @@ import java.util.Map;
 import java.util.Map.Entry;
 import java.util.Set;
 
+/**
+ * Annotation data needed for drawing a colored annotation matrix.
+ * 
+ * @author Thomas Van Parys
+ *
+ * @param <T>
+ */
 public class ColoredAnnotation<T> extends Annotation<T> {
 	
 	

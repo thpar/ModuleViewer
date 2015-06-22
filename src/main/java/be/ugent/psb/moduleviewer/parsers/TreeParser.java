@@ -41,7 +41,7 @@ import be.ugent.psb.moduleviewer.actions.ProgressListener;
  * The {@link SaxParser} uses either the {@link ConditionXMLHandler} or the {@link GeneXMLHandler} 
  * depending on the implementation of TreeParser
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 abstract class TreeParser extends Parser{

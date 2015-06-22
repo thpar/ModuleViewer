@@ -21,11 +21,9 @@ package be.ugent.psb.moduleviewer;
  * <http://www.gnu.org/licenses/lgpl-3.0.html>.
  * #L%
  */
-import java.io.BufferedReader;
 import java.io.FileInputStream;
 import java.io.IOException;
 import java.io.InputStream;
-import java.io.InputStreamReader;
 import java.net.URL;
 
 import org.apache.commons.cli.CommandLine;
@@ -51,7 +49,7 @@ import be.ugent.psb.moduleviewer.parsers.SymbolicNameParser;
 /**
  * Processes commandline and URL arguments
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class ArgumentLoader {
@@ -61,7 +59,12 @@ public class ArgumentLoader {
 	private GUIModel guiModel;
 
 	
-	
+	/**
+	 * Init command line options 
+	 * 
+	 * @param model 
+	 * @param guiModel
+	 */
 	public ArgumentLoader(Model model, GUIModel guiModel) {
 		this.model = model;
 		this.guiModel = guiModel;
@@ -122,6 +125,13 @@ public class ArgumentLoader {
 				
 	}
 
+	/**
+	 * Read the command line arguments, feed them to the parser and load the specified input files
+	 * 
+	 * @param args command line parameters
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public void processArguments(String[] args) throws IOException, ParseException{
 		CommandLineParser parser = new GnuParser();
 		
@@ -138,6 +148,14 @@ public class ArgumentLoader {
 		
 	}
 
+	/**
+	 * Load the specified data into the model. 
+	 * 
+	 * @param line the parsed CommandLine
+	 * 
+	 * @throws IOException
+	 * @throws ParseException
+	 */
 	public void loadData(CommandLine line) throws IOException, ParseException{
 		
 		//expression matrix

@@ -28,6 +28,12 @@ import javax.swing.AbstractAction;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
+/**
+ * Toggle drawing of tree structure for conditions on and off
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ToggleShowTreeAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;

@@ -40,7 +40,12 @@ import be.ugent.psb.moduleviewer.model.GeneNode;
 import be.ugent.psb.moduleviewer.model.NumberedAnnotation;
 
 
-
+/**
+ * Annotation matrix for {@link Gene}s
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 
 	private AnnotationBlock<Gene> ab;

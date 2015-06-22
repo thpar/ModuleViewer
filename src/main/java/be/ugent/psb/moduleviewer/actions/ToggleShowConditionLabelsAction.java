@@ -28,6 +28,14 @@ import javax.swing.AbstractAction;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
+/**
+ * Toggle the drawing of labels for conditions (under the figure). Could improve performance and reduce image clutter for 
+ * a large number of conditions.
+ * 
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ToggleShowConditionLabelsAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;

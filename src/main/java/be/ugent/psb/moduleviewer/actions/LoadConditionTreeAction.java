@@ -38,7 +38,7 @@ import be.ugent.psb.moduleviewer.parsers.ConditionTreeParser;
  * Loads an xml file that classifies genes into modules and organizes them 
  * into a tree structure within each module.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class LoadConditionTreeAction extends AbstractAction {

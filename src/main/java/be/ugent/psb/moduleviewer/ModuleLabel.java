@@ -43,7 +43,7 @@ import be.ugent.psb.moduleviewer.model.UnknownItemException;
 /**
  * The body of the GUI, the label that draws the Canvas with the module figures.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class ModuleLabel extends CanvasLabel implements Observer{

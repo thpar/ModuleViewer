@@ -29,16 +29,16 @@ import java.util.List;
 import java.util.Map;
 
 /**
+ * Data for one single annotation block
  * 
- * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class AnnotationBlock<T> {
 	
 	/**
 	 * Type of data we're annotating (Genes or Conditions)
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 *
 	 */
 	public enum DataType{
@@ -70,7 +70,7 @@ public class AnnotationBlock<T> {
 	}
 	/**
 	 * Kind of values linked to the genes
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 *
 	 */
 	public enum ValueType{

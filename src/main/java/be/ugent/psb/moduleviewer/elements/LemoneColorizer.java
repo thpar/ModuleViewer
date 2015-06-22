@@ -24,7 +24,14 @@ package be.ugent.psb.moduleviewer.elements;
 
 import java.awt.Color;
 
-
+/**
+ * Calculate the colors for expression values in the same way as originally done in the output figures 
+ * of the LeMoNe clustering tool.
+ * 
+ * @deprecated
+ * @author Thomas Van Parys
+ *
+ */
 public class LemoneColorizer extends ExpressionColorizer {
 	
 	private double mean;

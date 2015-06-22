@@ -29,6 +29,12 @@ import javax.swing.ImageIcon;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
+/**
+ * Action for the navigation buttons
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class NavModuleAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;
@@ -38,7 +44,13 @@ public class NavModuleAction extends AbstractAction {
 	private GUIModel guiModel;
 	
 	
-	
+	/**
+	 * 
+	 * 
+	 * @param icon 'next' or 'previous' icon 
+	 * @param step +1 or -1 step 
+	 * @param guiModel the GUIModel
+	 */
 	public NavModuleAction(ImageIcon icon, int step, GUIModel guiModel) {
 		super(new String(), icon);
 		this.step = step;

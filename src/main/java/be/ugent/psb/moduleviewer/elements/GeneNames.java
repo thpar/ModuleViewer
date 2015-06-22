@@ -35,6 +35,12 @@ import be.ugent.psb.modulegraphics.elements.LabelList.Direction;
 import be.ugent.psb.moduleviewer.model.Gene;
 import be.ugent.psb.moduleviewer.model.GeneNode;
 
+/**
+ * Gene names to display next to the main expression matrix 
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class GeneNames extends Canvas {
 	
 	public GeneNames(GeneNode geneRoot){

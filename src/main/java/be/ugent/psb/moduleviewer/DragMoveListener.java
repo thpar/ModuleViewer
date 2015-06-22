@@ -32,6 +32,12 @@ import javax.swing.JComponent;
 import javax.swing.JViewport;
 import javax.swing.SwingUtilities;
 
+/**
+ * Implementation of mouse dragging events
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class DragMoveListener implements MouseListener, MouseMotionListener{
 	private final Rectangle rect = new Rectangle();
 	private final JViewport vport;

@@ -22,6 +22,12 @@ package be.ugent.psb.moduleviewer.parsers;
  * #L%
  */
 
+/**
+ * Wrapper for exceptions thrown by the parsers
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ParseException extends Exception {
 
 	private static final long serialVersionUID = 1L;

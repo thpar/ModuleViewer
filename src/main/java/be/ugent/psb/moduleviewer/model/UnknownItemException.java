@@ -22,6 +22,14 @@ package be.ugent.psb.moduleviewer.model;
  * #L%
  */
 
+/**
+ * Thrown when a search for a certain item (gene, condition, module) on its identifier
+ * yields nothing.
+ * 
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class UnknownItemException extends Exception {
 
 	private static final long serialVersionUID = 1L;

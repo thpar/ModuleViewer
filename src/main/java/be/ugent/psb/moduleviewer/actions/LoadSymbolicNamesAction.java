@@ -34,7 +34,12 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.parsers.SymbolicNameParser;
 
-
+/**
+ * Load gene ID -> symbolic name mapping
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class LoadSymbolicNamesAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;

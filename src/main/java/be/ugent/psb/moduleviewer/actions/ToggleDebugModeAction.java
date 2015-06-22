@@ -28,6 +28,12 @@ import javax.swing.AbstractAction;
 
 import be.ugent.psb.moduleviewer.model.GUIModel;
 
+/**
+ * Toggle debug mode (outlining of Elements) 
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ToggleDebugModeAction extends AbstractAction {
 
 	private static final long serialVersionUID = 1L;

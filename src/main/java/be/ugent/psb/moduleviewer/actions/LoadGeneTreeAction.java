@@ -41,7 +41,7 @@ import be.ugent.psb.moduleviewer.parsers.GeneTreeParser;
  * Loads an xml file that classifies genes into modules and organizes them 
  * into a tree structure within each module.
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class LoadGeneTreeAction extends AbstractAction {

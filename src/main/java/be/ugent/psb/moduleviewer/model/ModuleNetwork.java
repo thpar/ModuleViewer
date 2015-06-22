@@ -35,6 +35,12 @@ import java.util.Set;
 import be.ugent.psb.moduleviewer.model.AnnotationBlock.DataType;
 import be.ugent.psb.moduleviewer.model.UnknownItemException.ItemType;
 
+/**
+ * A collection of co-expression modules
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class ModuleNetwork{
 
 	/**

@@ -32,10 +32,11 @@ import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.GUIModel.PointMode;
 
 /**
- * Loads an MVF file. These files represent several kinds of annotations for 
- * genes and conditions.
+ * Action to toggle point mode (between dragging and clicking)
  * 
- * @author thpar
+ * Point mode button is disabled at this point.
+ * 
+ * @author Thomas Van Parys
  *
  */
 public class SetPointModeAction extends AbstractAction {

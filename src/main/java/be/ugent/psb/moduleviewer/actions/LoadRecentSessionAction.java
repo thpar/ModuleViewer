@@ -1,4 +1,4 @@
-package be.ugent.psb.moduleviewer;
+package be.ugent.psb.moduleviewer.actions;
 
 /*
  * #%L
@@ -28,11 +28,16 @@ import java.io.IOException;
 
 import javax.swing.JOptionPane;
 
-import be.ugent.psb.moduleviewer.actions.LoadSessionAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.Model;
 import be.ugent.psb.moduleviewer.parsers.ParseException;
 
+/**
+ * Action to load a recently used session file
+ * 
+ * @author Thomas Van Parys
+ *
+ */
 public class LoadRecentSessionAction extends LoadSessionAction {
 
 	private static final long serialVersionUID = 1L;

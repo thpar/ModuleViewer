@@ -48,7 +48,7 @@ import be.ugent.psb.modulegraphics.elements.Element;
  * This model can be observed by a Canvas or JPanel to react to 
  * changes (toggling of certain components).
  * 
- * @author thpar
+ * @author Thomas Van Parys
  *
  */
 public class GUIModel extends Observable implements PropertyChangeListener{
@@ -109,7 +109,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	/**
 	 * Scope how to calculate data statistics (mean and sigma)
-	 * @author thpar
+	 * @author Thomas Van Parys
 	 *
 	 */
 	public enum MeanScopeModNet{
