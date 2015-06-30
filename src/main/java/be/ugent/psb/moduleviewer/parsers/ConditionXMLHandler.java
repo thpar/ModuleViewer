@@ -211,18 +211,28 @@ public class ConditionXMLHandler extends DefaultHandler {
 
 	private void parseConditionAttributes(Attributes attributes) throws SAXException{
 		String condId = attributes.getValue("id");
+		String condName = attributes.getValue("name");
 		try {
 			//retrieve parent tag
 			XMLTag thisTag = opened.pop();
 			XMLTag parentTag = opened.peek();
 			opened.push(thisTag);
 			switch(parentTag){
-			case CHILD: 
-				Condition addingCondition = modnet.getCondition(Integer.parseInt(condId));
+			case CHILD:
+				Condition addingCondition;
+				if (condId != null){
+					addingCondition = modnet.getCondition(Integer.parseInt(condId));					
+				} else {
+					addingCondition = modnet.getCondition(condName);					
+				}
 				node.addCondition(addingCondition);
 				break;
 			case NONTREECONDITIONS:
-				mod.addNonTreeCondition(Integer.parseInt(condId));
+				if (condId != null){
+					mod.addNonTreeCondition(Integer.parseInt(condId));					
+				} else {
+					mod.addNonTreeCondition(condName);					
+				}
 				break;
 			case NA:
 			case MODULENETWORK:

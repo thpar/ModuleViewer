@@ -169,7 +169,11 @@ public class Module {
 		this.nonTreeConditions.add(cond);
 		
 	}
-
+	public void addNonTreeCondition(String condName) throws UnknownItemException{
+		Condition cond = modnet.getCondition(condName);
+		this.nonTreeConditions.add(cond);
+		
+	}
 	public List<Condition> getNonTreeConditions() {
 		return nonTreeConditions;
 	}
