@@ -206,7 +206,7 @@
 		<dependency>
 			<groupId>be.thpar</groupId>
 			<artifactId>modulegraphics</artifactId>
-			<version>1.29.0-RC</version>
+			<version>1.29.0</version>
 		</dependency>
 		<dependency>
 			<groupId>commons-cli</groupId>
