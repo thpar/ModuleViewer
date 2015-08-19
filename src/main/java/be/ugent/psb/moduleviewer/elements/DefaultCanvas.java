@@ -23,6 +23,7 @@ package be.ugent.psb.moduleviewer.elements;
  */
 
 import java.awt.Dimension;
+import java.awt.Font;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
@@ -85,7 +86,7 @@ public class DefaultCanvas extends Canvas {
 	 * data from the model, and add them in the right order to this Canvas.
 	 */
 	private void composeCanvas() {
-		this.setUnit(new Dimension(20,20));
+		this.setUnit(new Dimension(16,20));
 		
 		//general settings
 		this.setHorizontalSpacing(5);
@@ -379,7 +380,7 @@ public class DefaultCanvas extends Canvas {
 			case tfenrichment:
 			case unknown:
 			default: 
-				rightCanvas.add(new Label(gab.getBlockName()));
+				rightCanvas.add(new Label(gab.getBlockName(), new Font("SansSerif", Font.PLAIN, 14)));
 				Element lastLabel = rightCanvas.getLastAddedElement();
 				lastLabel.setAlignment(Alignment.BOTTOM_CENTER);
 				lastLabel.setMargin(10, 0, 0, 0);
@@ -423,6 +424,10 @@ public class DefaultCanvas extends Canvas {
 		Canvas legendCanvas = new Canvas();
 		legendCanvas.setMargin(20, 0);
 		legendCanvas.setHorizontalSpacing(30);
+		
+		leftCanvas.add(new RelativeSpacer(arrowStack, null));
+		leftCanvas.add(legendCanvas);
+		
 		for (Integer blockId : modnet.getLegendBlockIds()){
 			Legend legend = new Legend(modnet, blockId);
 			legendCanvas.add(legend);
@@ -456,16 +461,14 @@ public class DefaultCanvas extends Canvas {
 				minGradValue, 
 				maxGradValue, 
 				new EnigmaColorizer(modnet.getSigma(), modnet.getMean()));
+		legendCanvas.add(gradient);
 		gradient.setMinLabel("<= "+Math.round(minGradValue*10)/10d);
 		gradient.setMaxLabel(">= "+Math.round(maxGradValue*10)/10d);
 		gradient.setWidth(20);
 		gradient.setTitle("Expression ratios");
 		gradient.addLabel(modnet.getMean());
 		gradient.setAlignment(Alignment.BOTTOM_LEFT);
-		legendCanvas.add(gradient);
 		
-		leftCanvas.add(new RelativeSpacer(arrowStack, null));
-		leftCanvas.add(legendCanvas);
 	}
 
 	
