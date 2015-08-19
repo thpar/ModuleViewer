@@ -50,6 +50,7 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 
 	private AnnotationBlock<Gene> ab;
 	private GeneNode geneRoot;
+	private LabelList labelList;
 	
 	enum LabelPosition{
 		TOP, BOTTOM, NONE;
@@ -76,9 +77,8 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 			break;
 		}
 		
-		LabelList labelList = new LabelList(labels);
-		//TODO Make font size Unit relative!
-		labelList.setFont(new Font("SansSerif", Font.PLAIN, 19));
+		labelList = new LabelList(labels);
+		labelList.setFont(new Font("SansSerif", Font.PLAIN, 10));
 		
 		switch(labelPosition){
 		default:
@@ -113,7 +113,9 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		}
 	}
 	
-	
+	public void setLabelFontSize(int size){
+		labelList.setFont(new Font("SansSerif", Font.PLAIN, size));
+	}
 	
 	
 	private void createNumberedMatrix() {

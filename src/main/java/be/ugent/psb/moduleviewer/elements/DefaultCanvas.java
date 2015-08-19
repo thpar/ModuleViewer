@@ -86,7 +86,12 @@ public class DefaultCanvas extends Canvas {
 	 * data from the model, and add them in the right order to this Canvas.
 	 */
 	private void composeCanvas() {
-		this.setUnit(new Dimension(16,20));
+		
+		if (guiModel.isWideMode()){
+			this.setUnit(new Dimension(16,20));
+		} else {
+			this.setUnit(new Dimension(10,20));
+		}
 		
 		//general settings
 		this.setHorizontalSpacing(5);
@@ -355,6 +360,9 @@ public class DefaultCanvas extends Canvas {
 			case unknown:
 			default:
 				GeneAnnotationMatrix ganMatrix = new GeneAnnotationMatrix(mod.getGeneTree(), gab);
+				if (guiModel.isWideMode()){
+					ganMatrix.setLabelFontSize(17);
+				}
 				rightCanvas.add(ganMatrix);
 				rightCanvas.getLastAddedElement().setAlignment(Alignment.TOP_CENTER);				
 				
@@ -417,6 +425,9 @@ public class DefaultCanvas extends Canvas {
 		leftCanvas.add(new RelativeSpacer(arrowStack, null));
 		if (guiModel.isDrawConditionLabels()){			
 			ConditionLabels condLabels = new ConditionLabels(mod.getConditionTree(), mod.getNonTreeConditions(),true);
+			if (guiModel.isWideMode()){
+				condLabels.setFontSize(14);
+			}
 			leftCanvas.add(condLabels);
 		}
 				

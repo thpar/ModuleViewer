@@ -47,6 +47,9 @@ public class ConditionLabels extends Canvas {
 
 	private ConditionNode rootNode;
 	private List<Condition> nonTreeConditions;
+	
+	private int fontSize = 8;
+	private LabelList labels; 
 
 	/**
 	 * 
@@ -93,13 +96,22 @@ public class ConditionLabels extends Canvas {
 			labelStrings.add(condition.getName());
 		}
 		
-		LabelList labels = new LabelList(labelStrings);
+		labels = new LabelList(labelStrings);
 		
-		labels.setFont(new Font("SansSerif", Font.PLAIN, 8));
+		labels.setFont(new Font("SansSerif", Font.PLAIN, this.fontSize));
 		labels.setDirection(Direction.LEFT_TO_RIGHT);
 		labels.setrAngle(ReadingAngle.LEFT);
 		return labels;
 	}
+	
+	/**
+	 * Set font size something different from the default 8pts.
+	 */
+	public void setFontSize(int size){
+		this.fontSize = size;
+		labels.setFont(new Font("SansSerif", Font.PLAIN, this.fontSize));
+	}
+	
 	
 	public Condition getHitCondition(int x, int y){
 		Element el = getHitChild(x, y);

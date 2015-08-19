@@ -59,6 +59,7 @@ import be.ugent.psb.moduleviewer.actions.SortGenesAction;
 import be.ugent.psb.moduleviewer.actions.ToggleDebugModeAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowConditionLabelsAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
+import be.ugent.psb.moduleviewer.actions.ToggleWideModeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeGeneReg;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeModNet;
@@ -170,6 +171,10 @@ public class MainMenu extends JMenuBar implements Observer{
 		conditionLabelBoxItem = new JCheckBoxMenuItem(new ToggleShowConditionLabelsAction(guiModel));
 		conditionLabelBoxItem.setSelected(guiModel.isDrawConditionLabels());
 		viewMenu.add(conditionLabelBoxItem);
+		
+		JCheckBoxMenuItem wideModeBoxItem = new JCheckBoxMenuItem(new ToggleWideModeAction(guiModel));
+		wideModeBoxItem.setSelected(guiModel.isWideMode());
+		viewMenu.add(wideModeBoxItem);
 		
 		viewMenu.addSeparator();
 		

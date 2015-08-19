@@ -108,6 +108,11 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private File prefFile;
 	
 	/**
+	 * With wideMode true, the cells are 16px wide, instead of the default 10px.
+	 */
+	private boolean wideMode = false;
+	
+	/**
 	 * Scope how to calculate data statistics (mean and sigma)
 	 * @author Thomas Van Parys
 	 *
@@ -151,6 +156,7 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	}
 	
 	private PointMode pointMode = PointMode.PAN;
+
 
 	
 	
@@ -572,6 +578,24 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 
 	public void incZoomLevel(double d) {
 		this.setZoomLevel(Math.min(zoomLevel+d, 3));
+	}
+
+	/**
+	 * With wideMode true, the cells are 16px wide, instead of the default 10px.
+	 */
+	public boolean isWideMode() {
+		return this.wideMode;
+	}
+	
+	/**
+	 * With wideMode true, the cells are 16px wide, instead of the default 10px.
+	 */
+	public void setWideMode(boolean wideMode) {
+		if (this.wideMode != wideMode){
+			this.wideMode = wideMode;
+			this.setChanged();
+			this.notifyObservers();
+		}
 	}
 	
 	
