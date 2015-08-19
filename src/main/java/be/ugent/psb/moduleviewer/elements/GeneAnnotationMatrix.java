@@ -77,7 +77,8 @@ public class GeneAnnotationMatrix extends AnnotationMatrix<Gene> {
 		}
 		
 		LabelList labelList = new LabelList(labels);
-		labelList.setFont(new Font("SansSerif", Font.PLAIN, 10));
+		//TODO Make font size Unit relative!
+		labelList.setFont(new Font("SansSerif", Font.PLAIN, 20));
 		
 		switch(labelPosition){
 		default:

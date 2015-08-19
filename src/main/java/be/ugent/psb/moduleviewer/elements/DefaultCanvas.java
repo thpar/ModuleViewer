@@ -85,6 +85,8 @@ public class DefaultCanvas extends Canvas {
 	 * data from the model, and add them in the right order to this Canvas.
 	 */
 	private void composeCanvas() {
+		this.setUnit(new Dimension(20,20));
+		
 		//general settings
 		this.setHorizontalSpacing(5);
 		this.setVerticalSpacing(5);
