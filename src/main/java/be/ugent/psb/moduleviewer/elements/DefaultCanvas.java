@@ -190,7 +190,7 @@ public class DefaultCanvas extends Canvas {
 					ExpressionMatrix regulatorMatrix = new ExpressionMatrix(regTree,
 							mod.getConditionTree(),
 							mod.getNonTreeConditions(),
-							new EnigmaColorizer(regSigma,regMean),
+							new PValueColorizer(regSigma,regMean),
 							true, false);
 					coreCanvas.add(regulatorMatrix);
 
@@ -230,7 +230,7 @@ public class DefaultCanvas extends Canvas {
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
 				mod.getNonTreeConditions(),
-				new EnigmaColorizer(geneSigma,geneMean),
+				new PValueColorizer(geneSigma,geneMean),
 				true, true);
 		coreCanvas.add(expressionMatrix);
 		
@@ -468,10 +468,12 @@ public class DefaultCanvas extends Canvas {
 		
 		double minGradValue = legendMean-legendSigma*2;
 		double maxGradValue = legendMean+legendSigma*2;
+		
+		//changed colortype
 		LegendGradient gradient = new LegendGradient(
 				minGradValue, 
 				maxGradValue, 
-				new EnigmaColorizer(modnet.getSigma(), modnet.getMean()));
+				new PValueColorizer(modnet.getSigma(), modnet.getMean()));
 		legendCanvas.add(gradient);
 		gradient.setMinLabel("<= "+Math.round(minGradValue*10)/10d);
 		gradient.setMaxLabel(">= "+Math.round(maxGradValue*10)/10d);
