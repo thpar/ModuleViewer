@@ -54,27 +54,28 @@ public class PValueColorizer extends ExpressionColorizer{
 	public Color getColor(Double data) {
 		if (Double.isNaN(data))	return Color.WHITE;
 		
-		Color col;
 		float redperc, blueperc, greenperc;
 		
 		if (data<0){
 			blueperc = 1;
 			redperc = new Float(downProb(data, mean, sigma));
 			greenperc = redperc;
-		} else {
+		} else if (data>0){
 			redperc = 1;
 			greenperc = 1;
 			blueperc = new Float(upProb(data, mean, sigma));
+		} else {
+			return Color.BLACK;
 		}
 		
-		col = new Color(redperc, greenperc, blueperc);
+		Color col = new Color(redperc, greenperc, blueperc);
 
 		return col;
 	}
 	
 	private double upProb (double x, double mean, double sigma){
 	    double prob=1;
-	    if (x <= 2*sigma){
+	    if (x <= mean + 2*sigma){
 	    	prob = 1-Math.exp(-Math.pow((x-mean)/sigma, 2));
 	    }
 	    return prob;
@@ -82,7 +83,7 @@ public class PValueColorizer extends ExpressionColorizer{
 	
 	private double downProb (double x, double mean, double sigma){
         double prob=1;
-	    if (x >= -2*sigma){	
+	    if (x >= mean -2*sigma){	
 	    	prob = 1 - Math.exp(-Math.pow((x-mean)/sigma, 2));
 	    }
 	    return prob;

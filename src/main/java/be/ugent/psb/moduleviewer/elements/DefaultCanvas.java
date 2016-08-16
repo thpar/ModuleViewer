@@ -475,11 +475,11 @@ public class DefaultCanvas extends Canvas {
 				maxGradValue, 
 				new PValueColorizer(modnet.getSigma(), modnet.getMean()));
 		legendCanvas.add(gradient);
-		gradient.setMinLabel("<= "+Math.round(minGradValue*10)/10d);
-		gradient.setMaxLabel(">= "+Math.round(maxGradValue*10)/10d);
+		gradient.setMinLabel("<= "+Math.round(minGradValue*1000)/1000d);
+		gradient.setMaxLabel(">= "+Math.round(maxGradValue*1000)/1000d);
 		gradient.setWidth(20);
-		gradient.setTitle("Expression ratios");
-		gradient.addLabel(modnet.getMean());
+		gradient.setTitle("P-Values");
+		gradient.addLabel(0);
 		gradient.setAlignment(Alignment.BOTTOM_LEFT);
 		
 	}
