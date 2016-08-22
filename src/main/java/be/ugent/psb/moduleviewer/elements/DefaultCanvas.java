@@ -27,6 +27,7 @@ import java.awt.Font;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
+import be.ugent.psb.modulegraphics.elements.Colorizer;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ElementStack;
 import be.ugent.psb.modulegraphics.elements.Label;
@@ -187,10 +188,20 @@ public class DefaultCanvas extends Canvas {
 						regMean = modnet.getMean();
 						break;
 					}
+					ExpressionColorizer regColorizer;
+					switch(guiModel.getColorScheme()){
+					case EXPRESSION:
+					default:
+						regColorizer = new EnigmaColorizer(regSigma, regMean);
+						break;
+					case PVALUES:
+						regColorizer = new PValueColorizer(regSigma, regMean);
+						break;
+					} 
 					ExpressionMatrix regulatorMatrix = new ExpressionMatrix(regTree,
 							mod.getConditionTree(),
 							mod.getNonTreeConditions(),
-							new PValueColorizer(regSigma,regMean),
+							regColorizer,
 							true, false);
 					coreCanvas.add(regulatorMatrix);
 
@@ -226,11 +237,20 @@ public class DefaultCanvas extends Canvas {
 			break;
 		}
 		
-		
+		ExpressionColorizer expColorizer;
+		switch(guiModel.getColorScheme()){
+		case EXPRESSION:
+		default:
+			expColorizer = new EnigmaColorizer(geneSigma,geneMean);
+			break;
+		case PVALUES:
+			expColorizer = new PValueColorizer(geneSigma,geneMean);
+			break;
+		}
 		ExpressionMatrix expressionMatrix = new ExpressionMatrix(mod.getGeneTree(),
 				mod.getConditionTree(),
 				mod.getNonTreeConditions(),
-				new PValueColorizer(geneSigma,geneMean),
+				expColorizer,
 				true, true);
 		coreCanvas.add(expressionMatrix);
 		
@@ -466,6 +486,7 @@ public class DefaultCanvas extends Canvas {
 			break;
 		}
 		
+		//FIXME: switch on color scheme (compare with master branch!)
 		double minGradValue = legendMean-legendSigma*2;
 		double maxGradValue = legendMean+legendSigma*2;
 		
@@ -473,7 +494,7 @@ public class DefaultCanvas extends Canvas {
 		LegendGradient gradient = new LegendGradient(
 				minGradValue, 
 				maxGradValue, 
-				new PValueColorizer(modnet.getSigma(), modnet.getMean()));
+				expColorizer);
 		legendCanvas.add(gradient);
 		gradient.setMinLabel("<= "+Math.round(minGradValue*1000)/1000d);
 		gradient.setMaxLabel(">= "+Math.round(maxGradValue*1000)/1000d);

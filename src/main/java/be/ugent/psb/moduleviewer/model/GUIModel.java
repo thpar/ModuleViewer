@@ -43,6 +43,7 @@ import be.ugent.psb.modulegraphics.display.CanvasFigure.OutputFormat;
 import be.ugent.psb.modulegraphics.elements.Element;
 
 
+
 /**
  * Settings of which data to include in the figure to be drawn.
  * This model can be observed by a Canvas or JPanel to react to 
@@ -157,7 +158,10 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	
 	private PointMode pointMode = PointMode.PAN;
 
-
+	public enum ColorSchemeType{
+		EXPRESSION, PVALUES
+	}
+	private ColorSchemeType colorScheme = ColorSchemeType.EXPRESSION; 
 	
 	
 	public GUIModel(Model model){
@@ -596,6 +600,22 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 			this.setChanged();
 			this.notifyObservers();
 		}
+	}
+
+	/**
+	 * 
+	 * @return selected {@link ColorSchemeType}
+	 */
+	public ColorSchemeType getColorScheme() {
+		return colorScheme;
+	}
+
+	/**
+	 * 
+	 * @param set selected {@link ColorSchemeType}
+	 */
+	public void setColorScheme(ColorSchemeType colorScheme) {
+		this.colorScheme = colorScheme;
 	}
 	
 	
