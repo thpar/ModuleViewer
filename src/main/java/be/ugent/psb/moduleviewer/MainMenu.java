@@ -50,6 +50,7 @@ import be.ugent.psb.moduleviewer.actions.LoadSessionAction;
 import be.ugent.psb.moduleviewer.actions.LoadSymbolicNamesAction;
 import be.ugent.psb.moduleviewer.actions.NewSessionAction;
 import be.ugent.psb.moduleviewer.actions.SaveSessionAsAction;
+import be.ugent.psb.moduleviewer.actions.SetColorSchemeAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeGeneRegAction;
 import be.ugent.psb.moduleviewer.actions.SetMeanScopeModNetAction;
 import be.ugent.psb.moduleviewer.actions.SetOutputFormatAction;
@@ -61,6 +62,7 @@ import be.ugent.psb.moduleviewer.actions.ToggleShowConditionLabelsAction;
 import be.ugent.psb.moduleviewer.actions.ToggleShowTreeAction;
 import be.ugent.psb.moduleviewer.actions.ToggleWideModeAction;
 import be.ugent.psb.moduleviewer.model.GUIModel;
+import be.ugent.psb.moduleviewer.model.GUIModel.ColorSchemeType;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeGeneReg;
 import be.ugent.psb.moduleviewer.model.GUIModel.MeanScopeModNet;
 import be.ugent.psb.moduleviewer.model.Model;
@@ -91,6 +93,9 @@ public class MainMenu extends JMenuBar implements Observer{
 	private JMenuItem loadSymbolicNameItem;
 	private JMenuItem loadConditionTreeItem;
 	private JMenuItem loadAnnotItem;
+	private ButtonGroup colorSchemeGroup;
+	private JRadioButtonMenuItem exprValColorsItem;
+	private JRadioButtonMenuItem pValColorsItem;
 	
 	public MainMenu(Model model, final GUIModel guiModel){
 
@@ -223,6 +228,26 @@ public class MainMenu extends JMenuBar implements Observer{
 		sigmaMeanMenu.add(regSeparateItem);
 		sigmaMeanMenu.add(regJoinedItem);
 		
+		JMenu colorSchemeMenu = new JMenu("Color scheme");
+		viewMenu.add(colorSchemeMenu);
+		colorSchemeGroup = new ButtonGroup();
+		exprValColorsItem = new JRadioButtonMenuItem(new SetColorSchemeAction(guiModel, ColorSchemeType.EXPRESSION));
+		pValColorsItem = new JRadioButtonMenuItem(new SetColorSchemeAction(guiModel, ColorSchemeType.PVALUES));
+		colorSchemeGroup.add(exprValColorsItem);
+		colorSchemeGroup.add(pValColorsItem);
+		
+		colorSchemeMenu.add(exprValColorsItem);
+		colorSchemeMenu.add(pValColorsItem);
+		
+		switch(guiModel.getColorScheme()){
+		case EXPRESSION:
+			colorSchemeGroup.setSelected(exprValColorsItem.getModel(), true);
+			break;
+		case PVALUES:
+			colorSchemeGroup.setSelected(pValColorsItem.getModel(), true);
+			break;
+		}
+		
 		viewMenu.addSeparator();
 		JMenuItem logItem = new JMenuItem(new ShowLogAction(model));
 		viewMenu.add(logItem);
@@ -342,6 +367,15 @@ public class MainMenu extends JMenuBar implements Observer{
 			recentSessionMenu.setEnabled(false);
 		} else {
 			recentSessionMenu.setEnabled(true);
+		}
+		
+		switch(guiModel.getColorScheme()){
+		case EXPRESSION:
+			this.colorSchemeGroup.setSelected(this.exprValColorsItem.getModel(), true);
+			break;
+		case PVALUES:
+			this.colorSchemeGroup.setSelected(this.pValColorsItem.getModel(), true);
+			break;
 		}
 		
 		enableDataLoadItems();

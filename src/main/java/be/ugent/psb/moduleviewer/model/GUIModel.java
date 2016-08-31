@@ -159,7 +159,20 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	private PointMode pointMode = PointMode.PAN;
 
 	public enum ColorSchemeType{
-		EXPRESSION, PVALUES
+		EXPRESSION, PVALUES;
+
+		@Override
+		public String toString() {
+			switch(this){
+			case EXPRESSION:
+			default:
+				return "Expression values";
+			case PVALUES:
+				return "p-Values";
+			}
+		}
+		
+		
 	}
 	private ColorSchemeType colorScheme = ColorSchemeType.EXPRESSION; 
 	
@@ -615,7 +628,11 @@ public class GUIModel extends Observable implements PropertyChangeListener{
 	 * @param set selected {@link ColorSchemeType}
 	 */
 	public void setColorScheme(ColorSchemeType colorScheme) {
-		this.colorScheme = colorScheme;
+		if (this.colorScheme != colorScheme){
+			this.colorScheme = colorScheme;
+			setChanged();
+			notifyObservers();			
+		}
 	}
 	
 	

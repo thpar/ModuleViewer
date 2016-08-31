@@ -27,7 +27,6 @@ import java.awt.Font;
 import java.util.List;
 
 import be.ugent.psb.modulegraphics.elements.Canvas;
-import be.ugent.psb.modulegraphics.elements.Colorizer;
 import be.ugent.psb.modulegraphics.elements.Element;
 import be.ugent.psb.modulegraphics.elements.ElementStack;
 import be.ugent.psb.modulegraphics.elements.Label;
@@ -486,21 +485,30 @@ public class DefaultCanvas extends Canvas {
 			break;
 		}
 		
-		//FIXME: switch on color scheme (compare with master branch!)
 		double minGradValue = legendMean-legendSigma*2;
 		double maxGradValue = legendMean+legendSigma*2;
 		
-		//changed colortype
 		LegendGradient gradient = new LegendGradient(
 				minGradValue, 
 				maxGradValue, 
 				expColorizer);
 		legendCanvas.add(gradient);
-		gradient.setMinLabel("<= "+Math.round(minGradValue*1000)/1000d);
-		gradient.setMaxLabel(">= "+Math.round(maxGradValue*1000)/1000d);
+		switch(guiModel.getColorScheme()){
+		case EXPRESSION:
+		default:
+			gradient.setTitle("Expression ratios");
+			gradient.setMinLabel("<= "+Math.round(minGradValue*10)/10d);
+			gradient.setMaxLabel(">= "+Math.round(maxGradValue*10)/10d);
+			gradient.addLabel(modnet.getMean());
+			break;
+		case PVALUES:
+			gradient.setTitle("P-Values");
+			gradient.setMinLabel("<= "+Math.round(minGradValue*1000)/1000d);
+			gradient.setMaxLabel(">= "+Math.round(maxGradValue*1000)/1000d);
+			gradient.addLabel(0);
+			break;
+		}
 		gradient.setWidth(20);
-		gradient.setTitle("P-Values");
-		gradient.addLabel(0);
 		gradient.setAlignment(Alignment.BOTTOM_LEFT);
 		
 	}
