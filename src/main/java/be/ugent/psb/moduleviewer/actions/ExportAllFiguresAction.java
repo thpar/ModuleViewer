@@ -30,6 +30,7 @@ import javax.swing.JFileChooser;
 import javax.swing.SwingWorker;
 
 import be.ugent.psb.modulegraphics.display.CanvasFigure;
+import be.ugent.psb.modulegraphics.display.CanvasFigure.OutputFormat;
 import be.ugent.psb.modulegraphics.elements.Canvas;
 import be.ugent.psb.moduleviewer.elements.DefaultCanvas;
 import be.ugent.psb.moduleviewer.model.GUIModel;
@@ -115,6 +116,8 @@ public class ExportAllFiguresAction extends AbstractAction {
 			int modCount = 0;
 			int totModCount = modnet.getModuleIds().size();
 			
+			OutputFormat format = guiModel.getOutputFormat();
+			
 			for (String modId : modnet.getModuleIds()){
 				Module mod = modnet.getModule(modId);
 				String title = "Module "+modId;
@@ -129,7 +132,7 @@ public class ExportAllFiguresAction extends AbstractAction {
 				try {
 					Canvas canvas = new DefaultCanvas(mod, model, guiModel, title);
 					CanvasFigure figCanvas = new CanvasFigure(canvas, fileName);
-					figCanvas.writeToFigure(guiModel.getOutputFormat());
+					figCanvas.writeToFigure(format);
 				} catch (Exception e) {
 					model.getLogger().addEntry(e, "Failed to export figure "+fileName);
 				}
