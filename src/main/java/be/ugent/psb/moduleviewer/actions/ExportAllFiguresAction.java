@@ -100,15 +100,6 @@ public class ExportAllFiguresAction extends AbstractAction {
 			guiModel.showProgressBar(true);
 			setProgress(0);
 			
-			//trick to pass on progListener to other class. Not needed now.
-//			ProgressListener progListener = new ProgressListener(){
-//				@Override
-//				public void setMyProgress(int percent) {
-//					setProgress(percent);
-//				}
-//			};
-			
-			
 			ModuleNetwork modnet = model.getModnet();
 			guiModel.showProgressBar(true);
 			guiModel.setStateString("Exporting images...");
@@ -117,6 +108,7 @@ public class ExportAllFiguresAction extends AbstractAction {
 			int totModCount = modnet.getModuleIds().size();
 			
 			OutputFormat format = guiModel.getOutputFormat();
+			File outputDir = guiModel.getOutputDir();
 			
 			for (String modId : modnet.getModuleIds()){
 				Module mod = modnet.getModule(modId);
@@ -126,8 +118,8 @@ public class ExportAllFiguresAction extends AbstractAction {
 					title+=" - "+mod.getName();
 					file_id+="_"+mod.getName();
 				}
-				String fileName = guiModel.getOutputDir() + System.getProperty("file.separator") + 
-				guiModel.getFileNameTemplate(file_id)+"."+guiModel.getOutputFormat();
+				String fileName = outputDir + System.getProperty("file.separator") + 
+				guiModel.getFileNameTemplate(file_id)+"."+format;
 				
 				try {
 					Canvas canvas = new DefaultCanvas(mod, model, guiModel, title);
@@ -143,7 +135,7 @@ public class ExportAllFiguresAction extends AbstractAction {
 			}
 			
 			setProgress(100);
-			guiModel.setStateString("Figures exported to "+guiModel.getOutputDir());
+			guiModel.setStateString("Figures exported to "+outputDir);
 			return null;
 		}
 		
