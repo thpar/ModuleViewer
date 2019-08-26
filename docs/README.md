@@ -9,13 +9,13 @@ ModuleViewer is a tool to directly generate annotated heat maps from gene cluste
 Creation of images relies on at least two types of data: the data matrix and the modules file. Optionally, this can be extended with regulator data, a condition tree, and annotation files.
 
 * **data matrix**: This TAB-delimited file describes the expression data. The header contains the name of all experiments (conditions), the first column represents gene names. The second column can be left empty, or be used for symbolic gene names. The rest of the data consists of the expression data. 
-* **gene file**: Either an [XML file](TreeFile) with modules and genes, possibly grouped together into a tree structure, or a [simple list](ListFile) of modules with their genes.
-* **condition tree**: (optional) By default, each module displays all conditions, in the same order as given in the expression matrix. A more fine grained representation can be defined using an [XML file](TreeFile). This file specifies conditions to be displayed per module, possibly grouped together into a tree structure.
-* **regulator tree**: (optional) [XML file](TreeFile) with regulator genes or a [simple list](ListFile) of regulators assigned to modules.
+* **gene file**: Either an [XML file](TreeFile.md) with modules and genes, possibly grouped together into a tree structure, or a [simple list](ListFile.md) of modules with their genes.
+* **condition tree**: (optional) By default, each module displays all conditions, in the same order as given in the expression matrix. A more fine grained representation can be defined using an [XML file](TreeFile.md). This file specifies conditions to be displayed per module, possibly grouped together into a tree structure.
+* **regulator tree**: (optional) [XML file](TreeFile.md) with regulator genes or a [simple list](ListFile.md) of regulators assigned to modules.
 * **symbolic name mapping**: A tab delimted two column mapping file: GeneID --> Symbolic Name
-* **annotations**: Most information that should be drawn around the central module matrices, can be described as: "Module number x lists genes or conditions y1, y2, y3, ... as having property z". Optionally each gene or condition can be linked to an extra data point (color, integer, ...). For this purpose, we created the [MVFFormat](MVFFormat).
+* **annotations**: Most information that should be drawn around the central module matrices, can be described as: "Module number x lists genes or conditions y1, y2, y3, ... as having property z". Optionally each gene or condition can be linked to an extra data point (color, integer, ...). For this purpose, we created the [MVFFormat](MVFFormat.md).
 
-Demo data can be downloaded here: [Demo Data](ModuleViewerDemoData).
+Demo data can be downloaded here: [Demo Data](ModuleViewerDemoData.md).
 
 The regulator tree lets the user visualize regulators or other genes associated with the module, as an extra matrix above the main gene expression matrix.
 These "associated genes" can even be a complete other module, so *two modules can be compared to each other*. To do this, make a copy of the original gene file, but replace the module ID of the modules to be compared, with the ID of the modules to be compared to. Then load this second file as a "regulator file". In a similar way, a new MVF file could be constructed, copying the original file, replacing the module IDs and changing the OBJECT key from GENES to REGULATORS.

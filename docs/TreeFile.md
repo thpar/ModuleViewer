@@ -1,6 +1,6 @@
 # XML Format ####
 
-Gene and regulator input files can be formatted as [simple lists](ListFile).  
+Gene and regulator input files can be formatted as [simple lists](ListFile.md).  
 However, to represent subclustering in a tree structure, XML can be used.
 
 The parent element is `ModuleNetwork`, it's children being `Module`s with an `id` attribute and an optional `name` attribute.
