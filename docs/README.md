@@ -43,7 +43,7 @@ Alternatively, you can clone the code from the repository (master or stable tag)
 
 [webstart]: http://bioinformatics.psb.ugent.be/webtools/moduleviewer/launch.jnlp
 [maven]: https://maven.apache.org/
-[ModuleGraphics]: https://gitlab.psb.ugent.be/thpar/ModuleGraphics
+[ModuleGraphics]: https://github.com/thpar/ModuleGraphics
 
 ## Command line options #########
 
