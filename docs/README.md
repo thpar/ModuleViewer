@@ -1,6 +1,11 @@
 ## About  ###
 ModuleViewer is a tool to directly generate annotated heat maps from gene clusters and diverse biological data. It visualizes gene expression profiles and co-regulated gene clusters and their predicted regulators in the context of regulatory networks.
 
+> Vermeirssen, V., De Clercq, I., Van Parys, T., Van Breusegem, F., Van de Peer, Y. (2014) [Arabidopsis ensemble reverse-engineered gene regulatory network discloses interconnected transcription factors in oxidative stress][supp_data]. *The Plant Cell* 26, 4656-4679 ([doi][])
+
+[supp_data]: http://bioinformatics.psb.ugent.be/supplementary_data/vamei/module_display/
+[doi]: https://doi.org/10.1105/tpc.114.131417
+
 ![Module 17](files/module_432.png)
 
 
